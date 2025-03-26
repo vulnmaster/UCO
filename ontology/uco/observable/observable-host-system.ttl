@@ -1,99 +1,782 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
-@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
-@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
 
 <https://ontology.unifiedcyberontology.org/uco/observable/observable-host-system>
-    a owl:Ontology ;
-    rdfs:label "UCO Observable Host System Module"@en ;
-    rdfs:comment "Module containing host and system-related observable classes and properties."@en ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/observable-core> .
+	a owl:Ontology ;
+	rdfs:label "uco-observable-host-system"@en ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		observable-core:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
 
-# Host System Classes
-
-uco-observable:HostObservable
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:ObservableObject ;
-    rdfs:label "Host Observable"@en ;
-    rdfs:comment "A host-based observable object."@en .
-
-uco-observable:OperatingSystem
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:HostObservable ;
-    rdfs:label "Operating System"@en ;
-    rdfs:comment "An operating system instance."@en .
+# Host & System Observable base class
+observable:HostObservable
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable-core:ObservableObject ;
+	rdfs:label "HostObservable"@en ;
+	rdfs:comment "A host observable is an observable artifact that exists in the host and operating system domain."@en ;
+	sh:targetClass observable:HostObservable ;
+	owl:disjointWith observable:NetworkObservable ;
+	owl:disjointWith observable:IdentityAccountObservable ;
+	owl:disjointWith observable:SoftwareObservable ;
+	owl:disjointWith observable:CommunicationObservable ;
+	owl:disjointWith observable:SocialMediaObservable ;
+	owl:disjointWith observable:DeviceObservable ;
+	owl:disjointWith observable:CloudObservable ;
+	owl:disjointWith observable:ICSObservable ;
+	owl:disjointWith observable:ContentMediaObservable ;
+	.
 
 # File System Classes
+observable:FileSystemObject
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "FileSystemObject"@en ;
+	rdfs:comment "A file system object is an object in a file system."@en ;
+	sh:targetClass observable:FileSystemObject ;
+	.
 
-uco-observable:FileSystemObject
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:HostObservable ;
-    rdfs:label "File System Object"@en ;
-    rdfs:comment "A file system object (file, directory, link, etc.)."@en .
+observable:File
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:FileSystemObject ;
+	rdfs:label "File"@en ;
+	rdfs:comment "A file is a named collection of digital data."@en ;
+	sh:targetClass observable:File ;
+	.
 
-uco-observable:File
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:FileSystemObject ;
-    rdfs:label "File"@en ;
-    rdfs:comment "A file in a file system."@en .
+observable:FileFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "FileFacet"@en ;
+	rdfs:comment "A file facet is a grouping of characteristics unique to a file."@en ;
+	sh:property
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:accessedTime ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:createdTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:extension ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:fileName ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isDirectory ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:modifiedTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sizeInBytes ;
+		]
+		;
+	sh:targetClass observable:FileFacet ;
+	.
 
-uco-observable:Directory
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:FileSystemObject ;
-    rdfs:label "Directory"@en ;
-    rdfs:comment "A directory in a file system."@en .
+observable:Directory
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:FileSystemObject ;
+	rdfs:label "Directory"@en ;
+	rdfs:comment "A directory is a file system cataloging structure which contains references to other computer files, and possibly other directories."@en ;
+	sh:targetClass observable:Directory ;
+	.
+
+observable:FilePermissionsFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "FilePermissionsFacet"@en ;
+	rdfs:comment "A file permissions facet is a grouping of characteristics unique to the access rights for a file."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:owner ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:group ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:permissions ;
+		]
+		;
+	sh:targetClass observable:FilePermissionsFacet ;
+	.
+
+observable:FileSystem
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "FileSystem"@en ;
+	rdfs:comment "A file system is a way of storing and organizing computer files and their data."@en ;
+	sh:targetClass observable:FileSystem ;
+	.
+
+# Operating System Classes
+observable:OperatingSystem
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "OperatingSystem"@en ;
+	rdfs:comment "An operating system is the software that manages computer hardware, software resources, and provides common services for computer programs."@en ;
+	sh:targetClass observable:OperatingSystem ;
+	.
+
+observable:OperatingSystemFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "OperatingSystemFacet"@en ;
+	rdfs:comment "An operating system facet is a grouping of characteristics unique to an operating system."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:manufacturer ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:version ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:installDate ;
+		]
+		;
+	sh:targetClass observable:OperatingSystemFacet ;
+	.
 
 # Process Classes
+observable:Process
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "Process"@en ;
+	rdfs:comment "A process is an instance of a computer program that is being executed."@en ;
+	sh:targetClass observable:Process ;
+	.
 
-uco-observable:Process
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:HostObservable ;
-    rdfs:label "Process"@en ;
-    rdfs:comment "A running process on a system."@en .
+observable:ProcessFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ProcessFacet"@en ;
+	rdfs:comment "A process facet is a grouping of characteristics unique to an instance of a computer program that is being executed."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:arguments ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:command ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:createdTime ;
+		] ,
+		[
+			sh:class core:Thread ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:currentWorkingDirectory ;
+		] ,
+		[
+			sh:class observable:DigitalAccount ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:environmentVariables ;
+		] ,
+		[
+			sh:class core:Thread ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:isHidden ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:pid ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:parentProcess ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:childProcess ;
+		]
+		;
+	sh:targetClass observable:ProcessFacet ;
+	.
 
-# Facet Classes
+observable:Thread
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "Thread"@en ;
+	rdfs:comment "A thread is a schedulable subunit of sequential execution within a process."@en ;
+	sh:targetClass observable:Thread ;
+	.
 
-uco-observable:FileFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "File Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to a file."@en .
+observable:ThreadFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ThreadFacet"@en ;
+	rdfs:comment "A thread facet is a grouping of characteristics unique to a single path of execution within a process."@en ;
+	sh:property
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:createdTime ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:threadID ;
+		]
+		;
+	sh:targetClass observable:ThreadFacet ;
+	.
 
-uco-observable:ProcessFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "Process Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to a running process."@en .
+# Windows-specific Classes
+observable:WindowsRegistryKey
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "WindowsRegistryKey"@en ;
+	rdfs:comment "A Windows registry key is a particular key within a Windows registry."@en ;
+	sh:targetClass observable:WindowsRegistryKey ;
+	.
 
-uco-observable:OperatingSystemFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "Operating System Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to an operating system."@en .
+observable:RegistryKeyFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "RegistryKeyFacet"@en ;
+	rdfs:comment "A registry key facet is a grouping of characteristics unique to a Windows registry key."@en ;
+	sh:property
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:modifiedTime ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:numberOfSubkeys ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:key ;
+		] ,
+		[
+			sh:class observable:WindowsRegistryValue ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:values ;
+		]
+		;
+	sh:targetClass observable:RegistryKeyFacet ;
+	.
 
-# Properties
+observable:WindowsRegistryValue
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "WindowsRegistryValue"@en ;
+	rdfs:comment "A Windows registry value is a particular value within a Windows registry key."@en ;
+	sh:targetClass observable:WindowsRegistryValue ;
+	.
 
-uco-observable:hasParentProcess
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:Process ;
-    rdfs:range uco-observable:Process ;
-    rdfs:label "has parent process"@en ;
-    rdfs:comment "Specifies the parent process of a process."@en .
+observable:RegistryValueFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "RegistryValueFacet"@en ;
+	rdfs:comment "A registry value facet is a grouping of characteristics unique to a particular value within a Windows registry key."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:dataType ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:name ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:RegistryValueFacet ;
+	.
 
-uco-observable:hasFileFacet
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:File ;
-    rdfs:range uco-observable:FileFacet ;
-    rdfs:label "has file facet"@en ;
-    rdfs:comment "Specifies the characteristics of a file."@en .
+# Memory and Volume Classes
+observable:Memory
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "Memory"@en ;
+	rdfs:comment "Memory is a particular region of computer memory."@en ;
+	sh:targetClass observable:Memory ;
+	.
 
-uco-observable:containedWithin
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:FileSystemObject ;
-    rdfs:range uco-observable:Directory ;
-    rdfs:label "contained within"@en ;
-    rdfs:comment "Specifies the directory that contains a file system object."@en . 
+observable:MemoryFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "MemoryFacet"@en ;
+	rdfs:comment "A memory facet is a grouping of characteristics unique to a region of computer memory."@en ;
+	sh:property
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isVolatile ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:regionSize ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:regionStartAddress ;
+		]
+		;
+	sh:targetClass observable:MemoryFacet ;
+	.
+
+observable:Volume
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "Volume"@en ;
+	rdfs:comment "A volume is a single accessible storage area with a single file system, typically (but not necessarily) resident on a single partition of a hard disk."@en ;
+	sh:targetClass observable:Volume ;
+	.
+
+observable:VolumeFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "VolumeFacet"@en ;
+	rdfs:comment "A volume facet is a grouping of characteristics unique to a single accessible storage area with a single file system, typically (but not necessarily) resident on a single partition of a hard disk."@en ;
+	sh:property
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sectorSize ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:volumeID ;
+		]
+		;
+	sh:targetClass observable:VolumeFacet ;
+	.
+
+# Event and System-related Classes
+observable:Event
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "Event"@en ;
+	rdfs:comment "An event is an action or occurrence that happens in the observable domain."@en ;
+	sh:targetClass observable:Event ;
+	.
+
+observable:EventFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "EventFacet"@en ;
+	rdfs:comment "An event facet is a grouping of characteristics unique to an action or occurrence taking place in the digital world."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:eventType ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:observableCreatedTime ;
+		]
+		;
+	sh:targetClass observable:EventFacet ;
+	.
+
+observable:EventRecord
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "EventRecord"@en ;
+	rdfs:comment "An event record is a record of an event."@en ;
+	sh:targetClass observable:EventRecord ;
+	.
+
+observable:EventRecordFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "EventRecordFacet"@en ;
+	rdfs:comment "An event record facet is a grouping of characteristics unique to a record of an event."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:eventRecordID ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:eventType ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:observableCreatedTime ;
+		]
+		;
+	sh:targetClass observable:EventRecordFacet ;
+	.
+
+# Content Data
+observable:ContentData
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "ContentData"@en ;
+	rdfs:comment "Content data is data representing the content of something."@en ;
+	sh:targetClass observable:ContentData ;
+	.
+
+observable:ContentDataFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ContentDataFacet"@en ;
+	rdfs:comment "A content data facet is a grouping of characteristics unique to a block of digital data."@en ;
+	sh:property
+		[
+			sh:datatype xsd:hexBinary ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:dataPayload ;
+		] ,
+		[
+			sh:class types:Hash ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:hash ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:mimeType ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:byteOrder ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sizeInBytes ;
+		]
+		;
+	sh:targetClass observable:ContentDataFacet ;
+	.
+
+# Additional UNIX-specific Classes
+observable:UNIXProcess
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Process ;
+	rdfs:label "UNIXProcess"@en ;
+	rdfs:comment "A UNIX process is an instance of a computer program executed on a UNIX or UNIX-like operating system."@en ;
+	sh:targetClass observable:UNIXProcess ;
+	.
+
+observable:UNIXProcessFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:ProcessFacet ;
+	rdfs:label "UNIXProcessFacet"@en ;
+	rdfs:comment "A UNIX process facet is a grouping of characteristics unique to an instance of a computer program executed on a UNIX or UNIX-like operating system."@en ;
+	sh:property
+		[
+			sh:datatype xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:openFileDescriptors ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:pid ;
+		]
+		;
+	sh:targetClass observable:UNIXProcessFacet ;
+	.
+
+observable:UNIXFilePermissionsFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:FilePermissionsFacet ;
+	rdfs:label "UNIXFilePermissionsFacet"@en ;
+	rdfs:comment "A UNIX file permissions facet is a grouping of characteristics unique to the access rights for a UNIX file."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:owner ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:group ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:mode ;
+		]
+		;
+	sh:targetClass observable:UNIXFilePermissionsFacet ;
+	.
+
+# NTFS-specific Classes
+observable:NTFSFileFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "NTFSFileFacet"@en ;
+	rdfs:comment "An NTFS file facet is a grouping of characteristics unique to a file on an NTFS file system."@en ;
+	sh:property
+		[
+			sh:class observable:AlternateDataStream ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:alternateDataStreams ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:SID ;
+		]
+		;
+	sh:targetClass observable:NTFSFileFacet ;
+	.
+
+observable:AlternateDataStream
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:HostObservable ;
+	rdfs:label "AlternateDataStream"@en ;
+	rdfs:comment "An alternate data stream is a file content stream that is an alternative to the main stream of a file."@en ;
+	sh:targetClass observable:AlternateDataStream ;
+	.
+
+observable:AlternateDataStreamFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "AlternateDataStreamFacet"@en ;
+	rdfs:comment "An alternate data stream facet is a grouping of characteristics unique to a file content stream that is an alternative to the main stream of a file."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:name ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:size ;
+		] ,
+		[
+			sh:class types:Hash ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:hashes ;
+		]
+		;
+	sh:targetClass observable:AlternateDataStreamFacet ;
+	.

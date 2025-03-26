@@ -1,125 +1,460 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
-@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
-@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
 
 <https://ontology.unifiedcyberontology.org/uco/observable/observable-network>
-    a owl:Ontology ;
-    rdfs:label "UCO Observable Network Module"@en ;
-    rdfs:comment "Module containing network-related observable classes and properties."@en ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/observable-core> .
+	a owl:Ontology ;
+	rdfs:label "uco-observable-network"@en ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		observable-core:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
 
-# Network Observable Classes
+# Network Observable base class
+observable:NetworkObservable
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable-core:ObservableObject ;
+	rdfs:label "NetworkObservable"@en ;
+	rdfs:comment "A network observable is an observable artifact that exists in the network domain."@en ;
+	sh:targetClass observable:NetworkObservable ;
+	owl:disjointWith observable:HostObservable ;
+	owl:disjointWith observable:IdentityAccountObservable ;
+	owl:disjointWith observable:SoftwareObservable ;
+	owl:disjointWith observable:CommunicationObservable ;
+	owl:disjointWith observable:SocialMediaObservable ;
+	owl:disjointWith observable:DeviceObservable ;
+	owl:disjointWith observable:CloudObservable ;
+	owl:disjointWith observable:ICSObservable ;
+	owl:disjointWith observable:ContentMediaObservable ;
+	.
 
-uco-observable:NetworkObservable
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:ObservableObject ;
-    rdfs:label "Network Observable"@en ;
-    rdfs:comment "A network-based observable object."@en .
+# Network Classes
+observable:Address
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "Address"@en ;
+	rdfs:comment "An address is an identifier assigned to enable routing and management of information."@en ;
+	sh:targetClass observable:Address ;
+	.
 
-# Address Classes
+observable:DigitalAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Address ;
+	rdfs:label "DigitalAddress"@en ;
+	rdfs:comment "A digital address is an address used for digital communications."@en ;
+	sh:targetClass observable:DigitalAddress ;
+	.
 
-uco-observable:Address
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:NetworkObservable ;
-    rdfs:label "Address"@en ;
-    rdfs:comment "A network address."@en .
+observable:DigitalAddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "DigitalAddressFacet"@en ;
+	rdfs:comment "A digital address facet is a grouping of characteristics unique to an address within a digital network."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:displayName ;
+		]
+		;
+	sh:targetClass observable:DigitalAddressFacet ;
+	.
 
-uco-observable:DigitalAddress
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:Address ;
-    rdfs:label "Digital Address"@en ;
-    rdfs:comment "A digital address (IP, MAC, email, etc.)."@en .
+observable:IPAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAddress ;
+	rdfs:label "IPAddress"@en ;
+	rdfs:comment "An IP address is an Internet Protocol (IP) standards conformant identifier assigned to a device to enable routing and management of IP standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:IPAddress ;
+	.
 
-uco-observable:IPAddress
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:DigitalAddress ;
-    rdfs:label "IP Address"@en ;
-    rdfs:comment "An Internet Protocol (IP) address."@en .
+observable:IPv4Address
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IPAddress ;
+	rdfs:label "IPv4Address"@en ;
+	rdfs:comment "An IPv4 (Internet Protocol v4) address is an IPv4 standards conformant identifier assigned to a device to enable routing and management of IPv4 standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:IPv4Address ;
+	.
 
-uco-observable:IPv4Address
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:IPAddress ;
-    rdfs:label "IPv4 Address"@en ;
-    rdfs:comment "An Internet Protocol version 4 (IPv4) address."@en .
+observable:IPv4AddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "IPv4AddressFacet"@en ;
+	rdfs:comment "An IPv4 address facet is a grouping of characteristics unique to an IPv4 (Internet Protocol v4) standards conformant identifier assigned to a device to enable routing and management of IPv4 standards conformant communication to or from that device."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:IPv4AddressFacet ;
+	.
 
-uco-observable:IPv6Address
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:IPAddress ;
-    rdfs:label "IPv6 Address"@en ;
-    rdfs:comment "An Internet Protocol version 6 (IPv6) address."@en .
+observable:IPv6Address
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IPAddress ;
+	rdfs:label "IPv6Address"@en ;
+	rdfs:comment "An IPv6 (Internet Protocol v6) address is an IPv6 standards conformant identifier assigned to a device to enable routing and management of IPv6 standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:IPv6Address ;
+	.
 
-uco-observable:MACAddress
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:DigitalAddress ;
-    rdfs:label "MAC Address"@en ;
-    rdfs:comment "A Media Access Control (MAC) address."@en .
+observable:IPv6AddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "IPv6AddressFacet"@en ;
+	rdfs:comment "An IPv6 address facet is a grouping of characteristics unique to an IPv6 (Internet Protocol v6) standards conformant identifier assigned to a device to enable routing and management of IPv6 standards conformant communication to or from that device."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:IPv6AddressFacet ;
+	.
 
-# Network Connection Classes
+observable:MACAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAddress ;
+	rdfs:label "MACAddress"@en ;
+	rdfs:comment "A MAC address is a media access control standards conformant identifier assigned to a device to enable routing and management of MAC standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:MACAddress ;
+	.
 
-uco-observable:NetworkConnection
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:NetworkObservable ;
-    rdfs:label "Network Connection"@en ;
-    rdfs:comment "A network connection."@en .
+observable:MACAddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "MACAddressFacet"@en ;
+	rdfs:comment "A MAC address facet is a grouping of characteristics unique to a media access control standards conformant identifier assigned to a device to enable routing and management of MAC standards conformant communication to or from that device."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:MACAddressFacet ;
+	.
 
-uco-observable:TCPConnection
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:NetworkConnection ;
-    rdfs:label "TCP Connection"@en ;
-    rdfs:comment "A Transmission Control Protocol (TCP) connection."@en .
+observable:NetworkConnection
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "NetworkConnection"@en ;
+	rdfs:comment "A network connection is a connection (complete or attempted) across a digital network (a group of two or more computer systems linked together)."@en ;
+	sh:targetClass observable:NetworkConnection ;
+	.
 
-uco-observable:UDPConnection
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:NetworkConnection ;
-    rdfs:label "UDP Connection"@en ;
-    rdfs:comment "A User Datagram Protocol (UDP) connection."@en .
+observable:NetworkConnectionFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "NetworkConnectionFacet"@en ;
+	rdfs:comment "A network connection facet is a grouping of characteristics unique to a connection (complete or attempted) across a digital network (a group of two or more computer systems linked together)."@en ;
+	sh:property
+		[
+			sh:class observable:ObservableObject ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:dst ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:src ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:destinationPort ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sourcePort ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:protocols ;
+		]
+		;
+	sh:targetClass observable:NetworkConnectionFacet ;
+	.
 
-# Network Protocol Classes
+observable:URL
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAddress ;
+	rdfs:label "URL"@en ;
+	rdfs:comment "A URL (Uniform Resource Locator) is a standardized naming convention for addressing resources on the Internet."@en ;
+	sh:targetClass observable:URL ;
+	.
 
-uco-observable:NetworkProtocol
-    a owl:Class ;
-    rdfs:subClassOf uco-observable:NetworkObservable ;
-    rdfs:label "Network Protocol"@en ;
-    rdfs:comment "A network protocol."@en .
+observable:URLFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "URLFacet"@en ;
+	rdfs:comment "A URL facet is a grouping of characteristics unique to a uniform resource locator (URL)."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:fullValue ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:host ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:path ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:port ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:scheme ;
+		]
+		;
+	sh:targetClass observable:URLFacet ;
+	.
 
-# Facet Classes
+observable:DomainName
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAddress ;
+	rdfs:label "DomainName"@en ;
+	rdfs:comment "A domain name is an identification string that defines a realm of administrative autonomy, authority or control within the Internet."@en ;
+	sh:targetClass observable:DomainName ;
+	.
 
-uco-observable:NetworkConnectionFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "Network Connection Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to a network connection."@en .
+observable:DomainNameFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "DomainNameFacet"@en ;
+	rdfs:comment "A domain name facet is a grouping of characteristics unique to an identification string that defines a realm of administrative autonomy, authority or control within the Internet."@en ;
+	sh:property
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isTLD ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:DomainNameFacet ;
+	.
 
-uco-observable:NetworkInterfaceFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "Network Interface Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to a network interface."@en .
+observable:ARPCache
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "ARPCache"@en ;
+	rdfs:comment "An ARP cache is a collection of Address Resolution Protocol (ARP) entries (mostly dynamic) that are created when an IP address is resolved to a MAC address (so the computer can effectively communicate with the IP address). [based on https://en.wikipedia.org/wiki/ARP_cache]"@en ;
+	sh:targetClass observable:ARPCache ;
+	.
 
-# Properties
+observable:ARPCacheEntry
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "ARPCacheEntry"@en ;
+	rdfs:comment "An ARP cache entry is a single Address Resolution Protocol (ARP) response record that is created when an IP address is resolved to a MAC address (so the computer can effectively communicate with the IP address). [based on https://en.wikipedia.org/wiki/ARP_cache]"@en ;
+	sh:targetClass observable:ARPCacheEntry ;
+	.
 
-uco-observable:hasSourceAddress
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:NetworkConnection ;
-    rdfs:range uco-observable:Address ;
-    rdfs:label "has source address"@en ;
-    rdfs:comment "Specifies the source address of a network connection."@en .
+observable:AutonomousSystem
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "AutonomousSystem"@en ;
+	rdfs:comment "An autonomous system is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet. [based on https://en.wikipedia.org/wiki/Autonomous_system_(Internet)]"@en ;
+	sh:targetClass observable:AutonomousSystem ;
+	.
 
-uco-observable:hasDestinationAddress
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:NetworkConnection ;
-    rdfs:range uco-observable:Address ;
-    rdfs:label "has destination address"@en ;
-    rdfs:comment "Specifies the destination address of a network connection."@en .
+observable:AutonomousSystemFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "AutonomousSystemFacet"@en ;
+	rdfs:comment "An autonomous system facet is a grouping of characteristics unique to a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet. [based on https://en.wikipedia.org/wiki/Autonomous_system_(Internet)]"@en ;
+	sh:property
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:number ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:asHandle ;
+		] ,
+		[
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:or (
+				[
+					sh:datatype vocabulary:RegionalRegistryTypeVocab ;
+				]
+				[
+					sh:datatype xsd:string ;
+				]
+			) ;
+			sh:path observable:regionalInternetRegistry ;
+		]
+		;
+	sh:targetClass observable:AutonomousSystemFacet ;
+	.
 
-uco-observable:usesProtocol
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:NetworkConnection ;
-    rdfs:range uco-observable:NetworkProtocol ;
-    rdfs:label "uses protocol"@en ;
-    rdfs:comment "Specifies the protocol used by a network connection."@en . 
+observable:BluetoothAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:MACAddress ;
+	rdfs:label "BluetoothAddress"@en ;
+	rdfs:comment "A Bluetooth address is a Bluetooth standard conformant identifier assigned to a Bluetooth device to enable routing and management of Bluetooth standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:BluetoothAddress ;
+	.
+
+observable:BluetoothAddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:MACAddressFacet ;
+	rdfs:label "BluetoothAddressFacet"@en ;
+	rdfs:comment "A Bluetooth address facet is a grouping of characteristics unique to a Bluetooth standard conformant identifier assigned to a Bluetooth device to enable routing and management of Bluetooth standards conformant communication to or from that device."@en ;
+	sh:targetClass observable:BluetoothAddressFacet ;
+	.
+
+observable:DNSCache
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "DNSCache"@en ;
+	rdfs:comment "An DNS cache is a temporary locally stored collection of previous Domain Name System (DNS) query results (created when an domain name is resolved to a IP address) for a particular computer."@en ;
+	sh:targetClass observable:DNSCache ;
+	.
+
+observable:DNSRecord
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:NetworkObservable ;
+	rdfs:label "DNSRecord"@en ;
+	rdfs:comment "A DNS record is a single Domain Name System (DNS) artifact specifying information of a particular type (routing, authority, responsibility, security, etc.) for a specific Internet domain name."@en ;
+	sh:targetClass observable:DNSRecord ;
+	.

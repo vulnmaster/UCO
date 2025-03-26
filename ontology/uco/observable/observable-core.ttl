@@ -1,72 +1,93 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
-@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
-@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
-@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action/> .
 
-<https://ontology.unifiedcyberontology.org/uco/observable/observable-core>
-    a owl:Ontology ;
-    rdfs:label "UCO Observable Core Module"@en ;
-    rdfs:comment "Core module containing fundamental observable classes and properties."@en ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
-    owl:imports <https://ontology.unifiedcyberontology.org/uco/action/> .
+<https://ontology.unifiedcyberontology.org/uco/observable-core>
+	a owl:Ontology ;
+	rdfs:label "uco-observable-core"@en ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
 
-# Core Observable Classes
+observable:DefinedEffectFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "DefinedEffectFacet"@en ;
+	rdfs:comment "A defined effect facet is a grouping of characteristics unique to the effect of an observable action in relation to one or more observable objects."@en ;
+	sh:targetClass observable:DefinedEffectFacet ;
+	.
 
-uco-observable:ObservableObject
-    a owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Observable Object"@en ;
-    rdfs:comment "A distinct observable object within the digital domain."@en .
+observable:ObservableAction
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf action:Action ;
+	rdfs:label "ObservableAction"@en ;
+	rdfs:comment "An observable action is an action that can be observed within the digital domain."@en ;
+	sh:targetClass observable:ObservableAction ;
+	.
 
-uco-observable:ObservableAction
-    a owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Observable Action"@en ;
-    rdfs:comment "An action that can be observed within the digital domain."@en .
+observable:ObservableObject
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:UcoObject ;
+	rdfs:label "ObservableObject"@en ;
+	rdfs:comment "An observable object is a distinct entity in the digital domain."@en ;
+	sh:targetClass observable:ObservableObject ;
+	.
 
-uco-observable:ObservablePattern
-    a owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Observable Pattern"@en ;
-    rdfs:comment "A pattern of observable characteristics."@en .
+observable:ObservablePattern
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Pattern ;
+	rdfs:label "ObservablePattern"@en ;
+	rdfs:comment "An observable pattern is a grouping of observable characteristics."@en ;
+	sh:targetClass observable:ObservablePattern ;
+	.
 
-uco-observable:ObservableRelationship
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Relationship ;
-    rdfs:label "Observable Relationship"@en ;
-    rdfs:comment "A relationship between observable objects."@en .
+observable:ObservableRelationship
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Relationship ;
+	rdfs:label "ObservableRelationship"@en ;
+	rdfs:comment "An observable relationship is a relationship between two or more observable objects."@en ;
+	sh:targetClass observable:ObservableRelationship ;
+	.
 
-# Core Facet Classes
-
-uco-observable:DefinedEffectFacet
-    a owl:Class ;
-    rdfs:subClassOf uco-core:Facet ;
-    rdfs:label "Defined Effect Facet"@en ;
-    rdfs:comment "A grouping of characteristics unique to a defined effect of an action upon an observable object."@en .
-
-# Core Properties
-
-uco-observable:hasObservableObject
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:ObservableAction ;
-    rdfs:range uco-observable:ObservableObject ;
-    rdfs:label "has observable object"@en ;
-    rdfs:comment "Specifies the observable object that is the target of an observable action."@en .
-
-uco-observable:hasEffect
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:ObservableAction ;
-    rdfs:range uco-observable:DefinedEffectFacet ;
-    rdfs:label "has effect"@en ;
-    rdfs:comment "Specifies the defined effect of an observable action."@en .
-
-uco-observable:matchesPattern
-    a owl:ObjectProperty ;
-    rdfs:domain uco-observable:ObservableObject ;
-    rdfs:range uco-observable:ObservablePattern ;
-    rdfs:label "matches pattern"@en ;
-    rdfs:comment "Specifies that an observable object matches a defined pattern."@en . 
