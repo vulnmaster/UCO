@@ -1,1 +1,72 @@
- 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-core>
+    a owl:Ontology ;
+    rdfs:label "UCO Observable Core Module"@en ;
+    rdfs:comment "Core module containing fundamental observable classes and properties."@en ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/action/> .
+
+# Core Observable Classes
+
+uco-observable:ObservableObject
+    a owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Observable Object"@en ;
+    rdfs:comment "A distinct observable object within the digital domain."@en .
+
+uco-observable:ObservableAction
+    a owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Observable Action"@en ;
+    rdfs:comment "An action that can be observed within the digital domain."@en .
+
+uco-observable:ObservablePattern
+    a owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Observable Pattern"@en ;
+    rdfs:comment "A pattern of observable characteristics."@en .
+
+uco-observable:ObservableRelationship
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Relationship ;
+    rdfs:label "Observable Relationship"@en ;
+    rdfs:comment "A relationship between observable objects."@en .
+
+# Core Facet Classes
+
+uco-observable:DefinedEffectFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "Defined Effect Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to a defined effect of an action upon an observable object."@en .
+
+# Core Properties
+
+uco-observable:hasObservableObject
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:ObservableAction ;
+    rdfs:range uco-observable:ObservableObject ;
+    rdfs:label "has observable object"@en ;
+    rdfs:comment "Specifies the observable object that is the target of an observable action."@en .
+
+uco-observable:hasEffect
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:ObservableAction ;
+    rdfs:range uco-observable:DefinedEffectFacet ;
+    rdfs:label "has effect"@en ;
+    rdfs:comment "Specifies the defined effect of an observable action."@en .
+
+uco-observable:matchesPattern
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:ObservableObject ;
+    rdfs:range uco-observable:ObservablePattern ;
+    rdfs:label "matches pattern"@en ;
+    rdfs:comment "Specifies that an observable object matches a defined pattern."@en . 

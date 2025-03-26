@@ -1,1 +1,125 @@
- 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-network>
+    a owl:Ontology ;
+    rdfs:label "UCO Observable Network Module"@en ;
+    rdfs:comment "Module containing network-related observable classes and properties."@en ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/observable-core> .
+
+# Network Observable Classes
+
+uco-observable:NetworkObservable
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Network Observable"@en ;
+    rdfs:comment "A network-based observable object."@en .
+
+# Address Classes
+
+uco-observable:Address
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:NetworkObservable ;
+    rdfs:label "Address"@en ;
+    rdfs:comment "A network address."@en .
+
+uco-observable:DigitalAddress
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:Address ;
+    rdfs:label "Digital Address"@en ;
+    rdfs:comment "A digital address (IP, MAC, email, etc.)."@en .
+
+uco-observable:IPAddress
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:DigitalAddress ;
+    rdfs:label "IP Address"@en ;
+    rdfs:comment "An Internet Protocol (IP) address."@en .
+
+uco-observable:IPv4Address
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:IPAddress ;
+    rdfs:label "IPv4 Address"@en ;
+    rdfs:comment "An Internet Protocol version 4 (IPv4) address."@en .
+
+uco-observable:IPv6Address
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:IPAddress ;
+    rdfs:label "IPv6 Address"@en ;
+    rdfs:comment "An Internet Protocol version 6 (IPv6) address."@en .
+
+uco-observable:MACAddress
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:DigitalAddress ;
+    rdfs:label "MAC Address"@en ;
+    rdfs:comment "A Media Access Control (MAC) address."@en .
+
+# Network Connection Classes
+
+uco-observable:NetworkConnection
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:NetworkObservable ;
+    rdfs:label "Network Connection"@en ;
+    rdfs:comment "A network connection."@en .
+
+uco-observable:TCPConnection
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:NetworkConnection ;
+    rdfs:label "TCP Connection"@en ;
+    rdfs:comment "A Transmission Control Protocol (TCP) connection."@en .
+
+uco-observable:UDPConnection
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:NetworkConnection ;
+    rdfs:label "UDP Connection"@en ;
+    rdfs:comment "A User Datagram Protocol (UDP) connection."@en .
+
+# Network Protocol Classes
+
+uco-observable:NetworkProtocol
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:NetworkObservable ;
+    rdfs:label "Network Protocol"@en ;
+    rdfs:comment "A network protocol."@en .
+
+# Facet Classes
+
+uco-observable:NetworkConnectionFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "Network Connection Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to a network connection."@en .
+
+uco-observable:NetworkInterfaceFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "Network Interface Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to a network interface."@en .
+
+# Properties
+
+uco-observable:hasSourceAddress
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:NetworkConnection ;
+    rdfs:range uco-observable:Address ;
+    rdfs:label "has source address"@en ;
+    rdfs:comment "Specifies the source address of a network connection."@en .
+
+uco-observable:hasDestinationAddress
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:NetworkConnection ;
+    rdfs:range uco-observable:Address ;
+    rdfs:label "has destination address"@en ;
+    rdfs:comment "Specifies the destination address of a network connection."@en .
+
+uco-observable:usesProtocol
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:NetworkConnection ;
+    rdfs:range uco-observable:NetworkProtocol ;
+    rdfs:label "uses protocol"@en ;
+    rdfs:comment "Specifies the protocol used by a network connection."@en . 

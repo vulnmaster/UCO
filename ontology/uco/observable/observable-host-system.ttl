@@ -1,1 +1,99 @@
- 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-host-system>
+    a owl:Ontology ;
+    rdfs:label "UCO Observable Host System Module"@en ;
+    rdfs:comment "Module containing host and system-related observable classes and properties."@en ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/types/> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/observable-core> .
+
+# Host System Classes
+
+uco-observable:HostObservable
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Host Observable"@en ;
+    rdfs:comment "A host-based observable object."@en .
+
+uco-observable:OperatingSystem
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:HostObservable ;
+    rdfs:label "Operating System"@en ;
+    rdfs:comment "An operating system instance."@en .
+
+# File System Classes
+
+uco-observable:FileSystemObject
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:HostObservable ;
+    rdfs:label "File System Object"@en ;
+    rdfs:comment "A file system object (file, directory, link, etc.)."@en .
+
+uco-observable:File
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:FileSystemObject ;
+    rdfs:label "File"@en ;
+    rdfs:comment "A file in a file system."@en .
+
+uco-observable:Directory
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:FileSystemObject ;
+    rdfs:label "Directory"@en ;
+    rdfs:comment "A directory in a file system."@en .
+
+# Process Classes
+
+uco-observable:Process
+    a owl:Class ;
+    rdfs:subClassOf uco-observable:HostObservable ;
+    rdfs:label "Process"@en ;
+    rdfs:comment "A running process on a system."@en .
+
+# Facet Classes
+
+uco-observable:FileFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "File Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to a file."@en .
+
+uco-observable:ProcessFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "Process Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to a running process."@en .
+
+uco-observable:OperatingSystemFacet
+    a owl:Class ;
+    rdfs:subClassOf uco-core:Facet ;
+    rdfs:label "Operating System Facet"@en ;
+    rdfs:comment "A grouping of characteristics unique to an operating system."@en .
+
+# Properties
+
+uco-observable:hasParentProcess
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:Process ;
+    rdfs:range uco-observable:Process ;
+    rdfs:label "has parent process"@en ;
+    rdfs:comment "Specifies the parent process of a process."@en .
+
+uco-observable:hasFileFacet
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:File ;
+    rdfs:range uco-observable:FileFacet ;
+    rdfs:label "has file facet"@en ;
+    rdfs:comment "Specifies the characteristics of a file."@en .
+
+uco-observable:containedWithin
+    a owl:ObjectProperty ;
+    rdfs:domain uco-observable:FileSystemObject ;
+    rdfs:range uco-observable:Directory ;
+    rdfs:label "contained within"@en ;
+    rdfs:comment "Specifies the directory that contains a file system object."@en . 
