@@ -1,0 +1,534 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-communication-messaging>
+	a owl:Ontology ;
+	rdfs:label "uco-observable-communication-messaging"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing observables from communication and messaging systems. "@en-US ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		observable-core:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
+
+# Communication & Messaging Observable base class
+observable:CommunicationMessagingObservable
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable-core:ObservableObject ;
+	rdfs:label "CommunicationMessagingObservable"@en ;
+	rdfs:comment "A communication and messaging observable is an observable artifact that represents communication content between parties."@en ;
+	sh:targetClass observable:CommunicationMessagingObservable ;
+	owl:disjointWith observable:HostObservable ;
+	owl:disjointWith observable:NetworkObservable ;
+	owl:disjointWith observable:IdentityAccountObservable ;
+	owl:disjointWith observable:SoftwareObservable ;
+	owl:disjointWith observable:SocialMediaObservable ;
+	owl:disjointWith observable:DeviceObservable ;
+	owl:disjointWith observable:CloudObservable ;
+	owl:disjointWith observable:ICSObservable ;
+	owl:disjointWith observable:ContentMediaObservable ;
+	.
+
+# Message Classes
+observable:Message
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "Message"@en ;
+	rdfs:comment "A message is a communication between parties."@en ;
+	sh:targetClass observable:Message ;
+	.
+
+observable:MessageFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "MessageFacet"@en ;
+	rdfs:comment "A message facet is a grouping of characteristics unique to a communication between parties."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:application ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sentTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:from ;
+		]
+		;
+	sh:targetClass observable:MessageFacet ;
+	.
+
+observable:MessageThread
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "MessageThread"@en ;
+	rdfs:comment "A message thread is a collection of related messages."@en ;
+	sh:targetClass observable:MessageThread ;
+	.
+
+observable:MessageThreadFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "MessageThreadFacet"@en ;
+	rdfs:comment "A message thread facet is a grouping of characteristics unique to a collection of related messages."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:visibility ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:participants ;
+		]
+		;
+	sh:targetClass observable:MessageThreadFacet ;
+	.
+
+# Email Classes
+observable:EmailMessage
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Message ;
+	rdfs:label "EmailMessage"@en ;
+	rdfs:comment "An email message is a communication sent via email."@en ;
+	sh:targetClass observable:EmailMessage ;
+	.
+
+observable:EmailMessageFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "EmailMessageFacet"@en ;
+	rdfs:comment "An email message facet is a grouping of characteristics unique to a communication sent via email."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:body ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sentTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:recipients ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:subject ;
+		]
+		;
+	sh:targetClass observable:EmailMessageFacet ;
+	.
+
+# SMS Classes
+observable:SMSMessage
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Message ;
+	rdfs:label "SMSMessage"@en ;
+	rdfs:comment "An SMS message is a communication sent via text messaging."@en ;
+	sh:targetClass observable:SMSMessage ;
+	.
+
+observable:SMSMessageFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "SMSMessageFacet"@en ;
+	rdfs:comment "An SMS message facet is a grouping of characteristics unique to a communication sent via text messaging."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:messageBody ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:messageType ;
+		]
+		;
+	sh:targetClass observable:SMSMessageFacet ;
+	.
+
+# Instant Messaging Classes
+observable:InstantMessaging
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Message ;
+	rdfs:label "InstantMessaging"@en ;
+	rdfs:comment "An instant message is a real-time communication between parties."@en ;
+	sh:targetClass observable:InstantMessaging ;
+	.
+
+observable:InstantMessagingAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "InstantMessagingAddress"@en ;
+	rdfs:comment "An instant messaging address is an identifier for instant messaging communication."@en ;
+	sh:targetClass observable:InstantMessagingAddress ;
+	.
+
+# Phone Call Classes
+observable:Call
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "Call"@en ;
+	rdfs:comment "A call is a voice communication between parties."@en ;
+	sh:targetClass observable:Call ;
+	.
+
+observable:CallFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "CallFacet"@en ;
+	rdfs:comment "A call facet is a grouping of characteristics unique to a voice communication between parties."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:callType ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:duration ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:participant ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:startTime ;
+		]
+		;
+	sh:targetClass observable:CallFacet ;
+	.
+
+# VoIP Classes
+observable:VoIP
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "VoIP"@en ;
+	rdfs:comment "VoIP (Voice over IP) is a voice communication transmitted over the internet."@en ;
+	sh:targetClass observable:VoIP ;
+	.
+
+observable:VoIPFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "VoIPFacet"@en ;
+	rdfs:comment "A VoIP facet is a grouping of characteristics unique to a voice communication transmitted over the internet."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:application ;
+		]
+		;
+	sh:targetClass observable:VoIPFacet ;
+	.
+
+# Calendar Classes
+observable:Calendar
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "Calendar"@en ;
+	rdfs:comment "A calendar is a collection of scheduled events."@en ;
+	sh:targetClass observable:Calendar ;
+	.
+
+observable:CalendarFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "CalendarFacet"@en ;
+	rdfs:comment "A calendar facet is a grouping of characteristics unique to a collection of scheduled events."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:owner ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:application ;
+		]
+		;
+	sh:targetClass observable:CalendarFacet ;
+	.
+
+observable:CalendarEntry
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "CalendarEntry"@en ;
+	rdfs:comment "A calendar entry is a scheduled event in a calendar."@en ;
+	sh:targetClass observable:CalendarEntry ;
+	.
+
+observable:CalendarEntryFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "CalendarEntryFacet"@en ;
+	rdfs:comment "A calendar entry facet is a grouping of characteristics unique to a scheduled event in a calendar."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:eventStatus ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:endTime ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:startTime ;
+		]
+		;
+	sh:targetClass observable:CalendarEntryFacet ;
+	.
+
+# Contact Classes
+observable:Contact
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "Contact"@en ;
+	rdfs:comment "A contact is information about a person or organization used for communication."@en ;
+	sh:targetClass observable:Contact ;
+	.
+
+observable:ContactFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ContactFacet"@en ;
+	rdfs:comment "A contact facet is a grouping of characteristics unique to information about a person or organization used for communication."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:contactID ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:lastName ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:firstName ;
+		]
+		;
+	sh:targetClass observable:ContactFacet ;
+	.
+
+observable:ContactList
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "ContactList"@en ;
+	rdfs:comment "A contact list is a collection of contacts."@en ;
+	sh:targetClass observable:ContactList ;
+	.
+
+observable:ContactListFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ContactListFacet"@en ;
+	rdfs:comment "A contact list facet is a grouping of characteristics unique to a collection of contacts."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:contactListName ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:owner ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:sourceApplication ;
+		]
+		;
+	sh:targetClass observable:ContactListFacet ;
+	.
+
+# Captured Telecommunications Classes
+observable:CapturedTelecommunicationsInformation
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:CommunicationMessagingObservable ;
+	rdfs:label "CapturedTelecommunicationsInformation"@en ;
+	rdfs:comment "Captured telecommunications information is intercepted communication data."@en ;
+	sh:targetClass observable:CapturedTelecommunicationsInformation ;
+	.
+
+observable:CapturedTelecommunicationsInformationFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "CapturedTelecommunicationsInformationFacet"@en ;
+	rdfs:comment "A captured telecommunications information facet is a grouping of characteristics unique to intercepted communication data."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:captureCellSite ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:startTime ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:endTime ;
+		]
+		;
+	sh:targetClass observable:CapturedTelecommunicationsInformationFacet ;
+	.

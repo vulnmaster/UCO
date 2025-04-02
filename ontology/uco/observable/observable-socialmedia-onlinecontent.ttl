@@ -1,0 +1,659 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-socialmedia-onlinecontent>
+	a owl:Ontology ;
+	rdfs:label "uco-observable-socialmedia-onlinecontent"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing social media and online content. "@en-US ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		observable-core:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
+
+# Social Media & Online Content Observable base class
+observable:SocialMediaObservable
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable-core:ObservableObject ;
+	rdfs:label "SocialMediaObservable"@en ;
+	rdfs:comment "A social media and online content observable is an observable artifact that represents content from social media platforms, forums, wikis, and general web content."@en ;
+	sh:property
+		[
+			sh:class core:IdentityAbstraction ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path core:createdBy ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path core:description ;
+		] ,
+		[
+			sh:class core:ExternalReference ;
+			sh:nodeKind sh:IRI ;
+			sh:path core:externalReference ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path core:objectCreatedTime ;
+		] ,
+		[
+			sh:class core:MarkingDefinitionAbstraction ;
+			sh:nodeKind sh:IRI ;
+			sh:path core:objectMarking ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path core:specVersion ;
+		]
+		;
+	sh:targetClass observable:SocialMediaObservable ;
+	owl:disjointWith observable:HostObservable ;
+	owl:disjointWith observable:NetworkObservable ;
+	owl:disjointWith observable:IdentityAccountObservable ;
+	owl:disjointWith observable:SoftwareObservable ;
+	owl:disjointWith observable:CommunicationMessagingObservable ;
+	owl:disjointWith observable:DeviceObservable ;
+	owl:disjointWith observable:CloudObservable ;
+	owl:disjointWith observable:ICSObservable ;
+	owl:disjointWith observable:ContentMediaObservable ;
+	.
+
+# Social Media Profile Classes
+observable:SocialMediaProfile
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "SocialMediaProfile"@en ;
+	rdfs:comment "A social media profile is a user's profile on a social media platform."@en ;
+	sh:targetClass observable:SocialMediaProfile ;
+	.
+
+observable:SocialMediaProfileFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "SocialMediaProfileFacet"@en ;
+	rdfs:comment "A social media profile facet is a grouping of characteristics unique to a user's profile on a social media platform."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:profileID ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:platform ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:displayName ;
+		]
+		;
+	sh:targetClass observable:SocialMediaProfileFacet ;
+	.
+
+# Social Media Post Classes
+observable:SocialMediaPost
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "SocialMediaPost"@en ;
+	rdfs:comment "A social media post is content posted to a social media platform."@en ;
+	sh:targetClass observable:SocialMediaPost ;
+	.
+
+observable:SocialMediaPostFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "SocialMediaPostFacet"@en ;
+	rdfs:comment "A social media post facet is a grouping of characteristics unique to content posted to a social media platform."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:postID ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:content ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:postedTime ;
+		]
+		;
+	sh:targetClass observable:SocialMediaPostFacet ;
+	.
+
+observable:Tweet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Message ;
+	rdfs:label "Tweet"@en ;
+	rdfs:comment "A tweet is message submitted by a Twitter user account to the Twitter microblogging platform."@en ;
+	sh:targetClass observable:Tweet ;
+	.
+
+observable:TwitterProfileFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "TwitterProfileFacet" ;
+	rdfs:comment "A twitter profile facet is a grouping of characteristics unique to an explicit digital representation of identity and characteristics of the owner of a single Twitter user account. [based on https://en.wikipedia.org/wiki/User_profile]" ;
+	sh:property
+		[
+			sh:class observable:ObservableObject ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileBackgroundLocation ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileBannerLocation ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileImageLocation ;
+		] ,
+		[
+			sh:class types:Hash ;
+			sh:minCount "0"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileBackgroundHash ;
+		] ,
+		[
+			sh:class types:Hash ;
+			sh:minCount "0"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileBannerHash ;
+		] ,
+		[
+			sh:class types:Hash ;
+			sh:minCount "0"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:profileImageHash ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:profileIsProtected ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:profileIsVerified ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:listedCount ;
+		] ,
+		[
+			sh:datatype xsd:nonNegativeInteger ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:favoritesCount ;
+		] ,
+		[
+			sh:datatype xsd:nonNegativeInteger ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:followersCount ;
+		] ,
+		[
+			sh:datatype xsd:nonNegativeInteger ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:friendsCount ;
+		] ,
+		[
+			sh:datatype xsd:nonNegativeInteger ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:statusesCount ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:twitterHandle ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:twitterId ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:userLocationString ;
+		]
+		;
+	sh:targetClass observable:TwitterProfileFacet ;
+	.
+
+# Forum Classes
+observable:ForumPost
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Message ;
+	rdfs:label "ForumPost"@en ;
+	rdfs:comment "A forum post is message submitted by a user account to an online forum where the message content (and typically metadata including who posted it and when) is viewable by any party with viewing permissions on the forum."@en ;
+	sh:targetClass observable:ForumPost ;
+	.
+
+observable:ForumThread
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "ForumThread"@en ;
+	rdfs:comment "A forum thread is a collection of related forum posts."@en ;
+	sh:targetClass observable:ForumThread ;
+	.
+
+# Wiki Classes
+observable:WikiArticle
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "WikiArticle"@en ;
+	rdfs:comment "A wiki article is content in a wiki."@en ;
+	sh:targetClass observable:WikiArticle ;
+	.
+
+observable:WikiArticleFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "WikiArticleFacet"@en ;
+	rdfs:comment "A wiki article facet is a grouping of characteristics unique to content in a wiki."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:contributors ;
+		]
+		;
+	sh:targetClass observable:WikiArticleFacet ;
+	.
+
+# Web Browsing Classes
+observable:BrowserBookmark
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "BrowserBookmark"@en ;
+	rdfs:comment "A browser bookmark is a saved reference to a web page."@en ;
+	sh:targetClass observable:BrowserBookmark ;
+	.
+
+observable:BrowserBookmarkFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "BrowserBookmarkFacet"@en ;
+	rdfs:comment "A browser bookmark facet is a grouping of characteristics unique to a saved reference to a web page."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:application ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:visitCount ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:urlTargeted ;
+		]
+		;
+	sh:targetClass observable:BrowserBookmarkFacet ;
+	.
+
+observable:BrowserCookie
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "BrowserCookie"@en ;
+	rdfs:comment "A browser cookie is data stored by a web browser."@en ;
+	sh:targetClass observable:BrowserCookie ;
+	.
+
+observable:BrowserCookieFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "BrowserCookieFacet"@en ;
+	rdfs:comment "A browser cookie facet is a grouping of characteristics unique to data stored by a web browser."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:cookieName ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:cookiePath ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:expirationTime ;
+		]
+		;
+	sh:targetClass observable:BrowserCookieFacet ;
+	.
+
+observable:URLHistory
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "URLHistory"@en ;
+	rdfs:comment "A URL history is a record of web pages visited."@en ;
+	sh:targetClass observable:URLHistory ;
+	.
+
+observable:URLHistoryEntry
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:UcoInherentCharacterizationThing ;
+	rdfs:label "URL History Entry"@en-US ;
+	rdfs:comment "A URL history entry is a grouping of characteristics unique to the properties of a single URL history entry for a particular browser."@en-US ;
+	sh:property
+		[
+			sh:class observable:ObservableObject ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:url ;
+		] ,
+		[
+			sh:class observable:ObservableObject ;
+			sh:minCount "0"^^xsd:integer ;
+			sh:nodeKind sh:IRI ;
+			sh:path observable:referrerUrl ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:expirationTime ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:firstVisit ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:lastVisit ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:visitCount ;
+		] ,
+		[
+			sh:datatype xsd:nonNegativeInteger ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:manuallyEnteredCount ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:browserUserProfile ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:hostname ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:pageTitle ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:minCount "0"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:keywordSearchTerm ;
+		]
+		;
+	sh:targetClass observable:URLHistoryEntry ;
+	.
+
+observable:URLHistoryFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "URLHistoryFacet"@en ;
+	rdfs:comment "A URL history facet is a grouping of characteristics unique to a record of web pages visited."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:browserInformation ;
+		]
+		;
+	sh:targetClass observable:URLHistoryFacet ;
+	.
+
+observable:URLVisit
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "URLVisit"@en ;
+	rdfs:comment "A URL visit is a record of visiting a web page."@en ;
+	sh:targetClass observable:URLVisit ;
+	.
+
+observable:URLVisitFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "URLVisitFacet"@en ;
+	rdfs:comment "A URL visit facet is a grouping of characteristics unique to a record of visiting a web page."@en ;
+	sh:property
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:visitTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:urlHistoryEntry ;
+		]
+		;
+	sh:targetClass observable:URLVisitFacet ;
+	.
+
+# E-commerce Classes
+observable:ShopListing
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:ObservableObject ;
+	rdfs:label "ShopListing"@en ;
+	rdfs:comment "A shop listing is a listing of offered products on an online marketplace/shop."@en ;
+	sh:targetClass observable:ShopListing ;
+	.
+
+observable:ShopListingFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ShopListingFacet"@en ;
+	rdfs:comment "A shop listing facet is a grouping of characteristics unique to an item for sale in an online marketplace."@en ;
+	sh:property
+		[
+			sh:datatype xsd:decimal ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:price ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:currency ;
+		]
+		;
+	sh:targetClass observable:ShopListingFacet ;
+	.
+
+# Web Content Classes
+observable:WebPage
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:SocialMediaObservable ;
+	rdfs:label "WebPage"@en ;
+	rdfs:comment "A web page is content on the World Wide Web."@en ;
+	sh:targetClass observable:WebPage ;
+	.
+
+observable:WebPageFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "WebPageFacet"@en ;
+	rdfs:comment "A web page facet is a grouping of characteristics unique to content on the World Wide Web."@en ;
+	sh:property
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:expirationTime ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:links ;
+		]
+		;
+	sh:targetClass observable:WebPageFacet ;
+	.

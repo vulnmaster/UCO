@@ -69,6 +69,17 @@ observable:ObservableObject
 	sh:targetClass observable:ObservableObject ;
 	.
 
+observable:GenericObservableObject
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:ObservableObject ;
+	rdfs:label "GenericObservableObject"@en ;
+	rdfs:comment "A generic observable object is an article or unit within the digital domain."@en ;
+	sh:targetClass observable:GenericObservableObject ;
+	.
+
 observable:ObservablePattern
 	a
 		owl:Class ,

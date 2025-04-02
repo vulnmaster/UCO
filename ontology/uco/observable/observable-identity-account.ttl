@@ -1,0 +1,566 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/observable-identity-account>
+	a owl:Ontology ;
+	rdfs:label "uco-observable-identity-account"@en ;
+	owl:imports
+		action:1.3.0 ,
+		configuration:1.3.0 ,
+		core:1.3.0 ,
+		identity:1.3.0 ,
+		location:1.3.0 ,
+		observable-core:1.3.0 ,
+		types:1.3.0 ,
+		vocabulary:1.3.0
+		;
+	owl:versionIRI observable:1.3.0 ;
+	.
+
+# Identity & Account Observable base class
+observable:IdentityAccountObservable
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable-core:ObservableObject ;
+	rdfs:label "IdentityAccountObservable"@en ;
+	rdfs:comment "An identity and account observable is an observable artifact that represents digital identity information and account credentials."@en ;
+	sh:targetClass observable:IdentityAccountObservable ;
+	owl:disjointWith observable:HostObservable ;
+	owl:disjointWith observable:NetworkObservable ;
+	owl:disjointWith observable:SoftwareObservable ;
+	owl:disjointWith observable:CommunicationObservable ;
+	owl:disjointWith observable:SocialMediaObservable ;
+	owl:disjointWith observable:DeviceObservable ;
+	owl:disjointWith observable:CloudObservable ;
+	owl:disjointWith observable:ICSObservable ;
+	owl:disjointWith observable:ContentMediaObservable ;
+	.
+
+# Account Classes
+observable:Account
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "Account"@en ;
+	rdfs:comment "An account is a digital identity that can be used to access resources."@en ;
+	sh:targetClass observable:Account ;
+	.
+
+observable:AccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "AccountFacet"@en ;
+	rdfs:comment "An account facet is a grouping of characteristics unique to a digital identity that can be used to access resources."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:accountIdentifier ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:accountType ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isActive ;
+		]
+		;
+	sh:targetClass observable:AccountFacet ;
+	.
+
+observable:AccountAuthenticationFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "AccountAuthenticationFacet"@en ;
+	rdfs:comment "An account authentication facet is a grouping of characteristics unique to the authentication of a digital identity."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:password ;
+		] ,
+		[
+			sh:datatype xsd:dateTime ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:passwordLastChanged ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:passwordType ;
+		]
+		;
+	sh:targetClass observable:AccountAuthenticationFacet ;
+	.
+
+observable:DigitalAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:Account ;
+	rdfs:label "DigitalAccount"@en ;
+	rdfs:comment "A digital account is an account that exists in the digital domain."@en ;
+	sh:targetClass observable:DigitalAccount ;
+	.
+
+observable:DigitalAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "DigitalAccountFacet"@en ;
+	rdfs:comment "A digital account facet is a grouping of characteristics unique to an account that exists in the digital domain."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:displayName ;
+		]
+		;
+	sh:targetClass observable:DigitalAccountFacet ;
+	.
+
+observable:UserAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAccount ;
+	rdfs:label "UserAccount"@en ;
+	rdfs:comment "A user account is a digital account that represents a user."@en ;
+	sh:targetClass observable:UserAccount ;
+	.
+
+observable:UserAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "UserAccountFacet"@en ;
+	rdfs:comment "A user account facet is a grouping of characteristics unique to a digital account that represents a user."@en ;
+	sh:property
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:canEscalatePrivs ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isPrivileged ;
+		]
+		;
+	sh:targetClass observable:UserAccountFacet ;
+	.
+
+# OS-specific Account Classes
+observable:WindowsAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:UserAccount ;
+	rdfs:label "WindowsAccount"@en ;
+	rdfs:comment "A Windows account is a user account on a Windows system."@en ;
+	sh:targetClass observable:WindowsAccount ;
+	.
+
+observable:WindowsAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "WindowsAccountFacet"@en ;
+	rdfs:comment "A Windows account facet is a grouping of characteristics unique to a user account on a Windows system."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:groups ;
+		]
+		;
+	sh:targetClass observable:WindowsAccountFacet ;
+	.
+
+observable:UNIXAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:UserAccount ;
+	rdfs:label "UNIXAccount"@en ;
+	rdfs:comment "A UNIX account is a user account on a UNIX system."@en ;
+	sh:targetClass observable:UNIXAccount ;
+	.
+
+observable:UNIXAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "UNIXAccountFacet"@en ;
+	rdfs:comment "A UNIX account facet is a grouping of characteristics unique to a user account on a UNIX system."@en ;
+	sh:property
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:gid ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:shell ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:homeDirectory ;
+		]
+		;
+	sh:targetClass observable:UNIXAccountFacet ;
+	.
+
+# Application-specific Account Classes
+observable:ApplicationAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAccount ;
+	rdfs:label "ApplicationAccount"@en ;
+	rdfs:comment "An application account is a digital account specific to an application."@en ;
+	sh:targetClass observable:ApplicationAccount ;
+	.
+
+observable:ApplicationAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "ApplicationAccountFacet"@en ;
+	rdfs:comment "An application account facet is a grouping of characteristics unique to a digital account specific to an application."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:application ;
+		]
+		;
+	sh:targetClass observable:ApplicationAccountFacet ;
+	.
+
+# Email Account Classes
+observable:EmailAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAccount ;
+	rdfs:label "EmailAccount"@en ;
+	rdfs:comment "An email account is a digital account for email communication."@en ;
+	sh:targetClass observable:EmailAccount ;
+	.
+
+observable:EmailAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "EmailAccountFacet"@en ;
+	rdfs:comment "An email account facet is a grouping of characteristics unique to a digital account for email communication."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:emailAddress ;
+		]
+		;
+	sh:targetClass observable:EmailAccountFacet ;
+	.
+
+observable:EmailAddress
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "EmailAddress"@en ;
+	rdfs:comment "An email address is an identifier for email communication."@en ;
+	sh:targetClass observable:EmailAddress ;
+	.
+
+observable:EmailAddressFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "EmailAddressFacet"@en ;
+	rdfs:comment "An email address facet is a grouping of characteristics unique to an identifier for email communication."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:displayName ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:value ;
+		]
+		;
+	sh:targetClass observable:EmailAddressFacet ;
+	.
+
+# Phone Account Classes
+observable:PhoneAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAccount ;
+	rdfs:label "PhoneAccount"@en ;
+	rdfs:comment "A phone account is a digital account for telephony services."@en ;
+	sh:targetClass observable:PhoneAccount ;
+	.
+
+observable:PhoneAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "PhoneAccountFacet"@en ;
+	rdfs:comment "A phone account facet is a grouping of characteristics unique to a digital account for telephony services."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:phoneNumber ;
+		]
+		;
+	sh:targetClass observable:PhoneAccountFacet ;
+	.
+
+# Mobile Account Classes
+observable:MobileAccount
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:DigitalAccount ;
+	rdfs:label "MobileAccount"@en ;
+	rdfs:comment "A mobile account is a digital account on a mobile device."@en ;
+	sh:targetClass observable:MobileAccount ;
+	.
+
+observable:MobileAccountFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "MobileAccountFacet"@en ;
+	rdfs:comment "A mobile account facet is a grouping of characteristics unique to a digital account on a mobile device."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:IMSI ;
+		] ,
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:MSISDN ;
+		]
+		;
+	sh:targetClass observable:MobileAccountFacet ;
+	.
+
+# Credential Classes
+observable:Credential
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "Credential"@en ;
+	rdfs:comment "A credential is information used to verify the identity of a user."@en ;
+	sh:targetClass observable:Credential ;
+	.
+
+observable:CredentialDump
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "CredentialDump"@en ;
+	rdfs:comment "A credential dump is a collection of credentials."@en ;
+	sh:targetClass observable:CredentialDump ;
+	.
+
+# Digital Signature Classes
+observable:DigitalSignatureInfo
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "DigitalSignatureInfo"@en ;
+	rdfs:comment "Digital signature information is used to verify the authenticity of digital content."@en ;
+	sh:targetClass observable:DigitalSignatureInfo ;
+	.
+
+observable:DigitalSignatureInfoFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "DigitalSignatureInfoFacet"@en ;
+	rdfs:comment "A digital signature info facet is a grouping of characteristics unique to information used to verify the authenticity of digital content."@en ;
+	sh:property
+		[
+			sh:datatype xsd:string ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:certificateIssuer ;
+		] ,
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:signatureExists ;
+		]
+		;
+	sh:targetClass observable:DigitalSignatureInfoFacet ;
+	.
+
+# X.509 Certificate Classes
+observable:X509Certificate
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "X509Certificate"@en ;
+	rdfs:comment "An X.509 certificate is a digital certificate that uses the X.509 public key infrastructure standard."@en ;
+	sh:targetClass observable:X509Certificate ;
+	.
+
+observable:X509CertificateFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "X509CertificateFacet"@en ;
+	rdfs:comment "An X.509 certificate facet is a grouping of characteristics unique to a digital certificate that uses the X.509 public key infrastructure standard."@en ;
+	sh:property
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:isSelfSigned ;
+		] ,
+		[
+			sh:datatype xsd:integer ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:version ;
+		]
+		;
+	sh:targetClass observable:X509CertificateFacet ;
+	.
+
+observable:X509V3Extensions
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf observable:IdentityAccountObservable ;
+	rdfs:label "X509V3Extensions"@en ;
+	rdfs:comment "X.509 v3 extensions are additional fields in an X.509 certificate."@en ;
+	sh:targetClass observable:X509V3Extensions ;
+	.
+
+observable:X509V3ExtensionsFacet
+	a
+		owl:Class ,
+		sh:NodeShape
+		;
+	rdfs:subClassOf core:Facet ;
+	rdfs:label "X509V3ExtensionsFacet"@en ;
+	rdfs:comment "An X.509 v3 extensions facet is a grouping of characteristics unique to additional fields in an X.509 certificate."@en ;
+	sh:property
+		[
+			sh:datatype xsd:boolean ;
+			sh:maxCount "1"^^xsd:integer ;
+			sh:nodeKind sh:Literal ;
+			sh:path observable:basicConstraints ;
+		]
+		;
+	sh:targetClass observable:X509V3ExtensionsFacet ;
+	.

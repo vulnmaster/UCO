@@ -14,12 +14,12 @@ The module structure includes:
 - Network Observables Module (obserbable-network.ttl)
 - Host & System Observables Module (observable-host-system.ttl) 
 - Identity & Account Observables Module (observable-identity-account.ttl)
-- Software & Execution Observables Module (obserbable-software-execution.ttl)
-- Communication & Messaging Observables Module (obserbalbe-communication-messaging.ttl)
+- Software & Execution Observables Module (observable-software-execution.ttl)
+- Communication & Messaging Observables Module (observable-communication-messaging.ttl)
 - Social Media & Online Content Observables Module (observable-socialmedia-onlinecontent.ttl)
 - Device & Hardware Observables Module (observable-device-hardware.ttl)
 - Cloud & Virtual Infrastructure Observables Module (observable-cloud-virtualinfrastructure.ttl)
-- Industrial Control Systems (ICS) Observables Module (obserbable-industrial-control-systems.ttl)
+- Industrial Control Systems (ICS) Observables Module (observable-industrial-control-systems.ttl)
 - Content & Media Module (for media content like audio, images, video) (observable-content-media.ttl)
 
 ## Class and Property Realignment Analysis
