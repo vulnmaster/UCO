@@ -1,0 +1,1553 @@
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ics: <https://ontology.unifiedcyberontology.org/uco/observable/industrial-control-systems/> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/industrial-control-systems>
+    a owl:Ontology ;
+    rdfs:label "uco-observable-industrial-control-systems"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing industrial control systems (ICS) and operational technology (OT) observables. Based on NIST SP 800-82r2, IEC 62443, ISA-95, and other industry standards."@en-US ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/location/1.3.0> ;
+    .
+
+# ICS Observable base class
+observable:ICSObservable
+    a owl:Class ;
+    rdfs:subClassOf observable:ObservableObject ;
+    rdfs:label "ICS Observable"@en ;
+    rdfs:comment "An ICS observable is an observable artifact that represents industrial control systems and operational technology components."@en ;
+    owl:disjointWith observable:HostObservable ;
+    owl:disjointWith observable:NetworkObservable ;
+    owl:disjointWith observable:IdentityAccountObservable ;
+    owl:disjointWith observable:SoftwareObservable ;
+    owl:disjointWith observable:CommunicationMessagingObservable ;
+    owl:disjointWith observable:SocialMediaObservable ;
+    owl:disjointWith observable:DeviceObservable ;
+    owl:disjointWith observable:CloudObservable ;
+    owl:disjointWith observable:ContentMediaObservable ;
+    .
+
+# Network Zone Classes
+observable:SCADANetwork
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "SCADA Network"@en ;
+    rdfs:comment "A SCADA network zone as defined in NIST SP 800-82r2 Section 3.2.1 and IEC 62443-3-3 clause 8."@en ;
+    .
+
+observable:ControlNetwork
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Control Network"@en ;
+    rdfs:comment "A control network zone as defined in NIST SP 800-82r2 Section 3.2.2 and IEC 62443-3-3."@en ;
+    .
+
+observable:SafetyNetwork
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Safety Network"@en ;
+    rdfs:comment "A safety network zone as defined in NIST SP 800-82r2 Section 3.2.3 and IEC 62443-3-3."@en ;
+    .
+
+observable:DMZ
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Demilitarized Zone"@en ;
+    rdfs:comment "A DMZ network zone as defined in NIST SP 800-82r2 Section 3.2.4 and IEC 62443-3-3."@en ;
+    .
+
+# ICS Device Classes
+observable:ICSDevice
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "ICS Device"@en ;
+    rdfs:comment "An abstract parent class for all industrial control system devices. Based on IEC 62443-3-3 asset inventory attributes."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:deviceId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:manufacturer ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:model ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:firmwareVersion ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:lastUpdateTime ;
+        ] ,
+        [
+            sh:class location:Location ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:installedAt ;
+        ] ,
+        [
+            sh:class observable:NetworkInterface ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:hasNetworkInterface ;
+        ] ;
+    .
+
+observable:DCS
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Distributed Control System"@en ;
+    rdfs:comment "A distributed control system as defined in ISA-95 Part 4 and NIST SP 800-82r2 Section 3.2.4."@en ;
+    .
+
+observable:PLC
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Programmable Logic Controller"@en ;
+    rdfs:comment "A programmable logic controller (PLC) is an industrial computer that has been ruggedized and adapted for the control of manufacturing processes. Based on NIST SP 800-82r2 Section 3.2.4."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:programLogic ;
+        ] ,
+        [
+            sh:datatype xsd:positiveInteger ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:scanTime ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isRunning ;
+        ] ,
+        [
+            sh:class observable:Software ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:runsFirmware ;
+        ] ;
+    .
+
+observable:RTU
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Remote Terminal Unit"@en ;
+    rdfs:comment "A remote terminal unit (RTU) is a microprocessor-controlled electronic device that interfaces objects in the physical world to a distributed control system or SCADA system. Based on IEC 60870-6-503 and NIST SP 800-82r2."@en ;
+    sh:property
+        [
+            sh:datatype xsd:positiveInteger ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:telemetryPoints ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isRemote ;
+        ] ;
+    .
+
+observable:HMI
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Human-Machine Interface"@en ;
+    rdfs:comment "A human-machine interface (HMI) is a user interface or dashboard that connects a person to a machine, system, or device. Based on ISA-101 standard for HMI design."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:interfaceType ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isTouchEnabled ;
+        ] ;
+    .
+
+observable:EngineeringWorkstation
+    a owl:Class ;
+    rdfs:subClassOf observable:DCS ;
+    rdfs:label "Engineering Workstation"@en ;
+    rdfs:comment "An engineering workstation used for programming and configuration of control systems. Based on ISA-95 Part 4."@en ;
+    .
+
+observable:HistorianServer
+    a owl:Class ;
+    rdfs:subClassOf observable:DCS ;
+    rdfs:label "Historian Server"@en ;
+    rdfs:comment "A server that stores historical process data. Based on ISA-95 Part 4 and OPC HDA Specification."@en ;
+    .
+
+# Field Device Classes
+observable:Sensor
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Sensor"@en ;
+    rdfs:comment "A device that measures physical quantities. Based on ISA-5.1 instrumentation symbols and API RP 554 Part 1."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tagName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:description ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:engineeringUnits ;
+            sh:in ("bar" "psi" "kPa" "°C" "°F" "m³/h" "kg/h" "V" "mA" "Hz" "rpm") ;
+        ] ;
+    .
+
+observable:Actuator
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Actuator"@en ;
+    rdfs:comment "A device that controls physical processes. Based on ISA-5.1 instrumentation symbols."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tagName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:description ;
+        ] ;
+    .
+
+observable:IED
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Intelligent Electronic Device"@en ;
+    rdfs:comment "An intelligent electronic device that can receive data from sensors and issue control commands to actuators. Based on IEC 61850."@en ;
+    .
+
+observable:VFD
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Variable-Frequency Drive"@en ;
+    rdfs:comment "A variable-frequency drive that controls the speed of electric motors. Based on IEC 61800."@en ;
+    .
+
+# Gateway Classes
+observable:ProtocolGateway
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Protocol Gateway"@en ;
+    rdfs:comment "A device that converts between different industrial protocols. Based on IEC 62443-3-3."@en ;
+    .
+
+observable:SerialToIPGateway
+    a owl:Class ;
+    rdfs:subClassOf observable:ProtocolGateway ;
+    rdfs:label "Serial to IP Gateway"@en ;
+    rdfs:comment "A gateway that converts between serial and IP protocols. Based on IEC 62443-3-3."@en ;
+    .
+
+# Time Synchronization Classes
+observable:PTPGrandmaster
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "PTP Grandmaster"@en ;
+    rdfs:comment "A Precision Time Protocol grandmaster clock. Based on IEC 61850-90-1 and IEEE 1588-2019."@en ;
+    .
+
+observable:NTPServer
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "NTP Server"@en ;
+    rdfs:comment "A Network Time Protocol server. Based on RFC 5905."@en ;
+    .
+
+# Process Control Classes
+observable:ControlLoop
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Control Loop"@en ;
+    rdfs:comment "A control loop is a process management system designed to maintain a process variable at a desired set point. Based on ISA-5.9 for loop IDs and Perry's Chemical Engineers' Handbook Chapter 8 for control loops."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:loopId ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:setPoint ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:processVariable ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:controlMode ;
+        ] ,
+        [
+            sh:class observable:Sensor ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:readsFromSensor ;
+        ] ,
+        [
+            sh:class observable:Actuator ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:writesToActuator ;
+        ] ;
+    .
+
+observable:SensorReading
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Sensor Reading"@en ;
+    rdfs:comment "A sensor reading represents a measurement from an industrial sensor. Based on ISA-5.1."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:value ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:unit ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ,
+        [
+            sh:class observable:Sensor ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:originatingSensor ;
+        ] ;
+    .
+
+# Protocol Classes
+observable:FieldbusPacket
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Fieldbus Packet"@en ;
+    rdfs:comment "A fieldbus packet represents a communication packet in industrial fieldbus protocols."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:protocolType ;
+        ] ,
+        [
+            sh:datatype xsd:base64Binary ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:payload ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ,
+        [
+            sh:class observable:ICSDevice ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:sourceDevice ;
+        ] ,
+        [
+            sh:class observable:ICSDevice ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:destinationDevice ;
+        ] ;
+    .
+
+observable:ModbusFrame
+    a owl:Class ;
+    rdfs:subClassOf observable:FieldbusPacket ;
+    rdfs:label "Modbus Frame"@en ;
+    rdfs:comment "A Modbus protocol frame. Based on Modbus Application Protocol Specification V1.1b3."@en ;
+    .
+
+observable:DNP3Frame
+    a owl:Class ;
+    rdfs:subClassOf observable:FieldbusPacket ;
+    rdfs:label "DNP3 Frame"@en ;
+    rdfs:comment "A DNP3 protocol frame. Based on RFC 7033 for DNP3 TCP framing and IEEE 1815-2012."@en ;
+    .
+
+observable:OPCUAFrame
+    a owl:Class ;
+    rdfs:subClassOf observable:FieldbusPacket ;
+    rdfs:label "OPC UA Frame"@en ;
+    rdfs:comment "An OPC UA protocol frame. Based on OPC UA Specification Part 6."@en ;
+    .
+
+observable:ProfinetFrame
+    a owl:Class ;
+    rdfs:subClassOf observable:FieldbusPacket ;
+    rdfs:label "Profinet Frame"@en ;
+    rdfs:comment "A Profinet protocol frame. Based on IEC 61158-6-10."@en ;
+    .
+
+# Object Properties
+observable:hasNetworkInterface
+    a owl:ObjectProperty ;
+    rdfs:label "has network interface"@en ;
+    rdfs:comment "Indicates that an ICS device has a network interface. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:NetworkInterface ;
+    .
+
+observable:controlsLoop
+    a owl:ObjectProperty ;
+    rdfs:label "controls loop"@en ;
+    rdfs:comment "Indicates that an ICS device controls a control loop. Based on ISA-95 Part 3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:ControlLoop ;
+    owl:inverseOf observable:controlledByDevice ;
+    .
+
+observable:controlledByDevice
+    a owl:ObjectProperty ;
+    rdfs:label "controlled by device"@en ;
+    rdfs:comment "Indicates that a control loop is controlled by an ICS device. Based on ISA-95 Part 3."@en ;
+    rdfs:domain observable:ControlLoop ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:controlsLoop ;
+    .
+
+observable:readsFromSensor
+    a owl:ObjectProperty ;
+    rdfs:label "reads from sensor"@en ;
+    rdfs:comment "Indicates that a control loop reads from a sensor. Based on ISA-5.1."@en ;
+    rdfs:domain observable:ControlLoop ;
+    rdfs:range observable:Sensor ;
+    .
+
+observable:writesToActuator
+    a owl:ObjectProperty ;
+    rdfs:label "writes to actuator"@en ;
+    rdfs:comment "Indicates that a control loop writes to an actuator. Based on ISA-5.1."@en ;
+    rdfs:domain observable:ControlLoop ;
+    rdfs:range observable:Actuator ;
+    .
+
+observable:originatingSensor
+    a owl:ObjectProperty ;
+    rdfs:label "originating sensor"@en ;
+    rdfs:comment "Indicates the sensor that originated a sensor reading."@en ;
+    rdfs:domain observable:SensorReading ;
+    rdfs:range observable:Sensor ;
+    .
+
+observable:sourceDevice
+    a owl:ObjectProperty ;
+    rdfs:label "source device"@en ;
+    rdfs:comment "Indicates the source device of a fieldbus packet."@en ;
+    rdfs:domain observable:FieldbusPacket ;
+    rdfs:range observable:ICSDevice ;
+    .
+
+observable:destinationDevice
+    a owl:ObjectProperty ;
+    rdfs:label "destination device"@en ;
+    rdfs:comment "Indicates the destination device of a fieldbus packet."@en ;
+    rdfs:domain observable:FieldbusPacket ;
+    rdfs:range observable:ICSDevice ;
+    .
+
+observable:runsFirmware
+    a owl:ObjectProperty ;
+    rdfs:label "runs firmware"@en ;
+    rdfs:comment "Indicates that a device runs a specific firmware image. Based on IEC 62443-2-3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:FirmwareImage ;
+    owl:inverseOf observable:runsOnDevice ;
+    .
+
+observable:runsOnDevice
+    a owl:ObjectProperty ;
+    rdfs:label "runs on device"@en ;
+    rdfs:comment "Indicates that a firmware image runs on a device. Based on IEC 62443-2-3."@en ;
+    rdfs:domain observable:FirmwareImage ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:runsFirmware ;
+    .
+
+observable:storesReading
+    a owl:ObjectProperty ;
+    rdfs:label "stores reading"@en ;
+    rdfs:comment "Indicates that a historian server stores a sensor reading."@en ;
+    rdfs:domain observable:HistorianServer ;
+    rdfs:range observable:SensorReading ;
+    .
+
+observable:installedAt
+    a owl:ObjectProperty ;
+    rdfs:label "installed at"@en ;
+    rdfs:comment "Indicates the physical location where a device is installed."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range location:Location ;
+    .
+
+# Datatype Properties
+observable:deviceId
+    a owl:DatatypeProperty ;
+    rdfs:label "device ID"@en ;
+    rdfs:comment "The unique identifier of an ICS device."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:manufacturer
+    a owl:DatatypeProperty ;
+    rdfs:label "manufacturer"@en ;
+    rdfs:comment "The manufacturer of an ICS device."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:model
+    a owl:DatatypeProperty ;
+    rdfs:label "model"@en ;
+    rdfs:comment "The model of an ICS device."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:firmwareVersion
+    a owl:DatatypeProperty ;
+    rdfs:label "firmware version"@en ;
+    rdfs:comment "The firmware version of an ICS device."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:lastUpdateTime
+    a owl:DatatypeProperty ;
+    rdfs:label "last update time"@en ;
+    rdfs:comment "The last time an ICS device was updated."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:programLogic
+    a owl:DatatypeProperty ;
+    rdfs:label "program logic"@en ;
+    rdfs:comment "The program logic running on a PLC."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:scanTime
+    a owl:DatatypeProperty ;
+    rdfs:label "scan time"@en ;
+    rdfs:comment "The scan time of a PLC in milliseconds."@en ;
+    rdfs:range xsd:positiveInteger ;
+    .
+
+observable:isRunning
+    a owl:DatatypeProperty ;
+    rdfs:label "is running"@en ;
+    rdfs:comment "Indicates whether a PLC is currently running."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:telemetryPoints
+    a owl:DatatypeProperty ;
+    rdfs:label "telemetry points"@en ;
+    rdfs:comment "The number of telemetry points monitored by an RTU."@en ;
+    rdfs:range xsd:positiveInteger ;
+    .
+
+observable:isRemote
+    a owl:DatatypeProperty ;
+    rdfs:label "is remote"@en ;
+    rdfs:comment "Indicates whether an RTU is operating in remote mode."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:interfaceType
+    a owl:DatatypeProperty ;
+    rdfs:label "interface type"@en ;
+    rdfs:comment "The type of interface used by an HMI."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:isTouchEnabled
+    a owl:DatatypeProperty ;
+    rdfs:label "is touch enabled"@en ;
+    rdfs:comment "Indicates whether an HMI supports touch input."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:loopId
+    a owl:DatatypeProperty ;
+    rdfs:label "loop ID"@en ;
+    rdfs:comment "The unique identifier of a control loop."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:setPoint
+    a owl:DatatypeProperty ;
+    rdfs:label "set point"@en ;
+    rdfs:comment "The desired value for a process variable in a control loop."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:processVariable
+    a owl:DatatypeProperty ;
+    rdfs:label "process variable"@en ;
+    rdfs:comment "The current value of a process variable in a control loop."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:controlMode
+    a owl:DatatypeProperty ;
+    rdfs:label "control mode"@en ;
+    rdfs:comment "The current control mode of a control loop (e.g., manual, automatic)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:value
+    a owl:DatatypeProperty ;
+    rdfs:label "value"@en ;
+    rdfs:comment "The measured value from a sensor."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:unit
+    a owl:DatatypeProperty ;
+    rdfs:label "unit"@en ;
+    rdfs:comment "The unit of measurement for a sensor reading. Based on UN/CEFACT Recommendation 20."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:timestamp
+    a owl:DatatypeProperty ;
+    rdfs:label "timestamp"@en ;
+    rdfs:comment "The time when a measurement or event occurred. Based on ISO 8601 and RFC 3339 profile for date and time on the Internet."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:protocolType
+    a owl:DatatypeProperty ;
+    rdfs:label "protocol type"@en ;
+    rdfs:comment "The type of industrial protocol used in a communication packet."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:payload
+    a owl:DatatypeProperty ;
+    rdfs:label "payload"@en ;
+    rdfs:comment "The payload data of a communication packet."@en ;
+    rdfs:range xsd:base64Binary ;
+    .
+
+observable:tagName
+    a owl:DatatypeProperty ;
+    rdfs:label "tag name"@en ;
+    rdfs:comment "The tag name of a process point. Based on ISA-5.1."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:description
+    a owl:DatatypeProperty ;
+    rdfs:label "description"@en ;
+    rdfs:comment "A description of a process point. Based on ISA-5.1."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:engineeringUnits
+    a owl:DatatypeProperty ;
+    rdfs:label "engineering units"@en ;
+    rdfs:comment "The engineering units of a process point. Based on UN/CEFACT Recommendation 20."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Safety Instrumented System Classes
+observable:SIS
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Safety Instrumented System"@en ;
+    rdfs:comment "A safety instrumented system (SIS) is designed to prevent or mitigate hazardous events by taking a process to a safe state when predetermined conditions are violated. Based on IEC 61511 and ISA 84."@en ;
+    .
+
+observable:SafetyPLC
+    a owl:Class ;
+    rdfs:subClassOf observable:PLC ;
+    rdfs:label "Safety PLC"@en ;
+    rdfs:comment "A programmable logic controller specifically designed for safety-critical applications. Based on IEC 61508 and IEC 61131-3."@en ;
+    owl:disjointWith observable:PLC ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:safetyIntegrityLevel ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isDualRedundant ;
+        ] ;
+    .
+
+observable:SafetyRelay
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Safety Relay"@en ;
+    rdfs:comment "A relay designed for safety-critical applications with redundant contacts and monitoring. Based on IEC 61810-3."@en ;
+    .
+
+# OPC Infrastructure Classes
+observable:OPCUAServer
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "OPC UA Server"@en ;
+    rdfs:comment "An OPC UA server that provides data access to industrial devices. Based on OPC UA Specification Part 1."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:serverUri ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:supportsSecurity ;
+        ] ;
+    .
+
+observable:OPCUAClient
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "OPC UA Client"@en ;
+    rdfs:comment "An OPC UA client that connects to OPC UA servers. Based on OPC UA Specification Part 1."@en ;
+    .
+
+observable:OPCGateway
+    a owl:Class ;
+    rdfs:subClassOf observable:ProtocolGateway ;
+    rdfs:label "OPC Gateway"@en ;
+    rdfs:comment "A gateway that converts between OPC protocols. Based on OPC UA Specification Part 1."@en ;
+    .
+
+# I/O Subsystem Classes
+observable:IOCard
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "I/O Card"@en ;
+    rdfs:comment "An input/output card that interfaces with field devices. Based on IEC 61131-2."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:cardType ;
+        ] ,
+        [
+            sh:datatype xsd:positiveInteger ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:channelCount ;
+        ] ;
+    .
+
+observable:AnalogInput
+    a owl:Class ;
+    rdfs:subClassOf observable:IOCard ;
+    rdfs:label "Analog Input"@en ;
+    rdfs:comment "An analog input card that converts analog signals to digital values. Based on IEC 61131-2."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:minRange ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:maxRange ;
+        ] ;
+    .
+
+observable:DigitalOutput
+    a owl:Class ;
+    rdfs:subClassOf observable:IOCard ;
+    rdfs:label "Digital Output"@en ;
+    rdfs:comment "A digital output card that controls binary devices. Based on IEC 61131-2."@en ;
+    sh:property
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isSink ;
+        ] ;
+    .
+
+# Tag and Point Classes
+observable:Tag
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Tag"@en ;
+    rdfs:comment "A tag represents a process point in a historian or control system. Based on ISA-5.1 and OPC UA Specification Part 3."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tagName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:description ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:engineeringUnits ;
+        ] ;
+    .
+
+# Zone Classes
+observable:Zone
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Zone"@en ;
+    rdfs:comment "An abstract class representing a security zone in an industrial control system. Based on IEC 62443-3-3."@en ;
+    .
+
+observable:EnterpriseZone
+    a owl:Class ;
+    rdfs:subClassOf observable:Zone ;
+    rdfs:label "Enterprise Zone"@en ;
+    rdfs:comment "An enterprise zone containing business systems. Based on IEC 62443-3-3."@en ;
+    owl:disjointWith observable:ProcessControlZone ;
+    owl:disjointWith observable:SafetyZone ;
+    .
+
+observable:ProcessControlZone
+    a owl:Class ;
+    rdfs:subClassOf observable:Zone ;
+    rdfs:label "Process Control Zone"@en ;
+    rdfs:comment "A process control zone containing control systems. Based on IEC 62443-3-3."@en ;
+    owl:disjointWith observable:EnterpriseZone ;
+    owl:disjointWith observable:SafetyZone ;
+    .
+
+observable:SafetyZone
+    a owl:Class ;
+    rdfs:subClassOf observable:Zone ;
+    rdfs:label "Safety Zone"@en ;
+    rdfs:comment "A safety zone containing safety instrumented systems. Based on IEC 62443-3-3."@en ;
+    owl:disjointWith observable:EnterpriseZone ;
+    owl:disjointWith observable:ProcessControlZone ;
+    .
+
+# Alarm and Event Classes
+observable:Alarm
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Alarm"@en ;
+    rdfs:comment "An alarm represents a process condition that requires attention. Based on IEC 62682."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:alarmId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:priority ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isAcknowledged ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ;
+    .
+
+observable:EventLogEntry
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Event Log Entry"@en ;
+    rdfs:comment "An entry in an event log. Based on IEC 62682."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:eventId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:eventType ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ;
+    .
+
+# Object Properties for Zone and Network Relationships
+observable:memberOfZone
+    a owl:ObjectProperty ;
+    rdfs:label "member of zone"@en ;
+    rdfs:comment "Indicates that an ICS device is a member of a security zone. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:Zone ;
+    owl:inverseOf observable:hasMemberDevice ;
+    .
+
+observable:hasMemberDevice
+    a owl:ObjectProperty ;
+    rdfs:label "has member device"@en ;
+    rdfs:comment "Indicates that a security zone has an ICS device as a member. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:Zone ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:memberOfZone ;
+    .
+
+observable:connectedToNetwork
+    a owl:ObjectProperty ;
+    rdfs:label "connected to network"@en ;
+    rdfs:comment "Indicates that an ICS device is connected to a network. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:SCADANetwork ;
+    .
+
+# Object Properties for Tag and Reading Relationships
+observable:readingForTag
+    a owl:ObjectProperty ;
+    rdfs:label "reading for tag"@en ;
+    rdfs:comment "Indicates that a sensor reading is associated with a tag. Based on ISA-5.1."@en ;
+    rdfs:domain observable:SensorReading ;
+    rdfs:range observable:Tag ;
+    owl:inverseOf observable:hasReading ;
+    .
+
+observable:hasReading
+    a owl:ObjectProperty ;
+    rdfs:label "has reading"@en ;
+    rdfs:comment "Indicates that a tag has a sensor reading. Based on ISA-5.1."@en ;
+    rdfs:domain observable:Tag ;
+    rdfs:range observable:SensorReading ;
+    owl:inverseOf observable:readingForTag ;
+    .
+
+observable:storedByHistorian
+    a owl:ObjectProperty ;
+    rdfs:label "stored by historian"@en ;
+    rdfs:comment "Indicates that a sensor reading is stored by a historian server. Based on ISA-95 Part 4."@en ;
+    rdfs:domain observable:SensorReading ;
+    rdfs:range observable:HistorianServer ;
+    owl:inverseOf observable:storesReading ;
+    .
+
+# Object Properties for Program and Time Synchronization
+observable:executesProgram
+    a owl:ObjectProperty ;
+    rdfs:label "executes program"@en ;
+    rdfs:comment "Indicates that a PLC executes a program. Based on IEC 61131-3."@en ;
+    rdfs:domain observable:PLC ;
+    rdfs:range observable:Program ;
+    owl:inverseOf observable:executedByPLC ;
+    .
+
+observable:executedByPLC
+    a owl:ObjectProperty ;
+    rdfs:label "executed by PLC"@en ;
+    rdfs:comment "Indicates that a program is executed by a PLC. Based on IEC 61131-3."@en ;
+    rdfs:domain observable:Program ;
+    rdfs:range observable:PLC ;
+    owl:inverseOf observable:executesProgram ;
+    .
+
+observable:synchronizesDevice
+    a owl:ObjectProperty ;
+    rdfs:label "synchronizes device"@en ;
+    rdfs:comment "Indicates that a PTP grandmaster synchronizes an ICS device. Based on IEEE 1588-2019."@en ;
+    rdfs:domain observable:PTPGrandmaster ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:synchronizedByGrandmaster ;
+    .
+
+observable:synchronizedByGrandmaster
+    a owl:ObjectProperty ;
+    rdfs:label "synchronized by grandmaster"@en ;
+    rdfs:comment "Indicates that an ICS device is synchronized by a PTP grandmaster. Based on IEEE 1588-2019."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range observable:PTPGrandmaster ;
+    owl:inverseOf observable:synchronizesDevice ;
+    .
+
+# Object Properties for OPC UA Cloud Integration
+observable:mirroredByCloudGateway
+    a owl:ObjectProperty ;
+    rdfs:label "mirrored by cloud gateway"@en ;
+    rdfs:comment "Indicates that an OPC UA server is mirrored by a cloud gateway. Based on OPC UA Specification Part 1."@en ;
+    rdfs:domain observable:OPCUAServer ;
+    rdfs:range observable:CloudService ;
+    owl:inverseOf observable:mirrorsOPCUAServer ;
+    .
+
+observable:mirrorsOPCUAServer
+    a owl:ObjectProperty ;
+    rdfs:label "mirrors OPC UA server"@en ;
+    rdfs:comment "Indicates that a cloud service mirrors an OPC UA server. Based on OPC UA Specification Part 1."@en ;
+    rdfs:domain observable:CloudService ;
+    rdfs:range observable:OPCUAServer ;
+    owl:inverseOf observable:mirroredByCloudGateway ;
+    .
+
+# Datatype Properties for New Classes
+observable:safetyIntegrityLevel
+    a owl:DatatypeProperty ;
+    rdfs:label "safety integrity level"@en ;
+    rdfs:comment "The safety integrity level (SIL) of a safety instrumented system. Based on IEC 61508."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:isDualRedundant
+    a owl:DatatypeProperty ;
+    rdfs:label "is dual redundant"@en ;
+    rdfs:comment "Indicates whether a safety PLC has dual redundant processors. Based on IEC 61508."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:serverUri
+    a owl:DatatypeProperty ;
+    rdfs:label "server URI"@en ;
+    rdfs:comment "The URI of an OPC UA server. Based on OPC UA Specification Part 1."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:supportsSecurity
+    a owl:DatatypeProperty ;
+    rdfs:label "supports security"@en ;
+    rdfs:comment "Indicates whether an OPC UA server supports security features. Based on OPC UA Specification Part 2."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:cardType
+    a owl:DatatypeProperty ;
+    rdfs:label "card type"@en ;
+    rdfs:comment "The type of an I/O card. Based on IEC 61131-2."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:channelCount
+    a owl:DatatypeProperty ;
+    rdfs:label "channel count"@en ;
+    rdfs:comment "The number of channels on an I/O card. Based on IEC 61131-2."@en ;
+    rdfs:range xsd:positiveInteger ;
+    .
+
+observable:minRange
+    a owl:DatatypeProperty ;
+    rdfs:label "minimum range"@en ;
+    rdfs:comment "The minimum range of an analog input. Based on IEC 61131-2."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:maxRange
+    a owl:DatatypeProperty ;
+    rdfs:label "maximum range"@en ;
+    rdfs:comment "The maximum range of an analog input. Based on IEC 61131-2."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:isSink
+    a owl:DatatypeProperty ;
+    rdfs:label "is sink"@en ;
+    rdfs:comment "Indicates whether a digital output is a sink type. Based on IEC 61131-2."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:alarmId
+    a owl:DatatypeProperty ;
+    rdfs:label "alarm ID"@en ;
+    rdfs:comment "The unique identifier of an alarm. Based on IEC 62682."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:priority
+    a owl:DatatypeProperty ;
+    rdfs:label "priority"@en ;
+    rdfs:comment "The priority of an alarm. Based on IEC 62682."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:isAcknowledged
+    a owl:DatatypeProperty ;
+    rdfs:label "is acknowledged"@en ;
+    rdfs:comment "Indicates whether an alarm has been acknowledged. Based on IEC 62682."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:eventId
+    a owl:DatatypeProperty ;
+    rdfs:label "event ID"@en ;
+    rdfs:comment "The unique identifier of an event log entry. Based on IEC 62682."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:eventType
+    a owl:DatatypeProperty ;
+    rdfs:label "event type"@en ;
+    rdfs:comment "The type of an event log entry. Based on IEC 62682."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Alarm and Event Classes
+observable:AlarmEvent
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Alarm Event"@en ;
+    rdfs:comment "An alarm event represents a process condition that requires attention. Based on IEC 62682:2014 clause 4."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:alarmId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:priority ;
+            sh:in ("Critical" "High" "Medium" "Low" "Info") ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isAcknowledged ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:alarmTag ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ;
+    .
+
+# Firmware and Configuration Classes
+observable:FirmwareImage
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Firmware Image"@en ;
+    rdfs:comment "A firmware image represents the software running on an ICS device. Based on IEC 62443-2-3 Annex A patch management."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:firmwareVersion ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:hashValue ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:releaseDate ;
+        ] ;
+    .
+
+observable:ControllerConfig
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Controller Configuration"@en ;
+    rdfs:comment "A controller configuration file containing device settings and program logic. Based on IEC 61131-3."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:configHash ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:lastModifiedTime ;
+        ] ;
+    .
+
+# Wireless Communication Classes
+observable:WirelessHARTGateway
+    a owl:Class ;
+    rdfs:subClassOf observable:ProtocolGateway ;
+    rdfs:label "WirelessHART Gateway"@en ;
+    rdfs:comment "A gateway for WirelessHART field devices. Based on IEC 62591 (WirelessHART)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:positiveInteger ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:networkId ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isSecurityManager ;
+        ] ;
+    .
+
+observable:TelemetryRadio
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSDevice ;
+    rdfs:label "Telemetry Radio"@en ;
+    rdfs:comment "A radio device used for remote telemetry. Based on IEC 60870-5-101."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:frequency ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isEncrypted ;
+        ] ;
+    .
+
+# Process Unit Classes
+observable:ProcessUnit
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Process Unit"@en ;
+    rdfs:comment "A process unit represents a physical section of a plant. Based on ISA-95 Part 2 section 6."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:unitId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:description ;
+        ] ;
+    .
+
+observable:EquipmentModule
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Equipment Module"@en ;
+    rdfs:comment "An equipment module represents a functional unit within a process unit. Based on ISA-95 Part 2 section 6."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:moduleId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:description ;
+        ] ;
+    .
+
+# Safety Trip Class
+observable:SafetyTrip
+    a owl:Class ;
+    rdfs:subClassOf observable:ICSObservable ;
+    rdfs:label "Safety Trip"@en ;
+    rdfs:comment "A safety trip event from a safety instrumented system. Based on IEC 61511-1 clause 11."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tripCause ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ,
+        [
+            sh:class observable:Sensor ;
+            sh:nodeKind sh:IRI ;
+            sh:path observable:triggeredBySensor ;
+        ] ;
+    .
+
+# Object Properties for Asset Ownership
+observable:ownedBy
+    a owl:ObjectProperty ;
+    rdfs:label "owned by"@en ;
+    rdfs:comment "Indicates that an ICS device is owned by an organization. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range core:Identity ;
+    owl:inverseOf observable:ownsDevice ;
+    .
+
+observable:ownsDevice
+    a owl:ObjectProperty ;
+    rdfs:label "owns device"@en ;
+    rdfs:comment "Indicates that an organization owns an ICS device. Based on IEC 62443-3-3."@en ;
+    rdfs:domain core:Identity ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:ownedBy ;
+    .
+
+# Object Properties for Vulnerability Management
+observable:affectedByVulnerability
+    a owl:ObjectProperty ;
+    rdfs:label "affected by vulnerability"@en ;
+    rdfs:comment "Indicates that an ICS device is affected by a vulnerability. Based on NIST SP 800-82."@en ;
+    rdfs:domain observable:ICSDevice ;
+    rdfs:range types:Vulnerability ;
+    owl:inverseOf observable:affectsDevice ;
+    .
+
+observable:affectsDevice
+    a owl:ObjectProperty ;
+    rdfs:label "affects device"@en ;
+    rdfs:comment "Indicates that a vulnerability affects an ICS device. Based on NIST SP 800-82."@en ;
+    rdfs:domain types:Vulnerability ;
+    rdfs:range observable:ICSDevice ;
+    owl:inverseOf observable:affectedByVulnerability ;
+    .
+
+# Object Properties for I/O Module Relationships
+observable:hasIOModule
+    a owl:ObjectProperty ;
+    rdfs:label "has I/O module"@en ;
+    rdfs:comment "Indicates that a PLC has an I/O module. Based on IEC 61131-2."@en ;
+    rdfs:domain observable:PLC ;
+    rdfs:range observable:IOCard ;
+    owl:inverseOf observable:installedInPLC ;
+    .
+
+observable:installedInPLC
+    a owl:ObjectProperty ;
+    rdfs:label "installed in PLC"@en ;
+    rdfs:comment "Indicates that an I/O module is installed in a PLC. Based on IEC 61131-2."@en ;
+    rdfs:domain observable:IOCard ;
+    rdfs:range observable:PLC ;
+    owl:inverseOf observable:hasIOModule ;
+    .
+
+observable:connectedSensor
+    a owl:ObjectProperty ;
+    rdfs:label "connected sensor"@en ;
+    rdfs:comment "Indicates that an I/O module is connected to a sensor. Based on IEC 61131-2."@en ;
+    rdfs:domain observable:IOCard ;
+    rdfs:range observable:Sensor ;
+    owl:inverseOf observable:connectedToIOModule ;
+    .
+
+observable:connectedToIOModule
+    a owl:ObjectProperty ;
+    rdfs:label "connected to I/O module"@en ;
+    rdfs:comment "Indicates that a sensor is connected to an I/O module. Based on IEC 61131-2."@en ;
+    rdfs:domain observable:Sensor ;
+    rdfs:range observable:IOCard ;
+    owl:inverseOf observable:connectedSensor ;
+    .
+
+observable:connectedActuator
+    a owl:ObjectProperty ;
+    rdfs:label "connected actuator"@en ;
+    rdfs:comment "Indicates that an I/O module is connected to an actuator. Based on IEC 61131-2."@en ;
+    rdfs:domain observable:IOCard ;
+    rdfs:range observable:Actuator ;
+    owl:inverseOf observable:connectedToIOModule ;
+    .
+
+# Object Properties for Process Unit Relationships
+observable:partOfUnit
+    a owl:ObjectProperty ;
+    rdfs:label "part of unit"@en ;
+    rdfs:comment "Indicates that an equipment module is part of a process unit. Based on ISA-95 Part 2."@en ;
+    rdfs:domain observable:EquipmentModule ;
+    rdfs:range observable:ProcessUnit ;
+    owl:inverseOf observable:hasEquipmentModule ;
+    .
+
+observable:hasEquipmentModule
+    a owl:ObjectProperty ;
+    rdfs:label "has equipment module"@en ;
+    rdfs:comment "Indicates that a process unit has an equipment module. Based on ISA-95 Part 2."@en ;
+    rdfs:domain observable:ProcessUnit ;
+    rdfs:range observable:EquipmentModule ;
+    owl:inverseOf observable:partOfUnit ;
+    .
+
+# Object Properties for OPC UA Relationships
+observable:hostsTag
+    a owl:ObjectProperty ;
+    rdfs:label "hosts tag"@en ;
+    rdfs:comment "Indicates that an OPC UA server hosts a tag. Based on OPC UA Specification Part 3."@en ;
+    rdfs:domain observable:OPCUAServer ;
+    rdfs:range observable:Tag ;
+    owl:inverseOf observable:hostedByServer ;
+    .
+
+observable:hostedByServer
+    a owl:ObjectProperty ;
+    rdfs:label "hosted by server"@en ;
+    rdfs:comment "Indicates that a tag is hosted by an OPC UA server. Based on OPC UA Specification Part 3."@en ;
+    rdfs:domain observable:Tag ;
+    rdfs:range observable:OPCUAServer ;
+    owl:inverseOf observable:hostsTag ;
+    .
+
+# Object Properties for Network Relationships
+observable:partOfVirtualNetwork
+    a owl:ObjectProperty ;
+    rdfs:label "part of virtual network"@en ;
+    rdfs:comment "Indicates that a zone is part of a virtual network. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:Zone ;
+    rdfs:range observable:SCADANetwork ;
+    owl:inverseOf observable:hasZone ;
+    .
+
+observable:hasZone
+    a owl:ObjectProperty ;
+    rdfs:label "has zone"@en ;
+    rdfs:comment "Indicates that a virtual network has a zone. Based on IEC 62443-3-3."@en ;
+    rdfs:domain observable:SCADANetwork ;
+    rdfs:range observable:Zone ;
+    owl:inverseOf observable:partOfVirtualNetwork ;
+    .
+
+# Datatype Properties for New Classes
+observable:alarmTag
+    a owl:DatatypeProperty ;
+    rdfs:label "alarm tag"@en ;
+    rdfs:comment "The tag associated with an alarm event. Based on IEC 62682."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:hashValue
+    a owl:DatatypeProperty ;
+    rdfs:label "hash value"@en ;
+    rdfs:comment "The hash value of a firmware image or configuration file. Based on NIST SP 800-82."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:releaseDate
+    a owl:DatatypeProperty ;
+    rdfs:label "release date"@en ;
+    rdfs:comment "The release date of a firmware image. Based on IEC 62443-2-3."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:configHash
+    a owl:DatatypeProperty ;
+    rdfs:label "configuration hash"@en ;
+    rdfs:comment "The hash value of a configuration file. Based on NIST SP 800-82."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:lastModifiedTime
+    a owl:DatatypeProperty ;
+    rdfs:label "last modified time"@en ;
+    rdfs:comment "The last time a configuration file was modified. Based on NIST SP 800-82."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:networkId
+    a owl:DatatypeProperty ;
+    rdfs:label "network ID"@en ;
+    rdfs:comment "The network identifier of a WirelessHART gateway. Based on IEC 62591."@en ;
+    rdfs:range xsd:positiveInteger ;
+    .
+
+observable:isSecurityManager
+    a owl:DatatypeProperty ;
+    rdfs:label "is security manager"@en ;
+    rdfs:comment "Indicates whether a WirelessHART gateway is a security manager. Based on IEC 62591."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:frequency
+    a owl:DatatypeProperty ;
+    rdfs:label "frequency"@en ;
+    rdfs:comment "The operating frequency of a telemetry radio. Based on IEC 60870-5-101."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:isEncrypted
+    a owl:DatatypeProperty ;
+    rdfs:label "is encrypted"@en ;
+    rdfs:comment "Indicates whether a telemetry radio uses encryption. Based on IEC 60870-5-101."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:unitId
+    a owl:DatatypeProperty ;
+    rdfs:label "unit ID"@en ;
+    rdfs:comment "The unique identifier of a process unit. Based on ISA-95 Part 2."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:moduleId
+    a owl:DatatypeProperty ;
+    rdfs:label "module ID"@en ;
+    rdfs:comment "The unique identifier of an equipment module. Based on ISA-95 Part 2."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tripCause
+    a owl:DatatypeProperty ;
+    rdfs:label "trip cause"@en ;
+    rdfs:comment "The cause of a safety trip event. Based on IEC 61511-1."@en ;
+    rdfs:range xsd:string ;
+    .
