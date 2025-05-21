@@ -1364,3 +1364,59 @@ vocabulary:CryptoIOCTypeVocab
     ] ;
     .
 
+vocabulary:CloudServiceTypeVocab
+    a rdfs:Datatype ;
+    rdfs:label "Cloud Service Type Vocabulary"@en-US ;
+    rdfs:comment "Defines an open-vocabulary of cloud service types across major cloud providers (AWS, Azure, GCP)."@en ;
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:oneOf (
+            "Compute"^^vocabulary:CloudServiceTypeVocab
+            "Storage"^^vocabulary:CloudServiceTypeVocab
+            "Database"^^vocabulary:CloudServiceTypeVocab
+            "Networking"^^vocabulary:CloudServiceTypeVocab
+            "Security"^^vocabulary:CloudServiceTypeVocab
+            "Analytics"^^vocabulary:CloudServiceTypeVocab
+            "AI/ML"^^vocabulary:CloudServiceTypeVocab
+            "IoT"^^vocabulary:CloudServiceTypeVocab
+            "DevOps"^^vocabulary:CloudServiceTypeVocab
+            "Serverless"^^vocabulary:CloudServiceTypeVocab
+            "Containers"^^vocabulary:CloudServiceTypeVocab
+            "Migration"^^vocabulary:CloudServiceTypeVocab
+            "Management"^^vocabulary:CloudServiceTypeVocab
+            "Integration"^^vocabulary:CloudServiceTypeVocab
+            "Media"^^vocabulary:CloudServiceTypeVocab
+            "Mobile"^^vocabulary:CloudServiceTypeVocab
+            "Blockchain"^^vocabulary:CloudServiceTypeVocab
+            "Quantum"^^vocabulary:CloudServiceTypeVocab
+            "Other"^^vocabulary:CloudServiceTypeVocab
+        ) ;
+    ] ;
+    .
+
+vocabulary:ContainerOrchestrationPlatformVocab
+    a rdfs:Datatype ;
+    rdfs:label "Container Orchestration Platform Vocabulary"@en-US ;
+    rdfs:comment "Defines an open-vocabulary of container orchestration platforms and container runtimes."@en ;
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:oneOf (
+            "Kubernetes"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Docker Swarm"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Amazon ECS"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Azure Container Instances"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Google Cloud Run"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Docker"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Podman"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "LXC"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "OpenShift"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Rancher"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Mesos"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Nomad"^^vocabulary:ContainerOrchestrationPlatformVocab
+            "Other"^^vocabulary:ContainerOrchestrationPlatformVocab
+        ) ;
+    ] ;
+    .
+

@@ -1,0 +1,1115 @@
+# imports: https://ontology.unifiedcyberontology.org/uco/action/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/configuration/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/identity/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/location/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-core/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-identity-account/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/observable/observable-network/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/types/1.3.0
+# imports: https://ontology.unifiedcyberontology.org/uco/vocabulary/1.3.0
+
+@prefix action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix co: <http://purl.org/co/> .
+@prefix configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/> .
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix location: <https://ontology.unifiedcyberontology.org/uco/location/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix observable-core: <https://ontology.unifiedcyberontology.org/uco/observable/observable-core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/cloud-virtual-infrastructure>
+    a owl:Ontology ;
+    rdfs:label "uco-observable-cloud-virtual-infrastructure"@en ;
+    owl:imports
+        action:1.3.0 ,
+        configuration:1.3.0 ,
+        core:1.3.0 ,
+        identity:1.3.0 ,
+        location:1.3.0 ,
+        observable-core:1.3.0 ,
+        observable:observable-identity-account/1.3.0 ,
+        observable:observable-network/1.3.0 ,
+        types:1.3.0 ,
+        vocabulary:1.3.0
+        ;
+    owl:versionIRI observable:1.3.0 ;
+    .
+
+# Cloud Virtual Infrastructure Observable base class
+observable:CloudVirtualInfrastructureObservable
+    a
+        owl:Class ,
+        sh:NodeShape
+        ;
+    rdfs:subClassOf observable-core:ObservableObject ;
+    rdfs:label "Cloud Virtual Infrastructure Observable"@en-US ;
+    rdfs:comment "A base class for all cloud and virtual infrastructure related observables. Based on NIST Cloud Computing Reference Architecture (https://doi.org/10.6028/NIST.SP.500-292) and ISO/IEC 17788 Cloud Computing Overview and Vocabulary."@en ;
+    sh:targetClass observable:CloudVirtualInfrastructureObservable ;
+    owl:disjointWith (
+        observable-core:ObservableObject
+        observable:observable-identity-account:ObservableIdentity
+        observable:observable-network:ObservableNetwork
+    ) ;
+    .
+
+observable:CloudInstance
+    a owl:Class ;
+    rdfs:label "Cloud Instance"@en-US ;
+    rdfs:comment "A virtual machine or compute instance running in a cloud environment. Based on NIST Cloud Computing Reference Architecture and ISO/IEC 17789 Cloud Computing Reference Architecture."@en ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    owl:disjointWith (
+        observable:Container
+        observable:CloudService
+    ) ;
+    sh:property
+        [
+            sh:path observable:hasSecurityGroup ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ,
+        [
+            sh:path observable:hasIAMRole ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ,
+        [
+            sh:path observable:hasBlockStorage ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:Container
+    a owl:Class ;
+    rdfs:label "Container"@en-US ;
+    rdfs:comment "A container instance running in a container orchestration platform. Based on OCI Container Runtime Specification and Kubernetes Container Runtime Interface (CRI)."@en ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:CloudService
+    ) ;
+    .
+
+observable:CloudService
+    a owl:Class ;
+    rdfs:label "Cloud Service"@en-US ;
+    rdfs:comment "A managed service provided by a cloud platform. Based on NIST Cloud Computing Reference Architecture and ISO/IEC 17788 Cloud Computing Service Categories."@en ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+    ) ;
+    sh:property
+        [
+            sh:path observable:hasLoadBalancer ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:ContainerOrchestrationPlatform
+    a owl:Class ;
+    rdfs:label "Container Orchestration Platform"@en-US ;
+    rdfs:comment "A platform for managing and orchestrating containers. Based on Kubernetes Architecture and CNCF Cloud Native Computing Foundation standards."@en ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    sh:property
+        [
+            sh:path observable:hasContainerRegistry ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ,
+        [
+            sh:path observable:hasKubernetesCluster ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:CloudStorage
+    a owl:Class ;
+    rdfs:label "Cloud Storage"@en-US ;
+    rdfs:comment "A storage service in a cloud environment. Based on NIST Cloud Computing Reference Architecture and SNIA Cloud Storage Initiative (CSI) standards."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+    ) ;
+    .
+
+observable:CloudIdentity
+    a owl:Class ;
+    rdfs:label "Cloud Identity"@en-US ;
+    rdfs:comment "An identity used for authentication and authorization in a cloud environment. Based on NIST SP 800-63 Digital Identity Guidelines and OAuth 2.0 Authorization Framework (RFC 6749)."@en ;
+    rdfs:subClassOf observable:observable-identity-account:ObservableIdentity ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudService
+    ) ;
+    .
+
+observable:ServicePrincipal
+    a owl:Class ;
+    rdfs:label "Service Principal"@en-US ;
+    rdfs:comment "A service principal identity used for service-to-service authentication."@en ;
+    rdfs:subClassOf observable:CloudIdentity ;
+    owl:disjointWith observable:ManagedIdentity ;
+    .
+
+observable:ManagedIdentity
+    a owl:Class ;
+    rdfs:label "Managed Identity"@en-US ;
+    rdfs:comment "A managed identity automatically managed by the cloud platform."@en ;
+    rdfs:subClassOf observable:CloudIdentity ;
+    owl:disjointWith observable:ServicePrincipal ;
+    .
+
+# Properties for CloudInstance
+observable:instanceType
+    a owl:DatatypeProperty ;
+    rdfs:label "Instance Type"@en-US ;
+    rdfs:comment "The type/size of the cloud instance. Based on NIST Cloud Computing Reference Architecture and ISO/IEC 17788 Cloud Computing Service Categories."@en ;
+    rdfs:domain observable:CloudInstance ;
+    rdfs:range xsd:string ;
+    .
+
+observable:instanceState
+    a owl:DatatypeProperty ;
+    rdfs:label "Instance State"@en-US ;
+    rdfs:comment "The current state of the cloud instance (e.g., running, stopped, terminated)."@en ;
+    rdfs:domain observable:CloudInstance ;
+    rdfs:range xsd:string ;
+    .
+
+observable:instanceRegion
+    a owl:DatatypeProperty ;
+    rdfs:label "Instance Region"@en-US ;
+    rdfs:comment "The region where the cloud instance is deployed."@en ;
+    rdfs:domain observable:CloudInstance ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for Container
+observable:containerImage
+    a owl:DatatypeProperty ;
+    rdfs:label "Container Image"@en-US ;
+    rdfs:comment "The image used to create the container. Based on OCI Image Specification and Docker Image Specification v1.2.0."@en ;
+    rdfs:domain observable:Container ;
+    rdfs:range xsd:string ;
+    .
+
+observable:containerState
+    a owl:DatatypeProperty ;
+    rdfs:label "Container State"@en-US ;
+    rdfs:comment "The current state of the container (e.g., running, exited, created)."@en ;
+    rdfs:domain observable:Container ;
+    rdfs:range xsd:string ;
+    .
+
+observable:containerOrchestrationPlatform
+    a owl:ObjectProperty ;
+    rdfs:label "Container Orchestration Platform"@en-US ;
+    rdfs:comment "The platform used to orchestrate the container."@en ;
+    rdfs:domain observable:Container ;
+    rdfs:range observable:ContainerOrchestrationPlatform ;
+    .
+
+# Properties for CloudService
+observable:serviceType
+    a owl:DatatypeProperty ;
+    rdfs:label "Service Type"@en-US ;
+    rdfs:comment "The type of cloud service. Based on NIST Cloud Computing Reference Architecture and ISO/IEC 17788 Cloud Computing Service Categories."@en ;
+    rdfs:domain observable:CloudService ;
+    rdfs:range vocabulary:CloudServiceTypeVocab ;
+    .
+
+observable:serviceRegion
+    a owl:DatatypeProperty ;
+    rdfs:label "Service Region"@en-US ;
+    rdfs:comment "The region where the cloud service is deployed."@en ;
+    rdfs:domain observable:CloudService ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for ContainerOrchestrationPlatform
+observable:platformType
+    a owl:DatatypeProperty ;
+    rdfs:label "Platform Type"@en-US ;
+    rdfs:comment "The type of container orchestration platform."@en ;
+    rdfs:domain observable:ContainerOrchestrationPlatform ;
+    rdfs:range vocabulary:ContainerOrchestrationPlatformVocab ;
+    .
+
+observable:platformVersion
+    a owl:DatatypeProperty ;
+    rdfs:label "Platform Version"@en-US ;
+    rdfs:comment "The version of the container orchestration platform."@en ;
+    rdfs:domain observable:ContainerOrchestrationPlatform ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for CloudStorage
+observable:storageType
+    a owl:DatatypeProperty ;
+    rdfs:label "Storage Type"@en-US ;
+    rdfs:comment "The type of cloud storage. Based on SNIA Cloud Storage Initiative (CSI) standards and NIST Cloud Computing Reference Architecture."@en ;
+    rdfs:domain observable:CloudStorage ;
+    rdfs:range xsd:string ;
+    .
+
+observable:storageClass
+    a owl:DatatypeProperty ;
+    rdfs:label "Storage Class"@en-US ;
+    rdfs:comment "The storage class/tier of the cloud storage (e.g., Standard, Premium, Archive)."@en ;
+    rdfs:domain observable:CloudStorage ;
+    rdfs:range xsd:string ;
+    .
+
+observable:storageEncryption
+    a owl:DatatypeProperty ;
+    rdfs:label "Storage Encryption"@en-US ;
+    rdfs:comment "The encryption method used for the cloud storage."@en ;
+    rdfs:domain observable:CloudStorage ;
+    rdfs:range xsd:string ;
+    .
+
+observable:storageAccessControl
+    a owl:DatatypeProperty ;
+    rdfs:label "Storage Access Control"@en-US ;
+    rdfs:comment "The access control configuration for the cloud storage."@en ;
+    rdfs:domain observable:CloudStorage ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for CloudIdentity
+observable:identityType
+    a owl:DatatypeProperty ;
+    rdfs:label "Identity Type"@en-US ;
+    rdfs:comment "The type of cloud identity. Based on NIST SP 800-63 Digital Identity Guidelines and OAuth 2.0 Authorization Framework."@en ;
+    rdfs:domain observable:CloudIdentity ;
+    rdfs:range xsd:string ;
+    .
+
+observable:identityProvider
+    a owl:DatatypeProperty ;
+    rdfs:label "Identity Provider"@en-US ;
+    rdfs:comment "The identity provider for the cloud identity."@en ;
+    rdfs:domain observable:CloudIdentity ;
+    rdfs:range xsd:string ;
+    .
+
+observable:identityPermissions
+    a owl:DatatypeProperty ;
+    rdfs:label "Identity Permissions"@en-US ;
+    rdfs:comment "The permissions assigned to the cloud identity."@en ;
+    rdfs:domain observable:CloudIdentity ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for ServicePrincipal
+observable:servicePrincipalId
+    a owl:DatatypeProperty ;
+    rdfs:label "Service Principal ID"@en-US ;
+    rdfs:comment "The unique identifier for the service principal."@en ;
+    rdfs:domain observable:ServicePrincipal ;
+    rdfs:range xsd:string ;
+    .
+
+observable:servicePrincipalSecret
+    a owl:DatatypeProperty ;
+    rdfs:label "Service Principal Secret"@en-US ;
+    rdfs:comment "The secret/credential used by the service principal."@en ;
+    rdfs:domain observable:ServicePrincipal ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for ManagedIdentity
+observable:managedIdentityId
+    a owl:DatatypeProperty ;
+    rdfs:label "Managed Identity ID"@en-US ;
+    rdfs:comment "The unique identifier for the managed identity."@en ;
+    rdfs:domain observable:ManagedIdentity ;
+    rdfs:range xsd:string ;
+    .
+
+observable:managedIdentityType
+    a owl:DatatypeProperty ;
+    rdfs:label "Managed Identity Type"@en-US ;
+    rdfs:comment "The type of managed identity (e.g., system-assigned, user-assigned)."@en ;
+    rdfs:domain observable:ManagedIdentity ;
+    rdfs:range xsd:string ;
+    .
+
+observable:CloudMonitoring
+    a owl:Class ;
+    rdfs:label "Cloud Monitoring"@en-US ;
+    rdfs:comment "Monitoring and logging capabilities in a cloud environment. Based on NIST Cloud Computing Security Reference Architecture and OpenTelemetry standards."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudStorage
+    ) ;
+    .
+
+observable:CloudMetrics
+    a owl:Class ;
+    rdfs:label "Cloud Metrics"@en-US ;
+    rdfs:comment "Metrics collected from cloud resources."@en ;
+    rdfs:subClassOf observable:CloudMonitoring ;
+    owl:disjointWith observable:CloudLogs ;
+    .
+
+observable:CloudLogs
+    a owl:Class ;
+    rdfs:label "Cloud Logs"@en-US ;
+    rdfs:comment "Logs collected from cloud resources."@en ;
+    rdfs:subClassOf observable:CloudMonitoring ;
+    owl:disjointWith observable:CloudMetrics ;
+    .
+
+observable:CloudNetwork
+    a owl:Class ;
+    rdfs:label "Cloud Network"@en-US ;
+    rdfs:comment "Networking resources in a cloud environment. Based on NIST Cloud Computing Reference Architecture and IETF Cloud Networking standards."@en ;
+    rdfs:subClassOf observable:observable-network:ObservableNetwork ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudService
+    ) ;
+    .
+
+# Properties for CloudMonitoring
+observable:monitoringType
+    a owl:DatatypeProperty ;
+    rdfs:label "Monitoring Type"@en-US ;
+    rdfs:comment "The type of monitoring. Based on NIST Cloud Computing Security Reference Architecture and OpenTelemetry standards."@en ;
+    rdfs:domain observable:CloudMonitoring ;
+    rdfs:range xsd:string ;
+    .
+
+observable:monitoringInterval
+    a owl:DatatypeProperty ;
+    rdfs:label "Monitoring Interval"@en-US ;
+    rdfs:comment "The interval at which monitoring data is collected."@en ;
+    rdfs:domain observable:CloudMonitoring ;
+    rdfs:range xsd:string ;
+    .
+
+observable:monitoringRetention
+    a owl:DatatypeProperty ;
+    rdfs:label "Monitoring Retention"@en-US ;
+    rdfs:comment "The retention period for monitoring data."@en ;
+    rdfs:domain observable:CloudMonitoring ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for CloudMetrics
+observable:metricName
+    a owl:DatatypeProperty ;
+    rdfs:label "Metric Name"@en-US ;
+    rdfs:comment "The name of the metric."@en ;
+    rdfs:domain observable:CloudMetrics ;
+    rdfs:range xsd:string ;
+    .
+
+observable:metricValue
+    a owl:DatatypeProperty ;
+    rdfs:label "Metric Value"@en-US ;
+    rdfs:comment "The value of the metric."@en ;
+    rdfs:domain observable:CloudMetrics ;
+    rdfs:range xsd:double ;
+    .
+
+observable:metricTimestamp
+    a owl:DatatypeProperty ;
+    rdfs:label "Metric Timestamp"@en-US ;
+    rdfs:comment "The timestamp when the metric was collected."@en ;
+    rdfs:domain observable:CloudMetrics ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Properties for CloudLogs
+observable:logSource
+    a owl:DatatypeProperty ;
+    rdfs:label "Log Source"@en-US ;
+    rdfs:comment "The source of the log entry."@en ;
+    rdfs:domain observable:CloudLogs ;
+    rdfs:range xsd:string ;
+    .
+
+observable:logMessage
+    a owl:DatatypeProperty ;
+    rdfs:label "Log Message"@en-US ;
+    rdfs:comment "The content of the log entry."@en ;
+    rdfs:domain observable:CloudLogs ;
+    rdfs:range xsd:string ;
+    .
+
+observable:logTimestamp
+    a owl:DatatypeProperty ;
+    rdfs:label "Log Timestamp"@en-US ;
+    rdfs:comment "The timestamp when the log entry was created."@en ;
+    rdfs:domain observable:CloudLogs ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Properties for CloudNetwork
+observable:networkType
+    a owl:DatatypeProperty ;
+    rdfs:label "Network Type"@en-US ;
+    rdfs:comment "The type of cloud network. Based on NIST Cloud Computing Reference Architecture and IETF Cloud Networking standards."@en ;
+    rdfs:domain observable:CloudNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+observable:networkCidr
+    a owl:DatatypeProperty ;
+    rdfs:label "Network CIDR"@en-US ;
+    rdfs:comment "The CIDR block of the cloud network."@en ;
+    rdfs:domain observable:CloudNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+observable:networkRegion
+    a owl:DatatypeProperty ;
+    rdfs:label "Network Region"@en-US ;
+    rdfs:comment "The region where the cloud network is deployed."@en ;
+    rdfs:domain observable:CloudNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+observable:networkSecurityGroups
+    a owl:DatatypeProperty ;
+    rdfs:label "Network Security Groups"@en-US ;
+    rdfs:comment "The security groups associated with the cloud network."@en ;
+    rdfs:domain observable:CloudNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+# Regional Topology Classes
+observable:CloudRegion
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    rdfs:label "Cloud Region"@en-US ;
+    rdfs:comment "A geographical region where cloud resources are deployed. Based on AWS Global Infrastructure (https://aws.amazon.com/about-aws/global-infrastructure/) and Azure Global Infrastructure (https://azure.microsoft.com/en-us/global-infrastructure/)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:regionName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:cloudProvider ;
+        ] ;
+    .
+
+observable:AvailabilityZone
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    rdfs:label "Availability Zone"@en-US ;
+    rdfs:comment "A physically isolated location within a cloud region that provides high availability and fault tolerance. Based on AWS Global Infrastructure (https://aws.amazon.com/about-aws/global-infrastructure/) and Azure Availability Zones (https://docs.microsoft.com/en-us/azure/availability-zones/az-overview)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:zoneName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:zoneStatus ;
+        ] ;
+    .
+
+# Network Infrastructure Classes
+observable:VirtualNetwork
+    a owl:Class ;
+    rdfs:subClassOf observable:observable-network:ObservableNetwork ;
+    rdfs:label "Virtual Network"@en-US ;
+    rdfs:comment "A logically isolated network in the cloud (e.g., VPC, VNet, VCN). Based on AWS VPC (https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) and Azure Virtual Network (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:networkCidr ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:networkState ;
+        ] ,
+        [
+            sh:path observable:hasInternetGateway ;
+            sh:minCount "0"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:Subnet
+    a owl:Class ;
+    rdfs:subClassOf observable:observable-network:ObservableNetwork ;
+    rdfs:label "Subnet"@en-US ;
+    rdfs:comment "A segment of a virtual network with its own IP address range. Based on AWS VPC Subnets (https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html) and Azure Subnets (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:subnetCidr ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:subnetType ;
+        ] ,
+        [
+            sh:path observable:hasRouteTable ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:RouteTable
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    rdfs:label "Route Table"@en-US ;
+    rdfs:comment "A set of rules that determine where network traffic is directed. Based on AWS Route Tables (https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) and Azure Route Tables (https://docs.microsoft.com/en-us/azure/virtual-network/manage-route-table)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:routeTableId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:routeTableName ;
+        ] ;
+    .
+
+observable:InternetGateway
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudVirtualInfrastructureObservable ;
+    rdfs:label "Internet Gateway"@en-US ;
+    rdfs:comment "A horizontally scaled, redundant, and highly available VPC component that allows communication between instances in the VPC and the internet. Based on AWS Internet Gateway (https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:gatewayId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:gatewayState ;
+        ] ;
+    .
+
+observable:LoadBalancer
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudService ;
+    rdfs:label "Load Balancer"@en-US ;
+    rdfs:comment "A service that distributes incoming traffic across multiple targets. Based on AWS Elastic Load Balancing (https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html) and Azure Load Balancer (https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:loadBalancerType ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:loadBalancerScheme ;
+        ] ;
+    .
+
+# Properties for CloudRegion
+observable:regionName
+    a owl:DatatypeProperty ;
+    rdfs:label "Region Name"@en-US ;
+    rdfs:comment "The name of the cloud region (e.g., us-east-1, westeurope)."@en ;
+    rdfs:domain observable:CloudRegion ;
+    rdfs:range xsd:string ;
+    .
+
+observable:cloudProvider
+    a owl:DatatypeProperty ;
+    rdfs:label "Cloud Provider"@en-US ;
+    rdfs:comment "The cloud service provider (e.g., AWS, Azure, GCP)."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range vocabulary:CloudProviderVocab ;
+    .
+
+# Properties for AvailabilityZone
+observable:zoneName
+    a owl:DatatypeProperty ;
+    rdfs:label "Zone Name"@en-US ;
+    rdfs:comment "The name of the availability zone (e.g., us-east-1a)."@en ;
+    rdfs:domain observable:AvailabilityZone ;
+    rdfs:range xsd:string ;
+    .
+
+observable:zoneStatus
+    a owl:DatatypeProperty ;
+    rdfs:label "Zone Status"@en-US ;
+    rdfs:comment "The current status of the availability zone."@en ;
+    rdfs:domain observable:AvailabilityZone ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for VirtualNetwork
+observable:networkCidr
+    a owl:DatatypeProperty ;
+    rdfs:label "Network CIDR"@en-US ;
+    rdfs:comment "The CIDR block of the virtual network."@en ;
+    rdfs:domain observable:VirtualNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+observable:networkState
+    a owl:DatatypeProperty ;
+    rdfs:label "Network State"@en-US ;
+    rdfs:comment "The current state of the virtual network."@en ;
+    rdfs:domain observable:VirtualNetwork ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for Subnet
+observable:subnetCidr
+    a owl:DatatypeProperty ;
+    rdfs:label "Subnet CIDR"@en-US ;
+    rdfs:comment "The CIDR block of the subnet."@en ;
+    rdfs:domain observable:Subnet ;
+    rdfs:range xsd:string ;
+    .
+
+observable:subnetType
+    a owl:DatatypeProperty ;
+    rdfs:label "Subnet Type"@en-US ;
+    rdfs:comment "The type of subnet (e.g., public, private)."@en ;
+    rdfs:domain observable:Subnet ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for RouteTable
+observable:routeTableId
+    a owl:DatatypeProperty ;
+    rdfs:label "Route Table ID"@en-US ;
+    rdfs:comment "The unique identifier for the route table."@en ;
+    rdfs:domain observable:RouteTable ;
+    rdfs:range xsd:string ;
+    .
+
+observable:routeTableName
+    a owl:DatatypeProperty ;
+    rdfs:label "Route Table Name"@en-US ;
+    rdfs:comment "The name of the route table."@en ;
+    rdfs:domain observable:RouteTable ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for InternetGateway
+observable:gatewayId
+    a owl:DatatypeProperty ;
+    rdfs:label "Gateway ID"@en-US ;
+    rdfs:comment "The unique identifier for the internet gateway."@en ;
+    rdfs:domain observable:InternetGateway ;
+    rdfs:range xsd:string ;
+    .
+
+observable:gatewayState
+    a owl:DatatypeProperty ;
+    rdfs:label "Gateway State"@en-US ;
+    rdfs:comment "The current state of the internet gateway."@en ;
+    rdfs:domain observable:InternetGateway ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for LoadBalancer
+observable:loadBalancerType
+    a owl:DatatypeProperty ;
+    rdfs:label "Load Balancer Type"@en-US ;
+    rdfs:comment "The type of load balancer (e.g., application, network, gateway)."@en ;
+    rdfs:domain observable:LoadBalancer ;
+    rdfs:range xsd:string ;
+    .
+
+observable:loadBalancerScheme
+    a owl:DatatypeProperty ;
+    rdfs:label "Load Balancer Scheme"@en-US ;
+    rdfs:comment "The scheme of the load balancer (e.g., internet-facing, internal)."@en ;
+    rdfs:domain observable:LoadBalancer ;
+    rdfs:range xsd:string ;
+    .
+
+# Cross-cutting properties
+observable:accountId
+    a owl:DatatypeProperty ;
+    rdfs:label "Account ID"@en-US ;
+    rdfs:comment "The cloud account identifier."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range xsd:string ;
+    .
+
+observable:region
+    a owl:DatatypeProperty ;
+    rdfs:label "Region"@en-US ;
+    rdfs:comment "The cloud region where the resource is deployed."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range xsd:string ;
+    .
+
+observable:zone
+    a owl:DatatypeProperty ;
+    rdfs:label "Zone"@en-US ;
+    rdfs:comment "The availability zone where the resource is deployed."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tags
+    a owl:DatatypeProperty ;
+    rdfs:label "Tags"@en-US ;
+    rdfs:comment "Key-value pairs associated with the resource."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range xsd:string ;
+    .
+
+observable:creationTime
+    a owl:DatatypeProperty ;
+    rdfs:label "Creation Time"@en-US ;
+    rdfs:comment "The timestamp when the resource was created."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:SecurityGroup
+    a owl:Class ;
+    rdfs:label "Security Group"@en-US ;
+    rdfs:comment "A virtual firewall that controls inbound and outbound traffic for cloud resources. Based on NIST SP 800-145 Cloud Computing Security Reference Architecture and IETF Security Standards."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudStorage
+        observable:LoadBalancer
+    ) ;
+    .
+
+observable:IAMRole
+    a owl:Class ;
+    rdfs:label "IAM Role"@en-US ;
+    rdfs:comment "An IAM role that defines a set of permissions for making AWS service requests. Based on NIST SP 800-63 Digital Identity Guidelines and OAuth 2.0 Authorization Framework."@en ;
+    rdfs:subClassOf observable:CloudIdentity ;
+    owl:disjointWith (
+        observable:ServicePrincipal
+        observable:ManagedIdentity
+    ) ;
+    .
+
+observable:IAMPolicy
+    a owl:Class ;
+    rdfs:label "IAM Policy"@en-US ;
+    rdfs:comment "A document that defines permissions for IAM identities."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudStorage
+        observable:LoadBalancer
+        observable:SecurityGroup
+    ) ;
+    .
+
+observable:KeyManagementService
+    a owl:Class ;
+    rdfs:label "Key Management Service"@en-US ;
+    rdfs:comment "A service for managing cryptographic keys and secrets."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudStorage
+        observable:LoadBalancer
+        observable:SecurityGroup
+        observable:IAMPolicy
+    ) ;
+    .
+
+observable:Secret
+    a owl:Class ;
+    rdfs:label "Secret"@en-US ;
+    rdfs:comment "A secret value stored in a key management service."@en ;
+    rdfs:subClassOf observable:CloudService ;
+    owl:disjointWith (
+        observable:CloudInstance
+        observable:Container
+        observable:CloudStorage
+        observable:LoadBalancer
+        observable:SecurityGroup
+        observable:IAMPolicy
+        observable:KeyManagementService
+    ) ;
+    .
+
+# Properties for SecurityGroup
+observable:securityGroupRules
+    a owl:DatatypeProperty ;
+    rdfs:label "Security Group Rules"@en-US ;
+    rdfs:comment "The inbound and outbound rules for the security group."@en ;
+    rdfs:domain observable:SecurityGroup ;
+    rdfs:range xsd:string ;
+    .
+
+observable:securityGroupVpcId
+    a owl:DatatypeProperty ;
+    rdfs:label "Security Group VPC ID"@en-US ;
+    rdfs:comment "The ID of the VPC where the security group is created."@en ;
+    rdfs:domain observable:SecurityGroup ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for IAMRole
+observable:roleName
+    a owl:DatatypeProperty ;
+    rdfs:label "Role Name"@en-US ;
+    rdfs:comment "The name of the IAM role."@en ;
+    rdfs:domain observable:IAMRole ;
+    rdfs:range xsd:string ;
+    .
+
+observable:roleArn
+    a owl:DatatypeProperty ;
+    rdfs:label "Role ARN"@en-US ;
+    rdfs:comment "The Amazon Resource Name (ARN) of the IAM role."@en ;
+    rdfs:domain observable:IAMRole ;
+    rdfs:range xsd:string ;
+    .
+
+observable:assumeRolePolicy
+    a owl:DatatypeProperty ;
+    rdfs:label "Assume Role Policy"@en-US ;
+    rdfs:comment "The trust policy that defines which entities can assume the role."@en ;
+    rdfs:domain observable:IAMRole ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for IAMPolicy
+observable:policyName
+    a owl:DatatypeProperty ;
+    rdfs:label "Policy Name"@en-US ;
+    rdfs:comment "The name of the IAM policy."@en ;
+    rdfs:domain observable:IAMPolicy ;
+    rdfs:range xsd:string ;
+    .
+
+observable:policyArn
+    a owl:DatatypeProperty ;
+    rdfs:label "Policy ARN"@en-US ;
+    rdfs:comment "The Amazon Resource Name (ARN) of the IAM policy."@en ;
+    rdfs:domain observable:IAMPolicy ;
+    rdfs:range xsd:string ;
+    .
+
+observable:policyDocument
+    a owl:DatatypeProperty ;
+    rdfs:label "Policy Document"@en-US ;
+    rdfs:comment "The JSON policy document that defines the permissions."@en ;
+    rdfs:domain observable:IAMPolicy ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for KeyManagementService
+observable:keyId
+    a owl:DatatypeProperty ;
+    rdfs:label "Key ID"@en-US ;
+    rdfs:comment "The unique identifier for the key."@en ;
+    rdfs:domain observable:KeyManagementService ;
+    rdfs:range xsd:string ;
+    .
+
+observable:keyState
+    a owl:DatatypeProperty ;
+    rdfs:label "Key State"@en-US ;
+    rdfs:comment "The current state of the key (e.g., enabled, disabled, pending deletion)."@en ;
+    rdfs:domain observable:KeyManagementService ;
+    rdfs:range xsd:string ;
+    .
+
+observable:keyRotationEnabled
+    a owl:DatatypeProperty ;
+    rdfs:label "Key Rotation Enabled"@en-US ;
+    rdfs:comment "Whether automatic key rotation is enabled."@en ;
+    rdfs:domain observable:KeyManagementService ;
+    rdfs:range xsd:boolean ;
+    .
+
+# Properties for Secret
+observable:secretName
+    a owl:DatatypeProperty ;
+    rdfs:label "Secret Name"@en-US ;
+    rdfs:comment "The name of the secret."@en ;
+    rdfs:domain observable:Secret ;
+    rdfs:range xsd:string ;
+    .
+
+observable:secretArn
+    a owl:DatatypeProperty ;
+    rdfs:label "Secret ARN"@en-US ;
+    rdfs:comment "The Amazon Resource Name (ARN) of the secret."@en ;
+    rdfs:domain observable:Secret ;
+    rdfs:range xsd:string ;
+    .
+
+observable:secretVersion
+    a owl:DatatypeProperty ;
+    rdfs:label "Secret Version"@en-US ;
+    rdfs:comment "The version of the secret."@en ;
+    rdfs:domain observable:Secret ;
+    rdfs:range xsd:string ;
+    .
+
+# Serverless Computing Classes
+observable:ServerlessFunction
+    a owl:Class ;
+    rdfs:subClassOf observable:CloudService ;
+    rdfs:label "Serverless Function"@en-US ;
+    rdfs:comment "A serverless function that runs in response to events. Based on AWS Lambda (https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) and Azure Functions (https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:functionName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:runtime ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:memorySize ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timeout ;
+        ] ;
+    .
+
+# Properties for ServerlessFunction
+observable:functionName
+    a owl:DatatypeProperty ;
+    rdfs:label "Function Name"@en-US ;
+    rdfs:comment "The name of the serverless function."@en ;
+    rdfs:domain observable:ServerlessFunction ;
+    rdfs:range xsd:string ;
+    .
+
+observable:runtime
+    a owl:DatatypeProperty ;
+    rdfs:label "Runtime"@en-US ;
+    rdfs:comment "The runtime environment for the serverless function."@en ;
+    rdfs:domain observable:ServerlessFunction ;
+    rdfs:range xsd:string ;
+    .
+
+observable:memorySize
+    a owl:DatatypeProperty ;
+    rdfs:label "Memory Size"@en-US ;
+    rdfs:comment "The amount of memory allocated to the serverless function in MB."@en ;
+    rdfs:domain observable:ServerlessFunction ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:timeout
+    a owl:DatatypeProperty ;
+    rdfs:label "Timeout"@en-US ;
+    rdfs:comment "The maximum execution time for the serverless function in seconds."@en ;
+    rdfs:domain observable:ServerlessFunction ;
+    rdfs:range xsd:integer ;
+    .
+
+# Add relationship between CloudInstance and CloudRegion
+observable:isDeployedInRegion
+    a owl:ObjectProperty ;
+    rdfs:label "Is Deployed In Region"@en-US ;
+    rdfs:comment "Indicates that a cloud resource is deployed in a specific cloud region. Based on AWS Global Infrastructure (https://aws.amazon.com/about-aws/global-infrastructure/) and Azure Global Infrastructure (https://azure.microsoft.com/en-us/global-infrastructure/)."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range observable:CloudRegion ;
+    .
+
+observable:hasDeployedResource
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isDeployedInRegion ;
+    rdfs:label "Has Deployed Resource"@en-US ;
+    rdfs:comment "Indicates that a cloud region contains deployed cloud resources."@en ;
+    rdfs:domain observable:CloudRegion ;
+    rdfs:range observable:CloudVirtualInfrastructureObservable ;
+    .
+
+# Add relationship between CloudInstance and VirtualNetwork
+observable:isDeployedInNetwork
+    a owl:ObjectProperty ;
+    rdfs:label "Is Deployed In Network"@en-US ;
+    rdfs:comment "Indicates that a cloud resource is deployed within a virtual network. Based on AWS VPC (https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) and Azure Virtual Network (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview)."@en ;
+    rdfs:domain observable:CloudVirtualInfrastructureObservable ;
+    rdfs:range observable:VirtualNetwork ;
+    .
+
+observable:hasDeployedInstance
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isDeployedInNetwork ;
+    rdfs:label "Has Deployed Instance"@en-US ;
+    rdfs:comment "Indicates that a virtual network contains deployed cloud instances."@en ;
+    rdfs:domain observable:VirtualNetwork ;
+    rdfs:range observable:CloudVirtualInfrastructureObservable ;
+    .
+
+# Add relationship between Transaction and Blockchain
+observable:isPartOfBlockchain
+    a owl:ObjectProperty ;
+    rdfs:label "Is Part Of Blockchain"@en-US ;
+    rdfs:comment "Indicates that a transaction is part of a blockchain. Based on Bitcoin Core documentation and Ethereum Yellow Paper."@en ;
+    rdfs:domain observable:Transaction ;
+    rdfs:range observable:Blockchain ;
+    .
+
+observable:hasTransaction
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isPartOfBlockchain ;
+    rdfs:label "Has Transaction"@en-US ;
+    rdfs:comment "Indicates that a blockchain contains transactions."@en ;
+    rdfs:domain observable:Blockchain ;
+    rdfs:range observable:Transaction ;
+    .

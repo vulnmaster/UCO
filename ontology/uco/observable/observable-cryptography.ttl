@@ -1,0 +1,413 @@
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/cryptography>
+    a owl:Ontology ;
+    rdfs:label "uco-observable-cryptography"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing cryptographic observables."@en-US ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/1.3.0> ;
+    .
+
+# Cryptography Classes
+
+observable:PublicKey
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Public Key"@en ;
+    rdfs:comment "A public key used in asymmetric cryptography. Based on NIST FIPS 186-4 Digital Signature Standard (https://doi.org/10.6028/NIST.FIPS.186-4) and RFC 8017 PKCS #1 (https://datatracker.ietf.org/doc/html/rfc8017)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:keyValue ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:keyAlgorithm ;
+        ] ;
+    .
+
+observable:PrivateKey
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Private Key"@en ;
+    rdfs:comment "A private key used in asymmetric cryptography. Based on NIST FIPS 186-4 Digital Signature Standard (https://doi.org/10.6028/NIST.FIPS.186-4) and RFC 8017 PKCS #1 (https://datatracker.ietf.org/doc/html/rfc8017)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:keyValue ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:keyAlgorithm ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isEncrypted ;
+        ] ;
+    .
+
+observable:KeyPair
+    a owl:Class ;
+    rdfs:subClassOf observable:CryptographicKey ;
+    rdfs:label "Key Pair"@en-US ;
+    rdfs:comment "A pair of cryptographic keys consisting of a public key and a private key. Based on NIST SP 800-57 Part 1 (https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf)."@en ;
+    sh:property
+        [
+            sh:path observable:hasPublicKey ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ,
+        [
+            sh:path observable:hasPrivateKey ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:CryptographicAlgorithm
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Cryptographic Algorithm"@en ;
+    rdfs:comment "A cryptographic algorithm used for key generation and management. Based on NIST SP 800-131A (https://doi.org/10.6028/NIST.SP.800-131Ar2) for cryptographic algorithm and key length recommendations."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:algorithmName ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:keySize ;
+        ] ;
+    .
+
+observable:SeedPhrase
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Seed Phrase"@en ;
+    rdfs:comment "A mnemonic phrase used to generate cryptographic keys. Based on BIP-39 (https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) for mnemonic code generation."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:phraseValue ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:wordCount ;
+        ] ;
+    .
+
+observable:DigitalSignature
+    a owl:Class ;
+    rdfs:subClassOf observable:CryptographicKey ;
+    rdfs:label "Digital Signature"@en-US ;
+    rdfs:comment "A digital signature created using a private key. Based on NIST FIPS 186-5 (https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:signatureValue ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:signatureAlgorithm ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:signedAt ;
+        ] ,
+        [
+            sh:path observable:isSignedBy ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:Certificate
+    a owl:Class ;
+    rdfs:subClassOf observable:CryptographicKey ;
+    rdfs:label "Certificate"@en-US ;
+    rdfs:comment "A digital certificate that binds a public key to an identity. Based on RFC 5280 (https://datatracker.ietf.org/doc/html/rfc5280)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:certificateValue ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:subjectDN ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:issuerDN ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:validFrom ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:validTo ;
+        ] ,
+        [
+            sh:path observable:containsPublicKey ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:IRI ;
+        ] ;
+    .
+
+observable:HashDigest
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Hash Digest"@en ;
+    rdfs:comment "A cryptographic hash digest. Based on NIST FIPS 180-4 (https://doi.org/10.6028/NIST.FIPS.180-4) for Secure Hash Standard."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:hashValue ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:hashAlgorithm ;
+        ] ;
+    .
+
+# Cryptography Properties
+
+observable:keyValue
+    a owl:DatatypeProperty ;
+    rdfs:label "key value"@en ;
+    rdfs:comment "The value of the cryptographic key. Based on NIST FIPS 186-4 (https://doi.org/10.6028/NIST.FIPS.186-4) for key representation."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:keyAlgorithm
+    a owl:DatatypeProperty ;
+    rdfs:label "key algorithm"@en ;
+    rdfs:comment "The algorithm used for the key. Based on NIST SP 800-131A (https://doi.org/10.6028/NIST.SP.800-131Ar2) for approved cryptographic algorithms."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:isEncrypted
+    a owl:DatatypeProperty ;
+    rdfs:label "is encrypted"@en ;
+    rdfs:comment "Indicates whether the private key is encrypted. Based on NIST SP 800-57 (https://doi.org/10.6028/NIST.SP.800-57pt1r5) for key management."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:algorithmName
+    a owl:DatatypeProperty ;
+    rdfs:label "algorithm name"@en ;
+    rdfs:comment "The name of the cryptographic algorithm. Based on NIST SP 800-131A (https://doi.org/10.6028/NIST.SP.800-131Ar2) for approved cryptographic algorithms."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:keySize
+    a owl:DatatypeProperty ;
+    rdfs:label "key size"@en ;
+    rdfs:comment "The size of the key in bits. Based on NIST SP 800-57 (https://doi.org/10.6028/NIST.SP.800-57pt1r5) for key management recommendations."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:phraseValue
+    a owl:DatatypeProperty ;
+    rdfs:label "phrase value"@en ;
+    rdfs:comment "The mnemonic phrase value. Based on BIP-39 (https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) for mnemonic code generation."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:wordCount
+    a owl:DatatypeProperty ;
+    rdfs:label "word count"@en ;
+    rdfs:comment "The number of words in the seed phrase. Based on BIP-39 (https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) for mnemonic code generation."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:signatureValue
+    a owl:DatatypeProperty ;
+    rdfs:label "Signature Value"@en-US ;
+    rdfs:comment "The value of the digital signature."@en ;
+    rdfs:domain observable:DigitalSignature ;
+    rdfs:range xsd:string ;
+    .
+
+observable:signatureAlgorithm
+    a owl:DatatypeProperty ;
+    rdfs:label "Signature Algorithm"@en-US ;
+    rdfs:comment "The algorithm used to create the digital signature."@en ;
+    rdfs:domain observable:DigitalSignature ;
+    rdfs:range xsd:string ;
+    .
+
+observable:signedAt
+    a owl:DatatypeProperty ;
+    rdfs:label "Signed At"@en-US ;
+    rdfs:comment "The date and time when the digital signature was created."@en ;
+    rdfs:domain observable:DigitalSignature ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:certificateValue
+    a owl:DatatypeProperty ;
+    rdfs:label "Certificate Value"@en-US ;
+    rdfs:comment "The value of the digital certificate."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range xsd:string ;
+    .
+
+observable:subjectDN
+    a owl:DatatypeProperty ;
+    rdfs:label "Subject DN"@en-US ;
+    rdfs:comment "The Distinguished Name of the certificate subject."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range xsd:string ;
+    .
+
+observable:issuerDN
+    a owl:DatatypeProperty ;
+    rdfs:label "Issuer DN"@en-US ;
+    rdfs:comment "The Distinguished Name of the certificate issuer."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range xsd:string ;
+    .
+
+observable:validFrom
+    a owl:DatatypeProperty ;
+    rdfs:label "Valid From"@en-US ;
+    rdfs:comment "The date and time when the certificate becomes valid."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:validTo
+    a owl:DatatypeProperty ;
+    rdfs:label "Valid To"@en-US ;
+    rdfs:comment "The date and time when the certificate expires."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:hashValue
+    a owl:DatatypeProperty ;
+    rdfs:label "hash value"@en ;
+    rdfs:comment "The value of the hash digest."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:hashAlgorithm
+    a owl:DatatypeProperty ;
+    rdfs:label "hash algorithm"@en ;
+    rdfs:comment "The algorithm used for the hash digest."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Key Management Properties
+observable:hasPublicKey
+    a owl:ObjectProperty ;
+    rdfs:label "Has Public Key"@en-US ;
+    rdfs:comment "Indicates that a key pair has a public key."@en ;
+    rdfs:domain observable:KeyPair ;
+    rdfs:range observable:PublicKey ;
+    .
+
+observable:hasPrivateKey
+    a owl:ObjectProperty ;
+    rdfs:label "Has Private Key"@en-US ;
+    rdfs:comment "Indicates that a key pair has a private key."@en ;
+    rdfs:domain observable:KeyPair ;
+    rdfs:range observable:PrivateKey ;
+    .
+
+# Digital Signature Properties
+observable:isSignedBy
+    a owl:ObjectProperty ;
+    rdfs:label "Is Signed By"@en-US ;
+    rdfs:comment "Indicates that a digital signature was created using a private key."@en ;
+    rdfs:domain observable:DigitalSignature ;
+    rdfs:range observable:PrivateKey ;
+    .
+
+# Certificate Properties
+observable:containsPublicKey
+    a owl:ObjectProperty ;
+    rdfs:label "Contains Public Key"@en-US ;
+    rdfs:comment "Indicates that a certificate contains a public key."@en ;
+    rdfs:domain observable:Certificate ;
+    rdfs:range observable:PublicKey ;
+    .
+
+# Inverse Relationships
+observable:isPublicKeyOf
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:hasPublicKey ;
+    rdfs:label "Is Public Key Of"@en-US ;
+    rdfs:comment "Indicates that a public key is part of a key pair."@en ;
+    rdfs:domain observable:PublicKey ;
+    rdfs:range observable:KeyPair ;
+    .
+
+observable:isPrivateKeyOf
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:hasPrivateKey ;
+    rdfs:label "Is Private Key Of"@en-US ;
+    rdfs:comment "Indicates that a private key is part of a key pair."@en ;
+    rdfs:domain observable:PrivateKey ;
+    rdfs:range observable:KeyPair ;
+    .
+
+observable:hasCreatedSignature
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isSignedBy ;
+    rdfs:label "Has Created Signature"@en-US ;
+    rdfs:comment "Indicates that a private key has created digital signatures."@en ;
+    rdfs:domain observable:PrivateKey ;
+    rdfs:range observable:DigitalSignature ;
+    .
+
+observable:isContainedIn
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:containsPublicKey ;
+    rdfs:label "Is Contained In"@en-US ;
+    rdfs:comment "Indicates that a public key is contained in a certificate."@en ;
+    rdfs:domain observable:PublicKey ;
+    rdfs:range observable:Certificate ;
+    .

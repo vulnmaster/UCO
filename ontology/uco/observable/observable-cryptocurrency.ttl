@@ -1,0 +1,1225 @@
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix analysis: <https://ontology.unifiedcyberontology.org/uco/analysis/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/cryptocurrency>
+    a owl:Ontology ;
+    rdfs:label "uco-observable-cryptocurrency"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing cryptocurrency-related observables."@en-US ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/analysis/1.3.0> ;
+    .
+
+# Base Classes
+
+observable:BlockchainAddress
+    a owl:Class ;
+    rdfs:subClassOf observable:ObservableObject ;
+    rdfs:label "Blockchain Address"@en ;
+    rdfs:comment "A blockchain address is a unique identifier used to send and receive cryptocurrency transactions. Defined in Bitcoin BIP-13 and Ethereum EIP-55."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:addressValue ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:creationDate ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:lastSeenDate ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isContract ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:maxInclusive "1.0"^^xsd:decimal ;
+            sh:minInclusive "0.0"^^xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path analysis:classificationConfidence ;
+        ] ;
+    .
+
+observable:CryptoAmount
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Cryptocurrency Amount"@en ;
+    rdfs:comment "A class representing a specific amount of cryptocurrency. Based on ISO 4217 for currency amounts and IEEE 754 for decimal representation."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:amount ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:currencyType ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ;
+    .
+
+# Properties
+
+observable:addressValue
+    a owl:DatatypeProperty ;
+    rdfs:label "address value"@en ;
+    rdfs:comment "The string value of the blockchain address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:creationDate
+    a owl:DatatypeProperty ;
+    rdfs:label "creation date"@en ;
+    rdfs:comment "The date and time when the blockchain address was created."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:lastSeenDate
+    a owl:DatatypeProperty ;
+    rdfs:label "last seen date"@en ;
+    rdfs:comment "The date and time when the blockchain address was last observed in activity."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable:isContract
+    a owl:DatatypeProperty ;
+    rdfs:label "is contract"@en ;
+    rdfs:comment "Indicates whether the blockchain address is a smart contract."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:amount
+    a owl:DatatypeProperty ;
+    rdfs:label "amount"@en ;
+    rdfs:comment "The numerical amount of cryptocurrency."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:currencyType
+    a owl:DatatypeProperty ;
+    rdfs:label "currency type"@en ;
+    rdfs:comment "The type of cryptocurrency (e.g., ETH, BTC)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:timestamp
+    a owl:DatatypeProperty ;
+    rdfs:label "timestamp"@en ;
+    rdfs:comment "The date and time when the amount was recorded."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Blockchain-specific Classes
+
+observable:EthereumAddress
+    a owl:Class ;
+    rdfs:subClassOf observable:BlockchainAddress ;
+    rdfs:label "Ethereum Address"@en ;
+    rdfs:comment "An Ethereum blockchain address. Defined in Ethereum Yellow Paper (EIP-55) and EIP-137 for ENS integration."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:nonce ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:ensName ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isErc20Contract ;
+        ] ;
+    .
+
+observable:BitcoinAddress
+    a owl:Class ;
+    rdfs:subClassOf observable:BlockchainAddress ;
+    rdfs:label "Bitcoin Address"@en ;
+    rdfs:comment "A Bitcoin blockchain address. Defined in Bitcoin Improvement Proposals (BIPs) 13, 32, 43, and 84 for address formats and derivation paths."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:scriptPubKey ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:addressType ;
+        ] ;
+    .
+
+observable:PolygonAddress
+    a owl:Class ;
+    rdfs:subClassOf observable:BlockchainAddress ;
+    rdfs:label "Polygon Address"@en ;
+    rdfs:comment "A Polygon blockchain address."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:nonce ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isErc20Contract ;
+        ] ;
+    .
+
+# Additional Properties for Blockchain-specific Classes
+
+observable:nonce
+    a owl:DatatypeProperty ;
+    rdfs:label "nonce"@en ;
+    rdfs:comment "The nonce value for the address (used in Ethereum and similar chains)."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:ensName
+    a owl:DatatypeProperty ;
+    rdfs:label "ENS name"@en ;
+    rdfs:comment "The Ethereum Name Service (ENS) name associated with the address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:isErc20Contract
+    a owl:DatatypeProperty ;
+    rdfs:label "is ERC20 contract"@en ;
+    rdfs:comment "Indicates whether the address is an ERC20 token contract."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:scriptPubKey
+    a owl:DatatypeProperty ;
+    rdfs:label "script public key"@en ;
+    rdfs:comment "The script public key for the Bitcoin address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:addressType
+    a owl:DatatypeProperty ;
+    rdfs:label "address type"@en ;
+    rdfs:comment "The type of Bitcoin address (e.g., P2PKH, P2SH, Bech32)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Relationship Properties
+
+observable:associatedWithScam
+    a owl:ObjectProperty ;
+    rdfs:label "associated with scam"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a scam."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range vocabulary:CryptoScamCategoryVocab ;
+    .
+
+observable:usedInTransaction
+    a owl:ObjectProperty ;
+    rdfs:label "used in transaction"@en ;
+    rdfs:comment "Indicates that the blockchain address was used in a transaction."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:CryptoAmount ;
+    .
+
+observable:hasIOC
+    a owl:ObjectProperty ;
+    rdfs:label "has IOC"@en ;
+    rdfs:comment "Indicates that the blockchain address has associated indicators of compromise."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:CryptoIOC ;
+    .
+
+# Add relationship properties to link with existing UCO observables
+observable:hasAssociatedDomain
+    a owl:ObjectProperty ;
+    rdfs:label "has associated domain"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a domain name."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:DomainName ;
+    .
+
+observable:hasAssociatedURL
+    a owl:ObjectProperty ;
+    rdfs:label "has associated URL"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a URL."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:URL ;
+    .
+
+observable:hasAssociatedIPAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has associated IP address"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with an IP address."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:IPAddress ;
+    .
+
+observable:hasAssociatedSocialMediaProfile
+    a owl:ObjectProperty ;
+    rdfs:label "has associated social media profile"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a social media profile."@en ;
+    rdfs:domain observable:BlockchainAddress ;
+    rdfs:range observable:SocialMediaProfile ;
+    .
+
+# Add a property for discovery date and confidence score
+observable:associationDiscoveryDate
+    a owl:DatatypeProperty ;
+    rdfs:label "association discovery date"@en ;
+    rdfs:comment "The date and time when the association between the blockchain address and the observable was discovered."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Add CryptoIOC class
+observable:CryptoIOC
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Cryptocurrency Indicator of Compromise"@en ;
+    rdfs:comment "An indicator of compromise related to cryptocurrency activities, as reported by ChainAbuse."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:reportCount ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:maxInclusive "1.0"^^xsd:decimal ;
+            sh:minInclusive "0.0"^^xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:confidenceScore ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:isVerified ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:reportDate ;
+        ] ;
+    .
+
+# Add properties for CryptoIOC
+observable:reportCount
+    a owl:DatatypeProperty ;
+    rdfs:label "report count"@en ;
+    rdfs:comment "The number of times this IOC has been reported to ChainAbuse."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:confidenceScore
+    a owl:DatatypeProperty ;
+    rdfs:label "confidence score"@en ;
+    rdfs:comment "The confidence score assigned by ChainAbuse to this IOC report."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:isVerified
+    a owl:DatatypeProperty ;
+    rdfs:label "is verified"@en ;
+    rdfs:comment "Indicates whether the IOC report has been verified by ChainAbuse."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable:reportDate
+    a owl:DatatypeProperty ;
+    rdfs:label "report date"@en ;
+    rdfs:comment "The date and time when the IOC was reported to ChainAbuse."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Add relationship properties for CryptoIOC
+observable:hasAssociatedBlockchainAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has associated blockchain address"@en ;
+    rdfs:comment "Indicates that the IOC is associated with a blockchain address."@en ;
+    rdfs:domain observable:CryptoIOC ;
+    rdfs:range observable:BlockchainAddress ;
+    .
+
+# Core Ledger Artifacts
+
+observable:Blockchain
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Blockchain"@en ;
+    rdfs:comment "A distributed ledger that maintains a continuously growing list of records, called blocks. Based on NIST Special Publication 800-185 and ISO/TC 307 Blockchain and Distributed Ledger Technologies standards."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:chainId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:networkName ;
+        ] ;
+    .
+
+observable:Block
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Block"@en ;
+    rdfs:comment "A collection of transactions that have been verified and added to the blockchain. Defined in Bitcoin Core documentation and Ethereum Yellow Paper."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:blockHeight ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:blockHash ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:timestamp ;
+        ] ;
+    .
+
+observable:Transaction
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Transaction"@en ;
+    rdfs:comment "A record of value transfer or smart contract interaction on the blockchain. Based on Bitcoin Core documentation and Ethereum Yellow Paper transaction specifications."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:transactionHash ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:gasPrice ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:gasUsed ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:fee ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:value ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:nonce ;
+        ] ;
+    .
+
+observable:TransactionInput
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Transaction Input"@en ;
+    rdfs:comment "An input to a blockchain transaction, referencing a previous output."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:previousOutputHash ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:previousOutputIndex ;
+        ] ;
+    .
+
+observable:TransactionOutput
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Transaction Output"@en ;
+    rdfs:comment "An output from a blockchain transaction, specifying value and recipient."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:amount ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:recipientAddress ;
+        ] ;
+    .
+
+# Smart Contract Layer
+
+observable:SmartContract
+    a owl:Class ;
+    rdfs:subClassOf observable:BlockchainObservable ;
+    rdfs:label "Smart Contract"@en-US ;
+    rdfs:comment "A self-executing contract with the terms directly written into code. Based on Ethereum Smart Contracts (https://ethereum.org/en/developers/docs/smart-contracts/) and Solidity Documentation (https://docs.soliditylang.org/)."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:contractAddress ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:contractBytecode ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:contractABI ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:deploymentDate ;
+        ] ;
+    .
+
+observable:ContractEvent
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Contract Event"@en ;
+    rdfs:comment "An event emitted by a smart contract."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:eventName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:eventSignature ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:eventData ;
+        ] ;
+    .
+
+observable:ContractCall
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Contract Call"@en ;
+    rdfs:comment "A call to a smart contract function."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:functionName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:functionSignature ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:functionParameters ;
+        ] ;
+    .
+
+# Tokenization
+
+observable:FungibleToken
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Fungible Token"@en ;
+    rdfs:comment "A token that is interchangeable with other tokens of the same type. Based on ERC-20 standard (EIP-20) and ISO 17442 for Legal Entity Identifiers."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenContract ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenSymbol ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenDecimals ;
+        ] ;
+    .
+
+observable:NonFungibleToken
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Non-Fungible Token"@en ;
+    rdfs:comment "A unique token that is not interchangeable with other tokens. Based on ERC-721 standard (EIP-721) and ERC-1155 multi-token standard."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenContract ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenId ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenURI ;
+        ] ;
+    .
+
+observable:TokenTransfer
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Token Transfer"@en ;
+    rdfs:comment "A transfer of tokens between addresses."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:fromAddress ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:toAddress ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:amount ;
+        ] ;
+    .
+
+observable:TokenStandard
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Token Standard"@en ;
+    rdfs:comment "The standard used for token implementation. Based on ERC-20 (EIP-20), ERC-721 (EIP-721), and ERC-1155 token standards."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:standardName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:standardVersion ;
+        ] ;
+    .
+
+# DeFi & Exchange
+
+observable:ExchangeAccount
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Exchange Account"@en ;
+    rdfs:comment "An account on a cryptocurrency exchange."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:exchangeName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:accountId ;
+        ] ;
+    .
+
+observable:LiquidityPool
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Liquidity Pool"@en ;
+    rdfs:comment "A pool of tokens used for decentralized trading."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:poolAddress ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:totalLiquidity ;
+        ] ;
+    .
+
+observable:Swap
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Swap"@en ;
+    rdfs:comment "A token swap in a decentralized exchange."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenIn ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenOut ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:amountIn ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:amountOut ;
+        ] ;
+    .
+
+observable:DEXTrade
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "DEX Trade"@en ;
+    rdfs:comment "A trade executed on a decentralized exchange."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:dexName ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:price ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:volume ;
+        ] ;
+    .
+
+observable:DeFiProtocol
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "DeFi Protocol"@en ;
+    rdfs:comment "A decentralized finance protocol. Based on Ethereum Improvement Proposals (EIPs) and DeFi protocol standards from the Ethereum Foundation."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:protocolName ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:protocolVersion ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:protocolType ;
+        ] ;
+    .
+
+# Properties for FungibleToken
+observable:tokenContract
+    a owl:DatatypeProperty ;
+    rdfs:label "token contract"@en ;
+    rdfs:comment "The address of the token contract."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenSymbol
+    a owl:DatatypeProperty ;
+    rdfs:label "token symbol"@en ;
+    rdfs:comment "The symbol of the token."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenDecimals
+    a owl:DatatypeProperty ;
+    rdfs:label "token decimals"@en ;
+    rdfs:comment "The number of decimal places for the token."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+# Properties for NonFungibleToken
+observable:tokenId
+    a owl:DatatypeProperty ;
+    rdfs:label "token ID"@en ;
+    rdfs:comment "The unique identifier of the NFT."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenURI
+    a owl:DatatypeProperty ;
+    rdfs:label "token URI"@en ;
+    rdfs:comment "The URI containing the token metadata."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for TokenTransfer
+observable:fromAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "from address"@en ;
+    rdfs:comment "The address sending the tokens."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:toAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "to address"@en ;
+    rdfs:comment "The address receiving the tokens."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for TokenStandard
+observable:standardName
+    a owl:DatatypeProperty ;
+    rdfs:label "standard name"@en ;
+    rdfs:comment "The name of the token standard."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:standardVersion
+    a owl:DatatypeProperty ;
+    rdfs:label "standard version"@en ;
+    rdfs:comment "The version of the token standard."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for ExchangeAccount
+observable:exchangeName
+    a owl:DatatypeProperty ;
+    rdfs:label "exchange name"@en ;
+    rdfs:comment "The name of the cryptocurrency exchange."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:accountId
+    a owl:DatatypeProperty ;
+    rdfs:label "account ID"@en ;
+    rdfs:comment "The unique identifier for the exchange account."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for LiquidityPool
+observable:poolAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "pool address"@en ;
+    rdfs:comment "The address of the liquidity pool contract."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:totalLiquidity
+    a owl:DatatypeProperty ;
+    rdfs:label "total liquidity"@en ;
+    rdfs:comment "The total liquidity in the pool."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+# Properties for Swap
+observable:tokenIn
+    a owl:DatatypeProperty ;
+    rdfs:label "token in"@en ;
+    rdfs:comment "The token being swapped in."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenOut
+    a owl:DatatypeProperty ;
+    rdfs:label "token out"@en ;
+    rdfs:comment "The token being swapped out."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:amountIn
+    a owl:DatatypeProperty ;
+    rdfs:label "amount in"@en ;
+    rdfs:comment "The amount of tokens being swapped in."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:amountOut
+    a owl:DatatypeProperty ;
+    rdfs:label "amount out"@en ;
+    rdfs:comment "The amount of tokens being swapped out."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+# Properties for DEXTrade
+observable:dexName
+    a owl:DatatypeProperty ;
+    rdfs:label "DEX name"@en ;
+    rdfs:comment "The name of the decentralized exchange."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:price
+    a owl:DatatypeProperty ;
+    rdfs:label "price"@en ;
+    rdfs:comment "The price of the trade."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:volume
+    a owl:DatatypeProperty ;
+    rdfs:label "volume"@en ;
+    rdfs:comment "The volume of the trade."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+# Properties for DeFiProtocol
+observable:protocolName
+    a owl:DatatypeProperty ;
+    rdfs:label "protocol name"@en ;
+    rdfs:comment "The name of the DeFi protocol."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:protocolVersion
+    a owl:DatatypeProperty ;
+    rdfs:label "protocol version"@en ;
+    rdfs:comment "The version of the DeFi protocol."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:protocolType
+    a owl:DatatypeProperty ;
+    rdfs:label "protocol type"@en ;
+    rdfs:comment "The type of DeFi protocol (e.g., lending, staking, yield farming)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for Blockchain
+observable:chainId
+    a owl:DatatypeProperty ;
+    rdfs:label "chain ID"@en ;
+    rdfs:comment "The unique identifier for the blockchain network. Defined in EIP-155 for Ethereum and BIP-122 for Bitcoin."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:networkName
+    a owl:DatatypeProperty ;
+    rdfs:label "network name"@en ;
+    rdfs:comment "The name of the blockchain network."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for Block
+observable:blockHeight
+    a owl:DatatypeProperty ;
+    rdfs:label "block height"@en ;
+    rdfs:comment "The height of the block in the blockchain."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:blockHash
+    a owl:DatatypeProperty ;
+    rdfs:label "block hash"@en ;
+    rdfs:comment "The hash of the block."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for Transaction
+observable:transactionHash
+    a owl:DatatypeProperty ;
+    rdfs:label "transaction hash"@en ;
+    rdfs:comment "The hash of the transaction."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:gasPrice
+    a owl:DatatypeProperty ;
+    rdfs:label "gas price"@en ;
+    rdfs:comment "The price of gas for the transaction. Defined in Ethereum Yellow Paper and EIP-1559 for fee market changes."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:gasUsed
+    a owl:DatatypeProperty ;
+    rdfs:label "gas used"@en ;
+    rdfs:comment "The amount of gas used by the transaction."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:fee
+    a owl:DatatypeProperty ;
+    rdfs:label "fee"@en ;
+    rdfs:comment "The transaction fee."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable:value
+    a owl:DatatypeProperty ;
+    rdfs:label "value"@en ;
+    rdfs:comment "The value transferred in the transaction."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+# Properties for SmartContract
+observable:contractAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "Contract Address"@en-US ;
+    rdfs:comment "The blockchain address where the smart contract is deployed."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range xsd:string ;
+    .
+
+observable:contractBytecode
+    a owl:DatatypeProperty ;
+    rdfs:label "Contract Bytecode"@en-US ;
+    rdfs:comment "The compiled bytecode of the smart contract."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range xsd:string ;
+    .
+
+observable:contractABI
+    a owl:DatatypeProperty ;
+    rdfs:label "Contract ABI"@en-US ;
+    rdfs:comment "The Application Binary Interface (ABI) of the smart contract."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range xsd:string ;
+    .
+
+observable:deploymentDate
+    a owl:DatatypeProperty ;
+    rdfs:label "Deployment Date"@en-US ;
+    rdfs:comment "The date and time when the smart contract was deployed."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Properties for ContractEvent
+observable:eventName
+    a owl:DatatypeProperty ;
+    rdfs:label "event name"@en ;
+    rdfs:comment "The name of the contract event."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:eventSignature
+    a owl:DatatypeProperty ;
+    rdfs:label "event signature"@en ;
+    rdfs:comment "The signature of the contract event."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:eventData
+    a owl:DatatypeProperty ;
+    rdfs:label "event data"@en ;
+    rdfs:comment "The data associated with the contract event."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Properties for ContractCall
+observable:functionName
+    a owl:DatatypeProperty ;
+    rdfs:label "function name"@en ;
+    rdfs:comment "The name of the contract function being called."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:functionSignature
+    a owl:DatatypeProperty ;
+    rdfs:label "function signature"@en ;
+    rdfs:comment "The signature of the contract function being called."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable:functionParameters
+    a owl:DatatypeProperty ;
+    rdfs:label "function parameters"@en ;
+    rdfs:comment "The parameters passed to the contract function."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Token Classes
+observable:Token
+    a owl:Class ;
+    rdfs:subClassOf observable:BlockchainObservable ;
+    rdfs:label "Token"@en-US ;
+    rdfs:comment "A digital asset that represents value or utility on a blockchain. Based on ERC-20 (https://eips.ethereum.org/EIPS/eip-20) and ERC-721 (https://eips.ethereum.org/EIPS/eip-721) standards."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenAddress ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenSymbol ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:tokenDecimals ;
+        ] ,
+        [
+            sh:datatype xsd:integer ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable:totalSupply ;
+        ] ;
+    .
+
+# Properties for Token
+observable:tokenAddress
+    a owl:DatatypeProperty ;
+    rdfs:label "Token Address"@en-US ;
+    rdfs:comment "The blockchain address of the token contract."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenSymbol
+    a owl:DatatypeProperty ;
+    rdfs:label "Token Symbol"@en-US ;
+    rdfs:comment "The symbol used to represent the token."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range xsd:string ;
+    .
+
+observable:tokenDecimals
+    a owl:DatatypeProperty ;
+    rdfs:label "Token Decimals"@en-US ;
+    rdfs:comment "The number of decimal places the token can be divided into."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range xsd:integer ;
+    .
+
+observable:totalSupply
+    a owl:DatatypeProperty ;
+    rdfs:label "Total Supply"@en-US ;
+    rdfs:comment "The total supply of the token."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range xsd:integer ;
+    .
+
+# Relationships between classes
+observable:isDeployedOn
+    a owl:ObjectProperty ;
+    rdfs:label "Is Deployed On"@en-US ;
+    rdfs:comment "Indicates that a smart contract is deployed on a blockchain. Based on Ethereum Contract Deployment (https://ethereum.org/en/developers/docs/smart-contracts/deploying/)."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range observable:Blockchain ;
+    .
+
+observable:hasDeployedContract
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isDeployedOn ;
+    rdfs:label "Has Deployed Contract"@en-US ;
+    rdfs:comment "Indicates that a blockchain has deployed smart contracts."@en ;
+    rdfs:domain observable:Blockchain ;
+    rdfs:range observable:SmartContract ;
+    .
+
+observable:isTokenOf
+    a owl:ObjectProperty ;
+    rdfs:label "Is Token Of"@en-US ;
+    rdfs:comment "Indicates that a token is part of a blockchain. Based on ERC-20 and ERC-721 standards."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range observable:Blockchain ;
+    .
+
+observable:hasToken
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isTokenOf ;
+    rdfs:label "Has Token"@en-US ;
+    rdfs:comment "Indicates that a blockchain has tokens."@en ;
+    rdfs:domain observable:Blockchain ;
+    rdfs:range observable:Token ;
+    .
+
+observable:isImplementedBy
+    a owl:ObjectProperty ;
+    rdfs:label "Is Implemented By"@en-US ;
+    rdfs:comment "Indicates that a token is implemented by a smart contract. Based on ERC-20 and ERC-721 standards."@en ;
+    rdfs:domain observable:Token ;
+    rdfs:range observable:SmartContract ;
+    .
+
+observable:implementsToken
+    a owl:ObjectProperty ;
+    owl:inverseOf observable:isImplementedBy ;
+    rdfs:label "Implements Token"@en-US ;
+    rdfs:comment "Indicates that a smart contract implements a token."@en ;
+    rdfs:domain observable:SmartContract ;
+    rdfs:range observable:Token ;
+    .
