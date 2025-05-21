@@ -1316,3 +1316,51 @@ vocabulary:WirelessNetworkSecurityModeVocab
 	] ;
 	.
 
+vocabulary:CryptoScamCategoryVocab
+    a rdfs:Datatype ;
+    rdfs:label "Cryptocurrency Scam Category Vocabulary"@en-US ;
+    rdfs:comment "Defines an open-vocabulary of cryptocurrency scam categories. These categories are based on the 16 categories of malicious crypto activity identified by ChainAbuse (https://docs.chainabuse.com/docs/welcome-to-chainabuse-api)."@en ;
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:oneOf (
+            "Investment Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Phishing Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Ponzi Scheme"^^vocabulary:CryptoScamCategoryVocab
+            "Pump and Dump"^^vocabulary:CryptoScamCategoryVocab
+            "Rug Pull"^^vocabulary:CryptoScamCategoryVocab
+            "Social Engineering"^^vocabulary:CryptoScamCategoryVocab
+            "Token Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Trading Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Wallet Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Exchange Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Mining Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Airdrop Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Giveaway Scam"^^vocabulary:CryptoScamCategoryVocab
+            "Fake ICO"^^vocabulary:CryptoScamCategoryVocab
+            "Fake NFT"^^vocabulary:CryptoScamCategoryVocab
+            "Other"^^vocabulary:CryptoScamCategoryVocab
+        ) ;
+    ] ;
+    .
+
+vocabulary:CryptoIOCTypeVocab
+    a rdfs:Datatype ;
+    rdfs:label "Cryptocurrency IOC Type Vocabulary"@en-US ;
+    rdfs:comment "Defines an open-vocabulary of cryptocurrency indicator of compromise types based on ChainAbuse's data structure (https://docs.chainabuse.com/docs/welcome-to-chainabuse-api)."@en ;
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:oneOf (
+            "Domain"^^vocabulary:CryptoIOCTypeVocab
+            "URL"^^vocabulary:CryptoIOCTypeVocab
+            "BlockchainAddress"^^vocabulary:CryptoIOCTypeVocab
+            "IPAddress"^^vocabulary:CryptoIOCTypeVocab
+            "SocialMediaHandle"^^vocabulary:CryptoIOCTypeVocab
+            "EmailAddress"^^vocabulary:CryptoIOCTypeVocab
+            "PhoneNumber"^^vocabulary:CryptoIOCTypeVocab
+            "Other"^^vocabulary:CryptoIOCTypeVocab
+        ) ;
+    ] ;
+    .
+

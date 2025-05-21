@@ -1,0 +1,398 @@
+@prefix core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix analysis: <https://ontology.unifiedcyberontology.org/uco/analysis/> .
+@prefix vocabulary: <https://ontology.unifiedcyberontology.org/uco/vocabulary/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ontology.unifiedcyberontology.org/uco/observable/crypto>
+    a owl:Ontology ;
+    rdfs:label "uco-observable-crypto"@en ;
+    rdfs:comment "This ontology defines classes and properties for characterizing cryptocurrency-related observables."@en-US ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/observable/1.3.0> ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/analysis/1.3.0> ;
+    .
+
+# Base Classes
+
+observable-crypto:BlockchainAddress
+    a owl:Class ;
+    rdfs:subClassOf observable:ObservableObject ;
+    rdfs:label "Blockchain Address"@en ;
+    rdfs:comment "A blockchain address is a unique identifier used to send and receive cryptocurrency transactions."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:addressValue ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:creationDate ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:lastSeenDate ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:isContract ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:maxInclusive "1.0"^^xsd:decimal ;
+            sh:minInclusive "0.0"^^xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path analysis:classificationConfidence ;
+        ] ;
+    .
+
+observable-crypto:CryptoAmount
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Cryptocurrency Amount"@en ;
+    rdfs:comment "A class representing a specific amount of cryptocurrency."@en ;
+    sh:property
+        [
+            sh:datatype xsd:decimal ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:amount ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:minCount "1"^^xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:currencyType ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:timestamp ;
+        ] ;
+    .
+
+# Properties
+
+observable-crypto:addressValue
+    a owl:DatatypeProperty ;
+    rdfs:label "address value"@en ;
+    rdfs:comment "The string value of the blockchain address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable-crypto:creationDate
+    a owl:DatatypeProperty ;
+    rdfs:label "creation date"@en ;
+    rdfs:comment "The date and time when the blockchain address was created."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable-crypto:lastSeenDate
+    a owl:DatatypeProperty ;
+    rdfs:label "last seen date"@en ;
+    rdfs:comment "The date and time when the blockchain address was last observed in activity."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+observable-crypto:isContract
+    a owl:DatatypeProperty ;
+    rdfs:label "is contract"@en ;
+    rdfs:comment "Indicates whether the blockchain address is a smart contract."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable-crypto:amount
+    a owl:DatatypeProperty ;
+    rdfs:label "amount"@en ;
+    rdfs:comment "The numerical amount of cryptocurrency."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable-crypto:currencyType
+    a owl:DatatypeProperty ;
+    rdfs:label "currency type"@en ;
+    rdfs:comment "The type of cryptocurrency (e.g., ETH, BTC)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable-crypto:timestamp
+    a owl:DatatypeProperty ;
+    rdfs:label "timestamp"@en ;
+    rdfs:comment "The date and time when the amount was recorded."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Blockchain-specific Classes
+
+observable-crypto:EthereumAddress
+    a owl:Class ;
+    rdfs:subClassOf observable-crypto:BlockchainAddress ;
+    rdfs:label "Ethereum Address"@en ;
+    rdfs:comment "An Ethereum blockchain address."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:nonce ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:ensName ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:isErc20Contract ;
+        ] ;
+    .
+
+observable-crypto:BitcoinAddress
+    a owl:Class ;
+    rdfs:subClassOf observable-crypto:BlockchainAddress ;
+    rdfs:label "Bitcoin Address"@en ;
+    rdfs:comment "A Bitcoin blockchain address."@en ;
+    sh:property
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:scriptPubKey ;
+        ] ,
+        [
+            sh:datatype xsd:string ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:addressType ;
+        ] ;
+    .
+
+observable-crypto:PolygonAddress
+    a owl:Class ;
+    rdfs:subClassOf observable-crypto:BlockchainAddress ;
+    rdfs:label "Polygon Address"@en ;
+    rdfs:comment "A Polygon blockchain address."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:nonce ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:isErc20Contract ;
+        ] ;
+    .
+
+# Additional Properties for Blockchain-specific Classes
+
+observable-crypto:nonce
+    a owl:DatatypeProperty ;
+    rdfs:label "nonce"@en ;
+    rdfs:comment "The nonce value for the address (used in Ethereum and similar chains)."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable-crypto:ensName
+    a owl:DatatypeProperty ;
+    rdfs:label "ENS name"@en ;
+    rdfs:comment "The Ethereum Name Service (ENS) name associated with the address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable-crypto:isErc20Contract
+    a owl:DatatypeProperty ;
+    rdfs:label "is ERC20 contract"@en ;
+    rdfs:comment "Indicates whether the address is an ERC20 token contract."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable-crypto:scriptPubKey
+    a owl:DatatypeProperty ;
+    rdfs:label "script public key"@en ;
+    rdfs:comment "The script public key for the Bitcoin address."@en ;
+    rdfs:range xsd:string ;
+    .
+
+observable-crypto:addressType
+    a owl:DatatypeProperty ;
+    rdfs:label "address type"@en ;
+    rdfs:comment "The type of Bitcoin address (e.g., P2PKH, P2SH, Bech32)."@en ;
+    rdfs:range xsd:string ;
+    .
+
+# Relationship Properties
+
+observable-crypto:associatedWithScam
+    a owl:ObjectProperty ;
+    rdfs:label "associated with scam"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a scam."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range vocabulary:CryptoScamCategoryVocab ;
+    .
+
+observable-crypto:usedInTransaction
+    a owl:ObjectProperty ;
+    rdfs:label "used in transaction"@en ;
+    rdfs:comment "Indicates that the blockchain address was used in a transaction."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable-crypto:CryptoAmount ;
+    .
+
+observable-crypto:hasIOC
+    a owl:ObjectProperty ;
+    rdfs:label "has IOC"@en ;
+    rdfs:comment "Indicates that the blockchain address has associated indicators of compromise."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable-crypto:CryptoIOC ;
+    .
+
+# Add relationship properties to link with existing UCO observables
+observable-crypto:hasAssociatedDomain
+    a owl:ObjectProperty ;
+    rdfs:label "has associated domain"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a domain name."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable:DomainName ;
+    .
+
+observable-crypto:hasAssociatedURL
+    a owl:ObjectProperty ;
+    rdfs:label "has associated URL"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a URL."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable:URL ;
+    .
+
+observable-crypto:hasAssociatedIPAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has associated IP address"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with an IP address."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable:IPAddress ;
+    .
+
+observable-crypto:hasAssociatedSocialMediaProfile
+    a owl:ObjectProperty ;
+    rdfs:label "has associated social media profile"@en ;
+    rdfs:comment "Indicates that the blockchain address is associated with a social media profile."@en ;
+    rdfs:domain observable-crypto:BlockchainAddress ;
+    rdfs:range observable:SocialMediaProfile ;
+    .
+
+# Add a property for discovery date and confidence score
+observable-crypto:associationDiscoveryDate
+    a owl:DatatypeProperty ;
+    rdfs:label "association discovery date"@en ;
+    rdfs:comment "The date and time when the association between the blockchain address and the observable was discovered."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Add CryptoIOC class
+observable-crypto:CryptoIOC
+    a owl:Class ;
+    rdfs:subClassOf core:UcoObject ;
+    rdfs:label "Cryptocurrency Indicator of Compromise"@en ;
+    rdfs:comment "An indicator of compromise related to cryptocurrency activities, as reported by ChainAbuse."@en ;
+    sh:property
+        [
+            sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:reportCount ;
+        ] ,
+        [
+            sh:datatype xsd:decimal ;
+            sh:maxInclusive "1.0"^^xsd:decimal ;
+            sh:minInclusive "0.0"^^xsd:decimal ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:confidenceScore ;
+        ] ,
+        [
+            sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:isVerified ;
+        ] ,
+        [
+            sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path observable-crypto:reportDate ;
+        ] ;
+    .
+
+# Add properties for CryptoIOC
+observable-crypto:reportCount
+    a owl:DatatypeProperty ;
+    rdfs:label "report count"@en ;
+    rdfs:comment "The number of times this IOC has been reported to ChainAbuse."@en ;
+    rdfs:range xsd:integer ;
+    .
+
+observable-crypto:confidenceScore
+    a owl:DatatypeProperty ;
+    rdfs:label "confidence score"@en ;
+    rdfs:comment "The confidence score assigned by ChainAbuse to this IOC report."@en ;
+    rdfs:range xsd:decimal ;
+    .
+
+observable-crypto:isVerified
+    a owl:DatatypeProperty ;
+    rdfs:label "is verified"@en ;
+    rdfs:comment "Indicates whether the IOC report has been verified by ChainAbuse."@en ;
+    rdfs:range xsd:boolean ;
+    .
+
+observable-crypto:reportDate
+    a owl:DatatypeProperty ;
+    rdfs:label "report date"@en ;
+    rdfs:comment "The date and time when the IOC was reported to ChainAbuse."@en ;
+    rdfs:range xsd:dateTime ;
+    .
+
+# Add relationship properties for CryptoIOC
+observable-crypto:hasAssociatedBlockchainAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has associated blockchain address"@en ;
+    rdfs:comment "Indicates that the IOC is associated with a blockchain address."@en ;
+    rdfs:domain observable-crypto:CryptoIOC ;
+    rdfs:range observable-crypto:BlockchainAddress ;
+    .
+
+observable-crypto:hasAssociatedDomain
+    a owl:ObjectProperty ;
+    rdfs:label "has associated domain"@en ;
+    rdfs:comment "Indicates that the IOC is associated with a domain name."@en ;
+    rdfs:domain observable-crypto:CryptoIOC ;
+    rdfs:range observable:DomainName ;
+    .
+
+observable-crypto:hasAssociatedURL
+    a owl:ObjectProperty ;
+    rdfs:label "has associated URL"@en ;
+    rdfs:comment "Indicates that the IOC is associated with a URL."@en ;
+    rdfs:domain observable-crypto:CryptoIOC ;
+    rdfs:range observable:URL ;
+    .
+
+observable-crypto:hasAssociatedIPAddress
+    a owl:ObjectProperty ;
+    rdfs:label "has associated IP address"@en ;
+    rdfs:comment "Indicates that the IOC is associated with an IP address."@en ;
+    rdfs:domain observable-crypto:CryptoIOC ;
+    rdfs:range observable:IPAddress ;
+    .
+
+observable-crypto:hasAssociatedSocialMediaProfile
+    a owl:ObjectProperty ;
+    rdfs:label "has associated social media profile"@en ;
+    rdfs:comment "Indicates that the IOC is associated with a social media profile."@en ;
+    rdfs:domain observable-crypto:CryptoIOC ;
+    rdfs:range observable:SocialMediaProfile ;
+    .
