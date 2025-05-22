@@ -1,0 +1,243 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix uco-channel: <https://ontology.unifiedcyberontology.org/channel#> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix hotline: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/0.3> rdf:type owl:Ontology ;
+    rdfs:label "Internet Crimes Against Children Core Ontology"@en ;
+    rdfs:comment "A core ontology for representing concepts and relationships specific to Internet Crimes Against Children investigations, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/0.3> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-03-20"^^xsd:date ;
+    dcterms:modified "2024-05-17"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/core> ,
+                <https://ontology.caseontology.org/case> ,
+                <https://ontology.unifiedcyberontology.org/hotlines/2025/core> .
+
+# Investigation Class
+icac:ICACInvestigation rdf:type owl:Class ;
+    rdfs:label "ICAC Investigation"@en ;
+    rdfs:comment "A child-protection investigation that follows a standard action lifecycle beginning with a cybertip. This class extends the CASE Investigation class to provide ICAC-specific investigation capabilities."@en ;
+    rdfs:subClassOf case-investigation:Investigation .
+
+# Investigation Lifecycle Properties
+icac:hasStep rdf:type owl:ObjectProperty ;
+    rdfs:label "has step"@en ;
+    rdfs:comment "Links an ICAC investigation to each ordered step in its lifecycle."@en ;
+    rdfs:domain icac:ICACInvestigation ;
+    rdfs:range uco-action:Action .
+
+icac:nextStep rdf:type owl:ObjectProperty ;
+    rdfs:label "next step"@en ;
+    rdfs:comment "Denotes the chronologically next action in the lifecycle."@en ;
+    owl:inverseOf icac:previousStep ;
+    owl:propertyChainAxiom (icac:hasStep icac:nextStep) .
+
+icac:previousStep rdf:type owl:ObjectProperty ;
+    rdfs:label "previous step"@en ;
+    rdfs:comment "Denotes the chronologically previous action in the lifecycle."@en ;
+    owl:inverseOf icac:nextStep .
+
+# Core Lifecycle Action Classes
+icac:ReceiveCybertipAction rdf:type owl:Class ;
+    rdfs:label "Receive Cybertip Action"@en ;
+    rdfs:comment "The initial action of receiving a cybertip report from a reporting entity (e.g., NCMEC, INHOPE)."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:ReviewCybertipAction rdf:type owl:Class ;
+    rdfs:label "Review Cybertip Action"@en ;
+    rdfs:comment "The action of reviewing and analyzing a cybertip report by an analyst."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:LegalProcessAction rdf:type owl:Class ;
+    rdfs:label "Legal Process Action"@en ;
+    rdfs:comment "The action of initiating legal processes such as search warrants, subpoenas, or MLAT requests."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:EvidenceReviewAction rdf:type owl:Class ;
+    rdfs:label "Evidence Review Action"@en ;
+    rdfs:comment "The action of reviewing and analyzing digital evidence using forensic tools."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:CSAMCurationAction rdf:type owl:Class ;
+    rdfs:label "CSAM Curation Action"@en ;
+    rdfs:comment "The action of curating and classifying child sexual abuse material using standard classification systems."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:VictimRescueAction rdf:type owl:Class ;
+    rdfs:label "Victim Rescue Action"@en ;
+    rdfs:comment "The action of rescuing and providing support to identified victims."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:UnknownVictimSubmission rdf:type owl:Class ;
+    rdfs:label "Unknown Victim Submission"@en ;
+    rdfs:comment "The action of submitting information about unidentified victims to relevant databases."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# Action-Specific Properties
+icac:targetsService rdf:type owl:ObjectProperty ;
+    rdfs:label "targets service"@en ;
+    rdfs:comment "Links a legal process action to the digital service it targets."@en ;
+    rdfs:domain icac:LegalProcessAction ;
+    rdfs:range uco-channel:DigitalService .
+
+icac:legalInstrument rdf:type owl:ObjectProperty ;
+    rdfs:label "legal instrument"@en ;
+    rdfs:comment "Links a legal process action to its legal instrument (e.g., search warrant, subpoena)."@en ;
+    rdfs:domain icac:LegalProcessAction .
+
+icac:usesClassification rdf:type owl:ObjectProperty ;
+    rdfs:label "uses classification"@en ;
+    rdfs:comment "Links a CSAM curation action to the classification system used."@en ;
+    rdfs:domain icac:CSAMCurationAction .
+
+icac:rescuedVictim rdf:type owl:ObjectProperty ;
+    rdfs:label "rescued victim"@en ;
+    rdfs:comment "Links a victim rescue action to the rescued victim."@en ;
+    rdfs:domain icac:VictimRescueAction ;
+    rdfs:range uco-identity:Person .
+
+icac:submittedTo rdf:type owl:ObjectProperty ;
+    rdfs:label "submitted to"@en ;
+    rdfs:comment "Links an unknown victim submission to the target database."@en ;
+    rdfs:domain icac:UnknownVictimSubmission .
+
+# Core Event Classes
+icac:ChildSexualAbuseEvent rdf:type owl:Class ;
+    rdfs:label "Child Sexual Abuse Event"@en ;
+    rdfs:comment "A class representing any event involving child sexual abuse or exploitation. This is the base class for all ICAC incidents."@en ;
+    rdfs:subClassOf uco-action:Crime .
+
+icac:CSAMIncident rdf:type owl:Class ;
+    rdfs:label "Child Sexual Abuse Material Incident"@en ;
+    rdfs:comment "Incidents involving possession, manufacture, or distribution of child sexual abuse material. This replaces the deprecated 'ChildPornographyIncident' term."@en ;
+    rdfs:subClassOf icac:ChildSexualAbuseEvent .
+
+icac:DigitallyGeneratedCSAMIncident rdf:type owl:Class ;
+    rdfs:label "Digitally Generated CSAM Incident"@en ;
+    rdfs:comment "Incidents involving digitally generated or manipulated child sexual abuse material."@en ;
+    rdfs:subClassOf icac:CSAMIncident .
+
+icac:LiveStreamingCSA rdf:type owl:Class ;
+    rdfs:label "Live Streaming Child Sexual Abuse"@en ;
+    rdfs:comment "Incidents involving live streaming of child sexual abuse."@en ;
+    rdfs:subClassOf icac:ChildSexualAbuseEvent .
+
+icac:GroomingSolicitation rdf:type owl:Class ;
+    rdfs:label "Grooming and Solicitation"@en ;
+    rdfs:comment "Incidents involving grooming or solicitation of children for sexual purposes."@en ;
+    rdfs:subClassOf icac:ChildSexualAbuseEvent .
+
+icac:Sextortion rdf:type owl:Class ;
+    rdfs:label "Sextortion"@en ;
+    rdfs:comment "Incidents involving sexual extortion of children."@en ;
+    rdfs:subClassOf icac:ChildSexualAbuseEvent .
+
+# Role Classes
+icac:VictimRole rdf:type owl:Class ;
+    rdfs:label "Victim Role"@en ;
+    rdfs:comment "Role of a person who is a victim of child sexual abuse or exploitation."@en ;
+    rdfs:subClassOf uco-role:VictimRole .
+
+icac:OffenderRole rdf:type owl:Class ;
+    rdfs:label "Offender Role"@en ;
+    rdfs:comment "Role of a person who commits child sexual abuse or exploitation."@en ;
+    rdfs:subClassOf uco-role:OffenderRole .
+
+icac:RescuerRole rdf:type owl:Class ;
+    rdfs:label "Rescuer Role"@en ;
+    rdfs:comment "Role of a person involved in rescuing or protecting victims (e.g., law enforcement, NGO worker)."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+# Core Object Properties
+icac:involvesVictim rdf:type owl:ObjectProperty ;
+    rdfs:label "involves victim"@en ;
+    rdfs:comment "Links an event to a victim role."@en ;
+    rdfs:domain icac:ChildSexualAbuseEvent ;
+    rdfs:range icac:VictimRole .
+
+icac:involvesOffender rdf:type owl:ObjectProperty ;
+    rdfs:label "involves offender"@en ;
+    rdfs:comment "Links an event to an offender role."@en ;
+    rdfs:domain icac:ChildSexualAbuseEvent ;
+    rdfs:range icac:OffenderRole .
+
+icac:usesChannel rdf:type owl:ObjectProperty ;
+    rdfs:label "uses channel"@en ;
+    rdfs:comment "Links an event to a digital service or communication channel."@en ;
+    rdfs:domain icac:ChildSexualAbuseEvent ;
+    rdfs:range uco-channel:DigitalService .
+
+icac:producesArtifact rdf:type owl:ObjectProperty ;
+    rdfs:label "produces artifact"@en ;
+    rdfs:comment "Links an event to a digital artifact it produces."@en ;
+    rdfs:domain icac:ChildSexualAbuseEvent ;
+    rdfs:range uco-observable:DigitalArtifact .
+
+# Core Datatype Properties
+icac:severityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "severity level"@en ;
+    rdfs:comment "The severity level of an incident (0-3, mapping to NorRating/EUROPOL scales)."@en ;
+    rdfs:domain icac:ChildSexualAbuseEvent ;
+    rdfs:range xsd:integer .
+
+icac:depictsChild rdf:type owl:ObjectProperty ;
+    rdfs:label "depicts child"@en ;
+    rdfs:comment "Links a digital artifact to a child depicted in it."@en ;
+    rdfs:domain uco-observable:DigitalArtifact ;
+    rdfs:range uco-identity:Person .
+
+icac:isDigitallyGenerated rdf:type owl:DatatypeProperty ;
+    rdfs:label "is digitally generated"@en ;
+    rdfs:comment "Indicates whether a digital artifact is digitally generated or manipulated."@en ;
+    rdfs:domain uco-observable:DigitalArtifact ;
+    rdfs:range xsd:boolean .
+
+# Deprecated Classes (moved to end)
+icac:ChildPornographyIncident rdf:type owl:Class ;
+    rdfs:label "Child Pornography Incident"@en ;
+    rdfs:comment "DEPRECATED: Use CSAMIncident instead. This term is deprecated in favor of more accurate terminology."@en ;
+    owl:deprecated "true"^^xsd:boolean ;
+    rdfs:subClassOf icac:CSAMIncident .
+
+# Channel-related additions
+icac:StreamingPlatformChannel rdf:type owl:Class ;
+    rdfs:subClassOf hotline:IntakeChannel ;
+    rdfs:label "Streaming Platform Channel"@en ;
+    rdfs:comment "A specific type of intake channel representing a live streaming platform or service."@en .
+
+icac:platformName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Platform Name"@en ;
+    rdfs:comment "The name of the platform or application where the content is hosted or activity occurs (e.g., Facebook, Twitch, Discord)."@en ;
+    rdfs:domain icac:StreamingPlatformChannel ;
+    rdfs:range xsd:string .
+
+icac:serviceName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Service Name"@en ;
+    rdfs:comment "The specific name of the service or sub-platform, if applicable (e.g., a specific game within a gaming platform)."@en ;
+    rdfs:domain icac:StreamingPlatformChannel ;
+    rdfs:range xsd:string .
+
+# Update LiveStreamIncident and usesChannel
+icac:LiveStreamIncident rdf:type owl:Class ;
+    rdfs:label "Live Streaming Child Sexual Abuse Incident"@en ;
+    rdfs:comment "An incident involving live streaming of child sexual abuse."@en ;
+    rdfs:subClassOf icac:CSAMIncident . # Or other appropriate parent
+
+icac:usesChannel rdf:type owl:ObjectProperty ;
+    rdfs:label "uses channel"@en ;
+    rdfs:comment "Links an incident (especially live streaming) to the communication channel used."@en ;
+    rdfs:domain icac:LiveStreamIncident ; # Or a more general event class
+    rdfs:range icac:StreamingPlatformChannel . # Changed to specific channel 

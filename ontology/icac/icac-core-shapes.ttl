@@ -1,0 +1,228 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+
+# Investigation Lifecycle Shape
+icac:ICACInvestigationShape rdf:type sh:NodeShape ;
+    rdfs:label "ICAC Investigation Shape"@en ;
+    sh:targetClass icac:ICACInvestigation ;
+    sh:property [
+        sh:path icac:hasStep ;
+        sh:minCount 1 ;
+        sh:class uco-action:Action ;
+        sh:message "An ICAC investigation must have at least one step"@en
+    ] ;
+    # Ensure first step is ReceiveCybertipAction
+    sh:rule [
+        a sh:SPARQLRule ;
+        sh:message "The first step must be ReceiveCybertipAction"@en ;
+        sh:condition [
+            sh:not [
+                sh:path (icac:hasStep icac:previousStep*) ;
+            ]
+        ] ;
+        sh:prefixes icac: ;
+        sh:construct """
+            INSERT { $this a icac:LifecycleError . }
+            WHERE {
+                $this icac:hasStep ?a .
+                FILTER NOT EXISTS { ?a a icac:ReceiveCybertipAction . }
+                FILTER NOT EXISTS { ?prev icac:nextStep ?a . }
+            }
+        """
+    ] .
+
+# Action Step Shapes
+icac:ReceiveCybertipActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Receive Cybertip Action Shape"@en ;
+    sh:targetClass icac:ReceiveCybertipAction ;
+    sh:property [
+        sh:path uco-core:hasFacet ;
+        sh:minCount 1 ;
+        sh:message "A receive cybertip action must have at least one facet"@en
+    ] .
+
+icac:ReviewCybertipActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Review Cybertip Action Shape"@en ;
+    sh:targetClass icac:ReviewCybertipAction ;
+    sh:property [
+        sh:path uco-action:performer ;
+        sh:minCount 1 ;
+        sh:class uco-role:Role ;
+        sh:message "A review cybertip action must have at least one performer"@en
+    ] .
+
+icac:LegalProcessActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Legal Process Action Shape"@en ;
+    sh:targetClass icac:LegalProcessAction ;
+    sh:property [
+        sh:path icac:targetsService ;
+        sh:minCount 1 ;
+        sh:message "A legal process action must target at least one service"@en
+    ] ;
+    sh:property [
+        sh:path icac:legalInstrument ;
+        sh:minCount 1 ;
+        sh:message "A legal process action must have at least one legal instrument"@en
+    ] .
+
+icac:EvidenceReviewActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Evidence Review Action Shape"@en ;
+    sh:targetClass icac:EvidenceReviewAction ;
+    sh:property [
+        sh:path uco-action:usesTool ;
+        sh:minCount 1 ;
+        sh:message "An evidence review action must use at least one tool"@en
+    ] .
+
+icac:CSAMCurationActionShape rdf:type sh:NodeShape ;
+    rdfs:label "CSAM Curation Action Shape"@en ;
+    sh:targetClass icac:CSAMCurationAction ;
+    sh:property [
+        sh:path icac:usesClassification ;
+        sh:minCount 1 ;
+        sh:message "A CSAM curation action must use at least one classification system"@en
+    ] .
+
+icac:VictimRescueActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Victim Rescue Action Shape"@en ;
+    sh:targetClass icac:VictimRescueAction ;
+    sh:property [
+        sh:path icac:rescuedVictim ;
+        sh:minCount 1 ;
+        sh:message "A victim rescue action must rescue at least one victim"@en
+    ] .
+
+icac:UnknownVictimSubmissionShape rdf:type sh:NodeShape ;
+    rdfs:label "Unknown Victim Submission Shape"@en ;
+    sh:targetClass icac:UnknownVictimSubmission ;
+    sh:property [
+        sh:path icac:submittedTo ;
+        sh:minCount 1 ;
+        sh:message "An unknown victim submission must be submitted to at least one database"@en
+    ] .
+
+# SHACL Validation Shapes
+
+# CSAM Incident Shape
+icac:CSAMIncidentShape rdf:type sh:NodeShape ;
+    rdfs:label "CSAM Incident Shape"@en ;
+    sh:targetClass icac:CSAMIncident ;
+    sh:property [
+        sh:path icac:producesArtifact ;
+        sh:minCount 1 ;
+        sh:message "A CSAM incident must produce at least one digital artifact"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesVictim ;
+        sh:minCount 1 ;
+        sh:message "A CSAM incident must involve at least one victim"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesOffender ;
+        sh:minCount 1 ;
+        sh:message "A CSAM incident must involve at least one offender"@en
+    ] .
+
+# Live Streaming CSA Shape
+icac:LiveStreamingCSAShape rdf:type sh:NodeShape ;
+    rdfs:label "Live Streaming CSA Shape"@en ;
+    sh:targetClass icac:LiveStreamingCSA ;
+    sh:property [
+        sh:path icac:usesChannel ;
+        sh:minCount 1 ;
+        sh:message "A live streaming CSA incident must use at least one communication channel"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesVictim ;
+        sh:minCount 1 ;
+        sh:message "A live streaming CSA incident must involve at least one victim"@en
+    ] .
+
+# Grooming Solicitation Shape
+icac:GroomingSolicitationShape rdf:type sh:NodeShape ;
+    rdfs:label "Grooming Solicitation Shape"@en ;
+    sh:targetClass icac:GroomingSolicitation ;
+    sh:property [
+        sh:path icac:usesChannel ;
+        sh:minCount 1 ;
+        sh:message "A grooming solicitation incident must use at least one communication channel"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesVictim ;
+        sh:minCount 1 ;
+        sh:message "A grooming solicitation incident must involve at least one victim"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesOffender ;
+        sh:minCount 1 ;
+        sh:message "A grooming solicitation incident must involve at least one offender"@en
+    ] ;
+    sh:property [
+        sh:path icac:severityLevel ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 5 ;
+        sh:message "Severity level must be between 1 and 5"@en
+    ] .
+
+# Sextortion Shape
+icac:SextortionShape rdf:type sh:NodeShape ;
+    rdfs:label "Sextortion Shape"@en ;
+    sh:targetClass icac:Sextortion ;
+    sh:property [
+        sh:path icac:usesChannel ;
+        sh:minCount 1 ;
+        sh:message "A sextortion incident must use at least one communication channel"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesVictim ;
+        sh:minCount 1 ;
+        sh:message "A sextortion incident must involve at least one victim"@en
+    ] ;
+    sh:property [
+        sh:path icac:involvesOffender ;
+        sh:minCount 1 ;
+        sh:message "A sextortion incident must involve at least one offender"@en
+    ] ;
+    sh:property [
+        sh:path icac:severityLevel ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 5 ;
+        sh:message "Severity level must be between 1 and 5"@en
+    ] .
+
+# Digital Artifact Shape
+icac:DigitalArtifactShape rdf:type sh:NodeShape ;
+    rdfs:label "Digital Artifact Shape"@en ;
+    sh:targetClass icac:DigitalArtifact ;
+    sh:property [
+        sh:path icac:depictsChild ;
+        sh:minCount 1 ;
+        sh:message "A digital artifact must be linked to at least one person"@en
+    ] ;
+    sh:property [
+        sh:path icac:isDigitallyGenerated ;
+        sh:datatype xsd:boolean ;
+        sh:message "isDigitallyGenerated must be a boolean value"@en
+    ] .
+
+# Severity Level Shape
+icac:SeverityLevelShape rdf:type sh:NodeShape ;
+    rdfs:label "Severity Level Shape"@en ;
+    sh:targetClass icac:SeverityLevel ;
+    sh:property [
+        sh:path icac:severityLevel ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 5 ;
+        sh:message "Severity level must be between 1 and 5"@en
+    ] . 

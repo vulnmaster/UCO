@@ -1,0 +1,99 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac/0.3#> .
+@prefix icacus: <https://ontology.unifiedcyberontology.org/icac/us/ncmec/0.2#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/us/ncmec/0.2> rdf:type owl:Ontology ;
+    rdfs:label "NCMEC Cybertip Report Ontology (US Extension)"@en ;
+    rdfs:comment "An ontology for representing concepts specific to NCMEC Cybertip reports as an extension to the core ICAC ontology. Version 0.2."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/us/ncmec/0.2> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-03-20"^^xsd:date ;
+    dcterms:modified "2024-05-17"^^xsd:date ;
+    owl:imports icac: .
+
+# NCMEC Report Structure
+icacus:NCMECCybertipReport rdf:type owl:Class ;
+    rdfs:label "NCMEC Cybertip Report"@en ;
+    rdfs:comment "A report submitted to NCMEC's CyberTipline. This class represents the root structure of a NCMEC report as defined in the NCMEC Cybertip API documentation."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# NCMEC Incident Types
+icacus:NCMECIncidentType rdf:type owl:Class ;
+    rdfs:label "NCMEC Incident Type"@en ;
+    rdfs:comment "Types of incidents as defined by NCMEC Cybertip API (Section B.1.1). This class represents the standardized incident categories used in NCMEC reporting."@en ;
+    rdfs:subClassOf icacus:NCMECCybertipReport .
+
+icacus:ChildSexTraffickingIncident rdf:type owl:Class ;
+    rdfs:label "Child Sex Trafficking Incident"@en ;
+    rdfs:comment "Incidents involving child sex trafficking. Source: NCMEC Cybertip API Section B.1.1, incidentType 'Child Sex Trafficking'."@en ;
+    rdfs:subClassOf icacus:NCMECIncidentType ;
+    skos:exactMatch "CST" ;
+    icacus:incidentCode "CST" .
+
+icacus:ChildSexTourismIncident rdf:type owl:Class ;
+    rdfs:label "Child Sex Tourism Incident"@en ;
+    rdfs:comment "Incidents involving child sex tourism. Source: NCMEC Cybertip API Section B.1.1, incidentType 'Child Sex Tourism'."@en ;
+    rdfs:subClassOf icacus:NCMECIncidentType ;
+    skos:exactMatch "CST" ;
+    icacus:incidentCode "CST" .
+
+icacus:OnlineEnticementIncident rdf:type owl:Class ;
+    rdfs:label "Online Enticement Incident"@en ;
+    rdfs:comment "Incidents involving online enticement of children for sexual acts. Source: NCMEC Cybertip API Section B.1.1, incidentType 'Online Enticement of Children for Sexual Acts'."@en ;
+    rdfs:subClassOf icacus:NCMECIncidentType ;
+    skos:exactMatch "OE" ;
+    icacus:incidentCode "OE" .
+
+# NCMEC Report Annotations
+icacus:NCMECReportAnnotation rdf:type owl:Class ;
+    rdfs:label "NCMEC Report Annotation"@en ;
+    rdfs:comment "Tags to describe the NCMEC report. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations element."@en ;
+    rdfs:subClassOf icacus:NCMECCybertipReport .
+
+icacus:SextortionAnnotation rdf:type owl:Class ;
+    rdfs:label "Sextortion Annotation"@en ;
+    rdfs:comment "Annotation indicating the report is associated with sextortion. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations/sextortion element."@en ;
+    rdfs:subClassOf icacus:NCMECReportAnnotation .
+
+icacus:CSAMSolicitationAnnotation rdf:type owl:Class ;
+    rdfs:label "CSAM Solicitation Annotation"@en ;
+    rdfs:comment "Annotation indicating the report is associated with solicitation of CSAM. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations/csamSolicitation element."@en ;
+    rdfs:subClassOf icacus:NCMECReportAnnotation .
+
+icacus:MinorToMinorInteractionAnnotation rdf:type owl:Class ;
+    rdfs:label "Minor to Minor Interaction Annotation"@en ;
+    rdfs:comment "Annotation indicating the report is associated with an interaction between minors. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations/minorToMinorInteraction element."@en ;
+    rdfs:subClassOf icacus:NCMECReportAnnotation .
+
+icacus:SpamAnnotation rdf:type owl:Class ;
+    rdfs:label "Spam Annotation"@en ;
+    rdfs:comment "Annotation indicating the report is associated with spam. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations/spam element."@en ;
+    rdfs:subClassOf icacus:NCMECReportAnnotation .
+
+# NCMEC Report Properties
+icacus:hasNCMECIncidentType rdf:type owl:ObjectProperty ;
+    rdfs:label "has NCMEC incident type"@en ;
+    rdfs:comment "Links a NCMEC report to its incident type. Source: NCMEC Cybertip API Section B.1.1, incidentType element."@en ;
+    rdfs:domain icacus:NCMECCybertipReport ;
+    rdfs:range icacus:NCMECIncidentType .
+
+icacus:hasNCMECReportAnnotation rdf:type owl:ObjectProperty ;
+    rdfs:label "has NCMEC report annotation"@en ;
+    rdfs:comment "Links a NCMEC report to its annotations. Source: NCMEC Cybertip API Section B.1.1, reportAnnotations element."@en ;
+    rdfs:domain icacus:NCMECCybertipReport ;
+    rdfs:range icacus:NCMECReportAnnotation .
+
+# NCMEC Incident Code Property
+icacus:incidentCode rdf:type owl:DatatypeProperty ;
+    rdfs:label "incident code"@en ;
+    rdfs:comment "The official NCMEC incident type code. Source: NCMEC Cybertip API Section B.1.1, incidentType element."@en ;
+    rdfs:domain icacus:NCMECIncidentType ;
+    rdfs:range xsd:string . 

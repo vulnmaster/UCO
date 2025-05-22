@@ -1,0 +1,101 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix hotline: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#> .
+
+# Example Report
+hotline:report-2024-001 a hotline:PublicReport ;
+    rdfs:label "Report #2024-001"@en ;
+    hotline:reportedBy hotline:reporter-001 ;
+    hotline:receivedBy hotline:org-001 ;
+    hotline:hasEvidence hotline:evidence-001 ;
+    hotline:intakeChannel hotline:web-form ;
+    hotline:status hotline:status-closed ;
+    hotline:triggersAction hotline:action-review-001 ;
+    hotline:triggersAction hotline:action-hash-001 ;
+    hotline:triggersAction hotline:action-forward-001 .
+
+# Reporter (Anonymous)
+hotline:reporter-001 a hotline:ReporterRole ;
+    rdfs:label "Anonymous Reporter"@en ;
+    hotline:isAnonymous true .
+
+# Organization
+hotline:org-001 a hotline:HotlineOrganization ;
+    rdfs:label "Example Hotline"@en .
+
+# Evidence (URL)
+hotline:evidence-001 a hotline:URLReference ;
+    rdfs:label "Suspicious URL"@en ;
+    uco-core:hasFacet hotline:url-facet-001 ;
+    hotline:firstSeen "2024-03-20T10:00:00Z"^^xsd:dateTime .
+
+hotline:url-facet-001 a uco-observable:URLFacet ;
+    uco-observable:urlValue "https://example.com/suspicious"^^xsd:anyURI .
+
+# Intake Channel
+hotline:web-form a hotline:IntakeChannel ;
+    rdfs:label "Web Form"@en .
+
+# Status
+hotline:status-closed a hotline:HotlineCaseStatus ;
+    rdfs:label "Closed"@en .
+
+# Actions
+hotline:action-review-001 a hotline:ReportReviewAction ;
+    rdfs:label "Initial Review"@en ;
+    uco-core:startTime "2024-03-20T10:05:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T10:15:00Z"^^xsd:dateTime ;
+    uco-action:performer hotline:analyst-001 ;
+    hotline:classification hotline:class-csam ;
+    hotline:nextStep hotline:action-hash-001 .
+
+hotline:action-hash-001 a hotline:HashSubmissionAction ;
+    rdfs:label "Hash Submission"@en ;
+    uco-core:startTime "2024-03-20T10:16:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T10:20:00Z"^^xsd:dateTime ;
+    uco-action:performer hotline:analyst-001 ;
+    hotline:producesHash hotline:hash-001 ;
+    hotline:previousStep hotline:action-review-001 ;
+    hotline:nextStep hotline:action-forward-001 .
+
+hotline:action-forward-001 a hotline:ForwardToLEAction ;
+    rdfs:label "Forward to LE"@en ;
+    uco-core:startTime "2024-03-20T10:21:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T10:25:00Z"^^xsd:dateTime ;
+    uco-action:performer hotline:analyst-001 ;
+    hotline:forwardsTo hotline:le-org-001 ;
+    hotline:previousStep hotline:action-hash-001 .
+
+# Supporting Instances
+hotline:analyst-001 a uco-identity:Identity ;
+    rdfs:label "Analyst John Doe"@en ;
+    uco-identity:hasRole hotline:role-analyst .
+
+hotline:role-analyst a uco-role:Role ;
+    rdfs:label "Hotline Analyst"@en .
+
+hotline:class-csam a hotline:ClassificationLabel ;
+    rdfs:label "CSAM"@en .
+
+hotline:hash-001 a uco-observable:Hash ;
+    rdfs:label "MD5 Hash"@en ;
+    uco-observable:hashMethod "MD5"^^xsd:string ;
+    uco-observable:hashValue "d41d8cd98f00b204e9800998ecf8427e"^^xsd:hexBinary .
+
+hotline:le-org-001 a uco-identity:Organization ;
+    rdfs:label "Example Law Enforcement"@en .
+
+# Example of Hash Feedback
+hotline:action-feedback-001 a hotline:HashFeedbackAction ;
+    rdfs:label "Hash Feedback"@en ;
+    uco-core:startTime "2024-03-21T09:00:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-21T09:05:00Z"^^xsd:dateTime ;
+    uco-action:performer hotline:analyst-001 ;
+    hotline:referencesHash hotline:hash-001 ;
+    hotline:feedbackType "Removed" . 

@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  fuseki:
+    image: stain/jena-fuseki:4.10.0
+    container_name: icac_fuseki
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./:/fuseki/load
+    environment:
+      - FUSEKI_DATASET_1=--file=/fuseki/load/icac-core.ttl --file=/fuseki/load/hotlines-core.ttl --file=/fuseki/load/icac-us-ncmec.ttl /icac
+      - ADMIN_PASSWORD=pw123
+      - FUSEKI_JVM_ARGS=-Xmx2g
+    restart: unless-stopped
+
+  pyshacl:
+    image: python:3.9-slim
+    container_name: icac_pyshacl
+    working_dir: /app
+    volumes:
+      - ./:/app/ontology/icac
+    command: >
+      sh -c "pip install pyshacl rdflib && \
+             echo 'Validating hotlines-core.ttl...' && \
+             pyshacl -s /app/ontology/icac/hotlines-core-shapes.ttl -d /app/ontology/icac/hotlines-core.ttl -f human && \
+             echo 'Validating icac-core.ttl...' && \
+             pyshacl -s /app/ontology/icac/icac-core-shapes.ttl -d /app/ontology/icac/icac-core.ttl -f human && \
+             echo 'Validating hotline-lifecycle example...' && \
+             pyshacl -s /app/ontology/icac/hotlines-core-shapes.ttl -d /app/ontology/icac/examples/hotline-lifecycle.ttl -f human && \
+             echo 'Validating investigation-lifecycle example...' && \
+             pyshacl -s /app/ontology/icac/icac-core-shapes.ttl -d /app/ontology/icac/examples/investigation-lifecycle.ttl -f human && \
+             echo 'Validation complete. Sleeping to keep container alive for inspection if needed.' && sleep infinity"
+    restart: unless-stopped 

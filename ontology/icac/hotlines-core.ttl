@@ -1,0 +1,283 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix hotline: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/hotlines/2025/core> rdf:type owl:Ontology ;
+    rdfs:label "Hotline Core Ontology"@en ;
+    rdfs:comment "A core ontology for representing hotline reports and their lifecycle, extending UCO. This ontology supports the representation of child sexual abuse material reports from various sources and their processing through hotline workflows."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/hotlines/2025/core/0.4> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-03-20"^^xsd:date ;
+    dcterms:modified "2024-05-17"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/core> .
+
+# SKOS Concept Schemes
+hotline:ClassificationScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "Hotline Classification Scheme"@en ;
+    rdfs:comment "A scheme for classifying hotline reports and evidence."@en ;
+    dcterms:issued "2024-03-20"^^xsd:date ;
+    dcterms:modified "2024-05-17"^^xsd:date .
+
+hotline:StatusScheme rdf:type skos:ConceptScheme ;
+    rdfs:label "Hotline Status Scheme"@en ;
+    rdfs:comment "A scheme for tracking hotline report status."@en ;
+    dcterms:issued "2024-03-20"^^xsd:date ;
+    dcterms:modified "2024-05-17"^^xsd:date .
+
+# Classification Concepts
+hotline:classification-confirmed rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:ClassificationScheme ;
+    skos:prefLabel "Confirmed CSAM"@en ;
+    skos:definition "Material has been reviewed and confirmed to be Child Sexual Abuse Material."@en .
+
+hotline:classification-false-positive rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:ClassificationScheme ;
+    skos:prefLabel "False Positive"@en ;
+    skos:definition "Material has been reviewed and determined not to be Child Sexual Abuse Material."@en .
+
+hotline:classification-uncertain rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:ClassificationScheme ;
+    skos:prefLabel "Uncertain"@en ;
+    skos:definition "Material requires further review to determine its nature."@en .
+
+hotline:classification-legal-concern rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:ClassificationScheme ;
+    skos:prefLabel "Legal but Concerning"@en ;
+    skos:definition "Material is legal but may still be concerning or warrant attention (e.g., adult pornography accessible to minors, risky online interactions)."@en .
+
+hotline:classification-other rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:ClassificationScheme ;
+    skos:prefLabel "Other"@en ;
+    skos:definition "Material falls into a category not otherwise specified."@en .
+
+# Status Concepts
+hotline:status-new rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "New"@en ;
+    skos:definition "Report has been newly received and is awaiting initial review."@en .
+
+hotline:status-in-progress rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "In Progress"@en ;
+    skos:definition "Report is actively being processed or investigated by the hotline."@en .
+
+hotline:status-in-review rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "In Review"@en ;
+    skos:definition "Report is currently under review by an analyst or specialist."@en .
+
+hotline:status-forwarded rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "Forwarded to LEA"@en ;
+    skos:definition "Report has been assessed and forwarded to a Law Enforcement Agency for further action."@en .
+
+hotline:status-closed rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "Closed"@en ;
+    skos:definition "Report processing is complete. This may occur after forwarding to LEA, determining it as a false positive, or other terminal actions."@en .
+
+hotline:status-reopened rdf:type owl:NamedIndividual , skos:Concept ;
+    skos:inScheme hotline:StatusScheme ;
+    skos:prefLabel "Reopened"@en ;
+    skos:definition "A previously closed report has been reopened for additional review or action due to new information."@en .
+
+# Core Classes
+hotline:HotlineOrganization rdf:type owl:Class ;
+    rdfs:label "Hotline Organization"@en ;
+    rdfs:comment "An organization that operates a hotline for receiving and processing reports of child sexual abuse material."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+hotline:HotlineReport rdf:type owl:Class ;
+    rdfs:label "Hotline Report"@en ;
+    rdfs:comment "A report submitted to a hotline about potential child sexual abuse material."@en ;
+    rdfs:subClassOf uco-observable:Observation .
+
+hotline:PublicReport rdf:type owl:Class ;
+    rdfs:label "Public Report"@en ;
+    rdfs:comment "A report submitted by a member of the public."@en ;
+    rdfs:subClassOf hotline:HotlineReport .
+
+hotline:ESPReport rdf:type owl:Class ;
+    rdfs:label "Electronic Service Provider Report"@en ;
+    rdfs:comment "A report submitted by an electronic service provider."@en ;
+    rdfs:subClassOf hotline:HotlineReport .
+
+hotline:AutomatedReporterAgent rdf:type owl:Class ;
+    rdfs:label "Automated Reporter Agent"@en ;
+    rdfs:comment "A software agent that automatically reports content to hotlines."@en ;
+    rdfs:subClassOf uco-identity:Software .
+
+hotline:ReporterRole rdf:type owl:Class ;
+    rdfs:label "Reporter Role"@en ;
+    rdfs:comment "The role of a person or organization submitting a report to a hotline."@en ;
+    rdfs:subClassOf uco-role:SubjectRole .
+
+hotline:IntakeChannel rdf:type owl:Class ;
+    rdfs:label "Intake Channel"@en ;
+    rdfs:comment "A channel through which reports are received (web form, API, phone, etc.)."@en ;
+    rdfs:subClassOf uco-core:Observable .
+
+hotline:EvidenceItem rdf:type owl:Class ;
+    rdfs:label "Evidence Item"@en ;
+    rdfs:comment "A piece of evidence associated with a hotline report."@en ;
+    rdfs:subClassOf uco-observable:DigitalArtifact .
+
+hotline:ImageEvidence rdf:type owl:Class ;
+    rdfs:label "Image Evidence"@en ;
+    rdfs:comment "An image submitted as evidence."@en ;
+    rdfs:subClassOf hotline:EvidenceItem .
+
+hotline:VideoEvidence rdf:type owl:Class ;
+    rdfs:label "Video Evidence"@en ;
+    rdfs:comment "A video submitted as evidence."@en ;
+    rdfs:subClassOf hotline:EvidenceItem .
+
+hotline:URLReference rdf:type owl:Class ;
+    rdfs:label "URL Reference"@en ;
+    rdfs:comment "A URL submitted as evidence."@en ;
+    rdfs:subClassOf hotline:EvidenceItem .
+
+hotline:HotlineAction rdf:type owl:Class ;
+    rdfs:label "Hotline Action"@en ;
+    rdfs:comment "An action taken as part of processing a hotline report."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+hotline:ReportReviewAction rdf:type owl:Class ;
+    rdfs:label "Report Review Action"@en ;
+    rdfs:comment "The action of reviewing and triaging a hotline report."@en ;
+    rdfs:subClassOf hotline:HotlineAction .
+
+hotline:ForwardToLEAction rdf:type owl:Class ;
+    rdfs:label "Forward to Law Enforcement Action"@en ;
+    rdfs:comment "The action of forwarding a report to law enforcement."@en ;
+    rdfs:subClassOf hotline:HotlineAction .
+
+hotline:HashSubmissionAction rdf:type owl:Class ;
+    rdfs:label "Hash Submission Action"@en ;
+    rdfs:comment "The action of submitting a hash to a hash-sharing service."@en ;
+    rdfs:subClassOf hotline:HotlineAction .
+
+hotline:HashFeedbackAction rdf:type owl:Class ;
+    rdfs:label "Hash Feedback Action"@en ;
+    rdfs:comment "The action of providing feedback about a hash submission."@en ;
+    rdfs:subClassOf hotline:HotlineAction .
+
+hotline:TakedownRequestAction rdf:type owl:Class ;
+    rdfs:label "Takedown Request Action"@en ;
+    rdfs:comment "The action of requesting content takedown from a hosting provider."@en ;
+    rdfs:subClassOf hotline:HotlineAction .
+
+# Object Properties
+hotline:reportedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "reported by"@en ;
+    rdfs:comment "Links a hotline report to its reporter (either a ReporterRole or AutomatedReporterAgent)."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range [ rdf:type owl:Class ;
+                 owl:unionOf (hotline:ReporterRole hotline:AutomatedReporterAgent) ] .
+
+hotline:receivedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "received by"@en ;
+    rdfs:comment "Links a hotline report to the hotline organization that received it."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range hotline:HotlineOrganization .
+
+hotline:hasEvidence rdf:type owl:ObjectProperty ;
+    rdfs:label "has evidence"@en ;
+    rdfs:comment "Links a hotline report to its evidence items."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range hotline:EvidenceItem .
+
+hotline:intakeChannel rdf:type owl:ObjectProperty ;
+    rdfs:label "intake channel"@en ;
+    rdfs:comment "Links a hotline report to the channel through which it was received."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range hotline:IntakeChannel .
+
+hotline:classification rdf:type owl:ObjectProperty ;
+    rdfs:label "classification"@en ;
+    rdfs:comment "Links a hotline report to its classification label (a skos:Concept from the ClassificationScheme)."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range skos:Concept .
+
+hotline:status rdf:type owl:ObjectProperty ;
+    rdfs:label "status"@en ;
+    rdfs:comment "Links a hotline report to its current status (a skos:Concept from the StatusScheme)."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range skos:Concept .
+
+hotline:triggersAction rdf:type owl:ObjectProperty ;
+    rdfs:label "triggers action"@en ;
+    rdfs:comment "Links a hotline report to actions taken in response."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range hotline:HotlineAction .
+
+hotline:forwardsTo rdf:type owl:ObjectProperty ;
+    rdfs:label "forwards to"@en ;
+    rdfs:comment "Links a forward action to the law enforcement organization."@en ;
+    rdfs:domain hotline:ForwardToLEAction ;
+    rdfs:range uco-identity:Organization .
+
+hotline:producesHash rdf:type owl:ObjectProperty ;
+    rdfs:label "produces hash"@en ;
+    rdfs:comment "Links a hash submission action to the produced hash."@en ;
+    rdfs:domain hotline:HashSubmissionAction ;
+    rdfs:range uco-observable:Hash .
+
+hotline:referencesHash rdf:type owl:ObjectProperty ;
+    rdfs:label "references hash"@en ;
+    rdfs:comment "Links a hash feedback action to the hash it references."@en ;
+    rdfs:domain hotline:HashFeedbackAction ;
+    rdfs:range uco-observable:Hash .
+
+hotline:foundAtURL rdf:type owl:ObjectProperty ;
+    rdfs:label "found at URL"@en ;
+    rdfs:comment "Links an evidence item to the URL where it was found."@en ;
+    rdfs:domain hotline:EvidenceItem ;
+    rdfs:range uco-observable:URL .
+
+# Datatype Properties
+hotline:isAnonymous rdf:type owl:DatatypeProperty ;
+    rdfs:label "is anonymous"@en ;
+    rdfs:comment "Indicates whether a reporter's identity is anonymous."@en ;
+    rdfs:domain hotline:ReporterRole ;
+    rdfs:range xsd:boolean .
+
+hotline:firstSeen rdf:type owl:DatatypeProperty ;
+    rdfs:label "first seen"@en ;
+    rdfs:comment "The date and time when an evidence item was first seen."@en ;
+    rdfs:domain hotline:EvidenceItem ;
+    rdfs:range xsd:dateTime .
+
+hotline:feedbackType rdf:type owl:DatatypeProperty ;
+    rdfs:label "feedback type"@en ;
+    rdfs:comment "The type of feedback provided for a hash submission."@en ;
+    rdfs:domain hotline:HashFeedbackAction ;
+    rdfs:range xsd:string .
+
+# Transitive Properties
+hotline:nextStep rdf:type owl:TransitiveProperty ;
+    rdfs:label "next step"@en ;
+    rdfs:comment "Denotes the chronologically next action in the lifecycle."@en ;
+    owl:inverseOf hotline:previousStep ;
+    owl:propertyChainAxiom (hotline:hasStep hotline:nextStep) .
+
+hotline:previousStep rdf:type owl:TransitiveProperty ;
+    rdfs:label "previous step"@en ;
+    rdfs:comment "Denotes the chronologically previous action in the lifecycle."@en ;
+    owl:inverseOf hotline:nextStep .
+
+hotline:linkedInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:label "linked investigation"@en ;
+    rdfs:comment "Links a hotline report to an ICAC investigation."@en ;
+    rdfs:domain hotline:HotlineReport ;
+    rdfs:range <https://ontology.unifiedcyberontology.org/icac#ICACInvestigation> . 

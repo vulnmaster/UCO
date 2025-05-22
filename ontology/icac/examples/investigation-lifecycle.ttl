@@ -1,0 +1,79 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix uco-channel: <https://ontology.unifiedcyberontology.org/channel#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icacus: <https://ontology.unifiedcyberontology.org/icac/us#> .
+
+# Example Investigation
+icac:investigation-2024-001 rdf:type icac:ICACInvestigation ;
+    rdfs:label "ICAC Investigation 2024-001"@en ;
+    icac:hasStep icac:step-001, icac:step-002, icac:step-003, icac:step-004, icac:step-005 .
+
+# Step 1: Receive Cybertip
+icac:step-001 rdf:type icac:ReceiveCybertipAction ;
+    rdfs:label "Receive NCMEC Cybertip"@en ;
+    uco-core:startTime "2024-03-20T09:00:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T09:05:00Z"^^xsd:dateTime ;
+    uco-core:hasFacet icacus:cybertip-2024-001 ;
+    icac:nextStep icac:step-002 .
+
+# Step 2: Review Cybertip
+icac:step-002 rdf:type icac:ReviewCybertipAction ;
+    rdfs:label "Review Cybertip by Analyst"@en ;
+    uco-core:startTime "2024-03-20T09:30:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T10:30:00Z"^^xsd:dateTime ;
+    uco-action:performer icac:analyst-001 ;
+    icac:previousStep icac:step-001 ;
+    icac:nextStep icac:step-003 .
+
+# Step 3: Legal Process
+icac:step-003 rdf:type icac:LegalProcessAction ;
+    rdfs:label "Issue Search Warrant"@en ;
+    uco-core:startTime "2024-03-20T11:00:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T12:00:00Z"^^xsd:dateTime ;
+    icac:targetsService icac:service-001 ;
+    icac:legalInstrument icac:warrant-001 ;
+    icac:previousStep icac:step-002 ;
+    icac:nextStep icac:step-004 .
+
+# Step 4: Evidence Review
+icac:step-004 rdf:type icac:EvidenceReviewAction ;
+    rdfs:label "Review Digital Evidence"@en ;
+    uco-core:startTime "2024-03-20T13:00:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T15:00:00Z"^^xsd:dateTime ;
+    uco-action:usesTool icac:tool-001 ;
+    icac:previousStep icac:step-003 ;
+    icac:nextStep icac:step-005 .
+
+# Step 5: CSAM Curation
+icac:step-005 rdf:type icac:CSAMCurationAction ;
+    rdfs:label "Classify CSAM"@en ;
+    uco-core:startTime "2024-03-20T15:30:00Z"^^xsd:dateTime ;
+    uco-core:endTime "2024-03-20T16:30:00Z"^^xsd:dateTime ;
+    icac:usesClassification icac:classification-001 ;
+    icac:previousStep icac:step-004 .
+
+# Supporting Instances
+icac:analyst-001 rdf:type uco-identity:Person ;
+    rdfs:label "John Smith"@en ;
+    uco-role:hasRole icac:analyst-role-001 .
+
+icac:analyst-role-001 rdf:type uco-role:Role ;
+    rdfs:label "ICAC Analyst"@en .
+
+icac:service-001 rdf:type uco-channel:DigitalService ;
+    rdfs:label "Example Social Media Platform"@en .
+
+icac:warrant-001 rdf:type icac:SearchWarrant ;
+    rdfs:label "Search Warrant 2024-001"@en .
+
+icac:tool-001 rdf:type uco-observable:Tool ;
+    rdfs:label "Autopsy Forensic Tool"@en .
+
+icac:classification-001 rdf:type icac:ClassificationSystem ;
+    rdfs:label "Project VIC"@en . 

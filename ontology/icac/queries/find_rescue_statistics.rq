@@ -1,0 +1,55 @@
+# Query: Q8 find_rescue_statistics
+# Purpose: Management dashboard - victim rescue metrics and trends
+# Parameters: ?from (dateTime), ?to (dateTime), ?limit (integer), ?organizationURI (optional)
+# Security: TLP-RED content excluded by default
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX hotline: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#>
+PREFIX icac: <https://ontology.unifiedcyberontology.org/icac/0.3#>
+PREFIX uco-core: <https://ontology.unifiedcyberontology.org/core#>
+PREFIX uco-observable: <https://ontology.unifiedcyberontology.org/observable#>
+PREFIX uco-confidentiality: <https://ontology.unifiedcyberontology.org/confidentiality#>
+
+SELECT ?organization ?yearMonth
+       (COUNT(DISTINCT ?report) AS ?totalReportsLinkedToRescue)
+       (COUNT(DISTINCT ?rescueAction) AS ?rescueActionCount)
+       (COUNT(DISTINCT ?victim) AS ?rescuedVictimCount)
+       (AVG(?cycleTimeDays) AS ?avgCycleTimeDays)
+       (MIN(?cycleTimeDays) AS ?minCycleTimeDays)
+       (MAX(?cycleTimeDays) AS ?maxCycleTimeDays)
+WHERE {
+    # Parameter defaults
+    VALUES (?from ?to ?limit ?organizationURI) {
+        ("2025-01-01T00:00:00Z"^^xsd:dateTime "2025-12-31T23:59:59Z"^^xsd:dateTime 100 UNDEF)
+    }
+    
+    ?report hotline:receivedBy ?organization ;
+            hotline:createdTime ?reportTime ;
+            hotline:triggersAction ?rescueAction .
+    
+    ?rescueAction a icac:VictimRescueAction ; # Changed from hotline:VictimRescueAction
+                  icac:startTime ?rescueTime ; # Changed from hotline:startTime
+                  icac:rescuedVictim ?victim ; # Changed from hotline:rescuedVictim
+                  icac:outcome icac:outcome-success . # Changed from hotline:outcome
+
+    # Filter by specific organization if URI is provided
+    FILTER(!BOUND(?organizationURI) || (?organization = ?organizationURI))
+
+    # Group by YearMonth of rescue time for charting
+    BIND(STRDT(CONCAT(STR(YEAR(?rescueTime)), "-", STR(MONTH(?rescueTime))), xsd:gYearMonth) AS ?yearMonth)
+    
+    # Calculate cycle time from report creation to rescue start
+    BIND(DAYS(?rescueTime - ?reportTime) AS ?cycleTimeDays)
+    
+    FILTER(?rescueTime >= ?from && ?rescueTime <= ?to) # Filter by rescue time
+
+    # Security filter
+    FILTER NOT EXISTS {
+        ?report uco-confidentiality:TLP-RED ?whatever .
+        ?victim uco-confidentiality:TLP-RED ?whatever .
+    }
+}
+GROUP BY ?organization ?yearMonth
+ORDER BY ?organization DESC(?yearMonth)
+LIMIT ?limit 
