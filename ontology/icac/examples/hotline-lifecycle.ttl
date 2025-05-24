@@ -1,101 +1,101 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
-@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
-@prefix uco-observable: <https://ontology.unifiedcyberontology.org/observable#> .
-@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
-@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
-@prefix hotline: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix hotlines-core: <https://ontology.unifiedcyberontology.org/hotlines/2025/core#> .
 
 # Example Report
-hotline:report-2024-001 a hotline:PublicReport ;
+hotlines-core:report-2024-001 a hotlines-core:PublicReport ;
     rdfs:label "Report #2024-001"@en ;
-    hotline:reportedBy hotline:reporter-001 ;
-    hotline:receivedBy hotline:org-001 ;
-    hotline:hasEvidence hotline:evidence-001 ;
-    hotline:intakeChannel hotline:web-form ;
-    hotline:status hotline:status-closed ;
-    hotline:triggersAction hotline:action-review-001 ;
-    hotline:triggersAction hotline:action-hash-001 ;
-    hotline:triggersAction hotline:action-forward-001 .
+    hotlines-core:reportedBy hotlines-core:reporter-001 ;
+    hotlines-core:receivedBy hotlines-core:org-001 ;
+    hotlines-core:hasEvidence hotlines-core:evidence-001 ;
+    hotlines-core:intakeChannel hotlines-core:web-form ;
+    hotlines-core:status hotlines-core:status-closed ;
+    hotlines-core:triggersAction hotlines-core:action-review-001 ;
+    hotlines-core:triggersAction hotlines-core:action-hash-001 ;
+    hotlines-core:triggersAction hotlines-core:action-forward-001 .
 
 # Reporter (Anonymous)
-hotline:reporter-001 a hotline:ReporterRole ;
+hotlines-core:reporter-001 a hotlines-core:ReporterRole ;
     rdfs:label "Anonymous Reporter"@en ;
-    hotline:isAnonymous true .
+    hotlines-core:isAnonymous true .
 
 # Organization
-hotline:org-001 a hotline:HotlineOrganization ;
+hotlines-core:org-001 a hotlines-core:HotlineOrganization ;
     rdfs:label "Example Hotline"@en .
 
 # Evidence (URL)
-hotline:evidence-001 a hotline:URLReference ;
+hotlines-core:evidence-001 a hotlines-core:URLReference ;
     rdfs:label "Suspicious URL"@en ;
-    uco-core:hasFacet hotline:url-facet-001 ;
-    hotline:firstSeen "2024-03-20T10:00:00Z"^^xsd:dateTime .
+    uco-core:hasFacet hotlines-core:url-facet-001 ;
+    hotlines-core:firstSeen "2024-03-20T10:00:00Z"^^xsd:dateTime .
 
-hotline:url-facet-001 a uco-observable:URLFacet ;
+hotlines-core:url-facet-001 a uco-observable:URLFacet ;
     uco-observable:urlValue "https://example.com/suspicious"^^xsd:anyURI .
 
 # Intake Channel
-hotline:web-form a hotline:IntakeChannel ;
+hotlines-core:web-form a hotlines-core:IntakeChannel ;
     rdfs:label "Web Form"@en .
 
 # Status
-hotline:status-closed a hotline:HotlineCaseStatus ;
+hotlines-core:status-closed a hotlines-core:HotlineCaseStatus ;
     rdfs:label "Closed"@en .
 
 # Actions
-hotline:action-review-001 a hotline:ReportReviewAction ;
+hotlines-core:action-review-001 a hotlines-core:ReportReviewAction ;
     rdfs:label "Initial Review"@en ;
     uco-core:startTime "2024-03-20T10:05:00Z"^^xsd:dateTime ;
     uco-core:endTime "2024-03-20T10:15:00Z"^^xsd:dateTime ;
-    uco-action:performer hotline:analyst-001 ;
-    hotline:classification hotline:class-csam ;
-    hotline:nextStep hotline:action-hash-001 .
+    uco-action:performer hotlines-core:analyst-001 ;
+    hotlines-core:classification hotlines-core:class-csam ;
+    hotlines-core:nextStep hotlines-core:action-hash-001 .
 
-hotline:action-hash-001 a hotline:HashSubmissionAction ;
+hotlines-core:action-hash-001 a hotlines-core:HashSubmissionAction ;
     rdfs:label "Hash Submission"@en ;
     uco-core:startTime "2024-03-20T10:16:00Z"^^xsd:dateTime ;
     uco-core:endTime "2024-03-20T10:20:00Z"^^xsd:dateTime ;
-    uco-action:performer hotline:analyst-001 ;
-    hotline:producesHash hotline:hash-001 ;
-    hotline:previousStep hotline:action-review-001 ;
-    hotline:nextStep hotline:action-forward-001 .
+    uco-action:performer hotlines-core:analyst-001 ;
+    hotlines-core:producesHash hotlines-core:hash-001 ;
+    hotlines-core:previousStep hotlines-core:action-review-001 ;
+    hotlines-core:nextStep hotlines-core:action-forward-001 .
 
-hotline:action-forward-001 a hotline:ForwardToLEAction ;
+hotlines-core:action-forward-001 a hotlines-core:ForwardToLEAction ;
     rdfs:label "Forward to LE"@en ;
     uco-core:startTime "2024-03-20T10:21:00Z"^^xsd:dateTime ;
     uco-core:endTime "2024-03-20T10:25:00Z"^^xsd:dateTime ;
-    uco-action:performer hotline:analyst-001 ;
-    hotline:forwardsTo hotline:le-org-001 ;
-    hotline:previousStep hotline:action-hash-001 .
+    uco-action:performer hotlines-core:analyst-001 ;
+    hotlines-core:forwardsTo hotlines-core:le-org-001 ;
+    hotlines-core:previousStep hotlines-core:action-hash-001 .
 
 # Supporting Instances
-hotline:analyst-001 a uco-identity:Identity ;
+hotlines-core:analyst-001 a uco-identity:Identity ;
     rdfs:label "Analyst John Doe"@en ;
-    uco-identity:hasRole hotline:role-analyst .
+    uco-identity:hasRole hotlines-core:role-analyst .
 
-hotline:role-analyst a uco-role:Role ;
+hotlines-core:role-analyst a uco-role:Role ;
     rdfs:label "Hotline Analyst"@en .
 
-hotline:class-csam a hotline:ClassificationLabel ;
+hotlines-core:class-csam a hotlines-core:ClassificationLabel ;
     rdfs:label "CSAM"@en .
 
-hotline:hash-001 a uco-observable:Hash ;
+hotlines-core:hash-001 a uco-observable:Hash ;
     rdfs:label "MD5 Hash"@en ;
     uco-observable:hashMethod "MD5"^^xsd:string ;
     uco-observable:hashValue "d41d8cd98f00b204e9800998ecf8427e"^^xsd:hexBinary .
 
-hotline:le-org-001 a uco-identity:Organization ;
+hotlines-core:le-org-001 a uco-identity:Organization ;
     rdfs:label "Example Law Enforcement"@en .
 
 # Example of Hash Feedback
-hotline:action-feedback-001 a hotline:HashFeedbackAction ;
+hotlines-core:action-feedback-001 a hotlines-core:HashFeedbackAction ;
     rdfs:label "Hash Feedback"@en ;
     uco-core:startTime "2024-03-21T09:00:00Z"^^xsd:dateTime ;
     uco-core:endTime "2024-03-21T09:05:00Z"^^xsd:dateTime ;
-    uco-action:performer hotline:analyst-001 ;
-    hotline:referencesHash hotline:hash-001 ;
-    hotline:feedbackType "Removed" . 
+    uco-action:performer hotlines-core:analyst-001 ;
+    hotlines-core:referencesHash hotlines-core:hash-001 ;
+    hotlines-core:feedbackType "Removed" . 

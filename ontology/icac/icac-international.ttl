@@ -1,0 +1,314 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
+
+<https://ontology.unifiedcyberontology.org/icac/international> rdf:type owl:Ontology ;
+    rdfs:label "ICAC International Coordination Ontology"@en ;
+    rdfs:comment "An ontology for modeling international coordination mechanisms in child protection, cross-border investigations, and global partnerships based on ICMEC frameworks serving 120+ countries."@en ;
+    owl:versionInfo "0.1.0" .
+
+# =============================================================================
+# INTERNATIONAL PARTNERSHIP FRAMEWORK
+# =============================================================================
+
+icac-international:InternationalPartnership rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "International Partnership"@en ;
+    rdfs:comment "A formal partnership between countries or organizations for child protection cooperation."@en .
+
+icac-international:CountryPartnership rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:InternationalPartnership ;
+    rdfs:label "Country Partnership"@en ;
+    rdfs:comment "A bilateral or multilateral partnership between specific countries for child protection."@en .
+
+icac-international:RegionalCoordination rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:InternationalPartnership ;
+    rdfs:label "Regional Coordination"@en ;
+    rdfs:comment "Coordination mechanisms within specific geographic regions."@en .
+
+icac-international:GlobalMissingChildrenCenter rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Global Missing Children Center"@en ;
+    rdfs:comment "International coordination center for missing children cases across borders."@en .
+
+icac-international:InternationalTaskForce rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "International Task Force"@en ;
+    rdfs:comment "Multi-national task force for coordinating child protection investigations."@en .
+
+# =============================================================================
+# CROSS-BORDER OPERATIONS
+# =============================================================================
+
+icac-international:CrossBorderOperation rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Cross-Border Operation"@en ;
+    rdfs:comment "Investigation or operation spanning multiple countries."@en .
+
+icac-international:CrossBorderInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:CrossBorderOperation ;
+    rdfs:label "Cross-Border Investigation"@en ;
+    rdfs:comment "Investigation requiring coordination across national boundaries."@en .
+
+icac-international:InternationalAlert rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "International Alert"@en ;
+    rdfs:comment "Alert system for sharing critical information across borders."@en .
+
+icac-international:GlobalCaseTracking rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Global Case Tracking"@en ;
+    rdfs:comment "System for tracking cases across multiple jurisdictions."@en .
+
+icac-international:InternationalReferral rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "International Referral"@en ;
+    rdfs:comment "Referral of cases or information to international partners."@en .
+
+# =============================================================================
+# INFORMATION SHARING MECHANISMS
+# =============================================================================
+
+icac-international:InformationSharingAgreement rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Information Sharing Agreement"@en ;
+    rdfs:comment "Formal agreement governing information sharing between countries."@en .
+
+icac-international:DataExchangeProtocol rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Data Exchange Protocol"@en ;
+    rdfs:comment "Technical protocol for secure data exchange between international partners."@en .
+
+icac-international:SecureChannel rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Secure Communication Channel"@en ;
+    rdfs:comment "Secure communication mechanism for international coordination."@en .
+
+icac-international:InternationalDatabase rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "International Database"@en ;
+    rdfs:comment "Shared database accessible by multiple countries for child protection."@en .
+
+# =============================================================================
+# GLOBAL HOTLINE NETWORK
+# =============================================================================
+
+icac-international:GlobalHotlineNetwork rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Global Hotline Network"@en ;
+    rdfs:comment "Network of interconnected national hotlines for child protection reporting."@en .
+
+icac-international:InternationalHotlineCoordination rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:GlobalHotlineNetwork ;
+    rdfs:label "International Hotline Coordination"@en ;
+    rdfs:comment "Coordination mechanism between different national hotlines."@en .
+
+icac-international:CrossReferralProtocol rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Cross-Referral Protocol"@en ;
+    rdfs:comment "Protocol for referring reports between national hotlines."@en .
+
+icac-international:MultilingualSupport rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Multilingual Support"@en ;
+    rdfs:comment "Support for multiple languages in international coordination."@en .
+
+# =============================================================================
+# INTERNATIONAL LEGAL COOPERATION
+# =============================================================================
+
+icac-international:MutualLegalAssistance rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Mutual Legal Assistance"@en ;
+    rdfs:comment "Formal legal assistance between countries for investigations and prosecutions."@en .
+
+icac-international:ExtraditionAgreement rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Extradition Agreement"@en ;
+    rdfs:comment "Agreement for extraditing suspects between countries."@en .
+
+icac-international:JurisdictionalCoordination rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Jurisdictional Coordination"@en ;
+    rdfs:comment "Coordination mechanism for resolving jurisdictional conflicts."@en .
+
+icac-international:InternationalWarrant rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "International Warrant"@en ;
+    rdfs:comment "Warrant recognized across multiple jurisdictions."@en .
+
+# =============================================================================
+# GLOBAL METRICS AND ASSESSMENT
+# =============================================================================
+
+icac-international:GlobalReach rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Global Reach"@en ;
+    rdfs:comment "Measurement of international coverage and impact."@en .
+
+icac-international:InternationalImpact rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "International Impact"@en ;
+    rdfs:comment "Assessment of international program effectiveness."@en .
+
+icac-international:CrossBorderEffectiveness rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Cross-Border Effectiveness"@en ;
+    rdfs:comment "Effectiveness measurement for cross-border operations."@en .
+
+# =============================================================================
+# INTERNATIONAL ROLES
+# =============================================================================
+
+icac-international:InternationalCoordinator rdf:type owl:Class ;
+    rdfs:subClassOf uco-role:Role ;
+    rdfs:label "International Coordinator"@en ;
+    rdfs:comment "Role responsible for international coordination activities."@en .
+
+icac-international:LiaisonOfficer rdf:type owl:Class ;
+    rdfs:subClassOf uco-role:Role ;
+    rdfs:label "Liaison Officer"@en ;
+    rdfs:comment "Officer serving as liaison between international partners."@en .
+
+icac-international:InternationalAnalyst rdf:type owl:Class ;
+    rdfs:subClassOf uco-role:Role ;
+    rdfs:label "International Analyst"@en ;
+    rdfs:comment "Analyst specializing in cross-border case analysis."@en .
+
+# =============================================================================
+# PROPERTIES FOR INTERNATIONAL COORDINATION
+# =============================================================================
+
+icac-international:partnerCountryCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:InternationalPartnership ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "partner country count"@en ;
+    rdfs:comment "Number of countries participating in the partnership."@en .
+
+icac-international:globalCoverage rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:GlobalReach ;
+    rdfs:range xsd:string ;
+    rdfs:label "global coverage"@en ;
+    rdfs:comment "Geographic coverage of international operations."@en .
+
+icac-international:crossBorderCapability rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:CrossBorderOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "cross-border capability"@en ;
+    rdfs:comment "Level of capability for cross-border operations."@en .
+
+icac-international:multilateralAgreement rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:InformationSharingAgreement ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "multilateral agreement"@en ;
+    rdfs:comment "Whether the agreement involves multiple parties."@en .
+
+icac-international:informationSharingLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:InformationSharingAgreement ;
+    rdfs:range xsd:string ;
+    rdfs:label "information sharing level"@en ;
+    rdfs:comment "Level of information sharing permitted (basic, enhanced, full)."@en .
+
+icac-international:responseTimeInternational rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:InternationalReferral ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "international response time"@en ;
+    rdfs:comment "Response time for international referrals in hours."@en .
+
+icac-international:coordinationComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:CrossBorderOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "coordination complexity"@en ;
+    rdfs:comment "Complexity level of international coordination (low, medium, high, complex)."@en .
+
+icac-international:jurisdictionCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:CrossBorderInvestigation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "jurisdiction count"@en ;
+    rdfs:comment "Number of jurisdictions involved in the investigation."@en .
+
+icac-international:languageSupport rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:MultilingualSupport ;
+    rdfs:range xsd:string ;
+    rdfs:label "language support"@en ;
+    rdfs:comment "Languages supported in international coordination."@en .
+
+icac-international:treatyBasis rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-international:MutualLegalAssistance ;
+    rdfs:range xsd:string ;
+    rdfs:label "treaty basis"@en ;
+    rdfs:comment "International treaty or agreement basis for legal cooperation."@en .
+
+# =============================================================================
+# OBJECT PROPERTIES FOR INTERNATIONAL RELATIONSHIPS
+# =============================================================================
+
+icac-international:coordinatesWith rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:InternationalPartnership ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "coordinates with"@en ;
+    rdfs:comment "Indicates coordination relationship between organizations."@en .
+
+icac-international:operatesInCountry rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:CrossBorderOperation ;
+    rdfs:range uco-location:Location ;
+    rdfs:label "operates in country"@en ;
+    rdfs:comment "Countries where the operation takes place."@en .
+
+icac-international:sharesDataWith rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:InformationSharingAgreement ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "shares data with"@en ;
+    rdfs:comment "Organizations that share data under the agreement."@en .
+
+icac-international:referredTo rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:InternationalReferral ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "referred to"@en ;
+    rdfs:comment "Organization or country to which the case is referred."@en .
+
+icac-international:managedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:GlobalHotlineNetwork ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "managed by"@en ;
+    rdfs:comment "Organization managing the global hotline network."@en .
+
+icac-international:participatesIn rdf:type owl:ObjectProperty ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-international:InternationalPartnership ;
+    rdfs:label "participates in"@en ;
+    rdfs:comment "Indicates participation in international partnerships."@en .
+
+icac-international:triggersAlert rdf:type owl:ObjectProperty ;
+    rdfs:domain icac:Investigation ;
+    rdfs:range icac-international:InternationalAlert ;
+    rdfs:label "triggers alert"@en ;
+    rdfs:comment "Investigation that triggers an international alert."@en .
+
+icac-international:requiresAssistance rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:CrossBorderInvestigation ;
+    rdfs:range icac-international:MutualLegalAssistance ;
+    rdfs:label "requires assistance"@en ;
+    rdfs:comment "Cross-border investigation requiring legal assistance."@en .
+
+icac-international:supportedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:CrossBorderOperation ;
+    rdfs:range icac-international:InternationalTaskForce ;
+    rdfs:label "supported by"@en ;
+    rdfs:comment "International task force supporting the operation."@en .
+
+icac-international:coordinatesHotlines rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-international:InternationalHotlineCoordination ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "coordinates hotlines"@en ;
+    rdfs:comment "Hotlines coordinated under international framework."@en . 

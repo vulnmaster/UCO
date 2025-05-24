@@ -1,0 +1,680 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-multi: <https://ontology.unifiedcyberontology.org/icac/multi-jurisdiction#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/multi-jurisdiction/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Multi-Jurisdictional Operations Ontology"@en ;
+    rdfs:comment "An ontology for representing multi-jurisdictional investigations, inter-agency coordination, resource sharing, and jurisdictional challenges in Internet Crimes Against Children cases, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/multi-jurisdiction/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/location> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# MULTI-JURISDICTIONAL INVESTIGATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-multi:MultiJurisdictionalInvestigation rdf:type owl:Class ;
+    rdfs:label "Multi-Jurisdictional Investigation"@en ;
+    rdfs:comment "Investigation spanning multiple legal jurisdictions requiring coordination between agencies."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-multi:TaskForceOperation rdf:type owl:Class ;
+    rdfs:label "Task Force Operation"@en ;
+    rdfs:comment "Coordinated operation conducted by multi-agency task force."@en ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation .
+
+icac-multi:JointInvestigation rdf:type owl:Class ;
+    rdfs:label "Joint Investigation"@en ;
+    rdfs:comment "Investigation conducted jointly by multiple law enforcement agencies."@en ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation .
+
+icac-multi:InformationSharing rdf:type owl:Class ;
+    rdfs:label "Information Sharing"@en ;
+    rdfs:comment "Formal sharing of intelligence or evidence between jurisdictions."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-multi:ResourceSharing rdf:type owl:Class ;
+    rdfs:label "Resource Sharing"@en ;
+    rdfs:comment "Sharing of personnel, equipment, or expertise between agencies."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-multi:CrossBorderOperation rdf:type owl:Class ;
+    rdfs:label "Cross Border Operation"@en ;
+    rdfs:comment "Law enforcement operation that crosses state or national borders."@en ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation .
+
+# =============================================================================
+# AGENCY AND ORGANIZATION CLASSES (extending UCO Identity)
+# =============================================================================
+
+icac-multi:LawEnforcementAgency rdf:type owl:Class ;
+    rdfs:label "Law Enforcement Agency"@en ;
+    rdfs:comment "Government organization responsible for law enforcement within a jurisdiction."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+icac-multi:FederalAgency rdf:type owl:Class ;
+    rdfs:label "Federal Agency"@en ;
+    rdfs:comment "Law enforcement agency with federal jurisdiction."@en ;
+    rdfs:subClassOf icac-multi:LawEnforcementAgency .
+
+icac-multi:StateAgency rdf:type owl:Class ;
+    rdfs:label "State Agency"@en ;
+    rdfs:comment "Law enforcement agency with state-level jurisdiction."@en ;
+    rdfs:subClassOf icac-multi:LawEnforcementAgency .
+
+icac-multi:LocalAgency rdf:type owl:Class ;
+    rdfs:label "Local Agency"@en ;
+    rdfs:comment "Law enforcement agency with local jurisdiction (city, county, municipal)."@en ;
+    rdfs:subClassOf icac-multi:LawEnforcementAgency .
+
+icac-multi:TaskForce rdf:type owl:Class ;
+    rdfs:label "Task Force"@en ;
+    rdfs:comment "Temporary multi-agency organization formed for specific operations."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+icac-multi:InternationalAgency rdf:type owl:Class ;
+    rdfs:label "International Agency"@en ;
+    rdfs:comment "Law enforcement agency from foreign jurisdiction."@en ;
+    rdfs:subClassOf icac-multi:LawEnforcementAgency .
+
+# =============================================================================
+# JURISDICTION AND AUTHORITY CLASSES (extending UCO Core)
+# =============================================================================
+
+icac-multi:Jurisdiction rdf:type owl:Class ;
+    rdfs:label "Jurisdiction"@en ;
+    rdfs:comment "Legal authority and geographic area where an agency has enforcement power."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-multi:FederalJurisdiction rdf:type owl:Class ;
+    rdfs:label "Federal Jurisdiction"@en ;
+    rdfs:comment "Legal authority under federal law and courts."@en ;
+    rdfs:subClassOf icac-multi:Jurisdiction .
+
+icac-multi:StateJurisdiction rdf:type owl:Class ;
+    rdfs:label "State Jurisdiction"@en ;
+    rdfs:comment "Legal authority under state law and courts."@en ;
+    rdfs:subClassOf icac-multi:Jurisdiction .
+
+icac-multi:LocalJurisdiction rdf:type owl:Class ;
+    rdfs:label "Local Jurisdiction"@en ;
+    rdfs:comment "Legal authority at local level (city, county, municipal)."@en ;
+    rdfs:subClassOf icac-multi:Jurisdiction .
+
+icac-multi:InternationalJurisdiction rdf:type owl:Class ;
+    rdfs:label "International Jurisdiction"@en ;
+    rdfs:comment "Legal authority in foreign countries."@en ;
+    rdfs:subClassOf icac-multi:Jurisdiction .
+
+# =============================================================================
+# COORDINATION ROLE CLASSES (extending UCO Role)
+# =============================================================================
+
+icac-multi:LeadAgency rdf:type owl:Class ;
+    rdfs:label "Lead Agency"@en ;
+    rdfs:comment "Primary agency responsible for coordinating multi-jurisdictional investigation."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-multi:ParticipatingAgency rdf:type owl:Class ;
+    rdfs:label "Participating Agency"@en ;
+    rdfs:comment "Agency providing support or resources to multi-jurisdictional investigation."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-multi:TaskForceLeader rdf:type owl:Class ;
+    rdfs:label "Task Force Leader"@en ;
+    rdfs:comment "Officer responsible for leading multi-agency task force operations."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-multi:LiaisonOfficer rdf:type owl:Class ;
+    rdfs:label "Liaison Officer"@en ;
+    rdfs:comment "Officer responsible for communication between agencies."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-multi:CoordinatingAgent rdf:type owl:Class ;
+    rdfs:label "Coordinating Agent"@en ;
+    rdfs:comment "Personnel responsible for coordinating multi-jurisdictional activities."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+# =============================================================================
+# LEGAL AND PROCEDURAL CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-multi:InteragencyAgreement rdf:type owl:Class ;
+    rdfs:label "Interagency Agreement"@en ;
+    rdfs:comment "Formal agreement between agencies for cooperation and resource sharing."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-multi:MutualAidRequest rdf:type owl:Class ;
+    rdfs:label "Mutual Aid Request"@en ;
+    rdfs:comment "Formal request for assistance from another jurisdiction."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-multi:JurisdictionalWarrant rdf:type owl:Class ;
+    rdfs:label "Jurisdictional Warrant"@en ;
+    rdfs:comment "Legal authorization that specifies jurisdictional authority."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-multi:ExtraditionRequest rdf:type owl:Class ;
+    rdfs:label "Extradition Request"@en ;
+    rdfs:comment "Legal request to transfer suspect between jurisdictions."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-multi:InformationSharingAgreement rdf:type owl:Class ;
+    rdfs:label "Information Sharing Agreement"@en ;
+    rdfs:comment "Agreement governing sharing of sensitive information between agencies."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# COORDINATION PROPERTIES
+# =============================================================================
+
+# Investigation Coordination Properties
+icac-multi:involvesAgency rdf:type owl:ObjectProperty ;
+    rdfs:label "involves agency"@en ;
+    rdfs:comment "Links investigation to participating law enforcement agency."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:LawEnforcementAgency .
+
+icac-multi:leadBy rdf:type owl:ObjectProperty ;
+    rdfs:label "lead by"@en ;
+    rdfs:comment "Identifies the lead agency for the investigation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:LeadAgency .
+
+icac-multi:coordinatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated by"@en ;
+    rdfs:comment "Links investigation to coordinating agent or officer."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:CoordinatingAgent .
+
+icac-multi:operatesInJurisdiction rdf:type owl:ObjectProperty ;
+    rdfs:label "operates in jurisdiction"@en ;
+    rdfs:comment "Links agency to the jurisdiction where it has authority."@en ;
+    rdfs:domain icac-multi:LawEnforcementAgency ;
+    rdfs:range icac-multi:Jurisdiction .
+
+# Resource and Information Sharing Properties
+icac-multi:sharesResourcesWith rdf:type owl:ObjectProperty ;
+    rdfs:label "shares resources with"@en ;
+    rdfs:comment "Links agency to another agency with which it shares resources."@en ;
+    rdfs:domain icac-multi:LawEnforcementAgency ;
+    rdfs:range icac-multi:LawEnforcementAgency .
+
+icac-multi:sharesInformationWith rdf:type owl:ObjectProperty ;
+    rdfs:label "shares information with"@en ;
+    rdfs:comment "Links agency to another agency with which it shares information."@en ;
+    rdfs:domain icac-multi:LawEnforcementAgency ;
+    rdfs:range icac-multi:LawEnforcementAgency .
+
+icac-multi:requestsAssistanceFrom rdf:type owl:ObjectProperty ;
+    rdfs:label "requests assistance from"@en ;
+    rdfs:comment "Links agency requesting assistance to providing agency."@en ;
+    rdfs:domain icac-multi:LawEnforcementAgency ;
+    rdfs:range icac-multi:LawEnforcementAgency .
+
+icac-multi:providesAssistanceTo rdf:type owl:ObjectProperty ;
+    rdfs:label "provides assistance to"@en ;
+    rdfs:comment "Links agency providing assistance to requesting agency."@en ;
+    rdfs:domain icac-multi:LawEnforcementAgency ;
+    rdfs:range icac-multi:LawEnforcementAgency .
+
+# Investigation Scope Properties
+icac-multi:investigationScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "investigation scope"@en ;
+    rdfs:comment "Geographic or jurisdictional scope of investigation (local, state, national, international)."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:jurisdictionCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "jurisdiction count"@en ;
+    rdfs:comment "Number of jurisdictions involved in the investigation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:integer .
+
+icac-multi:agencyCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "agency count"@en ;
+    rdfs:comment "Number of agencies participating in the investigation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:integer .
+
+icac-multi:crossesBorders rdf:type owl:DatatypeProperty ;
+    rdfs:label "crosses borders"@en ;
+    rdfs:comment "Whether investigation crosses state or national borders."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:boolean .
+
+# Coordination Properties
+icac-multi:coordinationMechanism rdf:type owl:DatatypeProperty ;
+    rdfs:label "coordination mechanism"@en ;
+    rdfs:comment "Method used for inter-agency coordination (task_force, liaison, joint_operation, mou)."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:communicationProtocol rdf:type owl:DatatypeProperty ;
+    rdfs:label "communication protocol"@en ;
+    rdfs:comment "Established protocol for inter-agency communication."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:meetingFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "meeting frequency"@en ;
+    rdfs:comment "How often coordination meetings are held (daily, weekly, monthly, as_needed)."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:informationSharingLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "information sharing level"@en ;
+    rdfs:comment "Level of information sharing between agencies (full, limited, restricted)."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+# Legal and Authority Properties
+icac-multi:primaryJurisdiction rdf:type owl:ObjectProperty ;
+    rdfs:label "primary jurisdiction"@en ;
+    rdfs:comment "Primary legal jurisdiction for the investigation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:Jurisdiction .
+
+icac-multi:authorizedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "authorized by"@en ;
+    rdfs:comment "Legal authorization enabling multi-jurisdictional operation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:JurisdictionalWarrant .
+
+icac-multi:governedByAgreement rdf:type owl:ObjectProperty ;
+    rdfs:label "governed by agreement"@en ;
+    rdfs:comment "Interagency agreement governing the cooperation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range icac-multi:InteragencyAgreement .
+
+icac-multi:legalComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:label "legal complexity"@en ;
+    rdfs:comment "Assessment of legal complexity (low, medium, high, extreme)."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+# Task Force Properties
+icac-multi:taskForceType rdf:type owl:DatatypeProperty ;
+    rdfs:label "task force type"@en ;
+    rdfs:comment "Type of task force (permanent, temporary, ad_hoc, specialized)."@en ;
+    rdfs:domain icac-multi:TaskForce ;
+    rdfs:range xsd:string .
+
+icac-multi:taskForceDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "task force duration"@en ;
+    rdfs:comment "Expected duration of task force operation (in months)."@en ;
+    rdfs:domain icac-multi:TaskForce ;
+    rdfs:range xsd:integer .
+
+icac-multi:memberAgencyCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "member agency count"@en ;
+    rdfs:comment "Number of agencies participating in task force."@en ;
+    rdfs:domain icac-multi:TaskForce ;
+    rdfs:range xsd:integer .
+
+icac-multi:personnelAssigned rdf:type owl:DatatypeProperty ;
+    rdfs:label "personnel assigned"@en ;
+    rdfs:comment "Number of personnel assigned to task force."@en ;
+    rdfs:domain icac-multi:TaskForce ;
+    rdfs:range xsd:integer .
+
+# Resource Sharing Properties
+icac-multi:resourceType rdf:type owl:DatatypeProperty ;
+    rdfs:label "resource type"@en ;
+    rdfs:comment "Type of resource being shared (personnel, equipment, expertise, funding)."@en ;
+    rdfs:domain icac-multi:ResourceSharing ;
+    rdfs:range xsd:string .
+
+icac-multi:resourceValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "resource value"@en ;
+    rdfs:comment "Monetary value of shared resources in USD."@en ;
+    rdfs:domain icac-multi:ResourceSharing ;
+    rdfs:range xsd:decimal .
+
+icac-multi:sharingDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "sharing duration"@en ;
+    rdfs:comment "Duration of resource sharing arrangement (in days)."@en ;
+    rdfs:domain icac-multi:ResourceSharing ;
+    rdfs:range xsd:integer .
+
+icac-multi:costSharingArrangement rdf:type owl:DatatypeProperty ;
+    rdfs:label "cost sharing arrangement"@en ;
+    rdfs:comment "How costs are shared between agencies."@en ;
+    rdfs:domain icac-multi:ResourceSharing ;
+    rdfs:range xsd:string .
+
+# Challenges and Issues Properties
+icac-multi:coordinationChallenges rdf:type owl:DatatypeProperty ;
+    rdfs:label "coordination challenges"@en ;
+    rdfs:comment "Challenges encountered in multi-jurisdictional coordination."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:jurisdictionalConflicts rdf:type owl:DatatypeProperty ;
+    rdfs:label "jurisdictional conflicts"@en ;
+    rdfs:comment "Conflicts between jurisdictional authorities or procedures."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:communicationBarriers rdf:type owl:DatatypeProperty ;
+    rdfs:label "communication barriers"@en ;
+    rdfs:comment "Barriers to effective inter-agency communication."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+icac-multi:successMetrics rdf:type owl:DatatypeProperty ;
+    rdfs:label "success metrics"@en ;
+    rdfs:comment "Metrics used to measure success of multi-jurisdictional cooperation."@en ;
+    rdfs:domain icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:range xsd:string .
+
+# International Cooperation Properties
+icac-multi:diplomaticChannels rdf:type owl:DatatypeProperty ;
+    rdfs:label "diplomatic channels"@en ;
+    rdfs:comment "Whether diplomatic channels were required for cooperation."@en ;
+    rdfs:domain icac-multi:CrossBorderOperation ;
+    rdfs:range xsd:boolean .
+
+icac-multi:treatyBasis rdf:type owl:DatatypeProperty ;
+    rdfs:label "treaty basis"@en ;
+    rdfs:comment "International treaty or agreement enabling cooperation."@en ;
+    rdfs:domain icac-multi:CrossBorderOperation ;
+    rdfs:range xsd:string .
+
+icac-multi:languageBarriers rdf:type owl:DatatypeProperty ;
+    rdfs:label "language barriers"@en ;
+    rdfs:comment "Language barriers encountered in international cooperation."@en ;
+    rdfs:domain icac-multi:CrossBorderOperation ;
+    rdfs:range xsd:string .
+
+icac-multi:timeZoneChallenges rdf:type owl:DatatypeProperty ;
+    rdfs:label "time zone challenges"@en ;
+    rdfs:comment "Challenges posed by different time zones in coordination."@en ;
+    rdfs:domain icac-multi:CrossBorderOperation ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# ENHANCED OPERATION COORDINATION (Idaho Case Analysis)
+# =============================================================================
+
+icac-multi:NamedMultiJurisdictionalOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Named Multi-Jurisdictional Operation"@en ;
+    rdfs:comment "Formally named multi-phase operation coordinated across jurisdictions."@en .
+
+icac-multi:NationalCoordinatedOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:label "National Coordinated Operation"@en ;
+    rdfs:comment "Operation coordinated across multiple ICAC task forces nationally."@en .
+
+icac-multi:OperationSafeOnlineSummerType rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NationalCoordinatedOperation ;
+    rdfs:label "Operation Safe Online Summer Type"@en ;
+    rdfs:comment "Type of national operation coordinated across 61+ ICAC Task Forces."@en .
+
+icac-multi:CoordinatedArrestWave rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Coordinated Arrest Wave"@en ;
+    rdfs:comment "Coordinated arrests conducted as part of larger operation."@en .
+
+icac-multi:OperationMetricsTracking rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Operation Metrics Tracking"@en ;
+    rdfs:comment "Comprehensive tracking of operation outcomes and effectiveness."@en .
+
+# Enhanced Operation Properties
+icac-multi:operationName rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "operation name"@en ;
+    rdfs:comment "Official name of the multi-jurisdictional operation."@en .
+
+icac-multi:operationPhase rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "operation phase"@en ;
+    rdfs:comment "Current phase of the operation (planning, execution, follow-up)."@en .
+
+icac-multi:taskForcesInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NationalCoordinatedOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "task forces involved"@en ;
+    rdfs:comment "Number of ICAC task forces participating in operation."@en .
+
+icac-multi:totalArrests rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:OperationMetricsTracking ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "total arrests"@en ;
+    rdfs:comment "Total number of arrests made during operation."@en .
+
+icac-multi:specializedUnitsDeployed rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "specialized units deployed"@en ;
+    rdfs:comment "Number of specialized units deployed in operation."@en .
+
+icac-multi:operationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "operation duration"@en ;
+    rdfs:comment "Duration of operation in days."@en .
+
+icac-multi:coordinationCenterLocation rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NationalCoordinatedOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "coordination center location"@en ;
+    rdfs:comment "Location of operation coordination center."@en .
+
+# =============================================================================
+# SEX OFFENDER COMPLIANCE MONITORING (Arkansas Case Analysis)
+# =============================================================================
+
+icac-multi:ComplianceMonitoringOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Compliance Monitoring Operation"@en ;
+    rdfs:comment "Large-scale operation monitoring sex offender compliance and registration requirements."@en .
+
+icac-multi:SexOffenderComplianceCheck rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Sex Offender Compliance Check"@en ;
+    rdfs:comment "Individual compliance check visit to registered sex offender."@en .
+
+icac-multi:RegistrationComplianceViolation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Compliance Violation"@en ;
+    rdfs:comment "Violation of sex offender registration requirements."@en .
+
+icac-multi:ComplianceVisitCoordination rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Compliance Visit Coordination"@en ;
+    rdfs:comment "Coordination of multiple compliance visits across jurisdictions."@en .
+
+icac-multi:StatewideSweep rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:ComplianceMonitoringOperation ;
+    rdfs:label "Statewide Sweep"@en ;
+    rdfs:comment "Statewide operation conducting compliance checks across all jurisdictions."@en .
+
+# =============================================================================
+# MULTI-STATE TRAFFICKING INVESTIGATIONS (Arkansas Case Analysis)
+# =============================================================================
+
+icac-multi:MultiStateTraffickingInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:CrossBorderOperation ;
+    rdfs:label "Multi-State Trafficking Investigation"@en ;
+    rdfs:comment "Child sex trafficking investigation spanning multiple states."@en .
+
+icac-multi:TraffickingCoordinationCenter rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "Trafficking Coordination Center"@en ;
+    rdfs:comment "Center coordinating multi-state trafficking investigations."@en .
+
+icac-multi:InterstateTraffickingNetwork rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Interstate Trafficking Network"@en ;
+    rdfs:comment "Criminal network operating across state boundaries for trafficking."@en .
+
+icac-multi:TraffickingInvestigationTask rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Trafficking Investigation Task"@en ;
+    rdfs:comment "Specific investigation task in multi-state trafficking case."@en .
+
+icac-multi:CrossStateEvidence rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Cross-State Evidence"@en ;
+    rdfs:comment "Evidence collected across multiple states in trafficking investigation."@en .
+
+# =============================================================================
+# ENHANCED OPERATIONAL SCALE (Arkansas Analysis)
+# =============================================================================
+
+icac-multi:LargeScaleOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:label "Large Scale Operation"@en ;
+    rdfs:comment "Operation involving 100+ law enforcement actions or extensive coordination."@en .
+
+icac-multi:ProactiveInvestigationCampaign rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Proactive Investigation Campaign"@en ;
+    rdfs:comment "Campaign focused on proactive investigation rather than reactive response."@en .
+
+icac-multi:HandsOnOffenseInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Hands-On Offense Investigation"@en ;
+    rdfs:comment "Investigation specifically targeting hands-on sexual offenses against children."@en .
+
+icac-multi:ChildRescueCoordination rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Child Rescue Coordination"@en ;
+    rdfs:comment "Coordination of child rescue operations across jurisdictions."@en .
+
+icac-multi:VictimIdentificationTask rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Victim Identification Task"@en ;
+    rdfs:comment "Task focused on identifying new child victims."@en .
+
+# =============================================================================
+# ENHANCED OPERATIONAL PROPERTIES (Arkansas Scale)
+# =============================================================================
+
+icac-multi:complianceVisitsCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:ComplianceMonitoringOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "compliance visits count"@en ;
+    rdfs:comment "Number of compliance visits conducted during operation."@en .
+
+icac-multi:statesInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:MultiStateTraffickingInvestigation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "states involved"@en ;
+    rdfs:comment "Number of states involved in trafficking investigation."@en .
+
+icac-multi:searchWarrantsExecuted rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "search warrants executed"@en ;
+    rdfs:comment "Number of search warrants executed during operation."@en .
+
+icac-multi:handsOnArrestsCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:HandsOnOffenseInvestigation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "hands-on arrests count"@en ;
+    rdfs:comment "Number of arrests for hands-on offenses."@en .
+
+icac-multi:childrenRescued rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:ChildRescueCoordination ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "children rescued"@en ;
+    rdfs:comment "Number of children rescued from ongoing abuse."@en .
+
+icac-multi:newVictimsIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:VictimIdentificationTask ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "new victims identified"@en ;
+    rdfs:comment "Number of new child victims identified."@en .
+
+icac-multi:investigationsInitiated rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:ProactiveInvestigationCampaign ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "investigations initiated"@en ;
+    rdfs:comment "Number of new investigations initiated during campaign."@en .
+
+icac-multi:casesSubmittedForProsecution rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "cases submitted for prosecution"@en ;
+    rdfs:comment "Number of cases submitted for prosecution."@en .
+
+icac-multi:grandJuryAcceptances rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "grand jury acceptances"@en ;
+    rdfs:comment "Number of cases accepted for grand jury indictment."@en .
+
+icac-multi:traffickingCasesIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:MultiStateTraffickingInvestigation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "trafficking cases identified"@en ;
+    rdfs:comment "Number of trafficking cases identified."@en .
+
+icac-multi:complianceViolationsFound rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:ComplianceMonitoringOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "compliance violations found"@en ;
+    rdfs:comment "Number of registration compliance violations discovered."@en .
+
+icac-multi:operationSuccessRating rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range xsd:string ;
+    rdfs:label "operation success rating"@en ;
+    rdfs:comment "Success rating of operation (most_successful, highly_successful, successful, limited)."@en .
+
+# Enhanced Object Properties for Arkansas Framework
+icac-multi:involvesTraffickingInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range icac-multi:MultiStateTraffickingInvestigation ;
+    rdfs:label "involves trafficking investigation"@en ;
+    rdfs:comment "Operation involves multi-state trafficking investigation."@en .
+
+icac-multi:coordinatesComplianceChecks rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-multi:ComplianceMonitoringOperation ;
+    rdfs:range icac-multi:SexOffenderComplianceCheck ;
+    rdfs:label "coordinates compliance checks"@en ;
+    rdfs:comment "Operation coordinates individual compliance checks."@en .
+
+icac-multi:facilitatesChildRescue rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-multi:LargeScaleOperation ;
+    rdfs:range icac-multi:ChildRescueCoordination ;
+    rdfs:label "facilitates child rescue"@en ;
+    rdfs:comment "Operation facilitates child rescue coordination."@en .
+
+icac-multi:identifiesVictims rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-multi:ProactiveInvestigationCampaign ;
+    rdfs:range icac-multi:VictimIdentificationTask ;
+    rdfs:label "identifies victims"@en ;
+    rdfs:comment "Campaign includes victim identification tasks."@en .
+
+icac-multi:uncoversCrossStateEvidence rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-multi:MultiStateTraffickingInvestigation ;
+    rdfs:range icac-multi:CrossStateEvidence ;
+    rdfs:label "uncovers cross-state evidence"@en ;
+    rdfs:comment "Investigation uncovers evidence across multiple states."@en . 

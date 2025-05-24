@@ -1,0 +1,424 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-custodial: <https://ontology.unifiedcyberontology.org/icac/custodial#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/custodial/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Custodial Relationship & Position of Trust Ontology"@en ;
+    rdfs:comment "An ontology for representing custodial relationships, positions of trust, and authority figure violations in Internet Crimes Against Children investigations, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/custodial/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# CUSTODIAL RELATIONSHIP CLASSES (extending UCO Core)
+# =============================================================================
+
+icac-custodial:CustodialRelationship rdf:type owl:Class ;
+    rdfs:label "Custodial Relationship"@en ;
+    rdfs:comment "Legal or informal relationship involving custody, care, or supervision of a child."@en ;
+    rdfs:subClassOf uco-core:Relationship .
+
+icac-custodial:PositionOfTrust rdf:type owl:Class ;
+    rdfs:label "Position of Trust"@en ;
+    rdfs:comment "Role or position that grants special access to or authority over children."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-custodial:CaregiverRelationship rdf:type owl:Class ;
+    rdfs:label "Caregiver Relationship"@en ;
+    rdfs:comment "Relationship involving responsibility for child's care, welfare, or supervision."@en ;
+    rdfs:subClassOf icac-custodial:CustodialRelationship .
+
+icac-custodial:FamilialRelationship rdf:type owl:Class ;
+    rdfs:label "Familial Relationship"@en ;
+    rdfs:comment "Family-based relationship with natural or assumed custodial responsibilities."@en ;
+    rdfs:subClassOf icac-custodial:CustodialRelationship .
+
+icac-custodial:ProfessionalCareRelationship rdf:type owl:Class ;
+    rdfs:label "Professional Care Relationship"@en ;
+    rdfs:comment "Professional relationship involving child care or supervision duties."@en ;
+    rdfs:subClassOf icac-custodial:CustodialRelationship .
+
+icac-custodial:TemporaryCustody rdf:type owl:Class ;
+    rdfs:label "Temporary Custody"@en ;
+    rdfs:comment "Short-term custody arrangement or supervision of a child."@en ;
+    rdfs:subClassOf icac-custodial:CustodialRelationship .
+
+# =============================================================================
+# AUTHORITY FIGURE CLASSES (extending UCO Role)
+# =============================================================================
+
+icac-custodial:AuthorityFigure rdf:type owl:Class ;
+    rdfs:label "Authority Figure"@en ;
+    rdfs:comment "Individual in position of authority, trust, or power over children."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-custodial:Guardian rdf:type owl:Class ;
+    rdfs:label "Guardian"@en ;
+    rdfs:comment "Legal or appointed guardian responsible for child's welfare."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:Babysitter rdf:type owl:Class ;
+    rdfs:label "Babysitter"@en ;
+    rdfs:comment "Individual temporarily caring for children in parents' absence."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:Relative rdf:type owl:Class ;
+    rdfs:label "Relative"@en ;
+    rdfs:comment "Family member in position of trust or authority over child."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:Teacher rdf:type owl:Class ;
+    rdfs:label "Teacher"@en ;
+    rdfs:comment "Educational professional with authority over students."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:Coach rdf:type owl:Class ;
+    rdfs:label "Coach"@en ;
+    rdfs:comment "Sports or activity coach with authority over young participants."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:Mentor rdf:type owl:Class ;
+    rdfs:label "Mentor"@en ;
+    rdfs:comment "Adult mentor or role model with trusted relationship with child."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:ChildcareProvider rdf:type owl:Class ;
+    rdfs:label "Childcare Provider"@en ;
+    rdfs:comment "Professional childcare or daycare provider."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+icac-custodial:FamilyFriend rdf:type owl:Class ;
+    rdfs:label "Family Friend"@en ;
+    rdfs:comment "Friend of family with trusted access to children."@en ;
+    rdfs:subClassOf icac-custodial:AuthorityFigure .
+
+# =============================================================================
+# TRUST VIOLATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-custodial:TrustViolation rdf:type owl:Class ;
+    rdfs:label "Trust Violation"@en ;
+    rdfs:comment "Action that violates a position of trust or custodial responsibility."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-custodial:CustodialAbuse rdf:type owl:Class ;
+    rdfs:label "Custodial Abuse"@en ;
+    rdfs:comment "Abuse committed by someone in custodial or caregiving role."@en ;
+    rdfs:subClassOf icac-custodial:TrustViolation .
+
+icac-custodial:AuthorityAbuse rdf:type owl:Class ;
+    rdfs:label "Authority Abuse"@en ;
+    rdfs:comment "Abuse of authority position to exploit or harm children."@en ;
+    rdfs:subClassOf icac-custodial:TrustViolation .
+
+icac-custodial:BreachOfCare rdf:type owl:Class ;
+    rdfs:label "Breach of Care"@en ;
+    rdfs:comment "Failure to provide appropriate care while in custodial role."@en ;
+    rdfs:subClassOf icac-custodial:TrustViolation .
+
+icac-custodial:SupervisionFailure rdf:type owl:Class ;
+    rdfs:label "Supervision Failure"@en ;
+    rdfs:comment "Failure to properly supervise or protect child while in position of authority."@en ;
+    rdfs:subClassOf icac-custodial:TrustViolation .
+
+# =============================================================================
+# CUSTODY ARRANGEMENT CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-custodial:CustodyArrangement rdf:type owl:Class ;
+    rdfs:label "Custody Arrangement"@en ;
+    rdfs:comment "Formal or informal arrangement for child custody or care."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-custodial:FormalCustody rdf:type owl:Class ;
+    rdfs:label "Formal Custody"@en ;
+    rdfs:comment "Legally established custody arrangement with court orders or official documentation."@en ;
+    rdfs:subClassOf icac-custodial:CustodyArrangement .
+
+icac-custodial:InformalCustody rdf:type owl:Class ;
+    rdfs:label "Informal Custody"@en ;
+    rdfs:comment "Informal custody arrangement without legal documentation."@en ;
+    rdfs:subClassOf icac-custodial:CustodyArrangement .
+
+icac-custodial:EmergencyCustody rdf:type owl:Class ;
+    rdfs:label "Emergency Custody"@en ;
+    rdfs:comment "Temporary custody arrangement due to emergency circumstances."@en ;
+    rdfs:subClassOf icac-custodial:CustodyArrangement .
+
+icac-custodial:VisitationArrangement rdf:type owl:Class ;
+    rdfs:label "Visitation Arrangement"@en ;
+    rdfs:comment "Scheduled visitation or contact arrangement with child."@en ;
+    rdfs:subClassOf icac-custodial:CustodyArrangement .
+
+# =============================================================================
+# CONSENT AND AUTHORIZATION CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-custodial:ParentalConsent rdf:type owl:Class ;
+    rdfs:label "Parental Consent"@en ;
+    rdfs:comment "Consent given by parent or guardian for custodial arrangement."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-custodial:CustodialAuthorization rdf:type owl:Class ;
+    rdfs:label "Custodial Authorization"@en ;
+    rdfs:comment "Official authorization granting custodial rights or responsibilities."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-custodial:BackgroundCheck rdf:type owl:Class ;
+    rdfs:label "Background Check"@en ;
+    rdfs:comment "Background verification conducted for custodial or care position."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# CUSTODIAL PROPERTIES
+# =============================================================================
+
+# Relationship Properties
+icac-custodial:relationshipType rdf:type owl:DatatypeProperty ;
+    rdfs:label "relationship type"@en ;
+    rdfs:comment "Type of custodial relationship (guardian, babysitter, relative, teacher, coach, mentor, daycare)."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range xsd:string .
+
+icac-custodial:relationshipDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "relationship duration"@en ;
+    rdfs:comment "Duration of custodial relationship in months."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range xsd:integer .
+
+icac-custodial:relationshipFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "relationship frequency"@en ;
+    rdfs:comment "Frequency of contact or care (daily, weekly, monthly, occasional)."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range xsd:string .
+
+icac-custodial:relationshipIntimacy rdf:type owl:DatatypeProperty ;
+    rdfs:label "relationship intimacy"@en ;
+    rdfs:comment "Level of closeness in relationship (distant, moderate, close, very_close)."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range xsd:string .
+
+# Authority Properties
+icac-custodial:authorityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "authority level"@en ;
+    rdfs:comment "Level of authority over child (limited, moderate, extensive, complete)."@en ;
+    rdfs:domain icac-custodial:PositionOfTrust ;
+    rdfs:range xsd:string .
+
+icac-custodial:authorityScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "authority scope"@en ;
+    rdfs:comment "Scope of authority (physical_care, educational, medical, financial, legal)."@en ;
+    rdfs:domain icac-custodial:PositionOfTrust ;
+    rdfs:range xsd:string .
+
+icac-custodial:supervisionLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "supervision level"@en ;
+    rdfs:comment "Level of supervision provided (none, minimal, moderate, close, constant)."@en ;
+    rdfs:domain icac-custodial:AuthorityFigure ;
+    rdfs:range xsd:string .
+
+# Custody Properties
+icac-custodial:custodyType rdf:type owl:DatatypeProperty ;
+    rdfs:label "custody type"@en ;
+    rdfs:comment "Type of custody (legal, physical, joint, sole, temporary)."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range xsd:string .
+
+icac-custodial:custodyDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "custody duration"@en ;
+    rdfs:comment "Duration of custody arrangement in days."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range xsd:integer .
+
+icac-custodial:custodySchedule rdf:type owl:DatatypeProperty ;
+    rdfs:label "custody schedule"@en ;
+    rdfs:comment "Schedule or pattern of custody (weekdays, weekends, alternating, specific_dates)."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range xsd:string .
+
+# Trust and Vulnerability Properties
+icac-custodial:trustLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "trust level"@en ;
+    rdfs:comment "Level of trust placed in authority figure (low, moderate, high, complete)."@en ;
+    rdfs:domain icac-custodial:PositionOfTrust ;
+    rdfs:range xsd:string .
+
+icac-custodial:accessLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "access level"@en ;
+    rdfs:comment "Level of access to child (supervised, unsupervised, unrestricted, private)."@en ;
+    rdfs:domain icac-custodial:PositionOfTrust ;
+    rdfs:range xsd:string .
+
+icac-custodial:vulnerabilityFactor rdf:type owl:DatatypeProperty ;
+    rdfs:label "vulnerability factor"@en ;
+    rdfs:comment "Factors that increase child's vulnerability (isolation, dependency, trust, fear)."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range xsd:string .
+
+# Violation Properties
+icac-custodial:violationType rdf:type owl:DatatypeProperty ;
+    rdfs:label "violation type"@en ;
+    rdfs:comment "Type of trust violation (abuse_of_authority, breach_of_care, exploitation, negligence)."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range xsd:string .
+
+icac-custodial:violationSeverity rdf:type owl:DatatypeProperty ;
+    rdfs:label "violation severity"@en ;
+    rdfs:comment "Severity level of trust violation (minor, moderate, severe, extreme)."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range xsd:string .
+
+icac-custodial:breachDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "breach duration"@en ;
+    rdfs:comment "Duration of trust violation in days."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range xsd:integer .
+
+icac-custodial:violationPattern rdf:type owl:DatatypeProperty ;
+    rdfs:label "violation pattern"@en ;
+    rdfs:comment "Pattern of violation (isolated, repeated, escalating, systematic)."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range xsd:string .
+
+# Consent Properties
+icac-custodial:consentStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "consent status"@en ;
+    rdfs:comment "Status of parental consent (given, withdrawn, conditional, disputed)."@en ;
+    rdfs:domain icac-custodial:ParentalConsent ;
+    rdfs:range xsd:string .
+
+icac-custodial:consentScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "consent scope"@en ;
+    rdfs:comment "Scope of activities covered by consent (general_care, specific_activities, emergency_care)."@en ;
+    rdfs:domain icac-custodial:ParentalConsent ;
+    rdfs:range xsd:string .
+
+icac-custodial:authorizationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "authorization level"@en ;
+    rdfs:comment "Level of authorization granted (basic, intermediate, full, emergency)."@en ;
+    rdfs:domain icac-custodial:CustodialAuthorization ;
+    rdfs:range xsd:string .
+
+# Background Check Properties
+icac-custodial:checkStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "check status"@en ;
+    rdfs:comment "Status of background check (passed, failed, pending, waived)."@en ;
+    rdfs:domain icac-custodial:BackgroundCheck ;
+    rdfs:range xsd:string .
+
+icac-custodial:checkScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "check scope"@en ;
+    rdfs:comment "Scope of background check (criminal, employment, reference, comprehensive)."@en ;
+    rdfs:domain icac-custodial:BackgroundCheck ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# CUSTODIAL RELATIONSHIPS
+# =============================================================================
+
+# Participant Relationships
+icac-custodial:involvesCustodian rdf:type owl:ObjectProperty ;
+    rdfs:label "involves custodian"@en ;
+    rdfs:comment "Links custodial relationship to the custodian or authority figure."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range icac-custodial:AuthorityFigure .
+
+icac-custodial:involvesChild rdf:type owl:ObjectProperty ;
+    rdfs:label "involves child"@en ;
+    rdfs:comment "Links custodial relationship to the child under care."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range uco-identity:Person .
+
+icac-custodial:involvesParent rdf:type owl:ObjectProperty ;
+    rdfs:label "involves parent"@en ;
+    rdfs:comment "Links custodial arrangement to the parent or legal guardian."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range uco-identity:Person .
+
+# Trust and Authority Relationships
+icac-custodial:holdsPositionOf rdf:type owl:ObjectProperty ;
+    rdfs:label "holds position of"@en ;
+    rdfs:comment "Links individual to position of trust or authority they hold."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac-custodial:PositionOfTrust .
+
+icac-custodial:hasAuthority rdf:type owl:ObjectProperty ;
+    rdfs:label "has authority"@en ;
+    rdfs:comment "Links authority figure to their authority position."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac-custodial:AuthorityFigure .
+
+icac-custodial:subjectTo rdf:type owl:ObjectProperty ;
+    rdfs:label "subject to"@en ;
+    rdfs:comment "Links child to authority figure who has control over them."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac-custodial:AuthorityFigure .
+
+# Violation Relationships
+icac-custodial:violatesPosition rdf:type owl:ObjectProperty ;
+    rdfs:label "violates position"@en ;
+    rdfs:comment "Links trust violation to the position of trust that was violated."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range icac-custodial:PositionOfTrust .
+
+icac-custodial:violatesRelationship rdf:type owl:ObjectProperty ;
+    rdfs:label "violates relationship"@en ;
+    rdfs:comment "Links trust violation to the custodial relationship that was violated."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range icac-custodial:CustodialRelationship .
+
+icac-custodial:perpetratedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "perpetrated by"@en ;
+    rdfs:comment "Links trust violation to the authority figure who perpetrated it."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range icac-custodial:AuthorityFigure .
+
+# Arrangement Relationships
+icac-custodial:authorizedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "authorized by"@en ;
+    rdfs:comment "Links custody arrangement to authorization or consent."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range icac-custodial:CustodialAuthorization .
+
+icac-custodial:requiredConsent rdf:type owl:ObjectProperty ;
+    rdfs:label "required consent"@en ;
+    rdfs:comment "Links custody arrangement to required parental consent."@en ;
+    rdfs:domain icac-custodial:CustodyArrangement ;
+    rdfs:range icac-custodial:ParentalConsent .
+
+icac-custodial:subjectToCheck rdf:type owl:ObjectProperty ;
+    rdfs:label "subject to check"@en ;
+    rdfs:comment "Links authority figure to background check they underwent."@en ;
+    rdfs:domain icac-custodial:AuthorityFigure ;
+    rdfs:range icac-custodial:BackgroundCheck .
+
+# Investigation Relationships
+icac-custodial:relevantToInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:label "relevant to investigation"@en ;
+    rdfs:comment "Links custodial relationship to ICAC investigation."@en ;
+    rdfs:domain icac-custodial:CustodialRelationship ;
+    rdfs:range icac:Investigation .
+
+icac-custodial:aggravatingFactor rdf:type owl:ObjectProperty ;
+    rdfs:label "aggravating factor"@en ;
+    rdfs:comment "Links trust violation to criminal offense as aggravating factor."@en ;
+    rdfs:domain icac-custodial:TrustViolation ;
+    rdfs:range uco-action:Crime . 

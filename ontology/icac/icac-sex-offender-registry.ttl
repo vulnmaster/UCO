@@ -1,0 +1,519 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-registry: <https://ontology.unifiedcyberontology.org/icac/sex-offender-registry#> .
+
+<https://ontology.unifiedcyberontology.org/icac/sex-offender-registry> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Sex Offender Registry Ontology"@en ;
+    rdfs:comment "An ontology for modeling sex offender registry data, registration requirements, and registry management systems for child protection investigations."@en ;
+    owl:versionInfo "0.1.0" .
+
+# =============================================================================
+# REGISTRY CORE CLASSES
+# =============================================================================
+
+icac-registry:SexOffenderRegistry rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Sex Offender Registry"@en ;
+    rdfs:comment "Registry system maintaining information about registered sex offenders."@en .
+
+icac-registry:RegisteredSexOffender rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Person ;
+    rdfs:label "Registered Sex Offender"@en ;
+    rdfs:comment "Individual required to register as a sex offender."@en .
+
+icac-registry:OffenderProfile rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Offender Profile"@en ;
+    rdfs:comment "Comprehensive profile of registered sex offender including all required information."@en .
+
+icac-registry:RegistrationRecord rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Record"@en ;
+    rdfs:comment "Official record of sex offender registration including all required data elements."@en .
+
+icac-registry:RegistrationRequirement rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Requirement"@en ;
+    rdfs:comment "Specific requirement for sex offender registration (location, frequency, restrictions)."@en .
+
+# =============================================================================
+# OFFENSE AND CONVICTION INFORMATION
+# =============================================================================
+
+icac-registry:ConvictingOffense rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Convicting Offense"@en ;
+    rdfs:comment "Criminal offense that resulted in sex offender registration requirement."@en .
+
+icac-registry:OffenseClassification rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Offense Classification"@en ;
+    rdfs:comment "Classification of sexual offense (felony/misdemeanor, degree, special categories)."@en .
+
+icac-registry:VictimInformation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Victim Information"@en ;
+    rdfs:comment "Information about victims relevant to registration (age, relationship, count)."@en .
+
+icac-registry:CourtOrder rdf:type owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Court Order"@en ;
+    rdfs:comment "Court order mandating sex offender registration."@en .
+
+# =============================================================================
+# REGISTRATION STATUS AND COMPLIANCE
+# =============================================================================
+
+icac-registry:RegistrationStatus rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Status"@en ;
+    rdfs:comment "Current status of sex offender registration (active, inactive, non-compliant, etc.)."@en .
+
+icac-registry:ComplianceHistory rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Compliance History"@en ;
+    rdfs:comment "History of compliance with registration requirements."@en .
+
+icac-registry:RegistrationUpdate rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Registration Update"@en ;
+    rdfs:comment "Update to sex offender registration information."@en .
+
+icac-registry:ComplianceViolation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Compliance Violation"@en ;
+    rdfs:comment "Violation of sex offender registration requirements."@en .
+
+icac-registry:VerificationCheck rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Verification Check"@en ;
+    rdfs:comment "Official verification of sex offender registration information."@en .
+
+# =============================================================================
+# PERSONAL IDENTIFICATION AND DEMOGRAPHICS
+# =============================================================================
+
+icac-registry:PersonalIdentifiers rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Personal Identifiers"@en ;
+    rdfs:comment "Collection of identifiers for registered sex offender (SSN, DOB, aliases, etc.)."@en .
+
+icac-registry:PhysicalDescription rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Physical Description"@en ;
+    rdfs:comment "Physical description of registered sex offender (height, weight, scars, tattoos)."@en .
+
+icac-registry:Photograph rdf:type owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Photograph"@en ;
+    rdfs:comment "Official photograph of registered sex offender."@en .
+
+icac-registry:Alias rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Identity ;
+    rdfs:label "Alias"@en ;
+    rdfs:comment "Known alias or alternate name used by registered sex offender."@en .
+
+icac-registry:IdentifyingMark rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Identifying Mark"@en ;
+    rdfs:comment "Distinctive physical mark (scar, tattoo, birthmark) for identification."@en .
+
+# =============================================================================
+# ADDRESS AND LOCATION INFORMATION
+# =============================================================================
+
+icac-registry:RegisteredAddress rdf:type owl:Class ;
+    rdfs:subClassOf uco-location:Location ;
+    rdfs:label "Registered Address"@en ;
+    rdfs:comment "Official registered address of sex offender."@en .
+
+icac-registry:PrimaryResidence rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegisteredAddress ;
+    rdfs:label "Primary Residence"@en ;
+    rdfs:comment "Primary residential address where offender lives."@en .
+
+icac-registry:TemporaryAddress rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegisteredAddress ;
+    rdfs:label "Temporary Address"@en ;
+    rdfs:comment "Temporary address where offender will be residing."@en .
+
+icac-registry:WorkLocation rdf:type owl:Class ;
+    rdfs:subClassOf uco-location:Location ;
+    rdfs:label "Work Location"@en ;
+    rdfs:comment "Location where registered sex offender is employed."@en .
+
+icac-registry:SchoolLocation rdf:type owl:Class ;
+    rdfs:subClassOf uco-location:Location ;
+    rdfs:label "School Location"@en ;
+    rdfs:comment "Educational institution where offender is enrolled."@en .
+
+icac-registry:AddressHistory rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Address History"@en ;
+    rdfs:comment "Historical record of registered addresses."@en .
+
+# =============================================================================
+# EMPLOYMENT AND EDUCATION
+# =============================================================================
+
+icac-registry:EmploymentInformation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Employment Information"@en ;
+    rdfs:comment "Current employment information for registered sex offender."@en .
+
+icac-registry:EducationInformation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Education Information"@en ;
+    rdfs:comment "Educational enrollment information for registered sex offender."@en .
+
+icac-registry:ProfessionalLicense rdf:type owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Professional License"@en ;
+    rdfs:comment "Professional license held by registered sex offender."@en .
+
+# =============================================================================
+# VEHICLE AND TRANSPORTATION
+# =============================================================================
+
+icac-registry:VehicleInformation rdf:type owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Vehicle Information"@en ;
+    rdfs:comment "Information about vehicles owned or operated by registered sex offender."@en .
+
+icac-registry:RegisteredVehicle rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:VehicleInformation ;
+    rdfs:label "Registered Vehicle"@en ;
+    rdfs:comment "Vehicle registered to sex offender."@en .
+
+# =============================================================================
+# INTERNET AND DIGITAL PRESENCE
+# =============================================================================
+
+icac-registry:InternetInformation rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Internet Information"@en ;
+    rdfs:comment "Internet-related information for registered sex offender."@en .
+
+icac-registry:OnlineIdentifier rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Identity ;
+    rdfs:label "Online Identifier"@en ;
+    rdfs:comment "Online username, email, or identifier used by registered sex offender."@en .
+
+icac-registry:SocialMediaAccount rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:OnlineIdentifier ;
+    rdfs:label "Social Media Account"@en ;
+    rdfs:comment "Social media account belonging to registered sex offender."@en .
+
+icac-registry:InternetServiceProvider rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "Internet Service Provider"@en ;
+    rdfs:comment "Internet service provider used by registered sex offender."@en .
+
+# =============================================================================
+# RESTRICTIONS AND CONDITIONS
+# =============================================================================
+
+icac-registry:RegistrationRestriction rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Restriction"@en ;
+    rdfs:comment "Restriction placed on registered sex offender."@en .
+
+icac-registry:GeographicRestriction rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegistrationRestriction ;
+    rdfs:label "Geographic Restriction"@en ;
+    rdfs:comment "Geographic area where offender is restricted from being."@en .
+
+icac-registry:ContactRestriction rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegistrationRestriction ;
+    rdfs:label "Contact Restriction"@en ;
+    rdfs:comment "Restriction on contact with certain individuals or groups."@en .
+
+icac-registry:InternetRestriction rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegistrationRestriction ;
+    rdfs:label "Internet Restriction"@en ;
+    rdfs:comment "Restriction on internet use or online activities."@en .
+
+icac-registry:EmploymentRestriction rdf:type owl:Class ;
+    rdfs:subClassOf icac-registry:RegistrationRestriction ;
+    rdfs:label "Employment Restriction"@en ;
+    rdfs:comment "Restriction on types of employment."@en .
+
+# =============================================================================
+# REGISTRY MANAGEMENT
+# =============================================================================
+
+icac-registry:RegistryAgency rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "Registry Agency"@en ;
+    rdfs:comment "Law enforcement agency responsible for maintaining sex offender registry."@en .
+
+icac-registry:RegistryOfficer rdf:type owl:Class ;
+    rdfs:subClassOf uco-role:Role ;
+    rdfs:label "Registry Officer"@en ;
+    rdfs:comment "Officer responsible for sex offender registration management."@en .
+
+icac-registry:RegistrySystem rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registry System"@en ;
+    rdfs:comment "Information system used to manage sex offender registry."@en .
+
+icac-registry:PublicWebsite rdf:type owl:Class ;
+    rdfs:subClassOf uco-observable:ObservableObject ;
+    rdfs:label "Public Website"@en ;
+    rdfs:comment "Public website for searching sex offender registry information."@en .
+
+# =============================================================================
+# NOTIFICATION AND ALERTS
+# =============================================================================
+
+icac-registry:CommunityNotification rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Community Notification"@en ;
+    rdfs:comment "Notification to community about registered sex offender."@en .
+
+icac-registry:RegistrationAlert rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Registration Alert"@en ;
+    rdfs:comment "Alert generated by registry system (non-compliance, address change, etc.)."@en .
+
+icac-registry:NotificationTier rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Notification Tier"@en ;
+    rdfs:comment "Classification tier determining level of community notification required."@en .
+
+# =============================================================================
+# DATATYPE PROPERTIES - OFFENDER INFORMATION
+# =============================================================================
+
+icac-registry:registrationNumber rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range xsd:string ;
+    rdfs:label "registration number"@en ;
+    rdfs:comment "Unique identifier assigned to sex offender registration."@en .
+
+icac-registry:registrationDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "registration date"@en ;
+    rdfs:comment "Date when sex offender registration was first required."@en .
+
+icac-registry:expirationDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "expiration date"@en ;
+    rdfs:comment "Date when registration requirement expires (if applicable)."@en .
+
+icac-registry:lastUpdate rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "last update"@en ;
+    rdfs:comment "Date of last update to registration information."@en .
+
+icac-registry:registrationFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:label "registration frequency"@en ;
+    rdfs:comment "Required frequency of registration updates (annual, quarterly, monthly)."@en .
+
+icac-registry:tier rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range xsd:string ;
+    rdfs:label "tier"@en ;
+    rdfs:comment "Risk tier classification (Tier I, II, III)."@en .
+
+icac-registry:lifetimeRegistration rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "lifetime registration"@en ;
+    rdfs:comment "Whether registration is required for life."@en .
+
+# Personal Information Properties
+icac-registry:fullName rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range xsd:string ;
+    rdfs:label "full name"@en ;
+    rdfs:comment "Legal full name of registered sex offender."@en .
+
+icac-registry:dateOfBirth rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range xsd:date ;
+    rdfs:label "date of birth"@en ;
+    rdfs:comment "Date of birth of registered sex offender."@en .
+
+icac-registry:socialSecurityNumber rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:PersonalIdentifiers ;
+    rdfs:range xsd:string ;
+    rdfs:label "social security number"@en ;
+    rdfs:comment "Social Security Number (restricted access)."@en .
+
+icac-registry:height rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:PhysicalDescription ;
+    rdfs:range xsd:string ;
+    rdfs:label "height"@en ;
+    rdfs:comment "Height of registered sex offender."@en .
+
+icac-registry:weight rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:PhysicalDescription ;
+    rdfs:range xsd:string ;
+    rdfs:label "weight"@en ;
+    rdfs:comment "Weight of registered sex offender."@en .
+
+icac-registry:eyeColor rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:PhysicalDescription ;
+    rdfs:range xsd:string ;
+    rdfs:label "eye color"@en ;
+    rdfs:comment "Eye color of registered sex offender."@en .
+
+icac-registry:hairColor rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:PhysicalDescription ;
+    rdfs:range xsd:string ;
+    rdfs:label "hair color"@en ;
+    rdfs:comment "Hair color of registered sex offender."@en .
+
+icac-registry:race rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range xsd:string ;
+    rdfs:label "race"@en ;
+    rdfs:comment "Race of registered sex offender."@en .
+
+icac-registry:sex rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range xsd:string ;
+    rdfs:label "sex"@en ;
+    rdfs:comment "Sex of registered sex offender."@en .
+
+# Offense Information Properties
+icac-registry:offenseDescription rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:ConvictingOffense ;
+    rdfs:range xsd:string ;
+    rdfs:label "offense description"@en ;
+    rdfs:comment "Description of the sexual offense."@en .
+
+icac-registry:convictionDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:ConvictingOffense ;
+    rdfs:range xsd:date ;
+    rdfs:label "conviction date"@en ;
+    rdfs:comment "Date of conviction for sexual offense."@en .
+
+icac-registry:sentenceLength rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:ConvictingOffense ;
+    rdfs:range xsd:string ;
+    rdfs:label "sentence length"@en ;
+    rdfs:comment "Length of sentence imposed for offense."@en .
+
+icac-registry:victimAge rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:VictimInformation ;
+    rdfs:range xsd:integer ;
+    rdfs:label "victim age"@en ;
+    rdfs:comment "Age of victim at time of offense."@en .
+
+icac-registry:victimCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:VictimInformation ;
+    rdfs:range xsd:integer ;
+    rdfs:label "victim count"@en ;
+    rdfs:comment "Number of victims involved in offense."@en .
+
+icac-registry:victimRelationship rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-registry:VictimInformation ;
+    rdfs:range xsd:string ;
+    rdfs:label "victim relationship"@en ;
+    rdfs:comment "Relationship between offender and victim (stranger, known, family)."@en .
+
+# =============================================================================
+# OBJECT PROPERTIES - RELATIONSHIPS
+# =============================================================================
+
+icac-registry:registeredIn rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:SexOffenderRegistry ;
+    rdfs:label "registered in"@en ;
+    rdfs:comment "Registry system where offender is registered."@en .
+
+icac-registry:hasProfile rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:OffenderProfile ;
+    rdfs:label "has profile"@en ;
+    rdfs:comment "Offender profile containing comprehensive information."@en .
+
+icac-registry:hasRegistrationRecord rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:RegistrationRecord ;
+    rdfs:label "has registration record"@en ;
+    rdfs:comment "Official registration record for offender."@en .
+
+icac-registry:basedOnOffense rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range icac-registry:ConvictingOffense ;
+    rdfs:label "based on offense"@en ;
+    rdfs:comment "Criminal offense that triggered registration requirement."@en .
+
+icac-registry:residesAt rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:RegisteredAddress ;
+    rdfs:label "resides at"@en ;
+    rdfs:comment "Current registered address of offender."@en .
+
+icac-registry:employedAt rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:WorkLocation ;
+    rdfs:label "employed at"@en ;
+    rdfs:comment "Location where offender is employed."@en .
+
+icac-registry:attendsSchool rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:SchoolLocation ;
+    rdfs:label "attends school"@en ;
+    rdfs:comment "Educational institution where offender is enrolled."@en .
+
+icac-registry:ownsVehicle rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:RegisteredVehicle ;
+    rdfs:label "owns vehicle"@en ;
+    rdfs:comment "Vehicle owned or operated by offender."@en .
+
+icac-registry:subjectToRestriction rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:RegistrationRestriction ;
+    rdfs:label "subject to restriction"@en ;
+    rdfs:comment "Restriction imposed on registered sex offender."@en .
+
+icac-registry:managedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:SexOffenderRegistry ;
+    rdfs:range icac-registry:RegistryAgency ;
+    rdfs:label "managed by"@en ;
+    rdfs:comment "Agency responsible for managing registry."@en .
+
+icac-registry:verifiedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegistrationRecord ;
+    rdfs:range icac-registry:VerificationCheck ;
+    rdfs:label "verified by"@en ;
+    rdfs:comment "Verification check confirming registration information."@en .
+
+icac-registry:hasCompliance rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:ComplianceHistory ;
+    rdfs:label "has compliance"@en ;
+    rdfs:comment "Compliance history for registered sex offender."@en .
+
+icac-registry:hasAlias rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:Alias ;
+    rdfs:label "has alias"@en ;
+    rdfs:comment "Known alias used by registered sex offender."@en .
+
+icac-registry:hasOnlineIdentifier rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-registry:RegisteredSexOffender ;
+    rdfs:range icac-registry:OnlineIdentifier ;
+    rdfs:label "has online identifier"@en ;
+    rdfs:comment "Online identifier used by registered sex offender."@en . 

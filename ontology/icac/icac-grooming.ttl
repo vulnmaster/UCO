@@ -1,0 +1,302 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-pattern: <https://ontology.unifiedcyberontology.org/uco/pattern#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-grooming: <https://ontology.unifiedcyberontology.org/icac/grooming#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/grooming/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Online Grooming & Enticement Ontology"@en ;
+    rdfs:comment "An ontology for representing online grooming behaviors, enticement patterns, and predatory communication tactics in Internet Crimes Against Children cases, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/grooming/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/pattern> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# GROOMING BEHAVIOR CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-grooming:GroomingBehavior rdf:type owl:Class ;
+    rdfs:label "Grooming Behavior"@en ;
+    rdfs:comment "Predatory behavior designed to prepare a child for abuse by building trust, isolating them, and normalizing inappropriate contact."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-grooming:TrustBuildingBehavior rdf:type owl:Class ;
+    rdfs:label "Trust Building Behavior"@en ;
+    rdfs:comment "Early grooming stage focused on establishing emotional connection with the child victim."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:IsolationBehavior rdf:type owl:Class ;
+    rdfs:label "Isolation Behavior"@en ;
+    rdfs:comment "Attempts to separate child from parents, friends, or other support systems."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:NormalizationBehavior rdf:type owl:Class ;
+    rdfs:label "Normalization Behavior"@en ;
+    rdfs:comment "Gradual introduction of sexual topics to normalize inappropriate behavior."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:Enticement rdf:type owl:Class ;
+    rdfs:label "Enticement"@en ;
+    rdfs:comment "Direct solicitation of a child to engage in illegal sexual activity or meet for such purposes."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:SexualExploitation rdf:type owl:Class ;
+    rdfs:label "Sexual Exploitation"@en ;
+    rdfs:comment "Direct exploitation of child for sexual purposes including solicitation of images or performances."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+# =============================================================================
+# GROOMING COMMUNICATION CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-grooming:GroomingMessage rdf:type owl:Class ;
+    rdfs:label "Grooming Message"@en ;
+    rdfs:comment "Communication containing grooming behavior or inappropriate content directed at a child."@en ;
+    rdfs:subClassOf uco-observable:Message .
+
+icac-grooming:SexualSolicitation rdf:type owl:Class ;
+    rdfs:label "Sexual Solicitation"@en ;
+    rdfs:comment "Message explicitly requesting sexual activity, images, or meetings from a child."@en ;
+    rdfs:subClassOf icac-grooming:GroomingMessage .
+
+icac-grooming:InappropriateGift rdf:type owl:Class ;
+    rdfs:label "Inappropriate Gift"@en ;
+    rdfs:comment "Offer or provision of gifts, money, or favors as part of grooming process."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-grooming:SecrecyRequest rdf:type owl:Class ;
+    rdfs:label "Secrecy Request"@en ;
+    rdfs:comment "Instruction to keep communication or relationship secret from parents or authorities."@en ;
+    rdfs:subClassOf icac-grooming:GroomingMessage .
+
+icac-grooming:VictimResponse rdf:type owl:Class ;
+    rdfs:label "Victim Response"@en ;
+    rdfs:comment "Child's response to grooming behavior, indicating compliance, resistance, or confusion."@en ;
+    rdfs:subClassOf uco-observable:Message .
+
+# =============================================================================
+# GROOMING PATTERN CLASSES (extending UCO Pattern)
+# =============================================================================
+
+icac-grooming:GroomingPattern rdf:type owl:Class ;
+    rdfs:label "Grooming Pattern"@en ;
+    rdfs:comment "Identifiable pattern of behavior across multiple communications or interactions that indicates grooming."@en ;
+    rdfs:subClassOf uco-pattern:Pattern .
+
+icac-grooming:EscalationPattern rdf:type owl:Class ;
+    rdfs:label "Escalation Pattern"@en ;
+    rdfs:comment "Progressive increase in inappropriate content or requests over time."@en ;
+    rdfs:subClassOf icac-grooming:GroomingPattern .
+
+icac-grooming:ManipulationPattern rdf:type owl:Class ;
+    rdfs:label "Manipulation Pattern"@en ;
+    rdfs:comment "Systematic use of psychological manipulation techniques to control victim."@en ;
+    rdfs:subClassOf icac-grooming:GroomingPattern .
+
+icac-grooming:PreyBehaviorPattern rdf:type owl:Class ;
+    rdfs:label "Prey Behavior Pattern"@en ;
+    rdfs:comment "Pattern of targeting vulnerable children or specific victim characteristics."@en ;
+    rdfs:subClassOf icac-grooming:GroomingPattern .
+
+# =============================================================================
+# VICTIM AND OFFENDER CLASSES (extending UCO Identity)
+# =============================================================================
+
+icac-grooming:ChildVictim rdf:type owl:Class ;
+    rdfs:label "Child Victim"@en ;
+    rdfs:comment "Minor child who is the target of grooming behavior."@en ;
+    rdfs:subClassOf uco-identity:Person .
+
+icac-grooming:OnlinePredator rdf:type owl:Class ;
+    rdfs:label "Online Predator"@en ;
+    rdfs:comment "Individual who engages in grooming behavior toward children online."@en ;
+    rdfs:subClassOf uco-identity:Person .
+
+icac-grooming:VictimVulnerability rdf:type owl:Class ;
+    rdfs:label "Victim Vulnerability"@en ;
+    rdfs:comment "Characteristics or circumstances that make a child more susceptible to grooming."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+# =============================================================================
+# GROOMING BEHAVIOR PROPERTIES
+# =============================================================================
+
+# Grooming Stage Properties
+icac-grooming:groomingStage rdf:type owl:DatatypeProperty ;
+    rdfs:label "grooming stage"@en ;
+    rdfs:comment "Stage of grooming process (initial_contact, trust_building, isolation, sexualization, maintenance)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+icac-grooming:behaviorDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "behavior duration"@en ;
+    rdfs:comment "Length of time grooming behavior continued (in days)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:integer .
+
+icac-grooming:targetsVictim rdf:type owl:ObjectProperty ;
+    rdfs:label "targets victim"@en ;
+    rdfs:comment "Links grooming behavior to the child victim being targeted."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range icac-grooming:ChildVictim .
+
+icac-grooming:exhibitsPattern rdf:type owl:ObjectProperty ;
+    rdfs:label "exhibits pattern"@en ;
+    rdfs:comment "Links grooming behavior to an identifiable pattern."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range icac-grooming:GroomingPattern .
+
+# Communication Properties
+icac-grooming:communicationFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "communication frequency"@en ;
+    rdfs:comment "Frequency of contact with victim (daily, weekly, multiple_daily)."@en ;
+    rdfs:domain icac-grooming:GroomingMessage ;
+    rdfs:range xsd:string .
+
+icac-grooming:contentType rdf:type owl:DatatypeProperty ;
+    rdfs:label "content type"@en ;
+    rdfs:comment "Type of content in grooming message (text, image, video, audio)."@en ;
+    rdfs:domain icac-grooming:GroomingMessage ;
+    rdfs:range xsd:string .
+
+icac-grooming:explicitnessLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "explicitness level"@en ;
+    rdfs:comment "Level of sexual explicitness in content (none, suggestive, explicit, graphic)."@en ;
+    rdfs:domain icac-grooming:GroomingMessage ;
+    rdfs:range xsd:string .
+
+icac-grooming:emotionalTone rdf:type owl:DatatypeProperty ;
+    rdfs:label "emotional tone"@en ;
+    rdfs:comment "Emotional approach used in message (caring, threatening, manipulative, seductive)."@en ;
+    rdfs:domain icac-grooming:GroomingMessage ;
+    rdfs:range xsd:string .
+
+# Manipulation Tactics Properties
+icac-grooming:usesGifts rdf:type owl:DatatypeProperty ;
+    rdfs:label "uses gifts"@en ;
+    rdfs:comment "Whether grooming involves offering gifts or money."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:boolean .
+
+icac-grooming:requestsSecrecy rdf:type owl:DatatypeProperty ;
+    rdfs:label "requests secrecy"@en ;
+    rdfs:comment "Whether grooming involves requests to keep relationship secret."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:boolean .
+
+icac-grooming:usesThreats rdf:type owl:DatatypeProperty ;
+    rdfs:label "uses threats"@en ;
+    rdfs:comment "Whether grooming involves threats or intimidation."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:boolean .
+
+icac-grooming:rolePlayingTactic rdf:type owl:DatatypeProperty ;
+    rdfs:label "role playing tactic"@en ;
+    rdfs:comment "False role claimed by predator (peer, mentor, romantic_interest, authority_figure)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+# Victim Response Properties
+icac-grooming:victimCompliance rdf:type owl:DatatypeProperty ;
+    rdfs:label "victim compliance"@en ;
+    rdfs:comment "Level of victim compliance with requests (resistant, hesitant, compliant, eager)."@en ;
+    rdfs:domain icac-grooming:VictimResponse ;
+    rdfs:range xsd:string .
+
+icac-grooming:distressIndicators rdf:type owl:DatatypeProperty ;
+    rdfs:label "distress indicators"@en ;
+    rdfs:comment "Signs of distress in victim's responses."@en ;
+    rdfs:domain icac-grooming:VictimResponse ;
+    rdfs:range xsd:string .
+
+icac-grooming:seekingHelp rdf:type owl:DatatypeProperty ;
+    rdfs:label "seeking help"@en ;
+    rdfs:comment "Whether victim attempted to seek help or report the contact."@en ;
+    rdfs:domain icac-grooming:VictimResponse ;
+    rdfs:range xsd:boolean .
+
+# Pattern Analysis Properties
+icac-grooming:patternConfidence rdf:type owl:DatatypeProperty ;
+    rdfs:label "pattern confidence"@en ;
+    rdfs:comment "Confidence level in pattern identification (0.0-1.0)."@en ;
+    rdfs:domain icac-grooming:GroomingPattern ;
+    rdfs:range xsd:decimal .
+
+icac-grooming:escalationRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "escalation rate"@en ;
+    rdfs:comment "Speed of escalation from initial contact to explicit content (days)."@en ;
+    rdfs:domain icac-grooming:EscalationPattern ;
+    rdfs:range xsd:integer .
+
+icac-grooming:manipulationTechnique rdf:type owl:DatatypeProperty ;
+    rdfs:label "manipulation technique"@en ;
+    rdfs:comment "Specific psychological manipulation technique employed."@en ;
+    rdfs:domain icac-grooming:ManipulationPattern ;
+    rdfs:range xsd:string .
+
+# Vulnerability Properties
+icac-grooming:vulnerabilityType rdf:type owl:DatatypeProperty ;
+    rdfs:label "vulnerability type"@en ;
+    rdfs:comment "Type of vulnerability (social_isolation, family_problems, low_self_esteem, seeking_attention)."@en ;
+    rdfs:domain icac-grooming:VictimVulnerability ;
+    rdfs:range xsd:string .
+
+icac-grooming:hasVulnerability rdf:type owl:ObjectProperty ;
+    rdfs:label "has vulnerability"@en ;
+    rdfs:comment "Links child victim to specific vulnerabilities that may be exploited."@en ;
+    rdfs:domain icac-grooming:ChildVictim ;
+    rdfs:range icac-grooming:VictimVulnerability .
+
+# Platform and Context Properties
+icac-grooming:primaryPlatform rdf:type owl:ObjectProperty ;
+    rdfs:label "primary platform"@en ;
+    rdfs:comment "Main digital platform where grooming communication occurred."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range uco-observable:DigitalService .
+
+icac-grooming:timeOfContact rdf:type owl:DatatypeProperty ;
+    rdfs:label "time of contact"@en ;
+    rdfs:comment "Typical time of day when contact occurs (morning, afternoon, evening, late_night)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+icac-grooming:contactFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "contact frequency"@en ;
+    rdfs:comment "How often communication occurs (daily, several_times_daily, weekly)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+# Evidence and Investigation Properties
+icac-grooming:evidenceValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence value"@en ;
+    rdfs:comment "Assessment of grooming behavior's value as evidence (high, medium, low)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+icac-grooming:prosecutionRelevance rdf:type owl:DatatypeProperty ;
+    rdfs:label "prosecution relevance"@en ;
+    rdfs:comment "Relevance of grooming evidence to prosecution case."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string .
+
+icac-grooming:victimImpact rdf:type owl:DatatypeProperty ;
+    rdfs:label "victim impact"@en ;
+    rdfs:comment "Assessment of psychological impact on victim (minimal, moderate, severe, extreme)."@en ;
+    rdfs:domain icac-grooming:GroomingBehavior ;
+    rdfs:range xsd:string . 

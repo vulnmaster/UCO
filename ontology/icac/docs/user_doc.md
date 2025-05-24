@@ -131,7 +131,7 @@ WHERE {
 }
 ```
 
-## Cookbook
+## Comprehensive Usage Examples
 
 ### 1. Creating Reports
 
@@ -196,27 +196,201 @@ hotline:action-004 a hotline:ForwardToLEAction ;
     hotline:endTime "2024-03-20T13:05:00Z"^^xsd:dateTime .
 ```
 
-Verify both LEAs:
+### 4. ICAC Investigation Lifecycle
+
+#### 4.1 Complete Investigation
+```turtle
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+
+icac:investigation-001 a icac:ICACInvestigation ;
+    icac:hasStep icac:receive-tip-001, icac:review-tip-001, icac:legal-process-001 ;
+    icac:hasReport hotline:report-004 .
+
+icac:receive-tip-001 a icac:ReceiveCybertipAction ;
+    icac:nextStep icac:review-tip-001 ;
+    uco-action:startTime "2024-03-20T13:00:00Z"^^xsd:dateTime .
+
+icac:review-tip-001 a icac:ReviewCybertipAction ;
+    icac:previousStep icac:receive-tip-001 ;
+    icac:nextStep icac:legal-process-001 ;
+    uco-action:performer icac:analyst-001 .
+
+icac:legal-process-001 a icac:LegalProcessAction ;
+    icac:previousStep icac:review-tip-001 ;
+    icac:targetsService icac:social-platform-001 ;
+    icac:legalInstrument icac:search-warrant-001 .
+```
+
+### 5. Production Case Investigation
+
+#### 5.1 CSAM Production Offense
+```turtle
+@prefix icac-production: <https://ontology.unifiedcyberontology.org/icac/production#> .
+
+icac-production:offense-001 a icac-production:ProductionOffense ;
+    icac-production:productionMethod "direct_recording" ;
+    icac-production:sessionCount 15 ;
+    icac-production:victimCount 2 ;
+    icac-production:producedAt icac-production:location-001 ;
+    icac-production:usesEquipment icac-production:device-001 .
+
+icac-production:producer-001 a icac-production:Producer ;
+    icac-production:holdsPositionOf icac-production:babysitter-role ;
+    icac-production:violatesPosition icac-production:trust-violation-001 .
+```
+
+### 6. Victim Impact Assessment
+
+#### 6.1 Comprehensive Impact Assessment
+```turtle
+@prefix icac-impact: <https://ontology.unifiedcyberontology.org/icac/victim-impact#> .
+
+icac-impact:assessment-001 a icac-impact:ComprehensiveImpactAssessment ;
+    icac-impact:severityLevel "severe" ;
+    icac-impact:assessesVictim icac-impact:victim-001 ;
+    icac-impact:identifiesHarm icac-impact:complex-trauma-001 .
+
+icac-impact:complex-trauma-001 a icac-impact:ComplexTrauma ;
+    icac-impact:traumaType "complex" ;
+    icac-impact:severity "severe" ;
+    icac-impact:manifestsAs icac-impact:behavioral-indicator-001, icac-impact:emotional-indicator-001 .
+
+icac-impact:therapeutic-intervention-001 a icac-impact:TraumaTherapy ;
+    icac-impact:treatmentModality "CBT" ;
+    icac-impact:addressesHarm icac-impact:complex-trauma-001 ;
+    icac-impact:treatmentOutcome "partially_successful" .
+```
+
+### 7. Task Force Operations
+
+#### 7.1 Multi-Agency Operation
+```turtle
+@prefix icac-taskforce: <https://ontology.unifiedcyberontology.org/icac/taskforce#> .
+
+icac-taskforce:operation-001 a icac-taskforce:TaskForceOperation ;
+    icac-taskforce:operationName "Operation Cyber Highway Safety Check" ;
+    icac-taskforce:leadAgency icac-taskforce:arkansas-dps ;
+    icac-taskforce:participatingAgency icac-taskforce:local-sheriff-001, icac-taskforce:fbi-field-office-001 ;
+    icac-taskforce:arrestCount 42 ;
+    icac-taskforce:searchWarrantCount 178 ;
+    icac-taskforce:childrenRescued 5 .
+```
+
+### 8. Sex Offender Registry Integration
+
+#### 8.1 Registry Compliance Monitoring
+```turtle
+@prefix icac-registry: <https://ontology.unifiedcyberontology.org/icac/sex-offender-registry#> .
+
+icac-registry:compliance-operation-001 a icac-registry:ComplianceMonitoringOperation ;
+    icac-registry:visitCount 1600 ;
+    icac-registry:complianceRate 0.95 ;
+    icac-registry:violationCount 80 ;
+    icac-registry:newArrestCount 12 .
+
+icac-registry:offender-001 a icac-registry:RegisteredOffender ;
+    icac-registry:registrationTier "Tier II" ;
+    icac-registry:hasRegistrationRecord icac-registry:record-001 ;
+    icac-registry:subjectToRestriction icac-registry:internet-restriction-001 .
+```
+
+### 9. International Coordination
+
+#### 9.1 Cross-Border Investigation
+```turtle
+@prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
+
+icac-international:cross-border-001 a icac-international:CrossBorderInvestigation ;
+    icac-international:originCountry "US" ;
+    icac-international:targetCountry "UK" ;
+    icac-international:coordinationMechanism icac-international:mutual-legal-assistance ;
+    icac-international:informationShared icac-international:evidence-package-001 .
+```
+
+### 10. Forensic Analysis
+
+#### 10.1 Digital Forensics Workflow
+```turtle
+@prefix icac-forensics: <https://ontology.unifiedcyberontology.org/icac/forensics#> .
+
+icac-forensics:acquisition-001 a icac-forensics:ForensicAcquisitionAction ;
+    icac-forensics:acquisitionMethod "physical_imaging" ;
+    icac-forensics:writeBlockingUsed true ;
+    icac-forensics:evidenceSeized icac-forensics:mobile-device-001 ;
+    icac-forensics:producesImage icac-forensics:forensic-image-001 .
+
+icac-forensics:analysis-001 a icac-forensics:ForensicAnalysisAction ;
+    icac-forensics:analyzesImage icac-forensics:forensic-image-001 ;
+    icac-forensics:usesTool icac-forensics:cellebrite-tool ;
+    icac-forensics:recoversFiles icac-forensics:recovered-images-001 .
+```
+
+## Advanced Query Examples
+
+### 1. Cross-Ontology Analytics
 ```sparql
-SELECT ?report ?canadian_org ?spanish_org
+# Find investigations with production offenses and victim impact assessments
+PREFIX icac: <https://ontology.unifiedcyberontology.org/icac#>
+PREFIX icac-production: <https://ontology.unifiedcyberontology.org/icac/production#>
+PREFIX icac-impact: <https://ontology.unifiedcyberontology.org/icac/victim-impact#>
+
+SELECT ?investigation ?offense ?assessment ?severity
 WHERE {
-    ?report a hotline:PublicReport ;
-            hotline:receivedBy ?canadian_org ;
-            hotline:triggersAction ?action .
-    ?action a hotline:ForwardToLEAction ;
-            hotline:forwardsTo ?spanish_org .
-    ?canadian_org hotline:jurisdiction "CA" .
-    ?spanish_org hotline:jurisdiction "ES" .
+    ?investigation a icac:ICACInvestigation ;
+                  icac:hasStep ?step .
+    ?step a icac-production:ProductionOffense .
+    ?offense a icac-production:ProductionOffense .
+    ?assessment a icac-impact:VictimImpactAssessment ;
+               icac-impact:severityLevel ?severity .
 }
 ```
 
-## Validation
+### 2. Task Force Performance Metrics
+```sparql
+# Calculate task force operation effectiveness
+PREFIX icac-taskforce: <https://ontology.unifiedcyberontology.org/icac/taskforce#>
+
+SELECT ?operation ?arrestRate ?rescueRate
+WHERE {
+    ?operation a icac-taskforce:TaskForceOperation ;
+              icac-taskforce:arrestCount ?arrests ;
+              icac-taskforce:searchWarrantCount ?warrants ;
+              icac-taskforce:childrenRescued ?rescued .
+    BIND(?arrests / ?warrants AS ?arrestRate)
+    BIND(?rescued / ?arrests AS ?rescueRate)
+}
+ORDER BY DESC(?arrestRate)
+```
+
+### 3. Registry Compliance Analysis
+```sparql
+# Find compliance violations by registry tier
+PREFIX icac-registry: <https://ontology.unifiedcyberontology.org/icac/sex-offender-registry#>
+
+SELECT ?tier (COUNT(?violation) AS ?violationCount)
+WHERE {
+    ?offender a icac-registry:RegisteredOffender ;
+             icac-registry:registrationTier ?tier ;
+             icac-registry:hasViolation ?violation .
+}
+GROUP BY ?tier
+ORDER BY DESC(?violationCount)
+```
+
+## Validation and Quality Assurance
 
 ### 1. Using pySHACL
-Shapes live in `ontology/icac/hotlines-core-shapes.ttl`:
+Shapes live in various `*-shapes.ttl` files:
 
 ```bash
-pyshacl -s ontology/icac/hotlines-core-shapes.ttl -d your-data.ttl
+# Validate hotline data
+pyshacl -s ontology/icac/hotlines-core-shapes.ttl -d your-hotline-data.ttl
+
+# Validate core ICAC data
+pyshacl -s ontology/icac/icac-core-shapes.ttl -d your-investigation-data.ttl
+
+# Validate forensic data
+pyshacl -s ontology/icac/icac-forensics-shapes.ttl -d your-forensic-data.ttl
 ```
 
 ### 2. Common Validation Rules
@@ -224,38 +398,112 @@ pyshacl -s ontology/icac/hotlines-core-shapes.ttl -d your-data.ttl
 - Evidence items must have a firstSeen timestamp
 - Actions must have a performer and timestamps
 - Forward actions must specify a target organization
+- Production offenses must specify victim count
+- Impact assessments must link to specific victims
+- Registry offenders must have valid tier classifications
+
+### 3. Performance Testing
+```bash
+# Run performance test for Q1 query (must complete in ≤ 500ms on 5M triples)
+time sparql --query queries/find_open_reports.rq --data your-5m-triple-dataset.ttl
+```
+
+## Development Workflow
+
+### 1. Local Development Setup
+```bash
+# Start complete development environment
+docker compose up -d
+
+# Validate all ontologies
+docker exec icac-robot robot validate *.ttl
+
+# Run SHACL validation
+docker exec icac-pyshacl pyshacl -s *-shapes.ttl -d examples/*.ttl
+```
+
+### 2. Contributing New Examples
+1. Create your example in `examples/` directory
+2. Ensure it validates against relevant SHACL shapes
+3. Add corresponding SPARQL queries in `queries/` directory
+4. Update documentation with usage examples
+5. Submit pull request with automated CI validation
+
+### 3. Adding New Ontology Modules
+1. Follow naming convention: `icac-[domain].ttl`
+2. Create corresponding SHACL shapes: `icac-[domain]-shapes.ttl`
+3. Add JSON-LD context if needed: `contexts/icac-[domain].jsonld`
+4. Create comprehensive examples demonstrating usage
+5. Update architecture diagrams and documentation
 
 ## Troubleshooting
 
 ### 1. Common Issues
-- Missing required properties
-- Invalid data types
-- Broken action sequences
-- Validation errors
-- Performance problems
+- **Missing required properties**: Check SHACL validation output
+- **Invalid data types**: Verify XSD type annotations
+- **Broken action sequences**: Ensure nextStep/previousStep chains are valid
+- **Cross-reference violations**: Validate relationships between ontology modules
+- **Performance problems**: Check query patterns and dataset size
 
 ### 2. Solutions
-- Check SHACL validation
-- Verify data types
-- Review action sequences
-- Check property cardinality
-- Monitor system resources
-- Check the Build badge on README to confirm latest commit passes ROBOT + pySHACL
+- Use SHACL validation for data quality checking
+- Verify property cardinality constraints
+- Review action workflow sequences
+- Monitor system resources during large dataset operations
+- Check the build badge on README to confirm latest commit passes validation
 
-## FAQ
+### 3. Getting Help
+- Check existing GitHub issues
+- Review comprehensive examples in `examples/` directory
+- Consult SPARQL queries in `queries/` directory for usage patterns
+- Join community discussions and working groups
+
+## Integration Patterns
+
+### 1. UCO/CASE Integration
+```turtle
+# Seamless integration with UCO core concepts
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+
+# ICAC investigation extends CASE investigation
+icac:investigation-001 a icac:ICACInvestigation, case-investigation:Investigation ;
+    uco-core:hasFacet [
+        a uco-core:TimestampFacet ;
+        uco-core:timestamp "2024-03-20T10:00:00Z"^^xsd:dateTime
+    ] .
+```
+
+### 2. Multi-System Data Exchange
+```turtle
+# Support for multiple data formats and systems
+icac:investigation-001 icac:exportFormat "CASE-JSON", "UCO-Turtle", "STIX-JSON" ;
+                      icac:compatibleWith "Autopsy", "Griffeye", "PhotoDNA-Service" .
+```
+
+## License and Support
 
 ### 1. Versioning
-- Current Version: 0.4.0 (May 2025)
-- See CHANGELOG.md for full history
-- Follows semantic versioning
+- Current Version: 0.9.0 (December 2024)
+- See CHANGELOG.md for complete version history
+- Follows semantic versioning (MAJOR.MINOR.PATCH)
+- Coordinated releases across all 22 ontology modules
 
-### 2. Support
-- GitHub issues
-- Mailing list
-- Documentation updates
+### 2. Support Channels
+- GitHub issues for bug reports and feature requests
+- Community mailing list for general discussion
+- Working group meetings for stakeholder feedback
+- Documentation updates and improvement suggestions
 
-## License
-
+### 3. License
 This project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
-See [Glossary](glossary.md) for acronyms and key terms.
+## Additional Resources
+
+- [Architecture Documentation](architecture.md) - Comprehensive system design
+- [Design Document](design.md) - Technical design principles
+- [Product Requirements](PRD.md) - Functional and technical requirements
+- [Glossary](glossary.md) - Acronyms and key terminology
+- [Contributing Guidelines](../CONTRIBUTING.md) - How to contribute to the project
+- [Example Files](../examples/) - Real-world usage demonstrations
+- [Analytics Queries](../queries/) - Operational intelligence examples

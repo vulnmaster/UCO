@@ -1,0 +1,360 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-physical: <https://ontology.unifiedcyberontology.org/icac/physical#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/physical/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Physical Evidence & Procurement Ontology"@en ;
+    rdfs:comment "An ontology for representing physical evidence, criminal procurement patterns, and abuse facilitation items in Internet Crimes Against Children investigations, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/physical/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/location> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# PHYSICAL EVIDENCE CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-physical:PhysicalEvidence rdf:type owl:Class ;
+    rdfs:label "Physical Evidence"@en ;
+    rdfs:comment "Tangible items collected as evidence in ICAC investigations."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-physical:ComputerEquipment rdf:type owl:Class ;
+    rdfs:label "Computer Equipment"@en ;
+    rdfs:comment "Digital devices including computers, laptops, tablets, and mobile phones seized as evidence."@en ;
+    rdfs:subClassOf icac-physical:PhysicalEvidence .
+
+icac-physical:StorageMedia rdf:type owl:Class ;
+    rdfs:label "Storage Media"@en ;
+    rdfs:comment "External storage devices including hard drives, USB drives, memory cards, and optical media."@en ;
+    rdfs:subClassOf icac-physical:PhysicalEvidence .
+
+icac-physical:AbuseFacilitationItem rdf:type owl:Class ;
+    rdfs:label "Abuse Facilitation Item"@en ;
+    rdfs:comment "Physical items intended for use in facilitating child abuse or exploitation."@en ;
+    rdfs:subClassOf icac-physical:PhysicalEvidence .
+
+icac-physical:DocumentaryEvidence rdf:type owl:Class ;
+    rdfs:label "Documentary Evidence"@en ;
+    rdfs:comment "Physical documents, printed materials, or written items relevant to the investigation."@en ;
+    rdfs:subClassOf icac-physical:PhysicalEvidence .
+
+icac-physical:PersonalItem rdf:type owl:Class ;
+    rdfs:label "Personal Item"@en ;
+    rdfs:comment "Personal belongings that may contain evidence or indicate criminal behavior."@en ;
+    rdfs:subClassOf icac-physical:PhysicalEvidence .
+
+# =============================================================================
+# PROCUREMENT AND ACQUISITION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-physical:CriminalProcurement rdf:type owl:Class ;
+    rdfs:label "Criminal Procurement"@en ;
+    rdfs:comment "Action of acquiring items specifically for criminal purposes."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-physical:OnlinePurchase rdf:type owl:Class ;
+    rdfs:label "Online Purchase"@en ;
+    rdfs:comment "Purchase of items through online platforms for criminal purposes."@en ;
+    rdfs:subClassOf icac-physical:CriminalProcurement .
+
+icac-physical:PhysicalPurchase rdf:type owl:Class ;
+    rdfs:label "Physical Purchase"@en ;
+    rdfs:comment "In-person purchase of items for criminal purposes."@en ;
+    rdfs:subClassOf icac-physical:CriminalProcurement .
+
+icac-physical:ItemModification rdf:type owl:Class ;
+    rdfs:label "Item Modification"@en ;
+    rdfs:comment "Alteration or customization of items to facilitate criminal activity."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# =============================================================================
+# SPECIFIC EVIDENCE ITEM CLASSES
+# =============================================================================
+
+icac-physical:RecordingEquipment rdf:type owl:Class ;
+    rdfs:label "Recording Equipment"@en ;
+    rdfs:comment "Devices used to create audio or video recordings of criminal activity."@en ;
+    rdfs:subClassOf icac-physical:AbuseFacilitationItem .
+
+icac-physical:CommunicationDevice rdf:type owl:Class ;
+    rdfs:label "Communication Device"@en ;
+    rdfs:comment "Devices used to communicate with victims or distribute illegal content."@en ;
+    rdfs:subClassOf icac-physical:ComputerEquipment .
+
+icac-physical:ChildTargetedItem rdf:type owl:Class ;
+    rdfs:label "Child Targeted Item"@en ;
+    rdfs:comment "Items specifically designed to appeal to or attract children."@en ;
+    rdfs:subClassOf icac-physical:AbuseFacilitationItem .
+
+icac-physical:RestraintItem rdf:type owl:Class ;
+    rdfs:label "Restraint Item"@en ;
+    rdfs:comment "Items intended for restraining or controlling victims."@en ;
+    rdfs:subClassOf icac-physical:AbuseFacilitationItem .
+
+icac-physical:DisguiseItem rdf:type owl:Class ;
+    rdfs:label "Disguise Item"@en ;
+    rdfs:comment "Items used to conceal identity or change appearance."@en ;
+    rdfs:subClassOf icac-physical:PersonalItem .
+
+# =============================================================================
+# SEARCH AND SEIZURE CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-physical:PhysicalSearch rdf:type owl:Class ;
+    rdfs:label "Physical Search"@en ;
+    rdfs:comment "Law enforcement search of physical premises for evidence."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-physical:EvidenceSeizure rdf:type owl:Class ;
+    rdfs:label "Evidence Seizure"@en ;
+    rdfs:comment "Legal seizure of physical items as evidence."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-physical:VehicleSearch rdf:type owl:Class ;
+    rdfs:label "Vehicle Search"@en ;
+    rdfs:comment "Search of motor vehicles for evidence or contraband."@en ;
+    rdfs:subClassOf icac-physical:PhysicalSearch .
+
+icac-physical:ResidenceSearch rdf:type owl:Class ;
+    rdfs:label "Residence Search"@en ;
+    rdfs:comment "Search of residential premises including homes and apartments."@en ;
+    rdfs:subClassOf icac-physical:PhysicalSearch .
+
+icac-physical:WorkplaceSearch rdf:type owl:Class ;
+    rdfs:label "Workplace Search"@en ;
+    rdfs:comment "Search of workplace or commercial premises."@en ;
+    rdfs:subClassOf icac-physical:PhysicalSearch .
+
+# =============================================================================
+# EVIDENCE PROPERTIES
+# =============================================================================
+
+# Basic Evidence Properties
+icac-physical:evidenceType rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence type"@en ;
+    rdfs:comment "Category of physical evidence (digital_device, document, contraband, personal_item)."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:evidenceTag rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence tag"@en ;
+    rdfs:comment "Unique identifier assigned to evidence item during collection."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:seizureDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "seizure date"@en ;
+    rdfs:comment "Date when the evidence was seized by law enforcement."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:dateTime .
+
+icac-physical:seizureLocation rdf:type owl:ObjectProperty ;
+    rdfs:label "seizure location"@en ;
+    rdfs:comment "Physical location where evidence was seized."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range uco-location:Location .
+
+# Device Properties
+icac-physical:deviceBrand rdf:type owl:DatatypeProperty ;
+    rdfs:label "device brand"@en ;
+    rdfs:comment "Manufacturer or brand of the computer equipment."@en ;
+    rdfs:domain icac-physical:ComputerEquipment ;
+    rdfs:range xsd:string .
+
+icac-physical:deviceModel rdf:type owl:DatatypeProperty ;
+    rdfs:label "device model"@en ;
+    rdfs:comment "Model number or name of the device."@en ;
+    rdfs:domain icac-physical:ComputerEquipment ;
+    rdfs:range xsd:string .
+
+icac-physical:serialNumber rdf:type owl:DatatypeProperty ;
+    rdfs:label "serial number"@en ;
+    rdfs:comment "Serial number of the device or item."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:storageCapacity rdf:type owl:DatatypeProperty ;
+    rdfs:label "storage capacity"@en ;
+    rdfs:comment "Storage capacity of digital storage media in gigabytes."@en ;
+    rdfs:domain icac-physical:StorageMedia ;
+    rdfs:range xsd:decimal .
+
+icac-physical:encryptionStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "encryption status"@en ;
+    rdfs:comment "Whether the device or storage media is encrypted (encrypted, unencrypted, partially_encrypted)."@en ;
+    rdfs:domain icac-physical:ComputerEquipment ;
+    rdfs:range xsd:string .
+
+# Procurement Properties
+icac-physical:procurementDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "procurement date"@en ;
+    rdfs:comment "Date when the item was acquired by the suspect."@en ;
+    rdfs:domain icac-physical:CriminalProcurement ;
+    rdfs:range xsd:dateTime .
+
+icac-physical:procurementMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "procurement method"@en ;
+    rdfs:comment "Method used to acquire the item (online_purchase, retail_store, private_sale, gift)."@en ;
+    rdfs:domain icac-physical:CriminalProcurement ;
+    rdfs:range xsd:string .
+
+icac-physical:procurementSource rdf:type owl:DatatypeProperty ;
+    rdfs:label "procurement source"@en ;
+    rdfs:comment "Source from which the item was acquired (vendor name, website, individual)."@en ;
+    rdfs:domain icac-physical:CriminalProcurement ;
+    rdfs:range xsd:string .
+
+icac-physical:procurementCost rdf:type owl:DatatypeProperty ;
+    rdfs:label "procurement cost"@en ;
+    rdfs:comment "Cost paid for the item in USD."@en ;
+    rdfs:domain icac-physical:CriminalProcurement ;
+    rdfs:range xsd:decimal .
+
+icac-physical:paymentMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "payment method"@en ;
+    rdfs:comment "Method of payment used (credit_card, cash, digital_currency, check)."@en ;
+    rdfs:domain icac-physical:CriminalProcurement ;
+    rdfs:range xsd:string .
+
+# Search and Seizure Properties
+icac-physical:searchWarrant rdf:type owl:ObjectProperty ;
+    rdfs:label "search warrant"@en ;
+    rdfs:comment "Warrant authorizing the search and seizure."@en ;
+    rdfs:domain icac-physical:PhysicalSearch ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-physical:searchingOfficer rdf:type owl:ObjectProperty ;
+    rdfs:label "searching officer"@en ;
+    rdfs:comment "Law enforcement officer who conducted the search."@en ;
+    rdfs:domain icac-physical:PhysicalSearch ;
+    rdfs:range uco-identity:Person .
+
+icac-physical:witnessPresent rdf:type owl:ObjectProperty ;
+    rdfs:label "witness present"@en ;
+    rdfs:comment "Civilian witness present during the search."@en ;
+    rdfs:domain icac-physical:PhysicalSearch ;
+    rdfs:range uco-identity:Person .
+
+icac-physical:searchDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "search duration"@en ;
+    rdfs:comment "Duration of the search in hours."@en ;
+    rdfs:domain icac-physical:PhysicalSearch ;
+    rdfs:range xsd:decimal .
+
+icac-physical:searchScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "search scope"@en ;
+    rdfs:comment "Areas or items covered by the search authorization."@en ;
+    rdfs:domain icac-physical:PhysicalSearch ;
+    rdfs:range xsd:string .
+
+# Criminal Intent Properties
+icac-physical:criminalPurpose rdf:type owl:DatatypeProperty ;
+    rdfs:label "criminal purpose"@en ;
+    rdfs:comment "Intended criminal use of the item."@en ;
+    rdfs:domain icac-physical:AbuseFacilitationItem ;
+    rdfs:range xsd:string .
+
+icac-physical:targetAgeGroup rdf:type owl:DatatypeProperty ;
+    rdfs:label "target age group"@en ;
+    rdfs:comment "Age group of children the item is designed to attract."@en ;
+    rdfs:domain icac-physical:ChildTargetedItem ;
+    rdfs:range xsd:string .
+
+icac-physical:modificationPurpose rdf:type owl:DatatypeProperty ;
+    rdfs:label "modification purpose"@en ;
+    rdfs:comment "Purpose of item modification for criminal activity."@en ;
+    rdfs:domain icac-physical:ItemModification ;
+    rdfs:range xsd:string .
+
+# Evidentiary Value Properties
+icac-physical:evidentiarySignificance rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidentiary significance"@en ;
+    rdfs:comment "Assessment of evidence importance (critical, high, medium, low)."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:chainOfCustody rdf:type owl:DatatypeProperty ;
+    rdfs:label "chain of custody"@en ;
+    rdfs:comment "Documentation of evidence handling from seizure to court."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:forensicAnalysisRequired rdf:type owl:DatatypeProperty ;
+    rdfs:label "forensic analysis required"@en ;
+    rdfs:comment "Whether the item requires specialized forensic analysis."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:boolean .
+
+icac-physical:digitalContentFound rdf:type owl:DatatypeProperty ;
+    rdfs:label "digital content found"@en ;
+    rdfs:comment "Whether illegal digital content was found on the device."@en ;
+    rdfs:domain icac-physical:ComputerEquipment ;
+    rdfs:range xsd:boolean .
+
+# Relationship Properties
+icac-physical:procuredBy rdf:type owl:ObjectProperty ;
+    rdfs:label "procured by"@en ;
+    rdfs:comment "Links a physical evidence item to its procurement action."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range icac-physical:CriminalProcurement .
+
+icac-physical:seizedDuring rdf:type owl:ObjectProperty ;
+    rdfs:label "seized during"@en ;
+    rdfs:comment "Links physical evidence to the search operation during which it was seized."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range icac-physical:PhysicalSearch .
+
+icac-physical:containsItem rdf:type owl:ObjectProperty ;
+    rdfs:label "contains item"@en ;
+    rdfs:comment "Indicates that one evidence item was found inside another."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range icac-physical:PhysicalEvidence .
+
+icac-physical:associatedWithSubject rdf:type owl:ObjectProperty ;
+    rdfs:label "associated with subject"@en ;
+    rdfs:comment "Links evidence to the person associated with its ownership or use."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range uco-identity:Person .
+
+# Condition and State Properties
+icac-physical:physicalCondition rdf:type owl:DatatypeProperty ;
+    rdfs:label "physical condition"@en ;
+    rdfs:comment "Physical state of the evidence (excellent, good, fair, poor, damaged)."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:functionalStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "functional status"@en ;
+    rdfs:comment "Whether the device is functional (working, non_functional, partially_functional)."@en ;
+    rdfs:domain icac-physical:ComputerEquipment ;
+    rdfs:range xsd:string .
+
+icac-physical:tamperEvidence rdf:type owl:DatatypeProperty ;
+    rdfs:label "tamper evidence"@en ;
+    rdfs:comment "Signs that the item has been tampered with or modified."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:string .
+
+icac-physical:hiddenCompartment rdf:type owl:DatatypeProperty ;
+    rdfs:label "hidden compartment"@en ;
+    rdfs:comment "Whether the item contains hidden compartments or concealed areas."@en ;
+    rdfs:domain icac-physical:PhysicalEvidence ;
+    rdfs:range xsd:boolean . 

@@ -1,0 +1,223 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool#> .
+@prefix icac-forensics: <https://ontology.unifiedcyberontology.org/icac/forensics#> .
+
+# =============================================================================
+# FORENSIC ACTION SHAPES
+# =============================================================================
+
+# Forensic Acquisition Action Shape
+icac-forensics:ForensicAcquisitionActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Forensic Acquisition Action Shape"@en ;
+    sh:targetClass icac-forensics:ForensicAcquisitionAction ;
+    sh:property [
+        sh:path uco-action:usesTool ;
+        sh:class uco-tool:Tool ;
+        sh:minCount 1 ;
+        sh:message "A forensic acquisition action must specify at least one tool used"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:acquisitionMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A forensic acquisition action must specify exactly one acquisition method"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:writeBlockingUsed ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A forensic acquisition action must specify whether write-blocking was used"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:evidenceSeized ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "A forensic acquisition action must specify at least one evidence item seized"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:forensicCopy ;
+        sh:class icac-forensics:ForensicImage ;
+        sh:minCount 1 ;
+        sh:message "A forensic acquisition action must produce at least one forensic copy"@en
+    ] .
+
+# Chain of Custody Action Shape
+icac-forensics:ChainOfCustodyActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Chain of Custody Action Shape"@en ;
+    sh:targetClass icac-forensics:ChainOfCustodyAction ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A chain of custody action must have exactly one start time"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:custodyTransferredFrom ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A chain of custody action must specify exactly one transferring party"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:custodyTransferredTo ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A chain of custody action must specify exactly one receiving party"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:custodyReason ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A chain of custody action must specify exactly one reason for transfer"@en
+    ] .
+
+# Evidence Verification Action Shape
+icac-forensics:EvidenceVerificationActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Evidence Verification Action Shape"@en ;
+    sh:targetClass icac-forensics:EvidenceVerificationAction ;
+    sh:property [
+        sh:path uco-core:object ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "An evidence verification action must specify at least one object being verified"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:verificationHash ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "An evidence verification action must include at least one verification hash"@en
+    ] .
+
+# Timeline Analysis Action Shape
+icac-forensics:TimelineAnalysisActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Timeline Analysis Action Shape"@en ;
+    sh:targetClass icac-forensics:TimelineAnalysisAction ;
+    sh:property [
+        sh:path icac-forensics:timelineEvent ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "A timeline analysis action must include at least one timeline event"@en
+    ] ;
+    sh:property [
+        sh:path uco-action:usesTool ;
+        sh:class uco-tool:Tool ;
+        sh:minCount 1 ;
+        sh:message "A timeline analysis action must specify at least one analysis tool used"@en
+    ] .
+
+# Metadata Extraction Action Shape
+icac-forensics:MetadataExtractionActionShape rdf:type sh:NodeShape ;
+    rdfs:label "Metadata Extraction Action Shape"@en ;
+    sh:targetClass icac-forensics:MetadataExtractionAction ;
+    sh:property [
+        sh:path uco-core:object ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "A metadata extraction action must specify at least one source object"@en
+    ] ;
+    sh:property [
+        sh:path uco-action:usesTool ;
+        sh:class uco-tool:Tool ;
+        sh:minCount 1 ;
+        sh:message "A metadata extraction action must specify at least one extraction tool used"@en
+    ] .
+
+# =============================================================================
+# FORENSIC ARTIFACT SHAPES
+# =============================================================================
+
+# Forensic Image Shape
+icac-forensics:ForensicImageShape rdf:type sh:NodeShape ;
+    rdfs:label "Forensic Image Shape"@en ;
+    sh:targetClass icac-forensics:ForensicImage ;
+    sh:property [
+        sh:path icac-forensics:verificationHash ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "A forensic image must have at least one verification hash"@en
+    ] ;
+    sh:property [
+        sh:path icac-forensics:sourceHash ;
+        sh:class uco-core:UcoObject ;
+        sh:minCount 1 ;
+        sh:message "A forensic image must have at least one source hash for verification"@en
+    ] .
+
+# Recovered File Shape
+icac-forensics:RecoveredFileShape rdf:type sh:NodeShape ;
+    rdfs:label "Recovered File Shape"@en ;
+    sh:targetClass icac-forensics:RecoveredFile ;
+    sh:property [
+        sh:path icac-forensics:recoveryMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A recovered file must specify exactly one recovery method"@en
+    ] .
+
+# Custody Document Shape
+icac-forensics:CustodyDocumentShape rdf:type sh:NodeShape ;
+    rdfs:label "Custody Document Shape"@en ;
+    sh:targetClass icac-forensics:CustodyDocument ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A custody document must have exactly one creation time"@en
+    ] .
+
+# =============================================================================
+# FORENSIC TOOL SHAPES
+# =============================================================================
+
+# Forensic Tool General Shape
+icac-forensics:ForensicToolShape rdf:type sh:NodeShape ;
+    rdfs:label "Forensic Tool Shape"@en ;
+    sh:targetClass icac-forensics:ForensicImagingTool ,
+                   icac-forensics:MobileForensicTool ,
+                   icac-forensics:NetworkForensicTool ,
+                   icac-forensics:MemoryForensicTool ,
+                   icac-forensics:HashingTool ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A forensic tool must have exactly one name"@en
+    ] .
+
+# =============================================================================
+# ROLE SHAPES
+# =============================================================================
+
+# Forensic Examiner Role Shape
+icac-forensics:ForensicExaminerRoleShape rdf:type sh:NodeShape ;
+    rdfs:label "Forensic Examiner Role Shape"@en ;
+    sh:targetClass icac-forensics:ForensicExaminerRole ;
+    sh:property [
+        sh:path uco-core:kindOfRelationship ;
+        sh:hasValue "examiner" ;
+        sh:message "A forensic examiner role must have kindOfRelationship value 'examiner'"@en
+    ] .
+
+# Evidence Custodian Role Shape
+icac-forensics:EvidenceCustodianRoleShape rdf:type sh:NodeShape ;
+    rdfs:label "Evidence Custodian Role Shape"@en ;
+    sh:targetClass icac-forensics:EvidenceCustodianRole ;
+    sh:property [
+        sh:path uco-core:kindOfRelationship ;
+        sh:hasValue "custodian" ;
+        sh:message "An evidence custodian role must have kindOfRelationship value 'custodian'"@en
+    ] . 

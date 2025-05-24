@@ -1,0 +1,718 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-taskforce: <https://ontology.unifiedcyberontology.org/icac/taskforce#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/taskforce/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Task Force Organization Ontology"@en ;
+    rdfs:comment "An ontology for representing ICAC task force structures, specialized units, coordination mechanisms, resource sharing, and joint operations in Internet Crimes Against Children investigations, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/taskforce/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# ICAC TASK FORCE CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:ICACtaskForce rdf:type owl:Class ;
+    rdfs:label "ICAC Task Force"@en ;
+    rdfs:comment "Internet Crimes Against Children task force unit specializing in child exploitation investigations."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-taskforce:StateICACtaskForce rdf:type owl:Class ;
+    rdfs:label "State ICAC Task Force"@en ;
+    rdfs:comment "State-level ICAC task force coordinating regional investigations."@en ;
+    rdfs:subClassOf icac-taskforce:ICACtaskForce .
+
+icac-taskforce:LocalICACtaskForce rdf:type owl:Class ;
+    rdfs:label "Local ICAC Task Force"@en ;
+    rdfs:comment "Local or regional ICAC task force unit."@en ;
+    rdfs:subClassOf icac-taskforce:ICACtaskForce .
+
+icac-taskforce:FederalICACtaskForce rdf:type owl:Class ;
+    rdfs:label "Federal ICAC Task Force"@en ;
+    rdfs:comment "Federal-level ICAC task force for complex or multi-jurisdictional cases."@en ;
+    rdfs:subClassOf icac-taskforce:ICACtaskForce .
+
+icac-taskforce:SpecializedUnit rdf:type owl:Class ;
+    rdfs:label "Specialized Unit"@en ;
+    rdfs:comment "Specialized unit within ICAC task force focused on specific aspects of investigations."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# SPECIALIZED UNIT CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:DigitalForensicsUnit rdf:type owl:Class ;
+    rdfs:label "Digital Forensics Unit"@en ;
+    rdfs:comment "Specialized unit focused on digital evidence acquisition and analysis."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+icac-taskforce:UndercoverUnit rdf:type owl:Class ;
+    rdfs:label "Undercover Unit"@en ;
+    rdfs:comment "Unit specializing in undercover operations and online investigations."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+icac-taskforce:VictimServiceUnit rdf:type owl:Class ;
+    rdfs:label "Victim Service Unit"@en ;
+    rdfs:comment "Unit providing specialized services and support to child victims."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+icac-taskforce:AnalyticsUnit rdf:type owl:Class ;
+    rdfs:label "Analytics Unit"@en ;
+    rdfs:comment "Unit specializing in data analysis and intelligence gathering."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+icac-taskforce:TacticalUnit rdf:type owl:Class ;
+    rdfs:label "Tactical Unit"@en ;
+    rdfs:comment "Unit handling high-risk arrests and tactical operations."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+icac-taskforce:TrainingUnit rdf:type owl:Class ;
+    rdfs:label "Training Unit"@en ;
+    rdfs:comment "Unit responsible for training and education of task force members."@en ;
+    rdfs:subClassOf icac-taskforce:SpecializedUnit .
+
+# =============================================================================
+# TASK FORCE MEMBER CLASSES (extending UCO Role)
+# =============================================================================
+
+icac-taskforce:TaskForceMember rdf:type owl:Class ;
+    rdfs:label "Task Force Member"@en ;
+    rdfs:comment "Individual member of an ICAC task force with specialized training."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-taskforce:TaskForceCommander rdf:type owl:Class ;
+    rdfs:label "Task Force Commander"@en ;
+    rdfs:comment "Command-level officer responsible for task force operations."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceMember .
+
+icac-taskforce:TaskForceCoordinator rdf:type owl:Class ;
+    rdfs:label "Task Force Coordinator"@en ;
+    rdfs:comment "Coordinator responsible for inter-agency cooperation and resource management."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceMember .
+
+icac-taskforce:TaskForceInvestigator rdf:type owl:Class ;
+    rdfs:label "Task Force Investigator"@en ;
+    rdfs:comment "Investigator specializing in ICAC cases and child exploitation."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceMember .
+
+icac-taskforce:TaskForceAnalyst rdf:type owl:Class ;
+    rdfs:label "Task Force Analyst"@en ;
+    rdfs:comment "Analyst specializing in ICAC intelligence and data analysis."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceMember .
+
+icac-taskforce:TaskForceForensicExaminer rdf:type owl:Class ;
+    rdfs:label "Task Force Forensic Examiner"@en ;
+    rdfs:comment "Digital forensic examiner specializing in ICAC evidence."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceMember .
+
+# =============================================================================
+# TASK FORCE OPERATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-taskforce:TaskForceOperation rdf:type owl:Class ;
+    rdfs:label "Task Force Operation"@en ;
+    rdfs:comment "Coordinated operation conducted by ICAC task force."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-taskforce:JointOperation rdf:type owl:Class ;
+    rdfs:label "Joint Operation"@en ;
+    rdfs:comment "Operation involving multiple task forces or agencies."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceOperation .
+
+icac-taskforce:SweepOperation rdf:type owl:Class ;
+    rdfs:label "Sweep Operation"@en ;
+    rdfs:comment "Large-scale coordinated operation targeting multiple suspects."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceOperation .
+
+icac-taskforce:ProactiveOperation rdf:type owl:Class ;
+    rdfs:label "Proactive Operation"@en ;
+    rdfs:comment "Proactive operation to identify and investigate potential offenders."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceOperation .
+
+icac-taskforce:ReactiveOperation rdf:type owl:Class ;
+    rdfs:label "Reactive Operation"@en ;
+    rdfs:comment "Operation in response to specific tips or reports."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceOperation .
+
+# =============================================================================
+# RESOURCE SHARING CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:ResourceSharing rdf:type owl:Class ;
+    rdfs:label "Resource Sharing"@en ;
+    rdfs:comment "Sharing of resources, personnel, or expertise between task forces."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-taskforce:PersonnelSharing rdf:type owl:Class ;
+    rdfs:label "Personnel Sharing"@en ;
+    rdfs:comment "Sharing of specialized personnel between task forces."@en ;
+    rdfs:subClassOf icac-taskforce:ResourceSharing .
+
+icac-taskforce:EquipmentSharing rdf:type owl:Class ;
+    rdfs:label "Equipment Sharing"@en ;
+    rdfs:comment "Sharing of specialized equipment or technology."@en ;
+    rdfs:subClassOf icac-taskforce:ResourceSharing .
+
+icac-taskforce:ExpertiseSharing rdf:type owl:Class ;
+    rdfs:label "Expertise Sharing"@en ;
+    rdfs:comment "Sharing of specialized knowledge or technical expertise."@en ;
+    rdfs:subClassOf icac-taskforce:ResourceSharing .
+
+icac-taskforce:IntelligenceSharing rdf:type owl:Class ;
+    rdfs:label "Intelligence Sharing"@en ;
+    rdfs:comment "Sharing of intelligence and investigative information."@en ;
+    rdfs:subClassOf icac-taskforce:ResourceSharing .
+
+# =============================================================================
+# COORDINATION MECHANISM CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:CoordinationMechanism rdf:type owl:Class ;
+    rdfs:label "Coordination Mechanism"@en ;
+    rdfs:comment "Formal mechanism for coordinating task force activities."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-taskforce:TaskForceAlliance rdf:type owl:Class ;
+    rdfs:label "Task Force Alliance"@en ;
+    rdfs:comment "Formal alliance between multiple ICAC task forces."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+icac-taskforce:RegionalCoordination rdf:type owl:Class ;
+    rdfs:label "Regional Coordination"@en ;
+    rdfs:comment "Coordination mechanism for regional task force cooperation."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+icac-taskforce:FederalStateCoordination rdf:type owl:Class ;
+    rdfs:label "Federal State Coordination"@en ;
+    rdfs:comment "Coordination between federal and state task forces."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+icac-taskforce:InformationExchange rdf:type owl:Class ;
+    rdfs:label "Information Exchange"@en ;
+    rdfs:comment "Formal information exchange mechanism between task forces."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+# =============================================================================
+# TRAINING AND CERTIFICATION CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:TaskForceTraining rdf:type owl:Class ;
+    rdfs:label "Task Force Training"@en ;
+    rdfs:comment "Specialized training program for ICAC task force members."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-taskforce:CertificationProgram rdf:type owl:Class ;
+    rdfs:label "Certification Program"@en ;
+    rdfs:comment "Certification program for specific ICAC investigation skills."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceTraining .
+
+icac-taskforce:ContinuingEducation rdf:type owl:Class ;
+    rdfs:label "Continuing Education"@en ;
+    rdfs:comment "Ongoing education and skill development for task force members."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceTraining .
+
+icac-taskforce:CrossTraining rdf:type owl:Class ;
+    rdfs:label "Cross Training"@en ;
+    rdfs:comment "Training across multiple specialized areas or units."@en ;
+    rdfs:subClassOf icac-taskforce:TaskForceTraining .
+
+# =============================================================================
+# TASK FORCE PROPERTIES
+# =============================================================================
+
+# Task Force Structure Properties
+icac-taskforce:taskForceId rdf:type owl:DatatypeProperty ;
+    rdfs:label "task force ID"@en ;
+    rdfs:comment "Unique identifier for the ICAC task force."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:string .
+
+icac-taskforce:establishmentDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "establishment date"@en ;
+    rdfs:comment "Date when the task force was established."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:dateTime .
+
+icac-taskforce:coverageArea rdf:type owl:DatatypeProperty ;
+    rdfs:label "coverage area"@en ;
+    rdfs:comment "Geographic area covered by the task force."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:string .
+
+icac-taskforce:memberCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "member count"@en ;
+    rdfs:comment "Number of active members in the task force."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:integer .
+
+icac-taskforce:agencyCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "agency count"@en ;
+    rdfs:comment "Number of agencies participating in the task force."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:integer .
+
+# Specialization Properties
+icac-taskforce:specializationArea rdf:type owl:DatatypeProperty ;
+    rdfs:label "specialization area"@en ;
+    rdfs:comment "Area of specialization (forensics, undercover, victim_services, analytics, tactical)."@en ;
+    rdfs:domain icac-taskforce:SpecializedUnit ;
+    rdfs:range xsd:string .
+
+icac-taskforce:capabilityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "capability level"@en ;
+    rdfs:comment "Level of capability (basic, intermediate, advanced, expert)."@en ;
+    rdfs:domain icac-taskforce:SpecializedUnit ;
+    rdfs:range xsd:string .
+
+icac-taskforce:resourceCapacity rdf:type owl:DatatypeProperty ;
+    rdfs:label "resource capacity"@en ;
+    rdfs:comment "Available resource capacity (limited, moderate, high, extensive)."@en ;
+    rdfs:domain icac-taskforce:SpecializedUnit ;
+    rdfs:range xsd:string .
+
+# Member Properties
+icac-taskforce:memberRole rdf:type owl:DatatypeProperty ;
+    rdfs:label "member role"@en ;
+    rdfs:comment "Role within the task force (commander, coordinator, investigator, analyst, examiner)."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range xsd:string .
+
+icac-taskforce:experienceLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "experience level"@en ;
+    rdfs:comment "Experience level in ICAC investigations (novice, experienced, expert, master)."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range xsd:string .
+
+icac-taskforce:certificationStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "certification status"@en ;
+    rdfs:comment "Certification status (certified, pending, expired, not_certified)."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range xsd:string .
+
+icac-taskforce:yearsOfService rdf:type owl:DatatypeProperty ;
+    rdfs:label "years of service"@en ;
+    rdfs:comment "Years of service in ICAC task force work."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range xsd:integer .
+
+# Operation Properties
+icac-taskforce:operationType rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation type"@en ;
+    rdfs:comment "Type of task force operation (joint, sweep, proactive, reactive)."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range xsd:string .
+
+icac-taskforce:operationScale rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation scale"@en ;
+    rdfs:comment "Scale of operation (local, regional, national, international)."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range xsd:string .
+
+icac-taskforce:participatingUnits rdf:type owl:DatatypeProperty ;
+    rdfs:label "participating units"@en ;
+    rdfs:comment "Number of units participating in operation."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range xsd:integer .
+
+icac-taskforce:operationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation duration"@en ;
+    rdfs:comment "Duration of operation in days."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range xsd:integer .
+
+icac-taskforce:operationOutcome rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation outcome"@en ;
+    rdfs:comment "Outcome of operation (successful, partially_successful, unsuccessful)."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range xsd:string .
+
+# Resource Sharing Properties
+icac-taskforce:sharingType rdf:type owl:DatatypeProperty ;
+    rdfs:label "sharing type"@en ;
+    rdfs:comment "Type of resource sharing (personnel, equipment, expertise, intelligence)."@en ;
+    rdfs:domain icac-taskforce:ResourceSharing ;
+    rdfs:range xsd:string .
+
+icac-taskforce:sharingDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "sharing duration"@en ;
+    rdfs:comment "Duration of resource sharing in months."@en ;
+    rdfs:domain icac-taskforce:ResourceSharing ;
+    rdfs:range xsd:integer .
+
+icac-taskforce:sharingAgreement rdf:type owl:DatatypeProperty ;
+    rdfs:label "sharing agreement"@en ;
+    rdfs:comment "Type of sharing agreement (formal, informal, emergency)."@en ;
+    rdfs:domain icac-taskforce:ResourceSharing ;
+    rdfs:range xsd:string .
+
+# Training Properties
+icac-taskforce:trainingType rdf:type owl:DatatypeProperty ;
+    rdfs:label "training type"@en ;
+    rdfs:comment "Type of training (basic, advanced, specialized, certification)."@en ;
+    rdfs:domain icac-taskforce:TaskForceTraining ;
+    rdfs:range xsd:string .
+
+icac-taskforce:trainingDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "training duration"@en ;
+    rdfs:comment "Duration of training in hours."@en ;
+    rdfs:domain icac-taskforce:TaskForceTraining ;
+    rdfs:range xsd:integer .
+
+icac-taskforce:completionRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "completion rate"@en ;
+    rdfs:comment "Completion rate for training program (percentage)."@en ;
+    rdfs:domain icac-taskforce:TaskForceTraining ;
+    rdfs:range xsd:decimal .
+
+icac-taskforce:certificationValid rdf:type owl:DatatypeProperty ;
+    rdfs:label "certification valid"@en ;
+    rdfs:comment "Whether certification is currently valid."@en ;
+    rdfs:domain icac-taskforce:CertificationProgram ;
+    rdfs:range xsd:boolean .
+
+# =============================================================================
+# TASK FORCE RELATIONSHIPS
+# =============================================================================
+
+# Structure Relationships
+icac-taskforce:hasMember rdf:type owl:ObjectProperty ;
+    rdfs:label "has member"@en ;
+    rdfs:comment "Links task force to its members."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:TaskForceMember .
+
+icac-taskforce:hasUnit rdf:type owl:ObjectProperty ;
+    rdfs:label "has unit"@en ;
+    rdfs:comment "Links task force to its specialized units."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:SpecializedUnit .
+
+icac-taskforce:commandedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "commanded by"@en ;
+    rdfs:comment "Links task force to its commander."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:TaskForceCommander .
+
+icac-taskforce:coordinatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated by"@en ;
+    rdfs:comment "Links task force to its coordinator."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:TaskForceCoordinator .
+
+# Unit Assignment Relationships
+icac-taskforce:assignedToUnit rdf:type owl:ObjectProperty ;
+    rdfs:label "assigned to unit"@en ;
+    rdfs:comment "Links task force member to their assigned unit."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range icac-taskforce:SpecializedUnit .
+
+icac-taskforce:leadsUnit rdf:type owl:ObjectProperty ;
+    rdfs:label "leads unit"@en ;
+    rdfs:comment "Links member to unit they lead."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range icac-taskforce:SpecializedUnit .
+
+# Operation Relationships
+icac-taskforce:conductedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "conducted by"@en ;
+    rdfs:comment "Links operation to task force that conducted it."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range icac-taskforce:ICACtaskForce .
+
+icac-taskforce:participatedIn rdf:type owl:ObjectProperty ;
+    rdfs:label "participated in"@en ;
+    rdfs:comment "Links task force member to operation they participated in."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range icac-taskforce:TaskForceOperation .
+
+icac-taskforce:involvedUnit rdf:type owl:ObjectProperty ;
+    rdfs:label "involved unit"@en ;
+    rdfs:comment "Links operation to specialized unit involved."@en ;
+    rdfs:domain icac-taskforce:TaskForceOperation ;
+    rdfs:range icac-taskforce:SpecializedUnit .
+
+# Cooperation Relationships
+icac-taskforce:collaboratesWith rdf:type owl:ObjectProperty ;
+    rdfs:label "collaborates with"@en ;
+    rdfs:comment "Links task force to other task forces they collaborate with."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:ICACtaskForce .
+
+icac-taskforce:sharesResourcesWith rdf:type owl:ObjectProperty ;
+    rdfs:label "shares resources with"@en ;
+    rdfs:comment "Links task force to resource sharing arrangement."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:ResourceSharing .
+
+icac-taskforce:coordinatedThrough rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated through"@en ;
+    rdfs:comment "Links task force to coordination mechanism used."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:CoordinationMechanism .
+
+# Training Relationships
+icac-taskforce:receivedTraining rdf:type owl:ObjectProperty ;
+    rdfs:label "received training"@en ;
+    rdfs:comment "Links task force member to training received."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range icac-taskforce:TaskForceTraining .
+
+icac-taskforce:providesTraining rdf:type owl:ObjectProperty ;
+    rdfs:label "provides training"@en ;
+    rdfs:comment "Links task force to training programs it provides."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:TaskForceTraining .
+
+icac-taskforce:certifiedIn rdf:type owl:ObjectProperty ;
+    rdfs:label "certified in"@en ;
+    rdfs:comment "Links task force member to certification programs completed."@en ;
+    rdfs:domain icac-taskforce:TaskForceMember ;
+    rdfs:range icac-taskforce:CertificationProgram .
+
+# Investigation Relationships
+icac-taskforce:handledInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:label "handled investigation"@en ;
+    rdfs:comment "Links task force to investigation they handled."@en ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac:Investigation .
+
+icac-taskforce:supportedInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:label "supported investigation"@en ;
+    rdfs:comment "Links specialized unit to investigation they supported."@en ;
+    rdfs:domain icac-taskforce:SpecializedUnit ;
+    rdfs:range icac:Investigation .
+
+# =============================================================================
+# ICAC TASK FORCE PERFORMANCE METRICS (Illinois Analysis)
+# =============================================================================
+
+icac-taskforce:TaskForceMetrics rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Task Force Metrics"@en ;
+    rdfs:comment "Performance metrics and statistics for ICAC task force operations."@en .
+
+icac-taskforce:HistoricalMetrics rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "Historical Metrics"@en ;
+    rdfs:comment "Long-term historical performance data for task force operations."@en .
+
+icac-taskforce:CyberTipMetrics rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "CyberTip Metrics"@en ;
+    rdfs:comment "Metrics tracking CyberTip processing and analysis by task force."@en .
+
+icac-taskforce:ArrestMetrics rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "Arrest Metrics"@en ;
+    rdfs:comment "Metrics tracking arrests made by task force operations."@en .
+
+icac-taskforce:AnnualPerformance rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "Annual Performance"@en ;
+    rdfs:comment "Year-specific performance metrics for task force operations."@en .
+
+icac-taskforce:NetworkPerformance rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "Network Performance"@en ;
+    rdfs:comment "Performance metrics for multi-agency network coordination."@en .
+
+icac-taskforce:TrainingReachMetrics rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:TaskForceMetrics ;
+    rdfs:label "Training Reach Metrics"@en ;
+    rdfs:comment "Metrics tracking training and education reach to professionals and community."@en .
+
+# =============================================================================
+# ILLINOIS ICAC TASK FORCE FRAMEWORK
+# =============================================================================
+
+icac-taskforce:IllinoisICACtaskForce rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:StateICACtaskForce ;
+    rdfs:label "Illinois ICAC Task Force"@en ;
+    rdfs:comment "Illinois state ICAC task force with specialized capabilities and extensive network partnerships."@en .
+
+icac-taskforce:FederalLawEnforcementPartner rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "Federal Law Enforcement Partner"@en ;
+    rdfs:comment "Federal law enforcement agency partnering with ICAC task force."@en .
+
+icac-taskforce:LocalLawEnforcementPartner rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "Local Law Enforcement Partner"@en ;
+    rdfs:comment "Local law enforcement agency partnering with ICAC task force."@en .
+
+# =============================================================================
+# PERFORMANCE METRICS PROPERTIES (Illinois Framework)
+# =============================================================================
+
+# CyberTip Processing Metrics
+icac-taskforce:cyberTipsReceived rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:CyberTipMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "cyber tips received"@en ;
+    rdfs:comment "Total number of CyberTips received by task force."@en .
+
+icac-taskforce:cyberTipsProcessed rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:CyberTipMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "cyber tips processed"@en ;
+    rdfs:comment "Number of CyberTips successfully processed and analyzed."@en .
+
+icac-taskforce:cyberTipsSince2019 rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:CyberTipMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "cyber tips since 2019"@en ;
+    rdfs:comment "Total CyberTips received since 2019 (Illinois: 35,000+)."@en .
+
+icac-taskforce:yearOverYearIncrease rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:AnnualPerformance ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "year over year increase"@en ;
+    rdfs:comment "Percentage increase from previous year (Illinois 2022: 26%)."@en .
+
+# Arrest Performance Metrics
+icac-taskforce:arrestsSince2019 rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ArrestMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "arrests since 2019"@en ;
+    rdfs:comment "Total arrests made since 2019 (Illinois: 600+)."@en .
+
+icac-taskforce:arrestsSince2006 rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ArrestMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "arrests since 2006"@en ;
+    rdfs:comment "Total arrests made since 2006 (Illinois: 1,990+)."@en .
+
+icac-taskforce:sexualPredatorArrests rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ArrestMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "sexual predator arrests"@en ;
+    rdfs:comment "Number of sexual predator arrests made by task force."@en .
+
+# Network Coordination Metrics
+icac-taskforce:partnerAgencyCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:NetworkPerformance ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "partner agency count"@en ;
+    rdfs:comment "Number of partner agencies in task force network (Illinois: 175+)."@en .
+
+icac-taskforce:coordinationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:NetworkPerformance ;
+    rdfs:range xsd:string ;
+    rdfs:label "coordination level"@en ;
+    rdfs:comment "Level of coordination (local, county, state, federal)."@en .
+
+icac-taskforce:agencyType rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:NetworkPerformance ;
+    rdfs:range xsd:string ;
+    rdfs:label "agency type"@en ;
+    rdfs:comment "Type of partner agency (local, county, state, federal)."@en .
+
+# Training and Education Metrics
+icac-taskforce:professionalsTrained rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:TrainingReachMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "professionals trained"@en ;
+    rdfs:comment "Number of law enforcement professionals trained."@en .
+
+icac-taskforce:parentsEducated rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:TrainingReachMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "parents educated"@en ;
+    rdfs:comment "Number of parents reached through safety education."@en .
+
+icac-taskforce:studentsEducated rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:TrainingReachMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "students educated"@en ;
+    rdfs:comment "Number of students reached through safety education."@en .
+
+icac-taskforce:teachersEducated rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:TrainingReachMetrics ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "teachers educated"@en ;
+    rdfs:comment "Number of teachers reached through safety education."@en .
+
+# Historical Timeline Properties
+icac-taskforce:reportingYear rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:AnnualPerformance ;
+    rdfs:range xsd:gYear ;
+    rdfs:label "reporting year"@en ;
+    rdfs:comment "Year for which performance metrics are reported."@en .
+
+icac-taskforce:performancePeriod rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:HistoricalMetrics ;
+    rdfs:range xsd:string ;
+    rdfs:label "performance period"@en ;
+    rdfs:comment "Time period covered by historical metrics (e.g., 'Since 2019', 'Since 2006')."@en .
+
+# =============================================================================
+# TASK FORCE METRICS RELATIONSHIPS
+# =============================================================================
+
+icac-taskforce:hasMetrics rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:TaskForceMetrics ;
+    rdfs:label "has metrics"@en ;
+    rdfs:comment "Links task force to its performance metrics."@en .
+
+icac-taskforce:measuresPerformance rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-taskforce:TaskForceMetrics ;
+    rdfs:range icac-taskforce:ICACtaskForce ;
+    rdfs:label "measures performance"@en ;
+    rdfs:comment "Links metrics to the task force they measure."@en .
+
+icac-taskforce:partnersWith rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range uco-identity:Organization ;
+    rdfs:label "partners with"@en ;
+    rdfs:comment "Links task force to partner organizations."@en .
+
+icac-taskforce:federalPartner rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:FederalLawEnforcementPartner ;
+    rdfs:label "federal partner"@en ;
+    rdfs:comment "Links task force to federal law enforcement partners."@en .
+
+icac-taskforce:localPartner rdf:type owl:ObjectProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range icac-taskforce:LocalLawEnforcementPartner ;
+    rdfs:label "local partner"@en ;
+    rdfs:comment "Links task force to local law enforcement partners."@en .
+
+# DOJ Grant and Funding Properties
+icac-taskforce:dojGrantFunded rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "DOJ grant funded"@en ;
+    rdfs:comment "Whether task force receives DOJ grant funding."@en .
+
+icac-taskforce:nationalTaskForceNetwork rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "national task force network"@en ;
+    rdfs:comment "Whether task force is part of national network (61 total)."@en .
+
+icac-taskforce:taskForceNumber rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-taskforce:ICACtaskForce ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "task force number"@en ;
+    rdfs:comment "Position within national network (e.g., '1 of 61')."@en . 

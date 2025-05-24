@@ -1,0 +1,266 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-undercover: <https://ontology.unifiedcyberontology.org/icac/undercover#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/undercover/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Undercover Operations Ontology"@en ;
+    rdfs:comment "An ontology for representing undercover law enforcement operations in Internet Crimes Against Children investigations, extending UCO and CASE. This ontology covers undercover identities, infiltration tactics, surveillance operations, and evidence collection through covert means."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/undercover/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# UNDERCOVER OPERATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-undercover:UndercoverOperation rdf:type owl:Class ;
+    rdfs:label "Undercover Operation"@en ;
+    rdfs:comment "A law enforcement operation using false identities or covert methods to investigate crimes and gather evidence."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-undercover:ChatRoomInfiltration rdf:type owl:Class ;
+    rdfs:label "Chat Room Infiltration"@en ;
+    rdfs:comment "Undercover operation involving infiltration of online chat rooms or messaging platforms to investigate criminal activity."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverOperation .
+
+icac-undercover:OnlinePlatformSurveillance rdf:type owl:Class ;
+    rdfs:label "Online Platform Surveillance"@en ;
+    rdfs:comment "Covert monitoring of online platforms for criminal activity without direct participation."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverOperation .
+
+icac-undercover:ControlledMeeting rdf:type owl:Class ;
+    rdfs:label "Controlled Meeting"@en ;
+    rdfs:comment "Planned in-person meeting between undercover agents and suspects under controlled conditions."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverOperation .
+
+icac-undercover:StingOperation rdf:type owl:Class ;
+    rdfs:label "Sting Operation"@en ;
+    rdfs:comment "Coordinated undercover operation designed to catch suspects in the act of committing crimes."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverOperation .
+
+# =============================================================================
+# UNDERCOVER IDENTITY CLASSES (extending UCO Identity)
+# =============================================================================
+
+icac-undercover:UndercoverIdentity rdf:type owl:Class ;
+    rdfs:label "Undercover Identity"@en ;
+    rdfs:comment "A fictitious identity created and maintained by law enforcement for undercover operations."@en ;
+    rdfs:subClassOf uco-identity:Identity .
+
+icac-undercover:ParentPersona rdf:type owl:Class ;
+    rdfs:label "Parent Persona"@en ;
+    rdfs:comment "Undercover identity portraying a parent or guardian of a child victim."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverIdentity .
+
+icac-undercover:ChildPersona rdf:type owl:Class ;
+    rdfs:label "Child Persona"@en ;
+    rdfs:comment "Undercover identity portraying a minor child for investigative purposes."@en ;
+    rdfs:subClassOf icac-undercover:UndercoverIdentity .
+
+icac-undercover:PlatformAccount rdf:type owl:Class ;
+    rdfs:label "Platform Account"@en ;
+    rdfs:comment "Account created on digital platforms for undercover operations."@en ;
+    rdfs:subClassOf uco-observable:DigitalAccount .
+
+# =============================================================================
+# UNDERCOVER ROLE CLASSES (extending UCO Role)
+# =============================================================================
+
+icac-undercover:UndercoverAgent rdf:type owl:Class ;
+    rdfs:label "Undercover Agent"@en ;
+    rdfs:comment "Law enforcement officer or authorized civilian operating under false identity in an investigation."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-undercover:OperationHandler rdf:type owl:Class ;
+    rdfs:label "Operation Handler"@en ;
+    rdfs:comment "Supervising officer responsible for managing undercover operations and agent safety."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-undercover:TechnicalSupport rdf:type owl:Class ;
+    rdfs:label "Technical Support"@en ;
+    rdfs:comment "Personnel providing technical infrastructure and monitoring for undercover operations."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+# =============================================================================
+# COMMUNICATION AND EVIDENCE CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-undercover:UndercoverCommunication rdf:type owl:Class ;
+    rdfs:label "Undercover Communication"@en ;
+    rdfs:comment "Communication conducted while using an undercover identity."@en ;
+    rdfs:subClassOf uco-observable:MessageThread .
+
+icac-undercover:CriminalSolicitation rdf:type owl:Class ;
+    rdfs:label "Criminal Solicitation"@en ;
+    rdfs:comment "Request or instruction from suspect to undercover agent to commit illegal acts."@en ;
+    rdfs:subClassOf uco-observable:Message .
+
+icac-undercover:IncriminatingStatement rdf:type owl:Class ;
+    rdfs:label "Incriminating Statement"@en ;
+    rdfs:comment "Statement made by suspect that provides evidence of criminal intent or past crimes."@en ;
+    rdfs:subClassOf uco-observable:Message .
+
+icac-undercover:OperationalEvidence rdf:type owl:Class ;
+    rdfs:label "Operational Evidence"@en ;
+    rdfs:comment "Evidence collected during undercover operations including recordings, communications, and observations."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# UNDERCOVER OPERATION PROPERTIES
+# =============================================================================
+
+# Operation Management Properties
+icac-undercover:operatesUnderIdentity rdf:type owl:ObjectProperty ;
+    rdfs:label "operates under identity"@en ;
+    rdfs:comment "Links an undercover agent to the false identity they are using."@en ;
+    rdfs:domain icac-undercover:UndercoverAgent ;
+    rdfs:range icac-undercover:UndercoverIdentity .
+
+icac-undercover:handledBy rdf:type owl:ObjectProperty ;
+    rdfs:label "handled by"@en ;
+    rdfs:comment "Links an undercover operation to its supervising handler."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range icac-undercover:OperationHandler .
+
+icac-undercover:targetsSubject rdf:type owl:ObjectProperty ;
+    rdfs:label "targets subject"@en ;
+    rdfs:comment "Links an undercover operation to the suspect being investigated."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range uco-identity:Person .
+
+icac-undercover:coversTimeframe rdf:type owl:ObjectProperty ;
+    rdfs:label "covers timeframe"@en ;
+    rdfs:comment "Time period during which the undercover operation was active."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation .
+
+# Identity Properties
+icac-undercover:portraysAge rdf:type owl:DatatypeProperty ;
+    rdfs:label "portrays age"@en ;
+    rdfs:comment "The age that the undercover identity claims to be."@en ;
+    rdfs:domain icac-undercover:UndercoverIdentity ;
+    rdfs:range xsd:integer .
+
+icac-undercover:backstoryDetails rdf:type owl:DatatypeProperty ;
+    rdfs:label "backstory details"@en ;
+    rdfs:comment "Biographical details created for the undercover identity."@en ;
+    rdfs:domain icac-undercover:UndercoverIdentity ;
+    rdfs:range xsd:string .
+
+icac-undercover:platformUsername rdf:type owl:DatatypeProperty ;
+    rdfs:label "platform username"@en ;
+    rdfs:comment "Username used for the undercover identity on digital platforms."@en ;
+    rdfs:domain icac-undercover:PlatformAccount ;
+    rdfs:range xsd:string .
+
+# Communication Properties
+icac-undercover:communicationPlatform rdf:type owl:ObjectProperty ;
+    rdfs:label "communication platform"@en ;
+    rdfs:comment "Digital platform where undercover communication took place."@en ;
+    rdfs:domain icac-undercover:UndercoverCommunication ;
+    rdfs:range uco-observable:DigitalService .
+
+icac-undercover:containsCriminalContent rdf:type owl:DatatypeProperty ;
+    rdfs:label "contains criminal content"@en ;
+    rdfs:comment "Whether the communication contains content of criminal nature."@en ;
+    rdfs:domain icac-undercover:UndercoverCommunication ;
+    rdfs:range xsd:boolean .
+
+icac-undercover:evidentiaryValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidentiary value"@en ;
+    rdfs:comment "Assessment of the communication's value as evidence (high, medium, low)."@en ;
+    rdfs:domain icac-undercover:UndercoverCommunication ;
+    rdfs:range xsd:string .
+
+# Operation Safety Properties
+icac-undercover:safetyProtocol rdf:type owl:DatatypeProperty ;
+    rdfs:label "safety protocol"@en ;
+    rdfs:comment "Safety measures implemented for the undercover operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range xsd:string .
+
+icac-undercover:backupTeamAssigned rdf:type owl:DatatypeProperty ;
+    rdfs:label "backup team assigned"@en ;
+    rdfs:comment "Whether a backup/surveillance team was assigned to the operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range xsd:boolean .
+
+icac-undercover:emergencySignal rdf:type owl:DatatypeProperty ;
+    rdfs:label "emergency signal"@en ;
+    rdfs:comment "Predetermined signal or code word for emergency situations."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range xsd:string .
+
+# Authorization Properties
+icac-undercover:judicialAuthorization rdf:type owl:ObjectProperty ;
+    rdfs:label "judicial authorization"@en ;
+    rdfs:comment "Court order or warrant authorizing the undercover operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-undercover:supervisoryApproval rdf:type owl:ObjectProperty ;
+    rdfs:label "supervisory approval"@en ;
+    rdfs:comment "Administrative approval from law enforcement supervisors."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range uco-identity:Person .
+
+icac-undercover:operationClassification rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation classification"@en ;
+    rdfs:comment "Security classification level of the undercover operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range xsd:string .
+
+# Result Properties
+icac-undercover:evidenceCollected rdf:type owl:ObjectProperty ;
+    rdfs:label "evidence collected"@en ;
+    rdfs:comment "Evidence gathered during the undercover operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range icac-undercover:OperationalEvidence .
+
+icac-undercover:leadsToDevelopment rdf:type owl:ObjectProperty ;
+    rdfs:label "leads to development"@en ;
+    rdfs:comment "Additional investigative leads generated by the undercover operation."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range uco-action:Action .
+
+icac-undercover:operationOutcome rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation outcome"@en ;
+    rdfs:comment "Result of the undercover operation (successful, compromised, terminated, ongoing)."@en ;
+    rdfs:domain icac-undercover:UndercoverOperation ;
+    rdfs:range xsd:string .
+
+# Chat Room Specific Properties
+icac-undercover:chatRoomTopic rdf:type owl:DatatypeProperty ;
+    rdfs:label "chat room topic"@en ;
+    rdfs:comment "Stated topic or theme of the chat room being infiltrated."@en ;
+    rdfs:domain icac-undercover:ChatRoomInfiltration ;
+    rdfs:range xsd:string .
+
+icac-undercover:participantCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "participant count"@en ;
+    rdfs:comment "Number of active participants in the chat room."@en ;
+    rdfs:domain icac-undercover:ChatRoomInfiltration ;
+    rdfs:range xsd:integer .
+
+icac-undercover:infiltrationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "infiltration duration"@en ;
+    rdfs:comment "Length of time the agent spent in the chat room (in hours)."@en ;
+    rdfs:domain icac-undercover:ChatRoomInfiltration ;
+    rdfs:range xsd:decimal . 

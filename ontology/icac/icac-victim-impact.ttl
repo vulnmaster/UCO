@@ -1,0 +1,497 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-impact: <https://ontology.unifiedcyberontology.org/icac/victim-impact#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/victim-impact/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Victim Impact Assessment Ontology"@en ;
+    rdfs:comment "An ontology for representing victim impact assessments, psychological harm, trauma indicators, therapeutic interventions, and recovery processes in Internet Crimes Against Children investigations, extending UCO and CASE."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/victim-impact/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# VICTIM IMPACT ASSESSMENT CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-impact:VictimImpactAssessment rdf:type owl:Class ;
+    rdfs:label "Victim Impact Assessment"@en ;
+    rdfs:comment "Comprehensive assessment of the impact of criminal activity on child victims."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:InitialImpactAssessment rdf:type owl:Class ;
+    rdfs:label "Initial Impact Assessment"@en ;
+    rdfs:comment "Initial evaluation of victim impact conducted early in investigation."@en ;
+    rdfs:subClassOf icac-impact:VictimImpactAssessment .
+
+icac-impact:ComprehensiveImpactAssessment rdf:type owl:Class ;
+    rdfs:label "Comprehensive Impact Assessment"@en ;
+    rdfs:comment "Detailed evaluation of victim impact for legal proceedings and treatment planning."@en ;
+    rdfs:subClassOf icac-impact:VictimImpactAssessment .
+
+icac-impact:OngoingImpactMonitoring rdf:type owl:Class ;
+    rdfs:label "Ongoing Impact Monitoring"@en ;
+    rdfs:comment "Continuous monitoring of victim impact during investigation and recovery."@en ;
+    rdfs:subClassOf icac-impact:VictimImpactAssessment .
+
+# =============================================================================
+# PSYCHOLOGICAL HARM CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-impact:PsychologicalHarm rdf:type owl:Class ;
+    rdfs:label "Psychological Harm"@en ;
+    rdfs:comment "Mental or emotional harm experienced by child victims."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:AcuteTrauma rdf:type owl:Class ;
+    rdfs:label "Acute Trauma"@en ;
+    rdfs:comment "Immediate psychological trauma following victimization."@en ;
+    rdfs:subClassOf icac-impact:PsychologicalHarm .
+
+icac-impact:ChronicTrauma rdf:type owl:Class ;
+    rdfs:label "Chronic Trauma"@en ;
+    rdfs:comment "Long-term psychological trauma from prolonged or repeated victimization."@en ;
+    rdfs:subClassOf icac-impact:PsychologicalHarm .
+
+icac-impact:ComplexTrauma rdf:type owl:Class ;
+    rdfs:label "Complex Trauma"@en ;
+    rdfs:comment "Complex trauma resulting from multiple types of victimization or prolonged abuse."@en ;
+    rdfs:subClassOf icac-impact:PsychologicalHarm .
+
+icac-impact:DevelopmentalImpact rdf:type owl:Class ;
+    rdfs:label "Developmental Impact"@en ;
+    rdfs:comment "Impact on normal child development due to victimization."@en ;
+    rdfs:subClassOf icac-impact:PsychologicalHarm .
+
+# =============================================================================
+# TRAUMA INDICATOR CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-impact:TraumaIndicator rdf:type owl:Class ;
+    rdfs:label "Trauma Indicator"@en ;
+    rdfs:comment "Observable signs or symptoms indicating psychological trauma."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:BehavioralIndicator rdf:type owl:Class ;
+    rdfs:label "Behavioral Indicator"@en ;
+    rdfs:comment "Changes in behavior that indicate trauma or distress."@en ;
+    rdfs:subClassOf icac-impact:TraumaIndicator .
+
+icac-impact:EmotionalIndicator rdf:type owl:Class ;
+    rdfs:label "Emotional Indicator"@en ;
+    rdfs:comment "Emotional symptoms or reactions indicating trauma."@en ;
+    rdfs:subClassOf icac-impact:TraumaIndicator .
+
+icac-impact:PhysicalIndicator rdf:type owl:Class ;
+    rdfs:label "Physical Indicator"@en ;
+    rdfs:comment "Physical symptoms or manifestations of psychological trauma."@en ;
+    rdfs:subClassOf icac-impact:TraumaIndicator .
+
+icac-impact:CognitiveIndicator rdf:type owl:Class ;
+    rdfs:label "Cognitive Indicator"@en ;
+    rdfs:comment "Changes in thinking, memory, or learning ability due to trauma."@en ;
+    rdfs:subClassOf icac-impact:TraumaIndicator .
+
+icac-impact:SocialIndicator rdf:type owl:Class ;
+    rdfs:label "Social Indicator"@en ;
+    rdfs:comment "Changes in social behavior or relationships due to trauma."@en ;
+    rdfs:subClassOf icac-impact:TraumaIndicator .
+
+# =============================================================================
+# THERAPEUTIC INTERVENTION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-impact:TherapeuticIntervention rdf:type owl:Class ;
+    rdfs:label "Therapeutic Intervention"@en ;
+    rdfs:comment "Professional therapeutic treatment or intervention for victim recovery."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-impact:CrisisIntervention rdf:type owl:Class ;
+    rdfs:label "Crisis Intervention"@en ;
+    rdfs:comment "Immediate therapeutic intervention for acute crisis situations."@en ;
+    rdfs:subClassOf icac-impact:TherapeuticIntervention .
+
+icac-impact:TraumaTherapy rdf:type owl:Class ;
+    rdfs:label "Trauma Therapy"@en ;
+    rdfs:comment "Specialized therapy for treating trauma and its effects."@en ;
+    rdfs:subClassOf icac-impact:TherapeuticIntervention .
+
+icac-impact:FamilyTherapy rdf:type owl:Class ;
+    rdfs:label "Family Therapy"@en ;
+    rdfs:comment "Therapeutic intervention involving the victim's family."@en ;
+    rdfs:subClassOf icac-impact:TherapeuticIntervention .
+
+icac-impact:GroupTherapy rdf:type owl:Class ;
+    rdfs:label "Group Therapy"@en ;
+    rdfs:comment "Therapeutic intervention conducted in group settings with other victims."@en ;
+    rdfs:subClassOf icac-impact:TherapeuticIntervention .
+
+icac-impact:CognitiveBehavioralTherapy rdf:type owl:Class ;
+    rdfs:label "Cognitive Behavioral Therapy"@en ;
+    rdfs:comment "CBT-based therapeutic intervention for trauma and behavioral issues."@en ;
+    rdfs:subClassOf icac-impact:TherapeuticIntervention .
+
+# =============================================================================
+# SUPPORT SERVICE CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-impact:VictimSupport rdf:type owl:Class ;
+    rdfs:label "Victim Support"@en ;
+    rdfs:comment "Support services provided to child victims and their families."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-impact:VictimAdvocacy rdf:type owl:Class ;
+    rdfs:label "Victim Advocacy"@en ;
+    rdfs:comment "Advocacy services to protect victim rights and interests."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+icac-impact:SafetyPlanning rdf:type owl:Class ;
+    rdfs:label "Safety Planning"@en ;
+    rdfs:comment "Development of safety plans to protect victims from further harm."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+icac-impact:EducationalSupport rdf:type owl:Class ;
+    rdfs:label "Educational Support"@en ;
+    rdfs:comment "Educational accommodations and support for victim's schooling."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+icac-impact:LegalSupport rdf:type owl:Class ;
+    rdfs:label "Legal Support"@en ;
+    rdfs:comment "Legal assistance and representation for victims in proceedings."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+# =============================================================================
+# RECOVERY AND OUTCOME CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-impact:RecoveryProcess rdf:type owl:Class ;
+    rdfs:label "Recovery Process"@en ;
+    rdfs:comment "Process of healing and recovery from victimization."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:RecoveryMilestone rdf:type owl:Class ;
+    rdfs:label "Recovery Milestone"@en ;
+    rdfs:comment "Significant achievement or progress point in victim recovery."@en ;
+    rdfs:subClassOf icac-impact:RecoveryProcess .
+
+icac-impact:LongTermEffect rdf:type owl:Class ;
+    rdfs:label "Long Term Effect"@en ;
+    rdfs:comment "Long-term consequences of victimization on the child's life."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:ResilienceFactors rdf:type owl:Class ;
+    rdfs:label "Resilience Factors"@en ;
+    rdfs:comment "Factors that contribute to victim resilience and recovery."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-impact:RecoveryBarriers rdf:type owl:Class ;
+    rdfs:label "Recovery Barriers"@en ;
+    rdfs:comment "Factors that impede victim recovery and healing."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# PROFESSIONAL ROLE CLASSES (extending UCO Role)
+# =============================================================================
+
+icac-impact:MentalHealthProfessional rdf:type owl:Class ;
+    rdfs:label "Mental Health Professional"@en ;
+    rdfs:comment "Licensed mental health professional providing victim services."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-impact:VictimAdvocate rdf:type owl:Class ;
+    rdfs:label "Victim Advocate"@en ;
+    rdfs:comment "Professional advocate representing victim interests."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-impact:SocialWorker rdf:type owl:Class ;
+    rdfs:label "Social Worker"@en ;
+    rdfs:comment "Licensed social worker providing victim and family services."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-impact:ForensicInterviewer rdf:type owl:Class ;
+    rdfs:label "Forensic Interviewer"@en ;
+    rdfs:comment "Trained professional conducting forensic interviews with child victims."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+# =============================================================================
+# IMPACT ASSESSMENT PROPERTIES
+# =============================================================================
+
+# Assessment Properties
+icac-impact:assessmentDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "assessment date"@en ;
+    rdfs:comment "Date when victim impact assessment was conducted."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range xsd:dateTime .
+
+icac-impact:assessmentType rdf:type owl:DatatypeProperty ;
+    rdfs:label "assessment type"@en ;
+    rdfs:comment "Type of impact assessment (clinical, forensic, educational, legal)."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range xsd:string .
+
+icac-impact:severityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "severity level"@en ;
+    rdfs:comment "Overall severity of victim impact (minimal, mild, moderate, severe, extreme)."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range xsd:string .
+
+icac-impact:functioningLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "functioning level"@en ;
+    rdfs:comment "Victim's current level of functioning (high, moderate, low, impaired)."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range xsd:string .
+
+# Psychological Harm Properties
+icac-impact:traumaType rdf:type owl:DatatypeProperty ;
+    rdfs:label "trauma type"@en ;
+    rdfs:comment "Type of trauma experienced (acute, chronic, complex, developmental)."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range xsd:string .
+
+icac-impact:onsetDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "onset date"@en ;
+    rdfs:comment "Date when trauma symptoms first appeared."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range xsd:dateTime .
+
+icac-impact:duration rdf:type owl:DatatypeProperty ;
+    rdfs:label "duration"@en ;
+    rdfs:comment "Duration of psychological harm in months."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range xsd:integer .
+
+icac-impact:severity rdf:type owl:DatatypeProperty ;
+    rdfs:label "severity"@en ;
+    rdfs:comment "Severity of psychological harm (mild, moderate, severe, extreme)."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range xsd:string .
+
+# Trauma Indicator Properties
+icac-impact:indicatorType rdf:type owl:DatatypeProperty ;
+    rdfs:label "indicator type"@en ;
+    rdfs:comment "Type of trauma indicator (behavioral, emotional, physical, cognitive, social)."@en ;
+    rdfs:domain icac-impact:TraumaIndicator ;
+    rdfs:range xsd:string .
+
+icac-impact:frequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "frequency"@en ;
+    rdfs:comment "Frequency of indicator occurrence (constant, frequent, occasional, rare)."@en ;
+    rdfs:domain icac-impact:TraumaIndicator ;
+    rdfs:range xsd:string .
+
+icac-impact:intensity rdf:type owl:DatatypeProperty ;
+    rdfs:label "intensity"@en ;
+    rdfs:comment "Intensity of trauma indicator (mild, moderate, severe)."@en ;
+    rdfs:domain icac-impact:TraumaIndicator ;
+    rdfs:range xsd:string .
+
+icac-impact:progressionPattern rdf:type owl:DatatypeProperty ;
+    rdfs:label "progression pattern"@en ;
+    rdfs:comment "Pattern of indicator progression (improving, stable, worsening, fluctuating)."@en ;
+    rdfs:domain icac-impact:TraumaIndicator ;
+    rdfs:range xsd:string .
+
+# Therapeutic Intervention Properties
+icac-impact:interventionType rdf:type owl:DatatypeProperty ;
+    rdfs:label "intervention type"@en ;
+    rdfs:comment "Type of therapeutic intervention (individual, family, group, crisis)."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range xsd:string .
+
+icac-impact:treatmentModality rdf:type owl:DatatypeProperty ;
+    rdfs:label "treatment modality"@en ;
+    rdfs:comment "Therapeutic modality used (CBT, EMDR, play_therapy, art_therapy)."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range xsd:string .
+
+icac-impact:sessionCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "session count"@en ;
+    rdfs:comment "Number of therapy sessions completed."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range xsd:integer .
+
+icac-impact:treatmentDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "treatment duration"@en ;
+    rdfs:comment "Duration of treatment in months."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range xsd:integer .
+
+icac-impact:treatmentOutcome rdf:type owl:DatatypeProperty ;
+    rdfs:label "treatment outcome"@en ;
+    rdfs:comment "Outcome of therapeutic intervention (successful, partially_successful, no_improvement, discontinued)."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range xsd:string .
+
+# Recovery Properties
+icac-impact:recoveryStage rdf:type owl:DatatypeProperty ;
+    rdfs:label "recovery stage"@en ;
+    rdfs:comment "Current stage of recovery (initial, progress, maintenance, relapse)."@en ;
+    rdfs:domain icac-impact:RecoveryProcess ;
+    rdfs:range xsd:string .
+
+icac-impact:recoveryTimeframe rdf:type owl:DatatypeProperty ;
+    rdfs:label "recovery timeframe"@en ;
+    rdfs:comment "Expected timeframe for recovery in months."@en ;
+    rdfs:domain icac-impact:RecoveryProcess ;
+    rdfs:range xsd:integer .
+
+icac-impact:prognosis rdf:type owl:DatatypeProperty ;
+    rdfs:label "prognosis"@en ;
+    rdfs:comment "Long-term prognosis for recovery (excellent, good, fair, poor, guarded)."@en ;
+    rdfs:domain icac-impact:RecoveryProcess ;
+    rdfs:range xsd:string .
+
+icac-impact:milestoneDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "milestone date"@en ;
+    rdfs:comment "Date when recovery milestone was achieved."@en ;
+    rdfs:domain icac-impact:RecoveryMilestone ;
+    rdfs:range xsd:dateTime .
+
+icac-impact:milestoneDescription rdf:type owl:DatatypeProperty ;
+    rdfs:label "milestone description"@en ;
+    rdfs:comment "Description of recovery milestone achieved."@en ;
+    rdfs:domain icac-impact:RecoveryMilestone ;
+    rdfs:range xsd:string .
+
+# Support Service Properties
+icac-impact:serviceType rdf:type owl:DatatypeProperty ;
+    rdfs:label "service type"@en ;
+    rdfs:comment "Type of support service (advocacy, safety, educational, legal, financial)."@en ;
+    rdfs:domain icac-impact:VictimSupport ;
+    rdfs:range xsd:string .
+
+icac-impact:serviceProvider rdf:type owl:DatatypeProperty ;
+    rdfs:label "service provider"@en ;
+    rdfs:comment "Organization or entity providing support services."@en ;
+    rdfs:domain icac-impact:VictimSupport ;
+    rdfs:range xsd:string .
+
+icac-impact:serviceDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "service duration"@en ;
+    rdfs:comment "Duration of support services in months."@en ;
+    rdfs:domain icac-impact:VictimSupport ;
+    rdfs:range xsd:integer .
+
+# Long-term Impact Properties
+icac-impact:impactArea rdf:type owl:DatatypeProperty ;
+    rdfs:label "impact area"@en ;
+    rdfs:comment "Area of life affected (education, relationships, mental_health, physical_health, social)."@en ;
+    rdfs:domain icac-impact:LongTermEffect ;
+    rdfs:range xsd:string .
+
+icac-impact:impactSeverity rdf:type owl:DatatypeProperty ;
+    rdfs:label "impact severity"@en ;
+    rdfs:comment "Severity of long-term impact (minimal, moderate, significant, severe)."@en ;
+    rdfs:domain icac-impact:LongTermEffect ;
+    rdfs:range xsd:string .
+
+icac-impact:lifeAreaAffected rdf:type owl:DatatypeProperty ;
+    rdfs:label "life area affected"@en ;
+    rdfs:comment "Specific life area affected by victimization."@en ;
+    rdfs:domain icac-impact:LongTermEffect ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# VICTIM IMPACT RELATIONSHIPS
+# =============================================================================
+
+# Assessment Relationships
+icac-impact:assessesVictim rdf:type owl:ObjectProperty ;
+    rdfs:label "assesses victim"@en ;
+    rdfs:comment "Links impact assessment to the victim being assessed."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range uco-identity:Person .
+
+icac-impact:identifiesHarm rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies harm"@en ;
+    rdfs:comment "Links assessment to psychological harm identified."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range icac-impact:PsychologicalHarm .
+
+icac-impact:documentedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "documented by"@en ;
+    rdfs:comment "Links assessment to professional who documented it."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range icac-impact:MentalHealthProfessional .
+
+# Harm and Indicator Relationships
+icac-impact:manifestsAs rdf:type owl:ObjectProperty ;
+    rdfs:label "manifests as"@en ;
+    rdfs:comment "Links psychological harm to trauma indicators it manifests as."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range icac-impact:TraumaIndicator .
+
+icac-impact:resultedFrom rdf:type owl:ObjectProperty ;
+    rdfs:label "resulted from"@en ;
+    rdfs:comment "Links psychological harm to the criminal action that caused it."@en ;
+    rdfs:domain icac-impact:PsychologicalHarm ;
+    rdfs:range uco-action:Crime .
+
+# Treatment Relationships
+icac-impact:addressesHarm rdf:type owl:ObjectProperty ;
+    rdfs:label "addresses harm"@en ;
+    rdfs:comment "Links therapeutic intervention to psychological harm it addresses."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range icac-impact:PsychologicalHarm .
+
+icac-impact:providedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "provided by"@en ;
+    rdfs:comment "Links intervention to professional who provided it."@en ;
+    rdfs:domain icac-impact:TherapeuticIntervention ;
+    rdfs:range icac-impact:MentalHealthProfessional .
+
+icac-impact:receivedTreatment rdf:type owl:ObjectProperty ;
+    rdfs:label "received treatment"@en ;
+    rdfs:comment "Links victim to therapeutic intervention received."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac-impact:TherapeuticIntervention .
+
+# Recovery Relationships
+icac-impact:partOfRecovery rdf:type owl:ObjectProperty ;
+    rdfs:label "part of recovery"@en ;
+    rdfs:comment "Links recovery milestone to overall recovery process."@en ;
+    rdfs:domain icac-impact:RecoveryMilestone ;
+    rdfs:range icac-impact:RecoveryProcess .
+
+icac-impact:facilitatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "facilitated by"@en ;
+    rdfs:comment "Links recovery to support services that facilitated it."@en ;
+    rdfs:domain icac-impact:RecoveryProcess ;
+    rdfs:range icac-impact:VictimSupport .
+
+icac-impact:impededBy rdf:type owl:ObjectProperty ;
+    rdfs:label "impeded by"@en ;
+    rdfs:comment "Links recovery to barriers that impede progress."@en ;
+    rdfs:domain icac-impact:RecoveryProcess ;
+    rdfs:range icac-impact:RecoveryBarriers .
+
+# Legal Relationships
+icac-impact:relevantToSentencing rdf:type owl:ObjectProperty ;
+    rdfs:label "relevant to sentencing"@en ;
+    rdfs:comment "Links victim impact to legal proceedings for sentencing."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range uco-action:Action .
+
+icac-impact:informsRestitution rdf:type owl:ObjectProperty ;
+    rdfs:label "informs restitution"@en ;
+    rdfs:comment "Links victim impact to restitution calculations."@en ;
+    rdfs:domain icac-impact:VictimImpactAssessment ;
+    rdfs:range uco-observable:ObservableObject . 

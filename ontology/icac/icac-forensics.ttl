@@ -1,0 +1,281 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool#> .
+@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types#> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-forensics: <https://ontology.unifiedcyberontology.org/icac/forensics#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/forensics/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Digital Forensics Ontology"@en ;
+    rdfs:comment "An ontology for representing digital forensics concepts specific to Internet Crimes Against Children investigations, extending UCO and CASE. This ontology provides forensic acquisition, chain of custody, evidence handling, and tool provenance capabilities."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/forensics/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2024-12-19"^^xsd:date ;
+    dcterms:modified "2024-12-19"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/tool> ,
+                <https://ontology.caseontology.org/case> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# FORENSIC TOOL CLASSES (extending UCO Tool)
+# =============================================================================
+
+icac-forensics:ForensicImagingTool rdf:type owl:Class ;
+    rdfs:label "Forensic Imaging Tool"@en ;
+    rdfs:comment "A tool specialized for creating forensic images of digital media using write-blocking and verification methods (e.g., FTK Imager, dd, Guymager, PALADIN)."@en ;
+    rdfs:subClassOf uco-tool:AnalyticTool .
+
+icac-forensics:MobileForensicTool rdf:type owl:Class ;
+    rdfs:label "Mobile Forensic Tool"@en ;
+    rdfs:comment "A tool specialized for mobile device forensics including logical and physical extraction (e.g., Cellebrite UFED, MSAB XRY, Oxygen Detective Suite)."@en ;
+    rdfs:subClassOf uco-tool:AnalyticTool .
+
+icac-forensics:NetworkForensicTool rdf:type owl:Class ;
+    rdfs:label "Network Forensic Tool"@en ;
+    rdfs:comment "A tool specialized for network traffic analysis and packet capture (e.g., Wireshark, NetworkMiner, Xplico)."@en ;
+    rdfs:subClassOf uco-tool:AnalyticTool .
+
+icac-forensics:MemoryForensicTool rdf:type owl:Class ;
+    rdfs:label "Memory Forensic Tool"@en ;
+    rdfs:comment "A tool specialized for analyzing volatile memory dumps (e.g., Volatility, Rekall, MAGNET RAM Capture)."@en ;
+    rdfs:subClassOf uco-tool:AnalyticTool .
+
+icac-forensics:HashingTool rdf:type owl:Class ;
+    rdfs:label "Hashing Tool"@en ;
+    rdfs:comment "A tool specialized for generating cryptographic hashes for evidence verification (e.g., hashdeep, md5deep, NIST NSRL)."@en ;
+    rdfs:subClassOf uco-tool:AnalyticTool .
+
+# =============================================================================
+# FORENSIC ACTION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-forensics:ForensicAcquisitionAction rdf:type owl:Class ;
+    rdfs:label "Forensic Acquisition Action"@en ;
+    rdfs:comment "The action of creating a forensically sound copy of digital evidence using write-blocking and verification procedures."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:ChainOfCustodyAction rdf:type owl:Class ;
+    rdfs:label "Chain of Custody Action"@en ;
+    rdfs:comment "An action that documents evidence handling, transfer, and custody maintaining legal admissibility."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:EvidenceVerificationAction rdf:type owl:Class ;
+    rdfs:label "Evidence Verification Action"@en ;
+    rdfs:comment "The action of verifying evidence integrity using cryptographic hashes and comparison methods."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:TimelineAnalysisAction rdf:type owl:Class ;
+    rdfs:label "Timeline Analysis Action"@en ;
+    rdfs:comment "The action of creating chronological sequences of digital artifacts and events for investigation analysis."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:MetadataExtractionAction rdf:type owl:Class ;
+    rdfs:label "Metadata Extraction Action"@en ;
+    rdfs:comment "The action of extracting metadata from digital artifacts including EXIF, file system timestamps, and application metadata."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# =============================================================================
+# FORENSIC ARTIFACT CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-forensics:ForensicImage rdf:type owl:Class ;
+    rdfs:label "Forensic Image"@en ;
+    rdfs:comment "A bit-for-bit copy of digital media created using forensically sound methods, maintaining evidence integrity."@en ;
+    rdfs:subClassOf uco-observable:Image .
+
+icac-forensics:RecoveredFile rdf:type owl:Class ;
+    rdfs:label "Recovered File"@en ;
+    rdfs:comment "A file recovered from deleted or unallocated space on digital media through forensic analysis techniques."@en ;
+    rdfs:subClassOf uco-observable:File .
+
+icac-forensics:MemoryDump rdf:type owl:Class ;
+    rdfs:label "Memory Dump"@en ;
+    rdfs:comment "A snapshot of volatile system memory captured for forensic analysis."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-forensics:NetworkCapture rdf:type owl:Class ;
+    rdfs:label "Network Capture"@en ;
+    rdfs:comment "A capture of network traffic packets for forensic analysis."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-forensics:CustodyDocument rdf:type owl:Class ;
+    rdfs:label "Custody Document"@en ;
+    rdfs:comment "Documentation recording the handling and transfer of evidence maintaining chain of custody."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# =============================================================================
+# FORENSIC PROCESS ROLES (extending UCO Role)
+# =============================================================================
+
+icac-forensics:ForensicExaminerRole rdf:type owl:Class ;
+    rdfs:label "Forensic Examiner Role"@en ;
+    rdfs:comment "Role of a person conducting digital forensic examination and analysis."@en ;
+    rdfs:subClassOf uco-core:Role .
+
+icac-forensics:EvidenceCustodianRole rdf:type owl:Class ;
+    rdfs:label "Evidence Custodian Role"@en ;
+    rdfs:comment "Role of a person responsible for evidence custody and security."@en ;
+    rdfs:subClassOf uco-core:Role .
+
+# =============================================================================
+# FORENSIC PROPERTIES
+# =============================================================================
+
+# Chain of Custody Properties
+icac-forensics:custodyTransferredFrom rdf:type owl:ObjectProperty ;
+    rdfs:label "custody transferred from"@en ;
+    rdfs:comment "Links a chain of custody action to the person or organization transferring custody."@en ;
+    rdfs:domain icac-forensics:ChainOfCustodyAction ;
+    rdfs:range uco-identity:Identity .
+
+icac-forensics:custodyTransferredTo rdf:type owl:ObjectProperty ;
+    rdfs:label "custody transferred to"@en ;
+    rdfs:comment "Links a chain of custody action to the person or organization receiving custody."@en ;
+    rdfs:domain icac-forensics:ChainOfCustodyAction ;
+    rdfs:range uco-identity:Identity .
+
+icac-forensics:custodyReason rdf:type owl:DatatypeProperty ;
+    rdfs:label "custody reason"@en ;
+    rdfs:comment "The reason for the custody transfer (e.g., 'forensic analysis', 'court exhibit', 'secure storage')."@en ;
+    rdfs:domain icac-forensics:ChainOfCustodyAction ;
+    rdfs:range xsd:string .
+
+# Verification Properties
+icac-forensics:verificationHash rdf:type owl:ObjectProperty ;
+    rdfs:label "verification hash"@en ;
+    rdfs:comment "Links a forensic artifact to its verification hash digest for integrity checking."@en ;
+    rdfs:range uco-types:Hash .
+
+icac-forensics:sourceHash rdf:type owl:ObjectProperty ;
+    rdfs:label "source hash"@en ;
+    rdfs:comment "Links a forensic image to the hash of its source media for verification."@en ;
+    rdfs:domain icac-forensics:ForensicImage ;
+    rdfs:range uco-types:Hash .
+
+icac-forensics:writeBlockingUsed rdf:type owl:DatatypeProperty ;
+    rdfs:label "write blocking used"@en ;
+    rdfs:comment "Indicates whether write-blocking hardware or software was used during acquisition."@en ;
+    rdfs:domain icac-forensics:ForensicAcquisitionAction ;
+    rdfs:range xsd:boolean .
+
+# Acquisition Properties
+icac-forensics:acquisitionMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "acquisition method"@en ;
+    rdfs:comment "The method used for forensic acquisition (e.g., 'physical', 'logical', 'live', 'chip-off')."@en ;
+    rdfs:domain icac-forensics:ForensicAcquisitionAction ;
+    rdfs:range xsd:string .
+
+icac-forensics:evidenceSeized rdf:type owl:ObjectProperty ;
+    rdfs:label "evidence seized"@en ;
+    rdfs:comment "Links an acquisition action to the original evidence item that was seized."@en ;
+    rdfs:domain icac-forensics:ForensicAcquisitionAction ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:forensicCopy rdf:type owl:ObjectProperty ;
+    rdfs:label "forensic copy"@en ;
+    rdfs:comment "Links an acquisition action to the forensic copy that was created."@en ;
+    rdfs:domain icac-forensics:ForensicAcquisitionAction ;
+    rdfs:range icac-forensics:ForensicImage .
+
+# Timeline Properties
+icac-forensics:timelineEvent rdf:type owl:ObjectProperty ;
+    rdfs:label "timeline event"@en ;
+    rdfs:comment "Links a timeline analysis to specific events or artifacts in chronological order."@en ;
+    rdfs:domain icac-forensics:TimelineAnalysisAction ;
+    rdfs:range uco-core:UcoObject .
+
+icac-forensics:recoveryMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "recovery method"@en ;
+    rdfs:comment "The method used to recover deleted or hidden files (e.g., 'unallocated space carving', 'file system journal')."@en ;
+    rdfs:domain icac-forensics:RecoveredFile ;
+    rdfs:range xsd:string .
+
+# Location Properties
+icac-forensics:evidenceLocation rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence location"@en ;
+    rdfs:comment "The physical or logical location where evidence was found (e.g., 'bedroom computer', 'cloud storage', 'mobile device')."@en ;
+    rdfs:range xsd:string .
+
+# Documentation Properties
+icac-forensics:forensicReport rdf:type owl:ObjectProperty ;
+    rdfs:label "forensic report"@en ;
+    rdfs:comment "Links a forensic action to its associated report or documentation."@en ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:caseExhibitNumber rdf:type owl:DatatypeProperty ;
+    rdfs:label "case exhibit number"@en ;
+    rdfs:comment "The official exhibit number assigned to evidence for legal proceedings."@en ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# SPECIALIZED DETECTION METHODS (Idaho Case Analysis)
+# =============================================================================
+
+icac-forensics:K9AssistedForensics rdf:type owl:Class ;
+    rdfs:label "K9 Assisted Forensics"@en ;
+    rdfs:comment "Forensic process enhanced by K9 detection capabilities for electronic storage devices."@en ;
+    rdfs:subClassOf icac-forensics:ForensicAcquisitionAction .
+
+icac-forensics:ElectronicStorageDeviceDetection rdf:type owl:Class ;
+    rdfs:label "Electronic Storage Device Detection"@en ;
+    rdfs:comment "Specialized detection of electronic storage devices using K9 or advanced scanning methods."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:HiddenDeviceRecovery rdf:type owl:Class ;
+    rdfs:label "Hidden Device Recovery"@en ;
+    rdfs:comment "Recovery of concealed or hidden electronic storage devices during search operations."@en ;
+    rdfs:subClassOf icac-forensics:ForensicAcquisitionAction .
+
+icac-forensics:AdvancedSearchTechnique rdf:type owl:Class ;
+    rdfs:label "Advanced Search Technique"@en ;
+    rdfs:comment "Specialized search techniques for locating digital evidence."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:DetectionDogAssist rdf:type owl:Class ;
+    rdfs:label "Detection Dog Assist"@en ;
+    rdfs:comment "Assistance provided by trained detection dogs in forensic searches."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# Specialized Detection Properties
+icac-forensics:k9AssistanceProvided rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-forensics:K9AssistedForensics ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "K9 assistance provided"@en ;
+    rdfs:comment "Whether K9 assistance was provided during forensic acquisition."@en .
+
+icac-forensics:detectionMethod rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-forensics:ElectronicStorageDeviceDetection ;
+    rdfs:range xsd:string ;
+    rdfs:label "detection method"@en ;
+    rdfs:comment "Method used for device detection (K9, manual, electronic scanning)."@en .
+
+icac-forensics:devicesRecovered rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-forensics:HiddenDeviceRecovery ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "devices recovered"@en ;
+    rdfs:comment "Number of hidden devices recovered during search."@en .
+
+icac-forensics:searchWarrantAssisted rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-forensics:DetectionDogAssist ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "search warrant assisted"@en ;
+    rdfs:comment "Whether detection dog assisted in search warrant execution."@en .
+
+icac-forensics:detectionAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-forensics:ElectronicStorageDeviceDetection ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "detection accuracy"@en ;
+    rdfs:comment "Accuracy rate of detection method (0.0-1.0)."@en . 
