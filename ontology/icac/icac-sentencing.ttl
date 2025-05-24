@@ -92,10 +92,7 @@ icac-sentencing:CSAM_Distribution rdf:type owl:Class ;
     rdfs:comment "Charge for distribution of child sexual abuse material."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
-icac-sentencing:CSAM_Production rdf:type owl:Class ;
-    rdfs:label "CSAM Production"@en ;
-    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
+icac-sentencing:CSAM_Production rdf:type owl:Class ;    rdfs:label "CSAM Production"@en ;    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .# SA JACET-inspired Mandatory Sentencing Classesicac-sentencing:MandatoryMinimumSentencing rdf:type owl:Class ;    rdfs:label "Mandatory Minimum Sentencing"@en ;    rdfs:comment "Sentencing under mandatory minimum provisions for Commonwealth child sexual abuse offenses."@en ;    rdfs:subClassOf icac-sentencing:PrisonSentence .icac-sentencing:CommonwealthChildAbuseOffense rdf:type owl:Class ;    rdfs:label "Commonwealth Child Abuse Offense"@en ;    rdfs:comment "Child abuse offense under Commonwealth law subject to mandatory minimum sentencing provisions."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .icac-sentencing:LiveStreamingOffense rdf:type owl:Class ;    rdfs:label "Live Streaming Offense"@en ;    rdfs:comment "Offense involving live streaming of child abuse, often carrying severe sentences."@en ;    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .icac-sentencing:SolicitingExplicitMaterial rdf:type owl:Class ;    rdfs:label "Soliciting Explicit Material"@en ;    rdfs:comment "Offense of soliciting sexually explicit material from children (e.g., from 10 foreign children via social media)."@en ;    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .
 
 icac-sentencing:OnlineEnticement rdf:type owl:Class ;
     rdfs:label "Online Enticement"@en ;

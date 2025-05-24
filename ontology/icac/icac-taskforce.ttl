@@ -182,22 +182,7 @@ icac-taskforce:IntelligenceSharing rdf:type owl:Class ;
     rdfs:comment "Sharing of intelligence and investigative information."@en ;
     rdfs:subClassOf icac-taskforce:ResourceSharing .
 
-# =============================================================================
-# COORDINATION MECHANISM CLASSES (extending UCO Observable)
-# =============================================================================
-
-icac-taskforce:CoordinationMechanism rdf:type owl:Class ;
-    rdfs:label "Coordination Mechanism"@en ;
-    rdfs:comment "Formal mechanism for coordinating task force activities."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-icac-taskforce:TaskForceAlliance rdf:type owl:Class ;
-    rdfs:label "Task Force Alliance"@en ;
-    rdfs:comment "Formal alliance between multiple ICAC task forces."@en ;
-    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
-
-icac-taskforce:RegionalCoordination rdf:type owl:Class ;
-    rdfs:label "Regional Coordination"@en ;
+# =============================================================================# COORDINATION MECHANISM CLASSES (extending UCO Observable)# =============================================================================icac-taskforce:CoordinationMechanism rdf:type owl:Class ;    rdfs:label "Coordination Mechanism"@en ;    rdfs:comment "Formal mechanism for coordinating task force activities."@en ;    rdfs:subClassOf uco-observable:ObservableObject .icac-taskforce:TaskForceAlliance rdf:type owl:Class ;    rdfs:label "Task Force Alliance"@en ;    rdfs:comment "Formal alliance between multiple ICAC task forces."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .# SA JACET-inspired Joint Operationsicac-taskforce:JointAntiChildExploitationTeam rdf:type owl:Class ;    rdfs:label "Joint Anti Child Exploitation Team"@en ;    rdfs:comment "Joint taskforce between federal and state agencies for coordinated investigative response (based on SA JACET model)."@en ;    rdfs:subClassOf icac-taskforce:ICACtaskForce .icac-taskforce:CoLocatedTaskForce rdf:type owl:Class ;    rdfs:label "Co-Located Task Force"@en ;    rdfs:comment "Task force with co-located federal and state investigators enabling rapid intelligence sharing."@en ;    rdfs:subClassOf icac-taskforce:JointAntiChildExploitationTeam .icac-taskforce:StateFederalPartnership rdf:type owl:Class ;    rdfs:label "State Federal Partnership"@en ;    rdfs:comment "Partnership between state police and federal agencies (e.g., AFP) for child exploitation investigations."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .icac-taskforce:InternationalTaskForceNetwork rdf:type owl:Class ;    rdfs:label "International Task Force Network"@en ;    rdfs:comment "Network of JACET teams across states and territories connected to international partners."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .icac-taskforce:RegionalCoordination rdf:type owl:Class ;    rdfs:label "Regional Coordination"@en ;
     rdfs:comment "Coordination mechanism for regional task force cooperation."@en ;
     rdfs:subClassOf icac-taskforce:CoordinationMechanism .
 

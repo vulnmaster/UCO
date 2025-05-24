@@ -70,10 +70,7 @@ icac-international:GlobalCaseTracking rdf:type owl:Class ;
     rdfs:label "Global Case Tracking"@en ;
     rdfs:comment "System for tracking cases across multiple jurisdictions."@en .
 
-icac-international:InternationalReferral rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "International Referral"@en ;
-    rdfs:comment "Referral of cases or information to international partners."@en .
+icac-international:InternationalReferral rdf:type owl:Class ;    rdfs:subClassOf uco-action:Action ;    rdfs:label "International Referral"@en ;    rdfs:comment "Referral of cases or information to international partners."@en .# SA JACET-inspired Live Streaming Operations  icac-international:LiveStreamingInvestigation rdf:type owl:Class ;    rdfs:subClassOf icac-international:CrossBorderInvestigation ;    rdfs:label "Live Streaming Investigation"@en ;    rdfs:comment "Investigation involving live streaming of child abuse across international borders (e.g., Philippines operations)."@en .icac-international:DistanceChildAbuse rdf:type owl:Class ;    rdfs:subClassOf icac-international:CrossBorderOperation ;    rdfs:label "Distance Child Abuse"@en ;    rdfs:comment "Child abuse ordered and instructed remotely across international borders via online platforms."@en .icac-international:InstructedAbuseOperation rdf:type owl:Class ;    rdfs:subClassOf icac-international:DistanceChildAbuse ;    rdfs:label "Instructed Abuse Operation"@en ;    rdfs:comment "Investigation of suspects ordering and instructing live child abuse viewed online from another country."@en .icac-international:OverseasVictimCoordination rdf:type owl:Class ;    rdfs:subClassOf icac-international:InternationalReferral ;    rdfs:label "Overseas Victim Coordination"@en ;    rdfs:comment "Coordination for identifying and assisting child victims located in foreign countries."@en .
 
 # =============================================================================
 # INFORMATION SHARING MECHANISMS
