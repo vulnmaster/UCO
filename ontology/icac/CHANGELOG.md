@@ -49,6 +49,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 8-week implementation timeline to achieve 95%+ coverage
 - Dedicated resource allocation for P0 critical issue
 
+### Added - Gary Simon Teacher Case Enhancements (2024-12-19)
+
+**Educational Exploitation Module Enhancements**:
+- **New Institution Types**: Added `IntermediateSchool` and `MiddleSchool` classes for grades 6-8 contexts
+- **New Educator Roles**: Added `MathTeacherRole` and `GymTeacherRole` for subject-specific and physical education contexts
+- **Classroom-Based Exploitation**: New classes for `ClassroomBasedExploitation`, `AcademicActivityExploitation`, `ImmediatePhysicalContactExploitation`
+- **Written Harassment Framework**: Complete framework for `WrittenHarassment`, `AssignmentHarassment`, `DegradingWrittenComments`, `AcademicIntimidation`
+- **Classroom Exploitation Contexts**: `AssignmentCompletionExploitation`, `TestTakingExploitation`, `OneOnOneAcademicExploitation`, `AfterHoursClassroomExploitation`
+- **Physical Contact Patterns**: `ImmediatePhysicalContact`, `OpportunisticTouching`, `BreastTouching`, `ForcibleTouching`
+- **School Staff Reporting**: `CounselorReporting`, `GymTeacherReporting`, `PrincipalNotification`, `PoliceNotification`, `VictimDisclosureToStaff`
+- **Enhanced Vulnerability Factors**: `ClassroomIsolationVulnerability`, `AcademicPowerVulnerability`
+- **Intermediate School Targeting**: `IntermediateSchoolTargeting` for younger adolescent victims (ages 11-14)
+- **Evidence Types**: `WrittenHarassmentEvidence`, `WitnessTestimonyEvidence` for classroom-based incidents
+- **Legal Charges**: `SexualAbuseFirstDegree`, `SexualAbuseSecondDegree`, `ForcibleTouchingCharge` with degree specifications
+
+**New Properties**:
+- Institution properties: `gradeRange`, `schoolAddress`, `educatorAge`, `yearsOfExperience`
+- Harassment properties: `harassmentContent`, `harassmentMedium`, `harassmentFrequency`, `degradationLevel`
+- Classroom context properties: `classroomNumber`, `academicActivity`, `timeOfDay`, `studentsPresent`, `isolationLevel`
+- Physical contact properties: `contactType`, `contactDuration`, `contactFrequency`, `bodyPartTouched`, `forceLevel`
+- Reporting properties: `reportingDelay`, `reportingStaffRole`, `disclosureMethod`, `mandatoryReportingTriggered`, `policeResponseTime`
+- Evidence properties: `writtenContent`, `assignmentType`, `evidenceLocation`
+- Legal properties: `chargeDegree`, `maximumSentence`, `bailAmount`, `bondAmount`
+
+**New Relationships**:
+- Classroom relationships: `takesPlaceIn`, `duringActivity`, `exploitsIsolation`, `leveragesAcademicPower`
+- Harassment relationships: `involvesWrittenHarassment`, `writtenOn`, `degradesVictim`, `intimidatesStudent`
+- Physical contact relationships: `involvesPhysicalContact`, `touchesVictim`, `forciblyTouches`
+- Reporting relationships: `reportsTo`, `receivesReport`, `notifiesPrincipal`, `triggersPoliceNotification`, `activatesMandatoryReporting`
+- Evidence relationships: `documentsHarassment`, `witnessesExploitation`, `corroboratesAccount`
+
+**SHACL Validation Enhancements**:
+- 25+ new validation shapes for classroom contexts, written harassment, physical contact, and reporting mechanisms
+- Cross-validation rules for classroom context consistency, reporting timeliness, and physical contact severity
+- Business rule validation for mandatory reporting requirements and charge degree consistency
+
+**Example Implementation**:
+- Complete Gary Simon teacher case example (`gary-simon-teacher-case-example.ttl`) with 285 triples
+- Demonstrates all new classes and properties in realistic case scenario
+- Models I.S. 218 intermediate school context with math teacher exploitation
+- Shows written harassment on assignments, immediate breast touching, and school staff reporting chain
+
+**Based on**: Brooklyn DA press release "Teacher Arraigned on Indictment Charging Him with Sexual Abuse of Two Students" (February 14, 2024)
+
 ## [1.7.0] - 2025-01-28
 
 ### Added - October 2024 Brooklyn Athletic Coaching Exploitation Case Enhancements

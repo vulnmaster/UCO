@@ -190,6 +190,33 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 - **icac-specialized-units.ttl** - Specialized Units & Advanced Capabilities
 - **icac-sex-offender-registry.ttl** - Sex Offender Registry Management
 
+## Educational Exploitation Module (`icac-educational-exploitation.ttl`)
+
+**Purpose**: Models child sexual exploitation within educational institutions, including schools, colleges, and educational programs.
+
+**Key Features**:
+- **Educational Institution Types**: Independent schools, public schools, private schools, elite institutions, intermediate schools, middle schools
+- **Educator Roles**: Teachers, math teachers, substitute teachers, administrators, counselors, coaches, gym teachers
+- **Exploitation Patterns**: Teacher-student exploitation, cross-institutional exploitation, position of trust exploitation
+- **Classroom-Based Exploitation**: Exploitation occurring within classroom settings during academic activities
+- **Written Harassment**: Harassment through written comments on student work and assignments
+- **Physical Contact Patterns**: Immediate physical contact, opportunistic touching, breast touching, forcible touching
+- **Academic Activity Exploitation**: Exploitation during assignments, tests, tutoring, and one-on-one instruction
+- **School Staff Reporting**: Counselor reporting, gym teacher reporting, principal notification, police notification
+- **Victim Targeting**: Elite school targeting, multiple institution targeting, age-specific targeting, intermediate school targeting
+- **Vulnerability Factors**: Trust-based, authority-based, access-based, classroom isolation, academic power vulnerabilities
+- **Digital Impersonation**: Peer impersonation, student impersonation, age deception, multiple account deception
+- **Evidence Types**: IP address evidence, digital communication evidence, victim accounts, institutional records, written harassment evidence
+- **Legal Charges**: Sexual abuse (first/second degree), forcible touching, endangering welfare of child, sex offender registration
+
+**Real-World Applications**:
+- Gary Simon teacher case (I.S. 218 Brooklyn) - classroom-based exploitation with written harassment and immediate physical contact
+- Modeling of intermediate school contexts and younger adolescent targeting
+- Academic authority exploitation and classroom isolation vulnerabilities
+- School staff reporting chains and mandatory reporting activation
+
+**SHACL Validation**: Comprehensive validation shapes ensure data integrity and business rule compliance.
+
 ## Key Features
 
 ### Brooklyn DA "Blue Cheese" Sex Trafficking Case Enhancements (Version 1.8.0) **NEW**
