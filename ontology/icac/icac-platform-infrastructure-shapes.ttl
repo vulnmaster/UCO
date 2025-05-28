@@ -1,0 +1,734 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-infrastructure: <https://ontology.unifiedcyberontology.org/icac/infrastructure#> .
+
+# =============================================================================
+# PLATFORM INFRASTRUCTURE SHAPES
+# =============================================================================
+
+icac-infrastructure:PlatformInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PlatformInfrastructure ;
+    rdfs:label "Platform Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for platform infrastructure instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 200 ;
+        sh:message "Infrastructure name should be 2-200 characters when specified."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 1000 ;
+        sh:message "Infrastructure description should be 10-1000 characters when specified."@en
+    ] .
+
+icac-infrastructure:ServerInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:ServerInfrastructure ;
+    rdfs:label "Server Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for server infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:serverCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Server count must be between 1 and 10000 when specified."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:cloudPlatform ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "AWS" "Azure" "GCP" "private_cloud" "dedicated_servers" "hybrid" "unknown" ) ;
+        sh:message "Cloud platform must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:ContentDeliveryNetworkShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:ContentDeliveryNetwork ;
+    rdfs:label "Content Delivery Network Shape"@en ;
+    rdfs:comment "Validation shape for CDN instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:bandwidthCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.1 ;
+        sh:maxInclusive 10000.0 ;
+        sh:message "Bandwidth capacity must be between 0.1 and 10000 Gbps."@en
+    ] .
+
+icac-infrastructure:DatabaseInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:DatabaseInfrastructure ;
+    rdfs:label "Database Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for database infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:storageCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.1 ;
+        sh:maxInclusive 100000.0 ;
+        sh:message "Storage capacity must be between 0.1 and 100000 terabytes."@en
+    ] .
+
+icac-infrastructure:NetworkInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:NetworkInfrastructure ;
+    rdfs:label "Network Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for network infrastructure instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Network infrastructure name should be 2-100 characters when specified."@en
+    ] .
+
+# =============================================================================
+# PAYMENT AND MONETIZATION SHAPES
+# =============================================================================
+
+icac-infrastructure:PaymentProcessingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PaymentProcessing ;
+    rdfs:label "Payment Processing Shape"@en ;
+    rdfs:comment "Validation shape for payment processing instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:paymentMethods ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 10 ;
+        sh:in ( "credit_cards" "cryptocurrency" "digital_wallets" "bank_transfers" "prepaid_cards" "gift_cards" "cash_equivalents" ) ;
+        sh:message "Payment methods must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:monthlyRevenue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100000000.0 ;
+        sh:message "Monthly revenue must be between 0 and 100 million USD."@en
+    ] .
+
+icac-infrastructure:CryptocurrencyInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:CryptocurrencyInfrastructure ;
+    rdfs:label "Cryptocurrency Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for cryptocurrency infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:cryptoCurrencyTypes ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 10 ;
+        sh:in ( "Bitcoin" "Monero" "Ethereum" "Litecoin" "Zcash" "Dash" "Ripple" "Tether" "other" ) ;
+        sh:message "Cryptocurrency types must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:SubscriptionManagementShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:SubscriptionManagement ;
+    rdfs:label "Subscription Management Shape"@en ;
+    rdfs:comment "Validation shape for subscription management instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:subscriptionTiers ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 20 ;
+        sh:message "Subscription tiers must be between 1 and 20."@en
+    ] .
+
+icac-infrastructure:FinancialObfuscationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:FinancialObfuscation ;
+    rdfs:label "Financial Obfuscation Shape"@en ;
+    rdfs:comment "Validation shape for financial obfuscation instances."@en ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 500 ;
+        sh:message "Financial obfuscation description should be 10-500 characters when specified."@en
+    ] .
+
+# =============================================================================
+# HOSTING AND DOMAIN SHAPES
+# =============================================================================
+
+icac-infrastructure:HostingProviderShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:HostingProvider ;
+    rdfs:label "Hosting Provider Shape"@en ;
+    rdfs:comment "Validation shape for hosting provider instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 200 ;
+        sh:message "Hosting provider must have a name (2-200 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:hostingProvider ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 200 ;
+        sh:message "Hosting provider name should be 2-200 characters when specified."@en
+    ] .
+
+icac-infrastructure:DomainInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:DomainInfrastructure ;
+    rdfs:label "Domain Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for domain infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:domainCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Domain count must be between 1 and 10000 when specified."@en
+    ] .
+
+icac-infrastructure:ProxyInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:ProxyInfrastructure ;
+    rdfs:label "Proxy Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for proxy infrastructure instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Proxy infrastructure name should be 2-100 characters when specified."@en
+    ] .
+
+icac-infrastructure:LoadBalancerShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:LoadBalancer ;
+    rdfs:label "Load Balancer Shape"@en ;
+    rdfs:comment "Validation shape for load balancer instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Load balancer name should be 2-100 characters when specified."@en
+    ] .
+
+# =============================================================================
+# SECURITY AND OBFUSCATION SHAPES
+# =============================================================================
+
+icac-infrastructure:SecurityInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:SecurityInfrastructure ;
+    rdfs:label "Security Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for security infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:obfuscationMethods ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 10 ;
+        sh:in ( "proxies" "VPNs" "Tor" "domain_fronting" "CDN_masking" "traffic_obfuscation" "protocol_tunneling" ) ;
+        sh:message "Obfuscation methods must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:EncryptionInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:EncryptionInfrastructure ;
+    rdfs:label "Encryption Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for encryption infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:encryptionStrength ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "AES-128" "AES-256" "RSA-2048" "RSA-4096" "ChaCha20" "Blowfish" "3DES" "custom" ) ;
+        sh:message "Encryption strength must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:AnonymityInfrastructureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:AnonymityInfrastructure ;
+    rdfs:label "Anonymity Infrastructure Shape"@en ;
+    rdfs:comment "Validation shape for anonymity infrastructure instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:anonymityLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "basic" "enhanced" "military-grade" "custom" ) ;
+        sh:message "Anonymity level must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:GeographicDistributionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:GeographicDistribution ;
+    rdfs:label "Geographic Distribution Shape"@en ;
+    rdfs:comment "Validation shape for geographic distribution instances."@en ;
+    sh:property [
+        sh:path icac-infrastructure:geographicLocations ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 200 ;
+        sh:message "Geographic locations must be between 1 and 200 when specified."@en
+    ] .
+
+# =============================================================================
+# INFRASTRUCTURE TAKEDOWN SHAPES
+# =============================================================================
+
+icac-infrastructure:InfrastructureTakedownShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureTakedown ;
+    rdfs:label "Infrastructure Takedown Shape"@en ;
+    rdfs:comment "Validation shape for infrastructure takedown instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Infrastructure takedown must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:endTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Infrastructure takedown may specify end time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:takedownDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.1 ;
+        sh:maxInclusive 8760.0 ;
+        sh:message "Takedown duration must be between 0.1 and 8760 hours (1 year)."@en
+    ] .
+
+icac-infrastructure:ServerSeizureShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:ServerSeizure ;
+    rdfs:label "Server Seizure Shape"@en ;
+    rdfs:comment "Validation shape for server seizure instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Server seizure must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:serversSeized ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Servers seized must be between 1 and 10000 when specified."@en
+    ] .
+
+icac-infrastructure:DomainSinkholeingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:DomainSinkholing ;
+    rdfs:label "Domain Sinkholing Shape"@en ;
+    rdfs:comment "Validation shape for domain sinkholing instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Domain sinkholing must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:domainsSinkholed ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Domains sinkholed must be between 1 and 10000 when specified."@en
+    ] .
+
+icac-infrastructure:AccountFreezingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:AccountFreezing ;
+    rdfs:label "Account Freezing Shape"@en ;
+    rdfs:comment "Validation shape for account freezing instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Account freezing must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:accountsFrozen ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 100000 ;
+        sh:message "Accounts frozen must be between 1 and 100000 when specified."@en
+    ] .
+
+icac-infrastructure:DataMirrorCreationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:DataMirrorCreation ;
+    rdfs:label "Data Mirror Creation Shape"@en ;
+    rdfs:comment "Validation shape for data mirror creation instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Data mirror creation must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:dataVolumeMirrored ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.001 ;
+        sh:maxInclusive 100000.0 ;
+        sh:message "Data volume mirrored must be between 0.001 and 100000 terabytes."@en
+    ] .
+
+# =============================================================================
+# INFRASTRUCTURE ANALYSIS SHAPES
+# =============================================================================
+
+icac-infrastructure:InfrastructureAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureAnalysis ;
+    rdfs:label "Infrastructure Analysis Shape"@en ;
+    rdfs:comment "Validation shape for infrastructure analysis instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Infrastructure analysis must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path uco-action:performer ;
+        sh:class uco-identity:Person ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Infrastructure analysis must specify performing analyst."@en
+    ] .
+
+icac-infrastructure:NetworkTopologyAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:NetworkTopologyAnalysis ;
+    rdfs:label "Network Topology Analysis Shape"@en ;
+    rdfs:comment "Validation shape for network topology analysis instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Network topology analysis must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:networkComplexity ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "simple" "moderate" "complex" "highly_complex" ) ;
+        sh:message "Network complexity must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:FinancialFlowAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:FinancialFlowAnalysis ;
+    rdfs:label "Financial Flow Analysis Shape"@en ;
+    rdfs:comment "Validation shape for financial flow analysis instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Financial flow analysis must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:financialComplexity ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "basic" "intermediate" "sophisticated" "highly_sophisticated" ) ;
+        sh:message "Financial complexity must be from the allowed list."@en
+    ] .
+
+icac-infrastructure:UserAccessPatternAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:UserAccessPatternAnalysis ;
+    rdfs:label "User Access Pattern Analysis Shape"@en ;
+    rdfs:comment "Validation shape for user access pattern analysis instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "User access pattern analysis must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-infrastructure:userGeographicSpread ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 200 ;
+        sh:message "User geographic spread must be between 1 and 200 countries."@en
+    ] .
+
+# =============================================================================
+# CROSS-REFERENCE VALIDATION SHAPES
+# =============================================================================
+
+icac-infrastructure:InfrastructureHostingCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PlatformInfrastructure ;
+    rdfs:label "Infrastructure Hosting Cross Reference Shape"@en ;
+    rdfs:comment "Validates that platform infrastructure has hosting relationships."@en ;
+    sh:sparql [
+        sh:message "Platform infrastructure should have hosting provider relationships."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:PlatformInfrastructure .
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:hostedBy ?provider .
+                    ?provider a icac-infrastructure:HostingProvider .
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:TakedownTargetCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureTakedown ;
+    rdfs:label "Takedown Target Cross Reference Shape"@en ;
+    rdfs:comment "Validates that takedown operations target infrastructure."@en ;
+    sh:sparql [
+        sh:message "Infrastructure takedown should target specific infrastructure."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:InfrastructureTakedown .
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:targetsInfrastructure ?infrastructure .
+                    ?infrastructure a icac-infrastructure:PlatformInfrastructure .
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:AnalysisSubjectCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureAnalysis ;
+    rdfs:label "Analysis Subject Cross Reference Shape"@en ;
+    rdfs:comment "Validates that infrastructure analysis has subject infrastructure."@en ;
+    sh:sparql [
+        sh:message "Infrastructure analysis should analyze specific infrastructure."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:InfrastructureAnalysis .
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:analysesInfrastructure ?infrastructure .
+                    ?infrastructure a icac-infrastructure:PlatformInfrastructure .
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:PaymentSystemCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PlatformInfrastructure ;
+    rdfs:label "Payment System Cross Reference Shape"@en ;
+    rdfs:comment "Validates payment system relationships for monetized platforms."@en ;
+    sh:sparql [
+        sh:message "Monetized platform infrastructure should have payment processing systems."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:PlatformInfrastructure .
+                ?payment icac-infrastructure:monthlyRevenue ?revenue .
+                FILTER (?revenue > 0)
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:usesPaymentSystem ?payment .
+                }
+            }
+        """
+    ] .
+
+# =============================================================================
+# TEMPORAL VALIDATION SHAPES
+# =============================================================================
+
+icac-infrastructure:TemporalValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureTakedown ,
+                   icac-infrastructure:ServerSeizure ,
+                   icac-infrastructure:DomainSinkholing ,
+                   icac-infrastructure:AccountFreezing ,
+                   icac-infrastructure:DataMirrorCreation ,
+                   icac-infrastructure:InfrastructureAnalysis ,
+                   icac-infrastructure:NetworkTopologyAnalysis ,
+                   icac-infrastructure:FinancialFlowAnalysis ,
+                   icac-infrastructure:UserAccessPatternAnalysis ;
+    rdfs:label "Temporal Validation Shape"@en ;
+    rdfs:comment "Validates temporal consistency for infrastructure operations."@en ;
+    sh:sparql [
+        sh:message "Start time must be before end time when both are specified."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this uco-core:startTime ?start ;
+                      uco-core:endTime ?end .
+                FILTER (?start >= ?end)
+            }
+        """
+    ] .
+
+icac-infrastructure:TakedownSequenceValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureAnalysis ;
+    rdfs:label "Takedown Sequence Validation Shape"@en ;
+    rdfs:comment "Validates that infrastructure analysis occurs after takedown operations."@en ;
+    sh:sparql [
+        sh:message "Infrastructure analysis should occur after takedown operations when analyzing seized infrastructure."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:InfrastructureAnalysis ;
+                      uco-core:startTime ?analysisTime ;
+                      icac-infrastructure:analysesInfrastructure ?infrastructure .
+                ?takedown icac-infrastructure:targetsInfrastructure ?infrastructure ;
+                          uco-core:startTime ?takedownTime .
+                FILTER (?analysisTime < ?takedownTime)
+            }
+        """
+    ] .
+
+# =============================================================================
+# DATA QUALITY SHAPES
+# =============================================================================
+
+icac-infrastructure:DataQualityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PlatformInfrastructure ,
+                   icac-infrastructure:PaymentProcessing ,
+                   icac-infrastructure:HostingProvider ,
+                   icac-infrastructure:InfrastructureTakedown ,
+                   icac-infrastructure:InfrastructureAnalysis ;
+    rdfs:label "Data Quality Shape"@en ;
+    rdfs:comment "Validates data quality for infrastructure entities."@en ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Creation time should be specified when available."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:modifiedTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Modification time should be specified when available."@en
+    ] .
+
+icac-infrastructure:CapacityValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:ServerInfrastructure ,
+                   icac-infrastructure:ContentDeliveryNetwork ,
+                   icac-infrastructure:DatabaseInfrastructure ;
+    rdfs:label "Capacity Validation Shape"@en ;
+    rdfs:comment "Validates infrastructure capacity specifications."@en ;
+    sh:sparql [
+        sh:message "Large-scale infrastructure should have appropriate capacity specifications."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a ?infraType .
+                FILTER (?infraType IN (
+                    icac-infrastructure:ServerInfrastructure,
+                    icac-infrastructure:ContentDeliveryNetwork,
+                    icac-infrastructure:DatabaseInfrastructure
+                ))
+                FILTER NOT EXISTS {
+                    { $this icac-infrastructure:serverCount ?count } UNION
+                    { $this icac-infrastructure:bandwidthCapacity ?bandwidth } UNION
+                    { $this icac-infrastructure:storageCapacity ?storage }
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:SecurityConsistencyValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:SecurityInfrastructure ;
+    rdfs:label "Security Consistency Validation Shape"@en ;
+    rdfs:comment "Validates security infrastructure consistency."@en ;
+    sh:sparql [
+        sh:message "High-anonymity infrastructure should use appropriate obfuscation methods."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-infrastructure:AnonymityInfrastructure ;
+                      icac-infrastructure:anonymityLevel "military-grade" .
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:obfuscationMethods ?method .
+                    FILTER (?method IN ("Tor", "VPNs", "domain_fronting"))
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:FinancialConsistencyValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:PaymentProcessing ;
+    rdfs:label "Financial Consistency Validation Shape"@en ;
+    rdfs:comment "Validates financial processing consistency."@en ;
+    sh:sparql [
+        sh:message "High-revenue platforms should have multiple payment methods."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-infrastructure:monthlyRevenue ?revenue .
+                FILTER (?revenue > 100000)
+                FILTER NOT EXISTS {
+                    $this icac-infrastructure:paymentMethods ?method1 .
+                    $this icac-infrastructure:paymentMethods ?method2 .
+                    FILTER (?method1 != ?method2)
+                }
+            }
+        """
+    ] .
+
+icac-infrastructure:TakedownEffectivenessValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-infrastructure:InfrastructureTakedown ;
+    rdfs:label "Takedown Effectiveness Validation Shape"@en ;
+    rdfs:comment "Validates takedown operation effectiveness metrics."@en ;
+    sh:sparql [
+        sh:message "Large-scale takedown operations should have significant seizure metrics."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-infrastructure:takedownDuration ?duration .
+                FILTER (?duration > 24)
+                FILTER NOT EXISTS {
+                    { ?seizure a icac-infrastructure:ServerSeizure ;
+                              icac-infrastructure:serversSeized ?servers .
+                      FILTER (?servers > 10) } UNION
+                    { ?sinkhole a icac-infrastructure:DomainSinkholing ;
+                                icac-infrastructure:domainsSinkholed ?domains .
+                      FILTER (?domains > 5) }
+                }
+            }
+        """
+    ] . 

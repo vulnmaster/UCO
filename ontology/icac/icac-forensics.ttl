@@ -275,4 +275,594 @@ icac-forensics:detectionAccuracy rdf:type owl:DatatypeProperty ;
     rdfs:domain icac-forensics:ElectronicStorageDeviceDetection ;
     rdfs:range xsd:decimal ;
     rdfs:label "detection accuracy"@en ;
-    rdfs:comment "Accuracy rate of detection method (0.0-1.0)."@en . 
+    rdfs:comment "Accuracy rate of detection method (0.0-1.0)."@en .
+
+# =============================================================================
+# LARGE-SCALE FORENSIC ANALYSIS (Kidflix/Europol Framework)
+# =============================================================================
+
+icac-forensics:MassDigitalEvidenceProcessing rdf:type owl:Class ;
+    rdfs:label "Mass Digital Evidence Processing"@en ;
+    rdfs:comment "Processing of massive volumes of digital evidence requiring specialized automated tools and distributed processing systems (terabytes of data from platforms with millions of users)."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:AutomatedContentAnalysis rdf:type owl:Class ;
+    rdfs:label "Automated Content Analysis"@en ;
+    rdfs:comment "Automated analysis of large volumes of content using machine learning and AI for rapid classification and triage."@en ;
+    rdfs:subClassOf icac-forensics:MassDigitalEvidenceProcessing .
+
+icac-forensics:DistributedForensicProcessing rdf:type owl:Class ;
+    rdfs:label "Distributed Forensic Processing"@en ;
+    rdfs:comment "Forensic processing distributed across multiple systems and locations for handling massive evidence volumes."@en ;
+    rdfs:subClassOf icac-forensics:MassDigitalEvidenceProcessing .
+
+icac-forensics:EvidenceTriageSystem rdf:type owl:Class ;
+    rdfs:label "Evidence Triage System"@en ;
+    rdfs:comment "Automated system for triaging massive evidence volumes to prioritize high-value targets and critical cases."@en ;
+    rdfs:subClassOf icac-forensics:AutomatedContentAnalysis .
+
+icac-forensics:UserBehaviorForensics rdf:type owl:Class ;
+    rdfs:label "User Behavior Forensics"@en ;
+    rdfs:comment "Forensic analysis of user behavior patterns across massive user databases for investigation prioritization."@en ;
+    rdfs:subClassOf icac-forensics:MassDigitalEvidenceProcessing .
+
+icac-forensics:ContentCorrelationAnalysis rdf:type owl:Class ;
+    rdfs:label "Content Correlation Analysis"@en ;
+    rdfs:comment "Analysis correlating content across multiple users and platforms for identifying networks and relationships."@en ;
+    rdfs:subClassOf icac-forensics:AutomatedContentAnalysis .
+
+icac-forensics:ScalableHashAnalysis rdf:type owl:Class ;
+    rdfs:label "Scalable Hash Analysis"@en ;
+    rdfs:comment "Hash analysis systems capable of processing millions of files against large databases of known illegal content."@en ;
+    rdfs:subClassOf icac-forensics:AutomatedContentAnalysis .
+
+icac-forensics:InternationalEvidenceProcessing rdf:type owl:Class ;
+    rdfs:label "International Evidence Processing"@en ;
+    rdfs:comment "Processing of evidence collected from international operations requiring coordination across multiple forensic labs."@en ;
+    rdfs:subClassOf icac-forensics:MassDigitalEvidenceProcessing .
+
+# =============================================================================
+# LARGE-SCALE FORENSIC PROPERTIES
+# =============================================================================
+
+# Volume and Scale Properties
+icac-forensics:evidenceVolumeTerabytes rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence volume terabytes"@en ;
+    rdfs:comment "Total volume of evidence in terabytes requiring processing."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:filesProcessedMillions rdf:type owl:DatatypeProperty ;
+    rdfs:label "files processed millions"@en ;
+    rdfs:comment "Number of files processed in millions for large-scale operations."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:userAccountsAnalyzed rdf:type owl:DatatypeProperty ;
+    rdfs:label "user accounts analyzed"@en ;
+    rdfs:comment "Number of user accounts analyzed in mass processing (nearly 2 million for Kidflix operation)."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:processingTimeframeDays rdf:type owl:DatatypeProperty ;
+    rdfs:label "processing timeframe days"@en ;
+    rdfs:comment "Timeframe required for processing massive evidence volumes in days."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Automation and Efficiency Properties
+icac-forensics:automationPercentage rdf:type owl:DatatypeProperty ;
+    rdfs:label "automation percentage"@en ;
+    rdfs:comment "Percentage of processing performed through automated analysis."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:triageAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "triage accuracy"@en ;
+    rdfs:comment "Accuracy rate of automated triage system (0.0-1.0)."@en ;
+    rdfs:domain icac-forensics:EvidenceTriageSystem ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:priorityClassification rdf:type owl:DatatypeProperty ;
+    rdfs:label "priority classification"@en ;
+    rdfs:comment "Priority classification assigned by triage system (critical, high, medium, low)."@en ;
+    rdfs:domain icac-forensics:EvidenceTriageSystem ;
+    rdfs:range xsd:string .
+
+icac-forensics:processingSpeed rdf:type owl:DatatypeProperty ;
+    rdfs:label "processing speed"@en ;
+    rdfs:comment "Processing speed in files per hour for automated systems."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range xsd:decimal .
+
+# Hash Analysis Properties
+icac-forensics:hashDatabaseSize rdf:type owl:DatatypeProperty ;
+    rdfs:label "hash database size"@en ;
+    rdfs:comment "Size of hash database used for comparison in millions of entries."@en ;
+    rdfs:domain icac-forensics:ScalableHashAnalysis ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:hashMatchesFound rdf:type owl:DatatypeProperty ;
+    rdfs:label "hash matches found"@en ;
+    rdfs:comment "Number of hash matches found against known illegal content databases."@en ;
+    rdfs:domain icac-forensics:ScalableHashAnalysis ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:falsePositiveRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "false positive rate"@en ;
+    rdfs:comment "False positive rate for automated content analysis (0.0-1.0)."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range xsd:decimal .
+
+# Distributed Processing Properties
+icac-forensics:processingNodes rdf:type owl:DatatypeProperty ;
+    rdfs:label "processing nodes"@en ;
+    rdfs:comment "Number of processing nodes used in distributed forensic processing."@en ;
+    rdfs:domain icac-forensics:DistributedForensicProcessing ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:geographicDistribution rdf:type owl:DatatypeProperty ;
+    rdfs:label "geographic distribution"@en ;
+    rdfs:comment "Geographic distribution of processing nodes (countries involved)."@en ;
+    rdfs:domain icac-forensics:DistributedForensicProcessing ;
+    rdfs:range xsd:string .
+
+icac-forensics:parallelProcessingEnabled rdf:type owl:DatatypeProperty ;
+    rdfs:label "parallel processing enabled"@en ;
+    rdfs:comment "Whether parallel processing capabilities are enabled."@en ;
+    rdfs:domain icac-forensics:DistributedForensicProcessing ;
+    rdfs:range xsd:boolean .
+
+# International Coordination Properties
+icac-forensics:forensicLabsInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:label "forensic labs involved"@en ;
+    rdfs:comment "Number of forensic laboratories involved in international evidence processing."@en ;
+    rdfs:domain icac-forensics:InternationalEvidenceProcessing ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:crossBorderDataSharing rdf:type owl:DatatypeProperty ;
+    rdfs:label "cross-border data sharing"@en ;
+    rdfs:comment "Whether cross-border data sharing protocols are enabled."@en ;
+    rdfs:domain icac-forensics:InternationalEvidenceProcessing ;
+    rdfs:range xsd:boolean .
+
+icac-forensics:standardizedProcessing rdf:type owl:DatatypeProperty ;
+    rdfs:label "standardized processing"@en ;
+    rdfs:comment "Whether standardized international processing protocols are used."@en ;
+    rdfs:domain icac-forensics:InternationalEvidenceProcessing ;
+    rdfs:range xsd:boolean .
+
+# User Behavior Analysis Properties
+icac-forensics:behaviorPatternsIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:label "behavior patterns identified"@en ;
+    rdfs:comment "Number of distinct behavior patterns identified in user analysis."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:riskLevelsAssigned rdf:type owl:DatatypeProperty ;
+    rdfs:label "risk levels assigned"@en ;
+    rdfs:comment "Number of users assigned risk levels through behavioral analysis."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:correlationStrength rdf:type owl:DatatypeProperty ;
+    rdfs:label "correlation strength"@en ;
+    rdfs:comment "Strength of content correlation found (weak, moderate, strong, very_strong)."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range xsd:string .
+
+icac-forensics:networkConnectionsFound rdf:type owl:DatatypeProperty ;
+    rdfs:label "network connections found"@en ;
+    rdfs:comment "Number of network connections identified through content correlation."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# =============================================================================
+# LARGE-SCALE FORENSIC RELATIONSHIPS
+# =============================================================================
+
+# Processing Relationships
+icac-forensics:processesEvidence rdf:type owl:ObjectProperty ;
+    rdfs:label "processes evidence"@en ;
+    rdfs:comment "Links mass processing system to evidence being processed."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:utilisesSystem rdf:type owl:ObjectProperty ;
+    rdfs:label "utilises system"@en ;
+    rdfs:comment "Links processing action to automated systems used."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:AutomatedContentAnalysis .
+
+icac-forensics:distributesProcessing rdf:type owl:ObjectProperty ;
+    rdfs:label "distributes processing"@en ;
+    rdfs:comment "Links mass processing to distributed processing systems."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:DistributedForensicProcessing .
+
+icac-forensics:triagesEvidence rdf:type owl:ObjectProperty ;
+    rdfs:label "triages evidence"@en ;
+    rdfs:comment "Links automated analysis to evidence triage systems."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range icac-forensics:EvidenceTriageSystem .
+
+# Analysis Relationships
+icac-forensics:analysesUserBehavior rdf:type owl:ObjectProperty ;
+    rdfs:label "analyses user behavior"@en ;
+    rdfs:comment "Links processing to user behavior forensic analysis."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:UserBehaviorForensics .
+
+icac-forensics:correlatesContent rdf:type owl:ObjectProperty ;
+    rdfs:label "correlates content"@en ;
+    rdfs:comment "Links automated analysis to content correlation analysis."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:performsHashAnalysis rdf:type owl:ObjectProperty ;
+    rdfs:label "performs hash analysis"@en ;
+    rdfs:comment "Links automated analysis to scalable hash analysis systems."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range icac-forensics:ScalableHashAnalysis .
+
+# International Coordination Relationships
+icac-forensics:coordinatesInternationalProcessing rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinates international processing"@en ;
+    rdfs:comment "Links mass processing to international evidence processing coordination."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:InternationalEvidenceProcessing .
+
+icac-forensics:involvesForensicLab rdf:type owl:ObjectProperty ;
+    rdfs:label "involves forensic lab"@en ;
+    rdfs:comment "Links international processing to participating forensic laboratories."@en ;
+    rdfs:domain icac-forensics:InternationalEvidenceProcessing ;
+    rdfs:range uco-identity:Organization .
+
+icac-forensics:sharesProcessingLoad rdf:type owl:ObjectProperty ;
+    rdfs:label "shares processing load"@en ;
+    rdfs:comment "Links distributed processing to load sharing arrangements."@en ;
+    rdfs:domain icac-forensics:DistributedForensicProcessing ;
+    rdfs:range uco-identity:Organization .
+
+# Evidence and Result Relationships
+icac-forensics:generatesTriageResults rdf:type owl:ObjectProperty ;
+    rdfs:label "generates triage results"@en ;
+    rdfs:comment "Links triage system to results generated."@en ;
+    rdfs:domain icac-forensics:EvidenceTriageSystem ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:identifiesPatterns rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies patterns"@en ;
+    rdfs:comment "Links user behavior analysis to patterns identified."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:discoversNetworks rdf:type owl:ObjectProperty ;
+    rdfs:label "discovers networks"@en ;
+    rdfs:comment "Links content correlation to criminal networks discovered."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-forensics:producesIntelligence rdf:type owl:ObjectProperty ;
+    rdfs:label "produces intelligence"@en ;
+    rdfs:comment "Links forensic analysis to intelligence products generated."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range uco-observable:ObservableObject .
+
+# =============================================================================
+# ADVANCED EVIDENCE CORRELATION CLASSES (extending existing framework)
+# =============================================================================
+
+icac-forensics:CrossPlatformCorrelation rdf:type owl:Class ;
+    rdfs:label "Cross-Platform Correlation"@en ;
+    rdfs:comment "Analysis correlating evidence across multiple platforms and services to identify coordinated criminal activities."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:GeospatialCorrelation rdf:type owl:Class ;
+    rdfs:label "Geospatial Correlation"@en ;
+    rdfs:comment "Correlation analysis based on geographic and location data from multiple sources."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:TemporalPatternAnalysis rdf:type owl:Class ;
+    rdfs:label "Temporal Pattern Analysis"@en ;
+    rdfs:comment "Analysis of temporal patterns and timing correlations across different pieces of evidence."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:BehavioralFingerprinting rdf:type owl:Class ;
+    rdfs:label "Behavioral Fingerprinting"@en ;
+    rdfs:comment "Analysis creating unique behavioral fingerprints from user activities to identify individuals across platforms."@en ;
+    rdfs:subClassOf icac-forensics:UserBehaviorForensics .
+
+icac-forensics:CommunicationPatternAnalysis rdf:type owl:Class ;
+    rdfs:label "Communication Pattern Analysis"@en ;
+    rdfs:comment "Analysis of communication patterns to identify relationships and networks."@en ;
+    rdfs:subClassOf icac-forensics:UserBehaviorForensics .
+
+icac-forensics:MetadataCorrelation rdf:type owl:Class ;
+    rdfs:label "Metadata Correlation"@en ;
+    rdfs:comment "Correlation analysis of metadata across multiple files and platforms."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:DatabaseIntelligenceIntegration rdf:type owl:Class ;
+    rdfs:label "Database Intelligence Integration"@en ;
+    rdfs:comment "Integration and correlation against multiple international databases and intelligence sources."@en ;
+    rdfs:subClassOf icac-forensics:MassDigitalEvidenceProcessing .
+
+icac-forensics:NetworkTrafficAnalysis rdf:type owl:Class ;
+    rdfs:label "Network Traffic Analysis"@en ;
+    rdfs:comment "Analysis of network traffic patterns to identify suspicious communications and data transfers."@en ;
+    rdfs:subClassOf icac-forensics:UserBehaviorForensics .
+
+icac-forensics:MachineLearningCorrelation rdf:type owl:Class ;
+    rdfs:label "Machine Learning Correlation"@en ;
+    rdfs:comment "AI/ML-powered correlation analysis to identify complex patterns not visible through traditional methods."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+icac-forensics:RealTimeCorrelation rdf:type owl:Class ;
+    rdfs:label "Real-Time Correlation"@en ;
+    rdfs:comment "Real-time correlation analysis for immediate identification of related evidence and ongoing activities."@en ;
+    rdfs:subClassOf icac-forensics:ContentCorrelationAnalysis .
+
+# =============================================================================
+# ADVANCED EVIDENCE CORRELATION PROPERTIES
+# =============================================================================
+
+# Cross-Platform Analysis Properties
+icac-forensics:platformsAnalyzed rdf:type owl:DatatypeProperty ;
+    rdfs:label "platforms analyzed"@en ;
+    rdfs:comment "Number of platforms included in cross-platform correlation analysis."@en ;
+    rdfs:domain icac-forensics:CrossPlatformCorrelation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:crossPlatformMatches rdf:type owl:DatatypeProperty ;
+    rdfs:label "cross-platform matches"@en ;
+    rdfs:comment "Number of matches found across different platforms."@en ;
+    rdfs:domain icac-forensics:CrossPlatformCorrelation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:platformCorrelationScore rdf:type owl:DatatypeProperty ;
+    rdfs:label "platform correlation score"@en ;
+    rdfs:comment "Correlation score across platforms (0.0-1.0)."@en ;
+    rdfs:domain icac-forensics:CrossPlatformCorrelation ;
+    rdfs:range xsd:decimal .
+
+# Geospatial Analysis Properties
+icac-forensics:geographicRadius rdf:type owl:DatatypeProperty ;
+    rdfs:label "geographic radius"@en ;
+    rdfs:comment "Geographic radius of correlation analysis in kilometers."@en ;
+    rdfs:domain icac-forensics:GeospatialCorrelation ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:locationPointsAnalyzed rdf:type owl:DatatypeProperty ;
+    rdfs:label "location points analyzed"@en ;
+    rdfs:comment "Number of location points included in geospatial analysis."@en ;
+    rdfs:domain icac-forensics:GeospatialCorrelation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:geospatialAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "geospatial accuracy"@en ;
+    rdfs:comment "Accuracy of geospatial correlation analysis in meters."@en ;
+    rdfs:domain icac-forensics:GeospatialCorrelation ;
+    rdfs:range xsd:decimal .
+
+# Temporal Analysis Properties
+icac-forensics:timeRangeAnalyzed rdf:type owl:DatatypeProperty ;
+    rdfs:label "time range analyzed"@en ;
+    rdfs:comment "Time range covered by temporal pattern analysis in days."@en ;
+    rdfs:domain icac-forensics:TemporalPatternAnalysis ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:temporalResolution rdf:type owl:DatatypeProperty ;
+    rdfs:label "temporal resolution"@en ;
+    rdfs:comment "Temporal resolution of analysis (seconds, minutes, hours, days)."@en ;
+    rdfs:domain icac-forensics:TemporalPatternAnalysis ;
+    rdfs:range xsd:string .
+
+icac-forensics:temporalPatternsIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:label "temporal patterns identified"@en ;
+    rdfs:comment "Number of distinct temporal patterns identified."@en ;
+    rdfs:domain icac-forensics:TemporalPatternAnalysis ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Behavioral Analysis Properties
+icac-forensics:behavioralFingerprintsCreated rdf:type owl:DatatypeProperty ;
+    rdfs:label "behavioral fingerprints created"@en ;
+    rdfs:comment "Number of unique behavioral fingerprints created from analysis."@en ;
+    rdfs:domain icac-forensics:BehavioralFingerprinting ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:fingerprintAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "fingerprint accuracy"@en ;
+    rdfs:comment "Accuracy of behavioral fingerprint matching (0.0-1.0)."@en ;
+    rdfs:domain icac-forensics:BehavioralFingerprinting ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:communicationGraphComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:label "communication graph complexity"@en ;
+    rdfs:comment "Complexity measure of communication graph analysis (simple, moderate, complex, highly_complex)."@en ;
+    rdfs:domain icac-forensics:CommunicationPatternAnalysis ;
+    rdfs:range xsd:string .
+
+# Machine Learning Properties
+icac-forensics:mlModelAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "ML model accuracy"@en ;
+    rdfs:comment "Accuracy of machine learning correlation models (0.0-1.0)."@en ;
+    rdfs:domain icac-forensics:MachineLearningCorrelation ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:trainingDataSize rdf:type owl:DatatypeProperty ;
+    rdfs:label "training data size"@en ;
+    rdfs:comment "Size of training dataset used for ML correlation in millions of records."@en ;
+    rdfs:domain icac-forensics:MachineLearningCorrelation ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:featureVectorsUsed rdf:type owl:DatatypeProperty ;
+    rdfs:label "feature vectors used"@en ;
+    rdfs:comment "Number of feature vectors used in machine learning analysis."@en ;
+    rdfs:domain icac-forensics:MachineLearningCorrelation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Real-Time Analysis Properties
+icac-forensics:correlationLatency rdf:type owl:DatatypeProperty ;
+    rdfs:label "correlation latency"@en ;
+    rdfs:comment "Average latency for real-time correlation analysis in milliseconds."@en ;
+    rdfs:domain icac-forensics:RealTimeCorrelation ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:streamingDataRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "streaming data rate"@en ;
+    rdfs:comment "Rate of streaming data processing in MB per second."@en ;
+    rdfs:domain icac-forensics:RealTimeCorrelation ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:realTimeAlerts rdf:type owl:DatatypeProperty ;
+    rdfs:label "real-time alerts"@en ;
+    rdfs:comment "Number of real-time alerts generated from correlation analysis."@en ;
+    rdfs:domain icac-forensics:RealTimeCorrelation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Database Integration Properties
+icac-forensics:databasesIntegrated rdf:type owl:DatatypeProperty ;
+    rdfs:label "databases integrated"@en ;
+    rdfs:comment "Number of international databases integrated for intelligence correlation."@en ;
+    rdfs:domain icac-forensics:DatabaseIntelligenceIntegration ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:queryResponseTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "query response time"@en ;
+    rdfs:comment "Average response time for database queries in seconds."@en ;
+    rdfs:domain icac-forensics:DatabaseIntelligenceIntegration ;
+    rdfs:range xsd:decimal .
+
+icac-forensics:intelligenceHits rdf:type owl:DatatypeProperty ;
+    rdfs:label "intelligence hits"@en ;
+    rdfs:comment "Number of intelligence hits found across integrated databases."@en ;
+    rdfs:domain icac-forensics:DatabaseIntelligenceIntegration ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Network Analysis Properties
+icac-forensics:networkSessionsAnalyzed rdf:type owl:DatatypeProperty ;
+    rdfs:label "network sessions analyzed"@en ;
+    rdfs:comment "Number of network sessions included in traffic analysis."@en ;
+    rdfs:domain icac-forensics:NetworkTrafficAnalysis ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:suspiciousConnectionsIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:label "suspicious connections identified"@en ;
+    rdfs:comment "Number of suspicious network connections identified."@en ;
+    rdfs:domain icac-forensics:NetworkTrafficAnalysis ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:dataTransferVolume rdf:type owl:DatatypeProperty ;
+    rdfs:label "data transfer volume"@en ;
+    rdfs:comment "Volume of data transfers analyzed in terabytes."@en ;
+    rdfs:domain icac-forensics:NetworkTrafficAnalysis ;
+    rdfs:range xsd:decimal .
+
+# =============================================================================
+# ADVANCED CORRELATION RELATIONSHIPS
+# =============================================================================
+
+# Cross-Platform Relationships
+icac-forensics:correlatesAcrossPlatforms rdf:type owl:ObjectProperty ;
+    rdfs:label "correlates across platforms"@en ;
+    rdfs:comment "Links analysis to cross-platform correlation performed."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range icac-forensics:CrossPlatformCorrelation .
+
+icac-forensics:identifiesCrossPlatformActivity rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies cross-platform activity"@en ;
+    rdfs:comment "Links cross-platform analysis to activities identified."@en ;
+    rdfs:domain icac-forensics:CrossPlatformCorrelation ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Geospatial Relationships
+icac-forensics:performsGeospatialAnalysis rdf:type owl:ObjectProperty ;
+    rdfs:label "performs geospatial analysis"@en ;
+    rdfs:comment "Links evidence processing to geospatial correlation analysis."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:GeospatialCorrelation .
+
+icac-forensics:identifiesGeographicClusters rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies geographic clusters"@en ;
+    rdfs:comment "Links geospatial analysis to geographic clusters identified."@en ;
+    rdfs:domain icac-forensics:GeospatialCorrelation ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Temporal Relationships
+icac-forensics:analyzesTemporalPatterns rdf:type owl:ObjectProperty ;
+    rdfs:label "analyzes temporal patterns"@en ;
+    rdfs:comment "Links content correlation to temporal pattern analysis."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range icac-forensics:TemporalPatternAnalysis .
+
+icac-forensics:identifiesTemporalClusters rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies temporal clusters"@en ;
+    rdfs:comment "Links temporal analysis to time-based clusters identified."@en ;
+    rdfs:domain icac-forensics:TemporalPatternAnalysis ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Behavioral Analysis Relationships
+icac-forensics:createsBehavioralFingerprints rdf:type owl:ObjectProperty ;
+    rdfs:label "creates behavioral fingerprints"@en ;
+    rdfs:comment "Links user behavior analysis to fingerprinting performed."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range icac-forensics:BehavioralFingerprinting .
+
+icac-forensics:analyzesCommunicationPatterns rdf:type owl:ObjectProperty ;
+    rdfs:label "analyzes communication patterns"@en ;
+    rdfs:comment "Links user behavior analysis to communication pattern analysis."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range icac-forensics:CommunicationPatternAnalysis .
+
+# Machine Learning Relationships
+icac-forensics:utilizesMachineLearning rdf:type owl:ObjectProperty ;
+    rdfs:label "utilizes machine learning"@en ;
+    rdfs:comment "Links correlation analysis to machine learning methods used."@en ;
+    rdfs:domain icac-forensics:ContentCorrelationAnalysis ;
+    rdfs:range icac-forensics:MachineLearningCorrelation .
+
+icac-forensics:trainsCorrelationModel rdf:type owl:ObjectProperty ;
+    rdfs:label "trains correlation model"@en ;
+    rdfs:comment "Links ML correlation to model training performed."@en ;
+    rdfs:domain icac-forensics:MachineLearningCorrelation ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Real-Time Analysis Relationships
+icac-forensics:enablesRealTimeCorrelation rdf:type owl:ObjectProperty ;
+    rdfs:label "enables real-time correlation"@en ;
+    rdfs:comment "Links automated analysis to real-time correlation capabilities."@en ;
+    rdfs:domain icac-forensics:AutomatedContentAnalysis ;
+    rdfs:range icac-forensics:RealTimeCorrelation .
+
+icac-forensics:generatesRealTimeAlerts rdf:type owl:ObjectProperty ;
+    rdfs:label "generates real-time alerts"@en ;
+    rdfs:comment "Links real-time correlation to alerts generated."@en ;
+    rdfs:domain icac-forensics:RealTimeCorrelation ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Database Integration Relationships
+icac-forensics:integratesIntelligenceDatabases rdf:type owl:ObjectProperty ;
+    rdfs:label "integrates intelligence databases"@en ;
+    rdfs:comment "Links mass processing to database intelligence integration."@en ;
+    rdfs:domain icac-forensics:MassDigitalEvidenceProcessing ;
+    rdfs:range icac-forensics:DatabaseIntelligenceIntegration .
+
+icac-forensics:queriesIntelligenceDatabase rdf:type owl:ObjectProperty ;
+    rdfs:label "queries intelligence database"@en ;
+    rdfs:comment "Links integration to specific databases queried."@en ;
+    rdfs:domain icac-forensics:DatabaseIntelligenceIntegration ;
+    rdfs:range uco-observable:ObservableObject .
+
+# Network Analysis Relationships
+icac-forensics:analyzesNetworkTraffic rdf:type owl:ObjectProperty ;
+    rdfs:label "analyzes network traffic"@en ;
+    rdfs:comment "Links user behavior analysis to network traffic analysis."@en ;
+    rdfs:domain icac-forensics:UserBehaviorForensics ;
+    rdfs:range icac-forensics:NetworkTrafficAnalysis .
+
+icac-forensics:identifiesNetworkAnomalies rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies network anomalies"@en ;
+    rdfs:comment "Links network analysis to anomalies identified."@en ;
+    rdfs:domain icac-forensics:NetworkTrafficAnalysis ;
+    rdfs:range uco-observable:ObservableObject . 

@@ -43,6 +43,20 @@
 - **LiveStreamingCSA**: Live streaming of child sexual abuse
 - **DigitallyGeneratedCSAMIncident**: AI-generated or manipulated CSAM
 
+### Athletic Coaching Exploitation Classes
+- **AthleticCoachingExploitation**: Child sexual exploitation by athletic coaches using sports authority and team dynamics
+- **TravelTeamExploitation**: Exploitation within travel or club sports teams with enhanced coach authority
+- **SchoolAthleticExploitation**: Exploitation within school-based athletic programs leveraging institutional authority
+- **DualCoachingRoleExploitation**: Exploitation leveraging multiple coaching positions across teams/institutions
+- **PhysicalTrainingCoercion**: Use of physical training, conditioning, and exercise as coercion mechanism
+- **ConditioningCoercion**: Use of physical conditioning exercises as coercion for sexual compliance
+- **TeamMembershipCoercion**: Threats to team membership and participation as coercion
+- **MaterialBenefitCoercion**: Athletic equipment, benefits, or opportunities as coercion
+- **AthleticFacilityExploitation**: Exploitation occurring in athletic facilities and sports venues
+- **SexualEducationExploitation**: Use of sexual topics and education as exploitation method within athletic context
+- **PhysicalContactEscalation**: Escalation of physical contact within athletic training context
+- **ParentNetworkDiscovery**: Discovery through parent community networks and team family communications
+
 ### Investigation Classes
 - **UnderCoverOperation**: Covert investigation activities
 - **TacticalOperation**: High-risk law enforcement operations
@@ -80,6 +94,13 @@
 - **SocialMediaPlatform**: Online platform used for communication or content sharing
 - **ContentModerationCapability**: Platform's ability to detect and remove illegal content
 
+### Athletic Coaching Roles
+- **AthleticCoachRole**: Athletic coaching role with authority over team members and training activities
+- **TravelTeamCoachRole**: Coaching role for travel or club sports teams with enhanced authority and access
+- **SchoolAthleticCoachRole**: Coaching role within school-based athletic programs with institutional authority
+- **HeadCoachRole**: Head coaching role with primary authority over team and training decisions
+- **AssistantCoachRole**: Assistant coaching role with delegated authority over specific training aspects
+
 ### Properties
 - **reportedBy**: Links a report to its reporter
 - **hasEvidence**: Links a report to its evidence
@@ -93,6 +114,23 @@
 - **nextStep**: Chronological sequence in workflows
 - **previousStep**: Reverse chronological sequence
 - **severityLevel**: Severity rating (0-3 scale)
+
+### Athletic Exploitation Properties
+- **coachesTeam**: Links coach to team they coach
+- **playsOnTeam**: Links player to team they participate in
+- **holdsCoachingRole**: Links person to coaching role they hold
+- **exploitsAthleticAuthority**: Links exploitation to athletic authority being exploited
+- **usesPhysicalTraining**: Links exploitation to physical training coercion methods used
+- **occursInFacility**: Links exploitation to athletic facility where it occurs
+- **threatensMembership**: Links coercion to team membership threats made
+- **escalatesPhysicalContact**: Links exploitation to physical contact escalation patterns
+- **discoveredByParents**: Links exploitation to parent network discovery
+- **sportType**: Type of sport (baseball, basketball, soccer, football, tennis, etc.)
+- **teamType**: Type of team (travel, school, club, recreational, competitive)
+- **conditioningType**: Type of conditioning exercise used for coercion
+- **exhaustionLevel**: Level of physical exhaustion induced
+- **materialBenefitType**: Type of material benefit offered
+- **contactEscalationPattern**: Pattern of physical contact escalation
 
 ### Status Values
 - **status-new**: Report is newly received
@@ -126,6 +164,7 @@
 - **Compliance Operations**: Large-scale registry verification activities
 - **Rescue Operations**: Emergency response to save children from ongoing abuse
 - **Prevention Campaigns**: Educational and awareness programs
+- **Athletic Coaching Operations**: Investigations targeting sports-based exploitation and coaching abuse
 
 ### Investigative Techniques
 - **Undercover Infiltration**: Covert penetration of criminal networks
@@ -133,6 +172,9 @@
 - **Hash Matching**: Automated comparison of known CSAM signatures
 - **Behavioral Analysis**: Pattern recognition in grooming and exploitation
 - **Cross-Platform Analysis**: Investigation across multiple digital services
+- **Athletic Authority Analysis**: Investigation of sports-based authority exploitation
+- **Team Dynamics Investigation**: Analysis of group-based exploitation patterns
+- **Physical Training Coercion Analysis**: Investigation of exercise-based compliance mechanisms
 
 ### International Frameworks
 - **ICMEC Global Partnership**: Cooperation with 120+ countries
@@ -147,6 +189,8 @@
 - **Compliance Rate**: Registry offenders in compliance with requirements
 - **Training Reach**: Number of professionals trained globally
 - **Prevention Effectiveness**: Impact measurement of education programs
+- **Athletic Investigation Success**: Effectiveness of sports-based exploitation investigations
+- **Parent Network Response**: Speed and effectiveness of community-based discovery
 
 ### Technology Integration
 - **UCO Compatibility**: Native integration with Unified Cyber Ontology

@@ -107,14 +107,7 @@ icac-platforms:UserVerificationSystem rdf:type owl:Class ;
     rdfs:comment "Systems used by platforms to verify user identity and age."@en ;
     rdfs:subClassOf uco-core:UcoObject .
 
-# =============================================================================
-# PLATFORM-SPECIFIC ACTION CLASSES (extending UCO Action)
-# =============================================================================
-
-icac-platforms:ContentModerationAction rdf:type owl:Class ;
-    rdfs:label "Content Moderation Action"@en ;
-    rdfs:comment "An action taken by a platform to moderate content (review, remove, restrict, etc.)."@en ;
-    rdfs:subClassOf uco-action:Action .
+# =============================================================================# PLATFORM-SPECIFIC ACTION CLASSES (extending UCO Action)# =============================================================================icac-platforms:ContentModerationAction rdf:type owl:Class ;    rdfs:label "Content Moderation Action"@en ;    rdfs:comment "An action taken by a platform to moderate content (review, remove, restrict, etc.)."@en ;    rdfs:subClassOf uco-action:Action .# =============================================================================# LARGE-SCALE PLATFORM OPERATIONS (Kidflix/Europol Framework)# =============================================================================icac-platforms:LargeScalePlatformTakedown rdf:type owl:Class ;    rdfs:label "Large Scale Platform Takedown"@en ;    rdfs:comment "Coordinated takedown of major exploitation platforms with user bases exceeding 1 million accounts, requiring specialized international coordination and mass forensic processing."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:PlatformOperation rdf:type owl:Class ;    rdfs:label "Platform Operation"@en ;    rdfs:comment "Coordinated law enforcement operation targeting specific platforms or services."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:MassUserDatabase rdf:type owl:Class ;    rdfs:label "Mass User Database"@en ;    rdfs:comment "User database analysis for platforms with massive user bases requiring specialized processing techniques and automated analysis tools."@en ;    rdfs:subClassOf uco-observable:ObservableObject .icac-platforms:UserScaleClassification rdf:type owl:Class ;    rdfs:label "User Scale Classification"@en ;    rdfs:comment "Classification system for platform size based on user base: small (<1K), medium (1K-100K), large (100K-1M), massive (1M+)."@en ;    rdfs:subClassOf uco-core:UcoObject .icac-platforms:MassUserBehaviorAnalysis rdf:type owl:Class ;    rdfs:label "Mass User Behavior Analysis"@en ;    rdfs:comment "Analysis of user behavior patterns across massive user bases for investigation prioritization and automated threat assessment."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:UserRiskClassification rdf:type owl:Class ;    rdfs:label "User Risk Classification"@en ;    rdfs:comment "Automated classification of user risk levels based on platform activity patterns, content sharing, and behavioral indicators."@en ;    rdfs:subClassOf uco-core:UcoObject .
 
 icac-platforms:AccountSuspensionAction rdf:type owl:Class ;
     rdfs:label "Account Suspension Action"@en ;
@@ -511,8 +504,176 @@ icac-platforms:platformsInvestigated rdf:type owl:DatatypeProperty ;
     rdfs:label "platforms investigated"@en ;
     rdfs:comment "Number of platforms investigated in coordinated effort."@en .
 
-icac-platforms:devicesSearched rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-platforms:SimultaneousSearchWarrant ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "devices searched"@en ;
-    rdfs:comment "Number of devices searched in simultaneous operation."@en . 
+icac-platforms:devicesSearched rdf:type owl:DatatypeProperty ;    rdfs:domain icac-platforms:SimultaneousSearchWarrant ;    rdfs:range xsd:nonNegativeInteger ;    rdfs:label "devices searched"@en ;    rdfs:comment "Number of devices searched in simultaneous operation."@en .# =============================================================================# LARGE-SCALE PLATFORM OPERATION PROPERTIES (Kidflix/Europol Framework)# =============================================================================# Scale and User Propertiesicac-platforms:userCount rdf:type owl:DatatypeProperty ;    rdfs:label "user count"@en ;    rdfs:comment "Total number of registered users on platform (nearly 2 million for Kidflix operation)."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:operationScale rdf:type owl:DatatypeProperty ;    rdfs:label "operation scale"@en ;    rdfs:comment "Scale classification for takedown operation (local, national, international, global)."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:string .icac-platforms:millionPlusUsers rdf:type owl:DatatypeProperty ;    rdfs:label "million plus users"@en ;    rdfs:comment "Whether platform has user base exceeding one million accounts."@en ;    rdfs:domain icac-platforms:UserScaleClassification ;    rdfs:range xsd:boolean .icac-platforms:countriesInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "countries involved"@en ;    rdfs:comment "Number of countries participating in coordinated platform takedown."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:evidenceVolumeTerabytes rdf:type owl:DatatypeProperty ;    rdfs:label "evidence volume terabytes"@en ;    rdfs:comment "Total volume of evidence seized in terabytes for massive platform operations."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:decimal .# Processing and Analysis Propertiesicac-platforms:automatedProcessingPercentage rdf:type owl:DatatypeProperty ;    rdfs:label "automated processing percentage"@en ;    rdfs:comment "Percentage of evidence processed through automated analysis systems."@en ;    rdfs:domain icac-platforms:MassUserBehaviorAnalysis ;    rdfs:range xsd:decimal .icac-platforms:processingTimeframeDays rdf:type owl:DatatypeProperty ;    rdfs:label "processing timeframe days"@en ;    rdfs:comment "Timeframe for processing massive user databases in days."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:userRiskLevel rdf:type owl:DatatypeProperty ;    rdfs:label "user risk level"@en ;    rdfs:comment "Automated risk classification level (low, medium, high, critical)."@en ;    rdfs:domain icac-platforms:UserRiskClassification ;    rdfs:range xsd:string .icac-platforms:platformScale rdf:type owl:DatatypeProperty ;    rdfs:label "platform scale"@en ;    rdfs:comment "Platform size classification (small, medium, large, massive)."@en ;    rdfs:domain icac-platforms:UserScaleClassification ;    rdfs:range xsd:string .# Relationship Properties for Large-Scale Operationsicac-platforms:involvesDatabase rdf:type owl:ObjectProperty ;    rdfs:label "involves database"@en ;    rdfs:comment "Links large-scale operation to user databases analyzed."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range icac-platforms:MassUserDatabase .icac-platforms:requiresAnalysis rdf:type owl:ObjectProperty ;    rdfs:label "requires analysis"@en ;    rdfs:comment "Links mass user database to behavior analysis required."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range icac-platforms:MassUserBehaviorAnalysis .icac-platforms:generatesClassification rdf:type owl:ObjectProperty ;    rdfs:label "generates classification"@en ;    rdfs:comment "Links behavior analysis to user risk classifications generated."@en ;    rdfs:domain icac-platforms:MassUserBehaviorAnalysis ;    rdfs:range icac-platforms:UserRiskClassification . 
+
+# =============================================================================
+# ANONYMOUS CHAT PLATFORM FRAMEWORK (Buffalo/Vermont Case Enhancement)
+# =============================================================================
+
+icac-platforms:AnonymousChatPlatform rdf:type owl:Class ;
+    rdfs:label "Anonymous Chat Platform"@en ;
+    rdfs:comment "Platform that allows anonymous or minimally verified communication, enabling contact without identity verification."@en ;
+    rdfs:subClassOf icac-platforms:MessagingService .
+
+icac-platforms:GuestChatFeature rdf:type owl:Class ;
+    rdfs:label "Guest Chat Feature"@en ;
+    rdfs:comment "Platform feature allowing users to chat without creating accounts or verifying identity."@en ;
+    rdfs:subClassOf uco-observable:DigitalServiceFeature .
+
+icac-platforms:TemporaryAccountSystem rdf:type owl:Class ;
+    rdfs:label "Temporary Account System"@en ;
+    rdfs:comment "System allowing creation of temporary accounts with minimal verification requirements."@en ;
+    rdfs:subClassOf uco-observable:DigitalServiceFeature .
+
+icac-platforms:MinimalVerificationRequirement rdf:type owl:Class ;
+    rdfs:label "Minimal Verification Requirement"@en ;
+    rdfs:comment "Verification requirements that are easily bypassed or minimal (email only, no identity check)."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-platforms:AnonymousContactOpportunity rdf:type owl:Class ;
+    rdfs:label "Anonymous Contact Opportunity"@en ;
+    rdfs:comment "Opportunities provided by platform for anonymous users to initiate contact with other users."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-platforms:RandomUserMatching rdf:type owl:Class ;
+    rdfs:label "Random User Matching"@en ;
+    rdfs:comment "Platform feature that randomly matches users for anonymous conversations."@en ;
+    rdfs:subClassOf icac-platforms:AnonymousContactOpportunity .
+
+icac-platforms:OpenChatRooms rdf:type owl:Class ;
+    rdfs:label "Open Chat Rooms"@en ;
+    rdfs:comment "Chat rooms open to anonymous users without verification or moderation."@en ;
+    rdfs:subClassOf icac-platforms:AnonymousContactOpportunity .
+
+icac-platforms:ProfileBrowsingAnonymous rdf:type owl:Class ;
+    rdfs:label "Profile Browsing Anonymous"@en ;
+    rdfs:comment "Ability to browse and contact user profiles anonymously without revealing identity."@en ;
+    rdfs:subClassOf icac-platforms:AnonymousContactOpportunity .
+
+icac-platforms:AnonymityProtectionLevel rdf:type owl:Class ;
+    rdfs:label "Anonymity Protection Level"@en ;
+    rdfs:comment "Level of anonymity protection provided by platform features and policies."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-platforms:IdentityDisclosurePolicy rdf:type owl:Class ;
+    rdfs:label "Identity Disclosure Policy"@en ;
+    rdfs:comment "Platform policy regarding when and how user identities may be disclosed to other users or authorities."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+# =============================================================================
+# ANONYMOUS CHAT PLATFORM PROPERTIES (Buffalo/Vermont Enhancement)
+# =============================================================================
+
+# Anonymity Features Properties
+icac-platforms:allowsAnonymousChat rdf:type owl:DatatypeProperty ;
+    rdfs:label "allows anonymous chat"@en ;
+    rdfs:comment "Whether platform allows anonymous chat without account creation."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range xsd:boolean .
+
+icac-platforms:guestAccountsAllowed rdf:type owl:DatatypeProperty ;
+    rdfs:label "guest accounts allowed"@en ;
+    rdfs:comment "Whether platform allows guest accounts with minimal verification."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range xsd:boolean .
+
+icac-platforms:verificationStrength rdf:type owl:DatatypeProperty ;
+    rdfs:label "verification strength"@en ;
+    rdfs:comment "Strength of identity verification (none, email_only, phone_optional, id_required)."@en ;
+    rdfs:domain icac-platforms:MinimalVerificationRequirement ;
+    rdfs:range xsd:string .
+
+icac-platforms:anonymityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "anonymity level"@en ;
+    rdfs:comment "Level of anonymity provided (full_anonymous, pseudo_anonymous, semi_verified, fully_verified)."@en ;
+    rdfs:domain icac-platforms:AnonymityProtectionLevel ;
+    rdfs:range xsd:string .
+
+icac-platforms:contactInitiationMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "contact initiation method"@en ;
+    rdfs:comment "Method for anonymous contact initiation (random_matching, public_rooms, profile_search, interest_based)."@en ;
+    rdfs:domain icac-platforms:AnonymousContactOpportunity ;
+    rdfs:range xsd:string .
+
+icac-platforms:moderationPresence rdf:type owl:DatatypeProperty ;
+    rdfs:label "moderation presence"@en ;
+    rdfs:comment "Level of moderation in anonymous areas (none, minimal, moderate, heavy)."@en ;
+    rdfs:domain icac-platforms:AnonymousContactOpportunity ;
+    rdfs:range xsd:string .
+
+icac-platforms:ageVerificationRequired rdf:type owl:DatatypeProperty ;
+    rdfs:label "age verification required"@en ;
+    rdfs:comment "Whether age verification is required for anonymous features."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range xsd:boolean .
+
+icac-platforms:crossPlatformAnonymity rdf:type owl:DatatypeProperty ;
+    rdfs:label "cross platform anonymity"@en ;
+    rdfs:comment "Whether anonymity is maintained across connected platforms or services."@en ;
+    rdfs:domain icac-platforms:AnonymityProtectionLevel ;
+    rdfs:range xsd:boolean .
+
+# Data Retention for Anonymous Users
+icac-platforms:anonymousUserDataRetention rdf:type owl:DatatypeProperty ;
+    rdfs:label "anonymous user data retention"@en ;
+    rdfs:comment "How long data from anonymous users is retained (in days)."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range xsd:integer .
+
+icac-platforms:conversationLogging rdf:type owl:DatatypeProperty ;
+    rdfs:label "conversation logging"@en ;
+    rdfs:comment "Whether anonymous conversations are logged and stored."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range xsd:boolean .
+
+icac-platforms:identityDisclosureCircumstances rdf:type owl:DatatypeProperty ;
+    rdfs:label "identity disclosure circumstances"@en ;
+    rdfs:comment "Circumstances under which anonymous user identity may be disclosed (never, legal_request, safety_violation, platform_choice)."@en ;
+    rdfs:domain icac-platforms:IdentityDisclosurePolicy ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# ANONYMOUS PLATFORM OBJECT PROPERTIES
+# =============================================================================
+
+icac-platforms:providesAnonymousFeature rdf:type owl:ObjectProperty ;
+    rdfs:label "provides anonymous feature"@en ;
+    rdfs:comment "Links anonymous chat platform to specific anonymity features provided."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range icac-platforms:GuestChatFeature .
+
+icac-platforms:enablesTemporaryAccounts rdf:type owl:ObjectProperty ;
+    rdfs:label "enables temporary accounts"@en ;
+    rdfs:comment "Links platform to temporary account systems enabled."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range icac-platforms:TemporaryAccountSystem .
+
+icac-platforms:offersContactOpportunity rdf:type owl:ObjectProperty ;
+    rdfs:label "offers contact opportunity"@en ;
+    rdfs:comment "Links platform to anonymous contact opportunities provided."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range icac-platforms:AnonymousContactOpportunity .
+
+icac-platforms:maintainsAnonymityLevel rdf:type owl:ObjectProperty ;
+    rdfs:label "maintains anonymity level"@en ;
+    rdfs:comment "Links platform to anonymity protection levels maintained."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range icac-platforms:AnonymityProtectionLevel .
+
+icac-platforms:governedByDisclosurePolicy rdf:type owl:ObjectProperty ;
+    rdfs:label "governed by disclosure policy"@en ;
+    rdfs:comment "Links platform to identity disclosure policies governing anonymous users."@en ;
+    rdfs:domain icac-platforms:AnonymousChatPlatform ;
+    rdfs:range icac-platforms:IdentityDisclosurePolicy .
+
+icac-platforms:facilitatesRandomMatching rdf:type owl:ObjectProperty ;
+    rdfs:label "facilitates random matching"@en ;
+    rdfs:comment "Links contact opportunity to random user matching systems."@en ;
+    rdfs:domain icac-platforms:AnonymousContactOpportunity ;
+    rdfs:range icac-platforms:RandomUserMatching .
+
+icac-platforms:providesOpenChatAccess rdf:type owl:ObjectProperty ;
+    rdfs:label "provides open chat access"@en ;
+    rdfs:comment "Links contact opportunity to open chat room access."@en ;
+    rdfs:domain icac-platforms:AnonymousContactOpportunity ;
+    rdfs:range icac-platforms:OpenChatRooms . 

@@ -1,0 +1,874 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-legal: <https://ontology.unifiedcyberontology.org/icac/legal-harmonization#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<https://ontology.unifiedcyberontology.org/icac/legal-harmonization-shapes> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Legal Harmonization SHACL Shapes"@en ;
+    rdfs:comment "SHACL shapes for validating ICAC legal harmonization ontology instances, covering international legal frameworks, policy harmonization, and CSAM legislation analysis across 196 countries."@en ;
+    owl:versionInfo "0.1.0" .
+
+# =============================================================================
+# LEGAL FRAMEWORK ANALYSIS SHAPES
+# =============================================================================
+
+icac-legal:CSAMModelLawShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:CSAMModelLaw ;
+    rdfs:label "CSAM Model Law Shape"@en ;
+    rdfs:comment "Validation shape for CSAM model legislation."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        rdfs:comment "Model law must have a descriptive name."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 50 ;
+        sh:maxLength 2000 ;
+        rdfs:comment "Model law must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Model law creation timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:legalSystemType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:in ("common_law" "civil_law" "religious_law" "mixed" "universal") ;
+        rdfs:comment "Legal system type for model law applicability."@en ;
+    ] .
+
+icac-legal:GlobalLegalReviewShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:GlobalLegalReview ;
+    rdfs:label "Global Legal Review Shape"@en ;
+    rdfs:comment "Validation shape for global legal reviews."@en ;
+    sh:property [
+        sh:path icac-legal:countriesAnalyzed ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 196 ;
+        rdfs:comment "Number of countries analyzed (1-196)."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Review start date."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:endTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Review completion date."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^Global.*Review.*[0-9]{4}$" ;
+        rdfs:comment "Review name must include 'Global', 'Review', and year."@en ;
+    ] ;
+    # Temporal validation: end time must be after start time
+    sh:sparql [
+        sh:message "Review end time must be after start time" ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "uco-core" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/uco/core#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this uco-core:startTime ?start ;
+                      uco-core:endTime ?end .
+                FILTER (?end <= ?start)
+            }
+        """ ;
+    ] .
+
+icac-legal:LegislativeAssessmentShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegislativeAssessment ;
+    rdfs:label "Legislative Assessment Shape"@en ;
+    rdfs:comment "Validation shape for legislative assessments."@en ;
+    sh:property [
+        sh:path icac-legal:legislativeCompliance ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        rdfs:comment "Compliance score must be between 0.0 and 1.0."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Assessment must have creation timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:assessedBy ;
+        sh:class uco-identity:Organization ;
+        sh:minCount 1 ;
+        rdfs:comment "Assessment must be conducted by an organization."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:identifiesGap ;
+        sh:class icac-legal:LegalFrameworkGap ;
+        rdfs:comment "Assessment may identify legal framework gaps."@en ;
+    ] .
+
+icac-legal:LegalFrameworkGapShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalFrameworkGap ;
+    rdfs:label "Legal Framework Gap Shape"@en ;
+    rdfs:comment "Validation shape for legal framework gaps."@en ;
+    sh:property [
+        sh:path icac-legal:policyGapSeverity ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("minor" "moderate" "major" "critical") ;
+        rdfs:comment "Gap severity must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 20 ;
+        sh:maxLength 1000 ;
+        rdfs:comment "Gap must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:requiresReform ;
+        sh:class icac-legal:LegalReform ;
+        sh:minCount 1 ;
+        rdfs:comment "Gap must require specific legal reform."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Gap identification timestamp."@en ;
+    ] .
+
+icac-legal:LegalComplianceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalCompliance ;
+    rdfs:label "Legal Compliance Shape"@en ;
+    rdfs:comment "Validation shape for legal compliance assessments."@en ;
+    sh:property [
+        sh:path icac-legal:legalAlignmentLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("none" "partial" "substantial" "full") ;
+        rdfs:comment "Legal alignment level must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:measuredBy ;
+        sh:class icac-legal:ComplianceMetrics ;
+        sh:minCount 1 ;
+        rdfs:comment "Compliance must be measured by specific metrics."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Compliance assessment must have timestamp."@en ;
+    ] .
+
+# =============================================================================
+# INTERNATIONAL LEGAL COOPERATION SHAPES
+# =============================================================================
+
+icac-legal:MutualLegalAssistanceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:MutualLegalAssistance ;
+    rdfs:label "Mutual Legal Assistance Shape"@en ;
+    rdfs:comment "Validation shape for mutual legal assistance frameworks."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 200 ;
+        rdfs:comment "MLA framework must have descriptive name."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 50 ;
+        rdfs:comment "MLA framework must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 2 ;
+        rdfs:comment "MLA must apply to at least two countries."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "MLA framework creation timestamp."@en ;
+    ] .
+
+icac-legal:ExtraditionAgreementShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:ExtraditionAgreement ;
+    rdfs:label "Extradition Agreement Shape"@en ;
+    rdfs:comment "Validation shape for extradition agreements."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Extradition.*Agreement.*" ;
+        rdfs:comment "Agreement name must contain 'Extradition' and 'Agreement'."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:enablesExtradition ;
+        sh:class icac-legal:InternationalLawEnforcement ;
+        sh:minCount 1 ;
+        rdfs:comment "Agreement must enable specific law enforcement actions."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 2 ;
+        sh:maxCount 2 ;
+        rdfs:comment "Bilateral extradition agreement between exactly two countries."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Agreement creation timestamp."@en ;
+    ] .
+
+icac-legal:TreatyFrameworkShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:TreatyFramework ;
+    rdfs:label "Treaty Framework Shape"@en ;
+    rdfs:comment "Validation shape for international treaty frameworks."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 15 ;
+        sh:maxLength 300 ;
+        rdfs:comment "Treaty framework must have comprehensive name."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:facilitatesCooperation ;
+        sh:class icac-legal:InternationalLawEnforcement ;
+        sh:minCount 1 ;
+        rdfs:comment "Treaty must facilitate international cooperation."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 3 ;
+        rdfs:comment "Multilateral treaty must apply to at least three countries."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Treaty framework creation timestamp."@en ;
+    ] .
+
+# =============================================================================
+# LEGISLATION TYPES SHAPES
+# =============================================================================
+
+icac-legal:CSAMCriminalizationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:CSAMCriminalization ;
+    rdfs:label "CSAM Criminalization Shape"@en ;
+    rdfs:comment "Validation shape for CSAM criminalization legislation."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(CSAM|Child Sexual Abuse Material).*" ;
+        rdfs:comment "Legislation name must reference CSAM or Child Sexual Abuse Material."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:implementationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("drafted" "enacted" "enforced") ;
+        rdfs:comment "Implementation status must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:basedOnModel ;
+        sh:class icac-legal:CSAMModelLaw ;
+        sh:maxCount 1 ;
+        rdfs:comment "May be based on model legislation."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Must apply to exactly one country."@en ;
+    ] .
+
+icac-legal:OnlineGroomingLawShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:OnlineGroomingLaw ;
+    rdfs:label "Online Grooming Law Shape"@en ;
+    rdfs:comment "Validation shape for online grooming legislation."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(Online|Digital|Cyber).*(Grooming|Solicitation).*" ;
+        rdfs:comment "Law name must reference online/digital/cyber and grooming/solicitation."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:implementationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("drafted" "enacted" "enforced") ;
+        rdfs:comment "Implementation status must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Must apply to exactly one country."@en ;
+    ] .
+
+icac-legal:VictimProtectionLawShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:VictimProtectionLaw ;
+    rdfs:label "Victim Protection Law Shape"@en ;
+    rdfs:comment "Validation shape for victim protection legislation."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(Victim|Child).*(Protection|Rights|Safety).*" ;
+        rdfs:comment "Law name must reference victim/child and protection/rights/safety."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:implementationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("drafted" "enacted" "enforced") ;
+        rdfs:comment "Implementation status must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Must apply to exactly one country."@en ;
+    ] .
+
+icac-legal:MandatoryReportingLawShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:MandatoryReportingLaw ;
+    rdfs:label "Mandatory Reporting Law Shape"@en ;
+    rdfs:comment "Validation shape for mandatory reporting legislation."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(Mandatory|Required).*(Report|Disclosure).*" ;
+        rdfs:comment "Law name must reference mandatory/required and report/disclosure."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:implementationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("drafted" "enacted" "enforced") ;
+        rdfs:comment "Implementation status must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Must apply to exactly one country."@en ;
+    ] .
+
+# =============================================================================
+# LEGAL STANDARDS AND BENCHMARKS SHAPES
+# =============================================================================
+
+icac-legal:InternationalStandardShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:InternationalStandard ;
+    rdfs:label "International Standard Shape"@en ;
+    rdfs:comment "Validation shape for international standards."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 200 ;
+        rdfs:comment "Standard must have descriptive name."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 100 ;
+        rdfs:comment "Standard must have comprehensive description."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Standard creation timestamp."@en ;
+    ] .
+
+icac-legal:ComplianceBenchmarkShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:ComplianceBenchmark ;
+    rdfs:label "Compliance Benchmark Shape"@en ;
+    rdfs:comment "Validation shape for compliance benchmarks."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Benchmark.*" ;
+        rdfs:comment "Benchmark name must contain 'Benchmark'."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 50 ;
+        rdfs:comment "Benchmark must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Benchmark creation timestamp."@en ;
+    ] .
+
+# =============================================================================
+# POLICY DEVELOPMENT AND REFORM SHAPES
+# =============================================================================
+
+icac-legal:LegalReformShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalReform ;
+    rdfs:label "Legal Reform Shape"@en ;
+    rdfs:comment "Validation shape for legal reform processes."@en ;
+    sh:property [
+        sh:path icac-legal:reformPriority ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("low" "medium" "high" "urgent") ;
+        rdfs:comment "Reform priority must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Reform.*" ;
+        rdfs:comment "Reform name must contain 'Reform'."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Reform start timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:endTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Reform completion timestamp."@en ;
+    ] ;
+    # Temporal validation for reform process
+    sh:sparql [
+        sh:message "Reform end time must be after start time" ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "uco-core" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/uco/core#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this uco-core:startTime ?start ;
+                      uco-core:endTime ?end .
+                FILTER (?end <= ?start)
+            }
+        """ ;
+    ] .
+
+icac-legal:PolicyDevelopmentShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:PolicyDevelopment ;
+    rdfs:label "Policy Development Shape"@en ;
+    rdfs:comment "Validation shape for policy development processes."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Policy.*Development.*" ;
+        rdfs:comment "Name must contain 'Policy' and 'Development'."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Development start timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:endTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Development completion timestamp."@en ;
+    ] .
+
+icac-legal:TechnicalAssistanceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:TechnicalAssistance ;
+    rdfs:label "Technical Assistance Shape"@en ;
+    rdfs:comment "Validation shape for technical assistance programs."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(Technical|Legal).*(Assistance|Support).*" ;
+        rdfs:comment "Name must reference technical/legal and assistance/support."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:providesAssistance ;
+        sh:class icac-legal:PolicyDevelopment ;
+        sh:minCount 1 ;
+        rdfs:comment "Must provide assistance to policy development."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Assistance start timestamp."@en ;
+    ] .
+
+# =============================================================================
+# ASSESSMENT AND METRICS SHAPES
+# =============================================================================
+
+icac-legal:LegalCoverageAssessmentShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalCoverageAssessment ;
+    rdfs:label "Legal Coverage Assessment Shape"@en ;
+    rdfs:comment "Validation shape for legal coverage assessments."@en ;
+    sh:property [
+        sh:path icac-legal:coveragePercentage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0 ;
+        rdfs:comment "Coverage percentage must be between 0.0 and 100.0."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Assessment must have creation timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Coverage.*Assessment.*" ;
+        rdfs:comment "Name must contain 'Coverage' and 'Assessment'."@en ;
+    ] .
+
+icac-legal:ComplianceMetricsShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:ComplianceMetrics ;
+    rdfs:label "Compliance Metrics Shape"@en ;
+    rdfs:comment "Validation shape for compliance metrics."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Compliance.*Metric.*" ;
+        rdfs:comment "Name must contain 'Compliance' and 'Metric'."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 30 ;
+        rdfs:comment "Metrics must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Metrics creation timestamp."@en ;
+    ] .
+
+icac-legal:HarmonizationProgressShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:HarmonizationProgress ;
+    rdfs:label "Harmonization Progress Shape"@en ;
+    rdfs:comment "Validation shape for harmonization progress tracking."@en ;
+    sh:property [
+        sh:path icac-legal:harmonizationProgress ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        rdfs:comment "Progress must be between 0.0 and 1.0."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Progress tracking must have timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Harmonization.*Progress.*" ;
+        rdfs:comment "Name must contain 'Harmonization' and 'Progress'."@en ;
+    ] .
+
+icac-legal:LegalEffectivenessShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalEffectiveness ;
+    rdfs:label "Legal Effectiveness Shape"@en ;
+    rdfs:comment "Validation shape for legal effectiveness assessments."@en ;
+    sh:property [
+        sh:path icac-legal:effectivenessScore ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        rdfs:comment "Effectiveness score must be between 0.0 and 1.0."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "Effectiveness assessment must have timestamp."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Effectiveness.*Assessment.*" ;
+        rdfs:comment "Name must contain 'Effectiveness' and 'Assessment'."@en ;
+    ] .
+
+# =============================================================================
+# REGIONAL AND NATIONAL CONTEXTS SHAPES
+# =============================================================================
+
+icac-legal:RegionalFrameworkShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:RegionalFramework ;
+    rdfs:label "Regional Framework Shape"@en ;
+    rdfs:comment "Validation shape for regional legal frameworks."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*(Regional|Continental).*(Framework|Agreement).*" ;
+        rdfs:comment "Name must reference regional/continental and framework/agreement."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 3 ;
+        rdfs:comment "Regional framework must apply to at least three countries."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        rdfs:comment "Framework creation timestamp."@en ;
+    ] .
+
+icac-legal:NationalLegislationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:NationalLegislation ;
+    rdfs:label "National Legislation Shape"@en ;
+    rdfs:comment "Validation shape for national legislation."@en ;
+    sh:property [
+        sh:path icac-legal:implementationStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("drafted" "enacted" "enforced") ;
+        rdfs:comment "Implementation status must be specified."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:legalSystemType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:in ("common_law" "civil_law" "religious_law" "mixed") ;
+        rdfs:comment "Legal system type classification."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        rdfs:comment "National legislation must apply to exactly one country."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:assessedBy ;
+        sh:class icac-legal:LegislativeAssessment ;
+        rdfs:comment "Legislation may be assessed."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:partOfFramework ;
+        sh:class icac-legal:RegionalFramework ;
+        rdfs:comment "May be part of regional framework."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 300 ;
+        rdfs:comment "Legislation must have descriptive name."@en ;
+    ] .
+
+icac-legal:JurisdictionalVariationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:JurisdictionalVariation ;
+    rdfs:label "Jurisdictional Variation Shape"@en ;
+    rdfs:comment "Validation shape for jurisdictional variations."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern ".*Jurisdictional.*Variation.*" ;
+        rdfs:comment "Name must contain 'Jurisdictional' and 'Variation'."@en ;
+    ] ;
+    sh:property [
+        sh:path uco-core:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 50 ;
+        rdfs:comment "Variation must have detailed description."@en ;
+    ] ;
+    sh:property [
+        sh:path icac-legal:appliesToCountry ;
+        sh:class uco-location:Location ;
+        sh:minCount 2 ;
+        rdfs:comment "Variation must apply to at least two jurisdictions."@en ;
+    ] .
+
+# =============================================================================
+# CROSS-REFERENCE VALIDATION RULES
+# =============================================================================
+
+# Validate that legal reforms address identified gaps
+icac-legal:LegalReformGapValidation rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalReform ;
+    rdfs:label "Legal Reform Gap Validation"@en ;
+    rdfs:comment "Validates that legal reforms properly address identified gaps."@en ;
+    sh:sparql [
+        sh:message "Legal reform must address at least one identified gap" ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-legal" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/legal-harmonization#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this a icac-legal:LegalReform .
+                FILTER NOT EXISTS {
+                    ?gap icac-legal:requiresReform $this .
+                }
+            }
+        """ ;
+    ] .
+
+# Validate compliance measurement consistency
+icac-legal:ComplianceConsistencyValidation rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:LegalCompliance ;
+    rdfs:label "Compliance Consistency Validation"@en ;
+    rdfs:comment "Validates consistency between alignment level and compliance metrics."@en ;
+    sh:sparql [
+        sh:message "Full alignment must have compliance metrics with high effectiveness" ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-legal" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/legal-harmonization#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this icac-legal:legalAlignmentLevel "full" ;
+                      icac-legal:measuredBy ?metrics .
+                ?metrics icac-legal:effectivenessScore ?score .
+                FILTER (?score < 0.8)
+            }
+        """ ;
+    ] .
+
+# Validate international cooperation requirements
+icac-legal:InternationalCooperationValidation rdf:type sh:NodeShape ;
+    sh:targetClass icac-legal:InternationalLawEnforcement ;
+    rdfs:label "International Cooperation Validation"@en ;
+    rdfs:comment "Validates that international law enforcement has proper legal framework support."@en ;
+    sh:sparql [
+        sh:message "International law enforcement must be supported by treaty or MLA framework" ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-legal" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/legal-harmonization#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this a icac-legal:InternationalLawEnforcement .
+                FILTER NOT EXISTS {
+                    { ?treaty icac-legal:facilitatesCooperation $this . }
+                    UNION
+                    { ?agreement icac-legal:enablesExtradition $this . }
+                }
+            }
+        """ ;
+    ] . 

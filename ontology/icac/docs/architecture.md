@@ -28,6 +28,8 @@ graph TD
         PRODUCTION[icac-production.ttl]
         CUSTODIAL[icac-custodial.ttl]
         GROOMING[icac-grooming.ttl]
+        SEXTORTION[icac-sextortion.ttl]
+        ATHLETIC[icac-athletic-exploitation.ttl]
     end
 
     subgraph "Specialized Investigation"
@@ -35,6 +37,7 @@ graph TD
         PHYSICAL[icac-physical-evidence.ttl]
         TACTICAL[icac-tactical.ttl]
         MULTI_JURISDICTION[icac-multi-jurisdiction.ttl]
+        STRANGER[icac-stranger-abduction.ttl]
     end
 
     subgraph "Technical Support"
@@ -42,6 +45,7 @@ graph TD
         FORENSICS_SHAPES[icac-forensics-shapes.ttl]
         DETECTION[icac-detection.ttl]
         PLATFORMS[icac-platforms.ttl]
+        STREET[icac-street-recruitment.ttl]
     end
 
     subgraph "Victim Services & Legal"
@@ -63,6 +67,8 @@ graph TD
         REGISTRY_EX[sex-offender-registry-integration-example.ttl]
         ILLINOIS_EX[illinois-attorney-general-case-example.ttl]
         INTERNATIONAL_EX[international-coordination-example.ttl]
+        MORTON_EX[brooklyn-morton-october-2024-example.ttl]
+        SEXTORTION_EX[wa-sextortion-case-example.ttl]
     end
 
     UCO --> ICAC
@@ -78,15 +84,19 @@ graph TD
     ICAC --> PRODUCTION
     ICAC --> CUSTODIAL
     ICAC --> GROOMING
+    ICAC --> SEXTORTION
+    ICAC --> ATHLETIC
     
     ICAC --> UNDERCOVER
     ICAC --> PHYSICAL
     ICAC --> TACTICAL
     ICAC --> MULTI_JURISDICTION
+    ICAC --> STRANGER
     
     ICAC --> FORENSICS
     ICAC --> DETECTION
     ICAC --> PLATFORMS
+    ICAC --> STREET
     
     ICAC --> VICTIM_IMPACT
     ICAC --> TASKFORCE
@@ -108,11 +118,13 @@ graph TD
     SEX_OFFENDER --> REGISTRY_EX
     SENTENCING --> ILLINOIS_EX
     INTERNATIONAL --> INTERNATIONAL_EX
+    ATHLETIC --> MORTON_EX
+    SEXTORTION --> SEXTORTION_EX
 
-    linkStyle 18,19,20 stroke-dasharray: 5 5
+    linkStyle 23,24,25 stroke-dasharray: 5 5
 ```
 
-> **Note**: Shapes files (dotted lines) are used for validation but not imported by production graphs. All 22 ontology modules extend the core ICAC framework.
+> **Note**: Shapes files (dotted lines) are used for validation but not imported by production graphs. All 23 ontology modules extend the core ICAC framework.
 
 ## Enhanced Data Flow
 
@@ -123,6 +135,7 @@ graph LR
         API[API Submission]
         FORM[Web Form]
         ESP[Platform ESP Reports]
+        ATHLETIC_REPORT[Athletic Coaching Reports]
     end
 
     subgraph "Detection & Classification"
@@ -130,6 +143,7 @@ graph LR
         ML[ML Detection]
         MANUAL[Manual Review]
         CLASS[Classification (SAR/COPINE)]
+        ATHLETIC_ANALYSIS[Athletic Authority Analysis]
     end
 
     subgraph "Forensic Processing"
@@ -137,12 +151,14 @@ graph LR
         VERIFY[Evidence Verification]
         CHAIN[Chain of Custody]
         RECOVER[File Recovery]
+        TEAM_DYNAMICS[Team Dynamics Analysis]
     end
 
     subgraph "Platform Cooperation"
         PRESERVE[Data Preservation]
         DISCLOSE[Legal Disclosure]
         MODERATE[Content Moderation]
+        INSTITUTIONAL[Institutional Coordination]
     end
 
     subgraph Storage
@@ -155,35 +171,41 @@ graph LR
         SPARQL[Analytics Queries]
         REPORTS[Forensic Reports]
         VIZ[Visualization]
+        ATHLETIC_INTEL[Athletic Investigation Intelligence]
     end
 
     JSON --> HASH
     API --> HASH
     FORM --> HASH
     ESP --> HASH
+    ATHLETIC_REPORT --> ATHLETIC_ANALYSIS
     
     HASH --> ML
     ML --> MANUAL
     MANUAL --> CLASS
+    ATHLETIC_ANALYSIS --> CLASS
     
     CLASS --> ACQUIRE
     ACQUIRE --> VERIFY
     VERIFY --> CHAIN
     CHAIN --> RECOVER
+    RECOVER --> TEAM_DYNAMICS
     
     CLASS --> PRESERVE
     PRESERVE --> DISCLOSE
     DISCLOSE --> MODERATE
+    MODERATE --> INSTITUTIONAL
     
-    RECOVER --> VALID
+    TEAM_DYNAMICS --> VALID
     CLASS --> VALID
-    MODERATE --> VALID
+    INSTITUTIONAL --> VALID
     VALID --> STORE
     
     STORE --> CASE
     STORE --> SPARQL
     STORE --> REPORTS
     STORE --> VIZ
+    STORE --> ATHLETIC_INTEL
 ```
 
 ## Enhanced Class Hierarchy
@@ -304,7 +326,7 @@ graph TD
 
 ## Complete Ontology Module Reference
 
-The ICAC Ontology Family consists of 22 modules organized by domain:
+The ICAC Ontology Family consists of 23 modules organized by domain:
 
 ### Core Framework (3 modules)
 - **`icac-core.ttl`:** Base investigation framework and lifecycles

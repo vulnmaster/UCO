@@ -1,0 +1,497 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/location#> .
+@prefix icac-educational: <https://ontology.unifiedcyberontology.org/icac/educational#> .
+@prefix icac-educational-shapes: <https://ontology.unifiedcyberontology.org/icac/educational/shapes#> .
+
+# =============================================================================
+# EDUCATIONAL INSTITUTION SHAPES
+# =============================================================================
+
+icac-educational-shapes:EducationalInstitutionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducationalInstitution ;
+    rdfs:label "Educational Institution Shape"@en ;
+    rdfs:comment "Validation shape for educational institutions."@en ;
+    sh:property [
+        sh:path icac-educational:institutionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("independent" "public" "private" "elite" "charter") ;
+        sh:message "Institution type must be specified from valid options."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:institutionLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Institution location must be specified."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:studentPopulation ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 50000 ;
+        sh:message "Student population must be between 1 and 50,000."@en
+    ] .
+
+icac-educational-shapes:EliteEducationalInstitutionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EliteEducationalInstitution ;
+    rdfs:label "Elite Educational Institution Shape"@en ;
+    rdfs:comment "Validation shape for elite educational institutions."@en ;
+    sh:property [
+        sh:path icac-educational:institutionReputation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("elite" "prestigious" "highly_selective") ;
+        sh:message "Elite institution must have appropriate reputation level."@en
+    ] .
+
+# =============================================================================
+# EDUCATOR ROLE SHAPES
+# =============================================================================
+
+icac-educational-shapes:EducatorRoleShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducatorRole ;
+    rdfs:label "Educator Role Shape"@en ;
+    rdfs:comment "Validation shape for educator roles."@en ;
+    sh:property [
+        sh:path icac-educational:employmentDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.1 ; # Minimum 1 month
+        sh:maxInclusive 600.0 ; # Maximum 50 years
+        sh:message "Employment duration must be between 0.1 and 600 months."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:accessLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("direct_student_contact" "limited_contact" "administrative_only" "no_contact") ;
+        sh:message "Access level must be specified from valid options."@en
+    ] .
+
+icac-educational-shapes:TeacherRoleShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:TeacherRole ;
+    rdfs:label "Teacher Role Shape"@en ;
+    rdfs:comment "Validation shape for teacher roles."@en ;
+    sh:property [
+        sh:path icac-educational:subjectTaught ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Teacher role must specify subject taught."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:gradeLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("Elementary" "Middle School" "High School" "K-12" "Mixed") ;
+        sh:message "Grade level must be specified from valid options."@en
+    ] .
+
+# =============================================================================
+# EDUCATOR EXPLOITATION SHAPES
+# =============================================================================
+
+icac-educational-shapes:EducatorPerpetratedExploitationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducatorPerpetratedExploitation ;
+    rdfs:label "Educator Perpetrated Exploitation Shape"@en ;
+    rdfs:comment "Validation shape for educator-perpetrated exploitation."@en ;
+    sh:property [
+        sh:path icac-educational:exploitationDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.1 ; # Minimum 1 month
+        sh:maxInclusive 120.0 ; # Maximum 10 years
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Exploitation duration must be between 0.1 and 120 months."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:victimCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 1000 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Victim count must be between 1 and 1000."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:exploitsPosition ;
+        sh:class icac-educational:EducatorRole ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Exploitation must specify educator position being exploited."@en
+    ] .
+
+icac-educational-shapes:CrossInstitutionalExploitationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:CrossInstitutionalExploitation ;
+    rdfs:label "Cross Institutional Exploitation Shape"@en ;
+    rdfs:comment "Validation shape for cross-institutional exploitation."@en ;
+    sh:property [
+        sh:path icac-educational:institutionCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 2 ; # Must be multiple institutions
+        sh:maxInclusive 50 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Cross-institutional exploitation must involve 2-50 institutions."@en
+    ] .
+
+# =============================================================================
+# DIGITAL IMPERSONATION SHAPES
+# =============================================================================
+
+icac-educational-shapes:DigitalImpersonationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:DigitalImpersonation ;
+    rdfs:label "Digital Impersonation Shape"@en ;
+    rdfs:comment "Validation shape for digital impersonation."@en ;
+    sh:property [
+        sh:path icac-educational:platformUsed ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("Snapchat" "Instagram" "TikTok" "Discord" "WhatsApp" "Telegram" "Facebook" "Twitter") ;
+        sh:message "Platform used must be specified from valid options."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:accountUsername ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Account username must be specified."@en
+    ] .
+
+icac-educational-shapes:AgeDeceptionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:AgeDeception ;
+    rdfs:label "Age Deception Shape"@en ;
+    rdfs:comment "Validation shape for age deception."@en ;
+    sh:property [
+        sh:path icac-educational:impersonatedAge ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 13 ;
+        sh:maxInclusive 19 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Impersonated age must be between 13 and 19."@en
+    ] .
+
+icac-educational-shapes:MultipleAccountDeceptionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:MultipleAccountDeception ;
+    rdfs:label "Multiple Account Deception Shape"@en ;
+    rdfs:comment "Validation shape for multiple account deception."@en ;
+    sh:property [
+        sh:path icac-educational:accountCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 2 ; # Must be multiple accounts
+        sh:maxInclusive 20 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Multiple account deception must involve 2-20 accounts."@en
+    ] .
+
+# =============================================================================
+# VICTIM TARGETING SHAPES
+# =============================================================================
+
+icac-educational-shapes:StudentVictimTargetingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:StudentVictimTargeting ;
+    rdfs:label "Student Victim Targeting Shape"@en ;
+    rdfs:comment "Validation shape for student victim targeting."@en ;
+    sh:property [
+        sh:path icac-educational:victimAgeRange ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[0-9]+-[0-9]+$" ;
+        sh:message "Victim age range must be in format 'min-max' (e.g., '13-15')."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:targetsStudent ;
+        sh:class uco-identity:Person ;
+        sh:minCount 1 ;
+        sh:message "Student targeting must specify at least one target student."@en
+    ] .
+
+icac-educational-shapes:MultipleInstitutionTargetingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:MultipleInstitutionTargeting ;
+    rdfs:label "Multiple Institution Targeting Shape"@en ;
+    rdfs:comment "Validation shape for multiple institution targeting."@en ;
+    sh:property [
+        sh:path icac-educational:institutionCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 2 ;
+        sh:maxInclusive 50 ;
+        sh:message "Multiple institution targeting must involve 2-50 institutions."@en
+    ] .
+
+# =============================================================================
+# SEXUAL PERFORMANCE SOLICITATION SHAPES
+# =============================================================================
+
+icac-educational-shapes:SexualPerformanceSolicitationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:SexualPerformanceSolicitation ;
+    rdfs:label "Sexual Performance Solicitation Shape"@en ;
+    rdfs:comment "Validation shape for sexual performance solicitation."@en ;
+    sh:property [
+        sh:path icac-educational:solicitsFrom ;
+        sh:class uco-identity:Person ;
+        sh:minCount 1 ;
+        sh:message "Sexual performance solicitation must specify at least one victim."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Sexual performance solicitation can have at most one start time."@en
+    ] .
+
+# =============================================================================
+# INSTITUTIONAL VULNERABILITY SHAPES
+# =============================================================================
+
+icac-educational-shapes:InstitutionalVulnerabilityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:InstitutionalVulnerability ;
+    rdfs:label "Institutional Vulnerability Shape"@en ;
+    rdfs:comment "Validation shape for institutional vulnerabilities."@en .
+
+icac-educational-shapes:TrustBasedVulnerabilityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:TrustBasedVulnerability ;
+    rdfs:label "Trust Based Vulnerability Shape"@en ;
+    rdfs:comment "Validation shape for trust-based vulnerabilities."@en .
+
+icac-educational-shapes:PrivilegedEnvironmentVulnerabilityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:PrivilegedEnvironmentVulnerability ;
+    rdfs:label "Privileged Environment Vulnerability Shape"@en ;
+    rdfs:comment "Validation shape for privileged environment vulnerabilities."@en .
+
+# =============================================================================
+# INVESTIGATION SHAPES
+# =============================================================================
+
+icac-educational-shapes:EducationalInstitutionInvestigationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducationalInstitutionInvestigation ;
+    rdfs:label "Educational Institution Investigation Shape"@en ;
+    rdfs:comment "Validation shape for educational institution investigations."@en ;
+    sh:property [
+        sh:path icac-educational:investigatesNetwork ;
+        sh:class icac-educational:EducatorPerpetratedExploitation ;
+        sh:minCount 1 ;
+        sh:message "Educational investigation must investigate at least one exploitation operation."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Investigation can have at most one start time."@en
+    ] .
+
+# =============================================================================
+# EVIDENCE SHAPES
+# =============================================================================
+
+icac-educational-shapes:IPAddressEvidenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:IPAddressEvidence ;
+    rdfs:label "IP Address Evidence Shape"@en ;
+    rdfs:comment "Validation shape for IP address evidence."@en ;
+    sh:property [
+        sh:path icac-educational:linkedToLocation ;
+        sh:class uco-location:Location ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "IP address evidence must link to exactly one location."@en
+    ] ;
+    sh:property [
+        sh:path icac-educational:documentsExploitation ;
+        sh:class icac-educational:EducatorPerpetratedExploitation ;
+        sh:minCount 1 ;
+        sh:message "IP address evidence must document at least one exploitation."@en
+    ] .
+
+icac-educational-shapes:DigitalCommunicationEvidenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:DigitalCommunicationEvidence ;
+    rdfs:label "Digital Communication Evidence Shape"@en ;
+    rdfs:comment "Validation shape for digital communication evidence."@en ;
+    sh:property [
+        sh:path icac-educational:documentsExploitation ;
+        sh:class icac-educational:EducatorPerpetratedExploitation ;
+        sh:minCount 1 ;
+        sh:message "Digital communication evidence must document at least one exploitation."@en
+    ] .
+
+icac-educational-shapes:VictimAccountEvidenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:VictimAccountEvidence ;
+    rdfs:label "Victim Account Evidence Shape"@en ;
+    rdfs:comment "Validation shape for victim account evidence."@en ;
+    sh:property [
+        sh:path icac-educational:providedBy ;
+        sh:class uco-identity:Person ;
+        sh:minCount 1 ;
+        sh:message "Victim account evidence must be provided by at least one victim."@en
+    ] .
+
+# =============================================================================
+# LEGAL CHARGE SHAPES
+# =============================================================================
+
+icac-educational-shapes:UseOfChildInSexualPerformanceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:UseOfChildInSexualPerformance ;
+    rdfs:label "Use of Child in Sexual Performance Shape"@en ;
+    rdfs:comment "Validation shape for use of child in sexual performance charges."@en ;
+    sh:property [
+        sh:path icac-educational:sentenceLength ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.1 ; # Minimum sentence
+        sh:maxInclusive 50.0 ; # Maximum 50 years
+        sh:message "Sentence length must be between 0.1 and 50 years."@en
+    ] .
+
+icac-educational-shapes:EndangeringWelfareOfChildShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EndangeringWelfareOfChild ;
+    rdfs:label "Endangering Welfare of Child Shape"@en ;
+    rdfs:comment "Validation shape for endangering welfare of child charges."@en ;
+    sh:property [
+        sh:path icac-educational:chargeCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 100 ;
+        sh:message "Charge count must be between 1 and 100."@en
+    ] .
+
+# =============================================================================
+# POST-CONVICTION REQUIREMENT SHAPES
+# =============================================================================
+
+icac-educational-shapes:PostReleaseSuperVisionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:PostReleaseSuperVision ;
+    rdfs:label "Post Release Supervision Shape"@en ;
+    rdfs:comment "Validation shape for post-release supervision."@en ;
+    sh:property [
+        sh:path icac-educational:supervisionDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 1.0 ; # Minimum 1 year
+        sh:maxInclusive 50.0 ; # Maximum 50 years
+        sh:message "Supervision duration must be between 1 and 50 years."@en
+    ] .
+
+icac-educational-shapes:SexOffenderRegistrationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:SexOffenderRegistration ;
+    rdfs:label "Sex Offender Registration Shape"@en ;
+    rdfs:comment "Validation shape for sex offender registration."@en .
+
+# =============================================================================
+# CONSISTENCY VALIDATION SHAPES
+# =============================================================================
+
+# Ensure educator exploitation involves appropriate educator role
+icac-educational-shapes:EducatorExploitationConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducatorPerpetratedExploitation ;
+    sh:sparql [
+        sh:message "Educator exploitation must involve person with educator role."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-educational" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/educational#"^^xsd:anyURI ;
+            ] ;
+            sh:declare [
+                sh:prefix "uco-identity" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/identity#"^^xsd:anyURI ;
+            ] ;
+            sh:declare [
+                sh:prefix "uco-role" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/role#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this icac-educational:exploitsPosition ?role .
+                FILTER NOT EXISTS {
+                    ?person icac-educational:employedAt ?institution .
+                    ?person uco-role:hasRole ?role .
+                }
+            }
+        """ ;
+    ] .
+
+# Ensure victim age consistency
+icac-educational-shapes:VictimAgeConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:StudentVictimTargeting ;
+    sh:sparql [
+        sh:message "Victim age range must be consistent with actual victim ages."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-educational" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/educational#"^^xsd:anyURI ;
+            ] ;
+            sh:declare [
+                sh:prefix "uco-identity" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/identity#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this icac-educational:victimAgeRange ?ageRange .
+                $this icac-educational:targetsStudent ?victim .
+                ?victim uco-identity:birthDate ?birthDate .
+                BIND(YEAR(NOW()) - YEAR(?birthDate) AS ?age)
+                BIND(STRBEFORE(?ageRange, "-") AS ?minAgeStr)
+                BIND(STRAFTER(?ageRange, "-") AS ?maxAgeStr)
+                BIND(xsd:integer(?minAgeStr) AS ?minAge)
+                BIND(xsd:integer(?maxAgeStr) AS ?maxAge)
+                FILTER(?age < ?minAge || ?age > ?maxAge)
+            }
+        """ ;
+    ] .
+
+# Ensure institution count consistency
+icac-educational-shapes:InstitutionCountConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:CrossInstitutionalExploitation ;
+    sh:sparql [
+        sh:message "Institution count must match number of institutions actually targeted."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-educational" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/educational#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this icac-educational:institutionCount ?count .
+                {
+                    SELECT $this (COUNT(DISTINCT ?institution) AS ?actualCount) WHERE {
+                        $this icac-educational:targetsStudent ?victim .
+                        ?victim icac-educational:attendsInstitution ?institution .
+                    }
+                    GROUP BY $this
+                }
+                FILTER(?count != ?actualCount)
+            }
+        """ ;
+    ] .
+
+# Ensure exploitation duration consistency
+icac-educational-shapes:ExploitationDurationConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-educational:EducatorPerpetratedExploitation ;
+    sh:sparql [
+        sh:message "End time must be after start time for exploitation operations."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "uco-core" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/core#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this WHERE {
+                $this uco-core:startTime ?start .
+                $this uco-core:endTime ?end .
+                FILTER(?end <= ?start)
+            }
+        """ ;
+    ] . 

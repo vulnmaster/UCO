@@ -1,0 +1,671 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-ai: <https://ontology.unifiedcyberontology.org/icac/ai-generated#> .
+
+# =============================================================================
+# AI-GENERATED CSAM SHAPES
+# =============================================================================
+
+icac-ai:AIGeneratedCSAMShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIGeneratedCSAM ;
+    rdfs:label "AI-Generated CSAM Shape"@en ;
+    rdfs:comment "Validation shape for AI-generated CSAM instances."@en ;
+    sh:property [
+        sh:path icac-ai:aiModelUsed ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "Stable Diffusion" "GAN" "VAE" "Transformer" "DALL-E" "Midjourney" "Custom Model" "Unknown" ) ;
+        sh:message "AI model used must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:artificialnessLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "fully_synthetic" "partially_altered" "minimally_modified" "hybrid" ) ;
+        sh:message "Artificialness level must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:realVictimDepicted ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Must specify whether real victim is depicted."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:renderingQuality ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "low" "medium" "high" "photorealistic" ) ;
+        sh:message "Rendering quality must be from the allowed list."@en
+    ] .
+
+icac-ai:DeepfakeCSAMShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:DeepfakeCSAM ;
+    rdfs:label "Deepfake CSAM Shape"@en ;
+    rdfs:comment "Validation shape for deepfake CSAM instances."@en ;
+    sh:property [
+        sh:path icac-ai:realVictimDepicted ;
+        sh:hasValue true ;
+        sh:message "Deepfake CSAM must involve real victim imagery."@en
+    ] .
+
+icac-ai:SyntheticMediaCSAMShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:SyntheticMediaCSAM ;
+    rdfs:label "Synthetic Media CSAM Shape"@en ;
+    rdfs:comment "Validation shape for synthetic media CSAM instances."@en ;
+    sh:property [
+        sh:path icac-ai:artificialnessLevel ;
+        sh:hasValue "fully_synthetic" ;
+        sh:message "Synthetic media CSAM must be fully synthetic."@en
+    ] .
+
+icac-ai:HybridCSAMShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:HybridCSAM ;
+    rdfs:label "Hybrid CSAM Shape"@en ;
+    rdfs:comment "Validation shape for hybrid CSAM instances."@en ;
+    sh:property [
+        sh:path icac-ai:artificialnessLevel ;
+        sh:hasValue "hybrid" ;
+        sh:message "Hybrid CSAM must have hybrid artificialness level."@en
+    ] .
+
+# =============================================================================
+# AI CONTENT GENERATION SHAPES
+# =============================================================================
+
+icac-ai:AIContentGenerationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentGeneration ;
+    rdfs:label "AI Content Generation Shape"@en ;
+    rdfs:comment "Validation shape for AI content generation instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "AI content generation must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:generationTechnique ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "text-to-image" "image-to-image" "style_transfer" "face_swap" "age_progression" "video_generation" ) ;
+        sh:message "Generation technique must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:generationComplexity ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "basic" "intermediate" "advanced" "expert" ) ;
+        sh:message "Generation complexity must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:technicalExpertiseRequired ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "basic" "intermediate" "advanced" "expert" ) ;
+        sh:message "Technical expertise required must be from the allowed list."@en
+    ] .
+
+icac-ai:ModelTrainingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:ModelTraining ;
+    rdfs:label "Model Training Shape"@en ;
+    rdfs:comment "Validation shape for model training instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Model training must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:endTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Model training may specify end time."@en
+    ] .
+
+icac-ai:ImageGenerationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:ImageGeneration ;
+    rdfs:label "Image Generation Shape"@en ;
+    rdfs:comment "Validation shape for image generation instances."@en ;
+    sh:property [
+        sh:path icac-ai:generationTechnique ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "text-to-image" "image-to-image" "style_transfer" ) ;
+        sh:message "Image generation technique must be appropriate for static images."@en
+    ] .
+
+icac-ai:VideoGenerationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:VideoGeneration ;
+    rdfs:label "Video Generation Shape"@en ;
+    rdfs:comment "Validation shape for video generation instances."@en ;
+    sh:property [
+        sh:path icac-ai:generationTechnique ;
+        sh:hasValue "video_generation" ;
+        sh:message "Video generation must use video generation technique."@en
+    ] .
+
+icac-ai:FaceSwappingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:FaceSwapping ;
+    rdfs:label "Face Swapping Shape"@en ;
+    rdfs:comment "Validation shape for face swapping instances."@en ;
+    sh:property [
+        sh:path icac-ai:generationTechnique ;
+        sh:hasValue "face_swap" ;
+        sh:message "Face swapping must use face swap technique."@en
+    ] .
+
+icac-ai:AgeProgressionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AgeProgression ;
+    rdfs:label "Age Progression Shape"@en ;
+    rdfs:comment "Validation shape for age progression instances."@en ;
+    sh:property [
+        sh:path icac-ai:generationTechnique ;
+        sh:hasValue "age_progression" ;
+        sh:message "Age progression must use age progression technique."@en
+    ] .
+
+# =============================================================================
+# AI DETECTION SHAPES
+# =============================================================================
+
+icac-ai:AIContentDetectionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentDetection ;
+    rdfs:label "AI Content Detection Shape"@en ;
+    rdfs:comment "Validation shape for AI content detection instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "AI content detection must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:detectionConfidence ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "Detection confidence must be between 0.0 and 1.0."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:detectionMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "neural_network" "statistical_analysis" "artifact_detection" "metadata_analysis" "hybrid_approach" ) ;
+        sh:message "Detection method must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:processingTime ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.1 ;
+        sh:maxInclusive 3600.0 ;
+        sh:message "Processing time must be between 0.1 and 3600 seconds."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:evidenceAdmissibility ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "accepted" "challenged" "rejected" "unclear" ) ;
+        sh:message "Evidence admissibility must be from the allowed list."@en
+    ] .
+
+icac-ai:SyntheticMediaAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:SyntheticMediaAnalysis ;
+    rdfs:label "Synthetic Media Analysis Shape"@en ;
+    rdfs:comment "Validation shape for synthetic media analysis instances."@en ;
+    sh:property [
+        sh:path uco-action:performer ;
+        sh:class uco-identity:Person ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Synthetic media analysis must specify performing analyst."@en
+    ] .
+
+icac-ai:DeepfakeDetectionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:DeepfakeDetection ;
+    rdfs:label "Deepfake Detection Shape"@en ;
+    rdfs:comment "Validation shape for deepfake detection instances."@en ;
+    sh:property [
+        sh:path icac-ai:detectionMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "neural_network" "artifact_detection" "biometric_analysis" "temporal_inconsistency" ) ;
+        sh:message "Deepfake detection method must be appropriate for face manipulation."@en
+    ] .
+
+icac-ai:ArtifactAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:ArtifactAnalysis ;
+    rdfs:label "Artifact Analysis Shape"@en ;
+    rdfs:comment "Validation shape for artifact analysis instances."@en ;
+    sh:property [
+        sh:path icac-ai:artifactsDetected ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 10 ;
+        sh:in ( "compression_anomalies" "facial_inconsistencies" "lighting_errors" "texture_artifacts" "edge_artifacts" "noise_patterns" "color_inconsistencies" "geometric_distortions" ) ;
+        sh:message "Artifacts detected must be from the allowed list."@en
+    ] .
+
+icac-ai:BiometricInconsistencyAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:BiometricInconsistencyAnalysis ;
+    rdfs:label "Biometric Inconsistency Analysis Shape"@en ;
+    rdfs:comment "Validation shape for biometric inconsistency analysis instances."@en ;
+    sh:property [
+        sh:path icac-ai:detectionMethod ;
+        sh:hasValue "biometric_analysis" ;
+        sh:message "Biometric inconsistency analysis must use biometric analysis method."@en
+    ] .
+
+# =============================================================================
+# AI DETECTION TOOL SHAPES
+# =============================================================================
+
+icac-ai:AIDetectionToolShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIDetectionTool ;
+    rdfs:label "AI Detection Tool Shape"@en ;
+    rdfs:comment "Validation shape for AI detection tool instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "AI detection tool must have a name (2-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path uco-tool:version ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$" ;
+        sh:message "Tool version must follow semantic versioning pattern (e.g., '1.0', '2.1.3')."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:falsePositiveRate ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "False positive rate must be between 0.0 and 1.0."@en
+    ] .
+
+icac-ai:DeepfakeDetectionToolShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:DeepfakeDetectionTool ;
+    rdfs:label "Deepfake Detection Tool Shape"@en ;
+    rdfs:comment "Validation shape for deepfake detection tool instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Deepfake detection tool must have a name (2-100 characters)."@en
+    ] .
+
+icac-ai:SyntheticImageDetectorShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:SyntheticImageDetector ;
+    rdfs:label "Synthetic Image Detector Shape"@en ;
+    rdfs:comment "Validation shape for synthetic image detector instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Synthetic image detector must have a name (2-100 characters)."@en
+    ] .
+
+icac-ai:MetadataAnalysisToolShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:MetadataAnalysisTool ;
+    rdfs:label "Metadata Analysis Tool Shape"@en ;
+    rdfs:comment "Validation shape for metadata analysis tool instances."@en ;
+    sh:property [
+        sh:path uco-core:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 2 ;
+        sh:maxLength 100 ;
+        sh:message "Metadata analysis tool must have a name (2-100 characters)."@en
+    ] .
+
+# =============================================================================
+# AI-CSAM INVESTIGATION SHAPES
+# =============================================================================
+
+icac-ai:AICSAMInvestigationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AICSAMInvestigation ;
+    rdfs:label "AI-CSAM Investigation Shape"@en ;
+    rdfs:comment "Validation shape for AI-CSAM investigation instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "AI-CSAM investigation must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:investigationChallengeLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "low" "moderate" "high" "extreme" ) ;
+        sh:message "Investigation challenge level must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:victimIdentificationDifficulty ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "none" "low" "moderate" "high" "impossible" ) ;
+        sh:message "Victim identification difficulty must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:legalFrameworkChallenges ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 5 ;
+        sh:in ( "legislation_gaps" "jurisdiction_issues" "evidence_admissibility" "prosecution_complexity" "international_cooperation" ) ;
+        sh:message "Legal framework challenges must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:prosecutionDifficulty ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "low" "moderate" "high" "extreme" ) ;
+        sh:message "Prosecution difficulty must be from the allowed list."@en
+    ] .
+
+icac-ai:GenerationSourceTrackingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:GenerationSourceTracking ;
+    rdfs:label "Generation Source Tracking Shape"@en ;
+    rdfs:comment "Validation shape for generation source tracking instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Generation source tracking must specify start time."@en
+    ] ;
+    sh:property [
+        sh:path icac-ai:sourceTraceability ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "untraceable" "limited" "moderate" "high" ) ;
+        sh:message "Source traceability must be from the allowed list."@en
+    ] .
+
+icac-ai:ModelIdentificationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:ModelIdentification ;
+    rdfs:label "Model Identification Shape"@en ;
+    rdfs:comment "Validation shape for model identification instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Model identification must specify start time."@en
+    ] .
+
+icac-ai:TrainingDataAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:TrainingDataAnalysis ;
+    rdfs:label "Training Data Analysis Shape"@en ;
+    rdfs:comment "Validation shape for training data analysis instances."@en ;
+    sh:property [
+        sh:path uco-core:startTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Training data analysis must specify start time."@en
+    ] .
+
+# =============================================================================
+# CROSS-REFERENCE VALIDATION SHAPES
+# =============================================================================
+
+icac-ai:AIGenerationCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIGeneratedCSAM ;
+    rdfs:label "AI Generation Cross Reference Shape"@en ;
+    rdfs:comment "Validates that AI-generated content has associated generation processes."@en ;
+    sh:sparql [
+        sh:message "AI-generated CSAM should have an associated generation process."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-ai:AIGeneratedCSAM .
+                FILTER NOT EXISTS {
+                    $this icac-ai:generatedUsing ?generation .
+                    ?generation a icac-ai:AIContentGeneration .
+                }
+            }
+        """
+    ] .
+
+icac-ai:DetectionToolCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentDetection ;
+    rdfs:label "Detection Tool Cross Reference Shape"@en ;
+    rdfs:comment "Validates that AI detection processes use appropriate tools."@en ;
+    sh:sparql [
+        sh:message "AI content detection should use detection tools."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-ai:AIContentDetection .
+                FILTER NOT EXISTS {
+                    $this icac-ai:usesDetectionTool ?tool .
+                    ?tool a icac-ai:AIDetectionTool .
+                }
+            }
+        """
+    ] .
+
+icac-ai:InvestigationSubjectCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AICSAMInvestigation ;
+    rdfs:label "Investigation Subject Cross Reference Shape"@en ;
+    rdfs:comment "Validates that AI-CSAM investigations have subject content."@en ;
+    sh:sparql [
+        sh:message "AI-CSAM investigation should have subject AI-generated content."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-ai:AICSAMInvestigation .
+                FILTER NOT EXISTS {
+                    ?content icac-ai:subjectOfInvestigation $this .
+                    ?content a icac-ai:AIGeneratedCSAM .
+                }
+            }
+        """
+    ] .
+
+icac-ai:SourceTrackingCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:GenerationSourceTracking ;
+    rdfs:label "Source Tracking Cross Reference Shape"@en ;
+    rdfs:comment "Validates source tracking relationships."@en ;
+    sh:sparql [
+        sh:message "Generation source tracking should be part of an AI-CSAM investigation."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-ai:GenerationSourceTracking .
+                FILTER NOT EXISTS {
+                    ?investigation a icac-ai:AICSAMInvestigation .
+                    ?investigation uco-action:subAction $this .
+                }
+            }
+        """
+    ] .
+
+# =============================================================================
+# TEMPORAL VALIDATION SHAPES
+# =============================================================================
+
+icac-ai:TemporalValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentGeneration ,
+                   icac-ai:AIContentDetection ,
+                   icac-ai:AICSAMInvestigation ,
+                   icac-ai:GenerationSourceTracking ,
+                   icac-ai:ModelIdentification ,
+                   icac-ai:TrainingDataAnalysis ;
+    rdfs:label "Temporal Validation Shape"@en ;
+    rdfs:comment "Validates temporal consistency for AI-related actions."@en ;
+    sh:sparql [
+        sh:message "Start time must be before end time when both are specified."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this uco-core:startTime ?start ;
+                      uco-core:endTime ?end .
+                FILTER (?start >= ?end)
+            }
+        """
+    ] .
+
+icac-ai:DetectionSequenceValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentDetection ;
+    rdfs:label "Detection Sequence Validation Shape"@en ;
+    rdfs:comment "Validates that detection occurs after content generation."@en ;
+    sh:sparql [
+        sh:message "AI content detection should occur after content generation."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-ai:AIContentDetection ;
+                      uco-core:startTime ?detectionTime .
+                ?content icac-ai:detectedBy $this ;
+                         icac-ai:generatedUsing ?generation .
+                ?generation uco-core:startTime ?generationTime .
+                FILTER (?detectionTime < ?generationTime)
+            }
+        """
+    ] .
+
+# =============================================================================
+# DATA QUALITY SHAPES
+# =============================================================================
+
+icac-ai:DataQualityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIGeneratedCSAM ,
+                   icac-ai:AIContentGeneration ,
+                   icac-ai:AIContentDetection ,
+                   icac-ai:AIDetectionTool ,
+                   icac-ai:AICSAMInvestigation ;
+    rdfs:label "Data Quality Shape"@en ;
+    rdfs:comment "Validates data quality for AI-related entities."@en ;
+    sh:property [
+        sh:path uco-core:createdTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Creation time should be specified when available."@en
+    ] ;
+    sh:property [
+        sh:path uco-core:modifiedTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Modification time should be specified when available."@en
+    ] .
+
+icac-ai:ConfidenceScoreValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentDetection ;
+    rdfs:label "Confidence Score Validation Shape"@en ;
+    rdfs:comment "Validates confidence score consistency and reasonableness."@en ;
+    sh:sparql [
+        sh:message "High confidence detection should use appropriate detection methods."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-ai:detectionConfidence ?confidence ;
+                      icac-ai:detectionMethod "metadata_analysis" .
+                FILTER (?confidence > 0.9)
+            }
+        """
+    ] .
+
+icac-ai:ArtificialnessConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIGeneratedCSAM ;
+    rdfs:label "Artificialness Consistency Shape"@en ;
+    rdfs:comment "Validates consistency between artificialness level and real victim depiction."@en ;
+    sh:sparql [
+        sh:message "Fully synthetic content should not depict real victims."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-ai:artificialnessLevel "fully_synthetic" ;
+                      icac-ai:realVictimDepicted true .
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "Content depicting real victims should not be fully synthetic."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-ai:realVictimDepicted true ;
+                      icac-ai:artificialnessLevel "fully_synthetic" .
+            }
+        """
+    ] .
+
+icac-ai:TechnicalComplexityValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AIContentGeneration ;
+    rdfs:label "Technical Complexity Validation Shape"@en ;
+    rdfs:comment "Validates consistency between generation complexity and technical expertise."@en ;
+    sh:sparql [
+        sh:message "Expert-level generation should require expert technical expertise."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-ai:generationComplexity "expert" ;
+                      icac-ai:technicalExpertiseRequired ?expertise .
+                FILTER (?expertise IN ("basic", "intermediate"))
+            }
+        """
+    ] .
+
+icac-ai:LegalFrameworkValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-ai:AICSAMInvestigation ;
+    rdfs:label "Legal Framework Validation Shape"@en ;
+    rdfs:comment "Validates legal framework challenge consistency."@en ;
+    sh:sparql [
+        sh:message "Extreme prosecution difficulty should correlate with significant legal framework challenges."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-ai:prosecutionDifficulty "extreme" .
+                FILTER NOT EXISTS {
+                    $this icac-ai:legalFrameworkChallenges ?challenge .
+                }
+            }
+        """
+    ] . 

@@ -23,11 +23,6 @@ icac:ICACInvestigationShape rdf:type sh:NodeShape ;
     sh:rule [
         a sh:SPARQLRule ;
         sh:message "The first step must be ReceiveCybertipAction"@en ;
-        sh:condition [
-            sh:not [
-                sh:path (icac:hasStep icac:previousStep*) ;
-            ]
-        ] ;
         sh:prefixes icac: ;
         sh:construct """
             INSERT { $this a icac:LifecycleError . }

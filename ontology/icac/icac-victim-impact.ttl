@@ -494,4 +494,392 @@ icac-impact:informsRestitution rdf:type owl:ObjectProperty ;
     rdfs:label "informs restitution"@en ;
     rdfs:comment "Links victim impact to restitution calculations."@en ;
     rdfs:domain icac-impact:VictimImpactAssessment ;
-    rdfs:range uco-observable:ObservableObject . 
+    rdfs:range uco-observable:ObservableObject .
+
+# =============================================================================
+# EMERGENCY RESPONSE AND HELP-SEEKING BEHAVIOR (Brooklyn Case Enhancement)
+# =============================================================================
+
+icac-impact:EmergencyHelpSeeking rdf:type owl:Class ;
+    rdfs:label "Emergency Help Seeking"@en ;
+    rdfs:comment "Victim's attempt to seek emergency help during trafficking or exploitation, such as calling 911 (e.g., Wilmington, NC call)."@en ;
+    rdfs:subClassOf icac-impact:VictimBehavior .
+
+icac-impact:NineOneOneCall rdf:type owl:Class ;
+    rdfs:label "911 Call"@en ;
+    rdfs:comment "Emergency call to 911 by trafficking victim seeking help and reporting forced prostitution."@en ;
+    rdfs:subClassOf icac-impact:EmergencyHelpSeeking .
+
+icac-impact:VictimSelfReporting rdf:type owl:Class ;
+    rdfs:label "Victim Self Reporting"@en ;
+    rdfs:comment "Victim's direct reporting of their trafficking or exploitation situation to authorities."@en ;
+    rdfs:subClassOf icac-impact:EmergencyHelpSeeking .
+
+icac-impact:EmergencyResponse rdf:type owl:Class ;
+    rdfs:label "Emergency Response"@en ;
+    rdfs:comment "Immediate response to victim emergency help requests, including law enforcement and victim services coordination."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-impact:VictimExtraction rdf:type owl:Class ;
+    rdfs:label "Victim Extraction"@en ;
+    rdfs:comment "Immediate removal of victim from dangerous trafficking situation following emergency call."@en ;
+    rdfs:subClassOf icac-impact:EmergencyResponse .
+
+icac-impact:OngoingDangerAssessment rdf:type owl:Class ;
+    rdfs:label "Ongoing Danger Assessment"@en ;
+    rdfs:comment "Assessment of victim's ongoing danger from trafficking network and need for protection."@en ;
+    rdfs:subClassOf icac-impact:VictimImpactAssessment .
+
+icac-impact:VictimSafetyPlanning rdf:type owl:Class ;
+    rdfs:label "Victim Safety Planning"@en ;
+    rdfs:comment "Development of safety plan for trafficking victim to prevent re-victimization."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+# Help-Seeking Barriers and Facilitators
+icac-impact:HelpSeekingBarrier rdf:type owl:Class ;
+    rdfs:label "Help Seeking Barrier"@en ;
+    rdfs:comment "Factor that prevents or impedes victim from seeking help (fear, control, isolation, trauma bonding)."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-impact:TraffickerControlBarrier rdf:type owl:Class ;
+    rdfs:label "Trafficker Control Barrier"@en ;
+    rdfs:comment "Control mechanisms used by traffickers that prevent victims from seeking help."@en ;
+    rdfs:subClassOf icac-impact:HelpSeekingBarrier .
+
+icac-impact:HelpSeekingFacilitator rdf:type owl:Class ;
+    rdfs:label "Help Seeking Facilitator"@en ;
+    rdfs:comment "Factor that enables or encourages victim to seek help (opportunity, trust, desperation, external support)."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+# =============================================================================
+# EMERGENCY RESPONSE PROPERTIES
+# =============================================================================
+
+icac-impact:emergencyCallLocation rdf:type owl:DatatypeProperty ;
+    rdfs:label "emergency call location"@en ;
+    rdfs:comment "Location from which emergency call was made (e.g., Wilmington, North Carolina)."@en ;
+    rdfs:domain icac-impact:NineOneOneCall ;
+    rdfs:range xsd:string .
+
+icac-impact:reportedSituation rdf:type owl:DatatypeProperty ;
+    rdfs:label "reported situation"@en ;
+    rdfs:comment "Situation reported by victim in emergency call (e.g., 'forced to engage in prostitution')."@en ;
+    rdfs:domain icac-impact:VictimSelfReporting ;
+    rdfs:range xsd:string .
+
+icac-impact:responseTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "response time"@en ;
+    rdfs:comment "Time from emergency call to first responder arrival in minutes."@en ;
+    rdfs:domain icac-impact:EmergencyResponse ;
+    rdfs:range xsd:decimal .
+
+icac-impact:extractionComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:label "extraction complexity"@en ;
+    rdfs:comment "Complexity level of victim extraction (simple, moderate, complex, high_risk)."@en ;
+    rdfs:domain icac-impact:VictimExtraction ;
+    rdfs:range xsd:string .
+
+icac-impact:ongoingDangerLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "ongoing danger level"@en ;
+    rdfs:comment "Assessment of ongoing danger to victim (low, moderate, high, extreme)."@en ;
+    rdfs:domain icac-impact:OngoingDangerAssessment ;
+    rdfs:range xsd:string .
+
+icac-impact:safetyPlanType rdf:type owl:DatatypeProperty ;
+    rdfs:label "safety plan type"@en ;
+    rdfs:comment "Type of safety plan implemented (immediate, short_term, long_term, comprehensive)."@en ;
+    rdfs:domain icac-impact:VictimSafetyPlanning ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# EMERGENCY RESPONSE RELATIONSHIPS
+# =============================================================================
+
+icac-impact:triggersResponse rdf:type owl:ObjectProperty ;
+    rdfs:label "triggers response"@en ;
+    rdfs:comment "Links emergency help seeking to response it triggers."@en ;
+    rdfs:domain icac-impact:EmergencyHelpSeeking ;
+    rdfs:range icac-impact:EmergencyResponse .
+
+icac-impact:resultsinExtraction rdf:type owl:ObjectProperty ;
+    rdfs:label "results in extraction"@en ;
+    rdfs:comment "Links emergency response to victim extraction performed."@en ;
+    rdfs:domain icac-impact:EmergencyResponse ;
+    rdfs:range icac-impact:VictimExtraction .
+
+icac-impact:necessitatesAssessment rdf:type owl:ObjectProperty ;
+    rdfs:label "necessitates assessment"@en ;
+    rdfs:comment "Links victim extraction to ongoing danger assessment required."@en ;
+    rdfs:domain icac-impact:VictimExtraction ;
+    rdfs:range icac-impact:OngoingDangerAssessment .
+
+icac-impact:informsSafetyPlanning rdf:type owl:ObjectProperty ;
+    rdfs:label "informs safety planning"@en ;
+    rdfs:comment "Links danger assessment to safety planning based on assessment results."@en ;
+    rdfs:domain icac-impact:OngoingDangerAssessment ;
+    rdfs:range icac-impact:VictimSafetyPlanning .
+
+icac-impact:impededByBarrier rdf:type owl:ObjectProperty ;
+    rdfs:label "impeded by barrier"@en ;
+    rdfs:comment "Links help seeking to barriers that impede it."@en ;
+    rdfs:domain icac-impact:EmergencyHelpSeeking ;
+    rdfs:range icac-impact:HelpSeekingBarrier .
+
+icac-impact:facilitatedByFactor rdf:type owl:ObjectProperty ;
+    rdfs:label "facilitated by factor"@en ;
+    rdfs:comment "Links help seeking to factors that facilitate it."@en ;
+    rdfs:domain icac-impact:EmergencyHelpSeeking ;
+    rdfs:range icac-impact:HelpSeekingFacilitator .
+
+# =============================================================================
+# HOSPITAL-BASED INTERVENTIONS (April 2025 Brooklyn Case Enhancement)
+# =============================================================================
+
+icac-impact:HospitalIntervention rdf:type owl:Class ;
+    rdfs:label "Hospital Intervention"@en ;
+    rdfs:comment "Medical intervention and assessment of trafficking victim at hospital following emergency call."@en ;
+    rdfs:subClassOf icac-impact:EmergencyResponse .
+
+icac-impact:SuicidalIdeationResponse rdf:type owl:Class ;
+    rdfs:label "Suicidal Ideation Response"@en ;
+    rdfs:comment "Emergency response to trafficking victim reporting suicidal thoughts or intentions."@en ;
+    rdfs:subClassOf icac-impact:EmergencyResponse .
+
+icac-impact:MedicalTraumaAssessment rdf:type owl:Class ;
+    rdfs:label "Medical Trauma Assessment"@en ;
+    rdfs:comment "Medical assessment of physical and psychological trauma in trafficking victims."@en ;
+    rdfs:subClassOf icac-impact:VictimImpactAssessment .
+
+icac-impact:HospitalDischarge rdf:type owl:Class ;
+    rdfs:label "Hospital Discharge"@en ;
+    rdfs:comment "Discharge of trafficking victim from hospital with safety planning and transportation arrangements."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-impact:VictimTransportationAssistance rdf:type owl:Class ;
+    rdfs:label "Victim Transportation Assistance"@en ;
+    rdfs:comment "Provision of transportation assistance to trafficking victims (bus tickets, safe transport)."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+# =============================================================================
+# MULTI-AGENCY VICTIM ASSISTANCE
+# =============================================================================
+
+icac-impact:MultiAgencyVictimResponse rdf:type owl:Class ;
+    rdfs:label "Multi-Agency Victim Response"@en ;
+    rdfs:comment "Coordinated victim assistance involving multiple agencies across jurisdictions."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+icac-impact:InterstateVictimServices rdf:type owl:Class ;
+    rdfs:label "Interstate Victim Services"@en ;
+    rdfs:comment "Victim services coordination across state lines for trafficking cases."@en ;
+    rdfs:subClassOf icac-impact:MultiAgencyVictimResponse .
+
+icac-impact:VictimServiceCoordination rdf:type owl:Class ;
+    rdfs:label "Victim Service Coordination"@en ;
+    rdfs:comment "Coordination of victim services between multiple agencies and organizations."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-impact:FearlessHudsonValleySupport rdf:type owl:Class ;
+    rdfs:label "Fearless Hudson Valley Support"@en ;
+    rdfs:comment "Support services provided by Fearless! Hudson Valley organization for trafficking victims."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+# =============================================================================
+# SPECIALIZED LAW ENFORCEMENT UNITS
+# =============================================================================
+
+icac-impact:PortAuthorityYouthServices rdf:type owl:Class ;
+    rdfs:label "Port Authority Youth Services"@en ;
+    rdfs:comment "Specialized youth services unit within Port Authority Police Department."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+icac-impact:HumanTraffickingSquad rdf:type owl:Class ;
+    rdfs:label "Human Trafficking Squad"@en ;
+    rdfs:comment "Specialized law enforcement unit focused on human trafficking investigations."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+icac-impact:ChildExploitationTaskForce rdf:type owl:Class ;
+    rdfs:label "Child Exploitation Task Force"@en ;
+    rdfs:comment "Joint task force between FBI and local law enforcement for child exploitation cases."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+# =============================================================================
+# VICTIM RECOVERY AND REINTEGRATION
+# =============================================================================
+
+icac-impact:VictimReintegration rdf:type owl:Class ;
+    rdfs:label "Victim Reintegration"@en ;
+    rdfs:comment "Process of reintegrating trafficking victims back into their communities and families."@en ;
+    rdfs:subClassOf icac-impact:RecoveryProcess .
+
+icac-impact:FamilyReunification rdf:type owl:Class ;
+    rdfs:label "Family Reunification"@en ;
+    rdfs:comment "Process of reuniting trafficking victims with their families."@en ;
+    rdfs:subClassOf icac-impact:VictimReintegration .
+
+icac-impact:HometownReturn rdf:type owl:Class ;
+    rdfs:label "Hometown Return"@en ;
+    rdfs:comment "Return of trafficking victim to their hometown or place of origin."@en ;
+    rdfs:subClassOf icac-impact:VictimReintegration .
+
+icac-impact:CommunitySupport rdf:type owl:Class ;
+    rdfs:label "Community Support"@en ;
+    rdfs:comment "Community-based support services for trafficking victims during reintegration."@en ;
+    rdfs:subClassOf icac-impact:VictimSupport .
+
+# =============================================================================
+# HOSPITAL INTERVENTION PROPERTIES
+# =============================================================================
+
+icac-impact:hospitalName rdf:type owl:DatatypeProperty ;
+    rdfs:label "hospital name"@en ;
+    rdfs:comment "Name of hospital where victim received treatment."@en ;
+    rdfs:domain icac-impact:HospitalIntervention ;
+    rdfs:range xsd:string .
+
+icac-impact:admissionReason rdf:type owl:DatatypeProperty ;
+    rdfs:label "admission reason"@en ;
+    rdfs:comment "Primary reason for hospital admission (suicidal_ideation, medical_emergency, trauma)."@en ;
+    rdfs:domain icac-impact:HospitalIntervention ;
+    rdfs:range xsd:string .
+
+icac-impact:hospitalStayDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "hospital stay duration"@en ;
+    rdfs:comment "Duration of hospital stay in days."@en ;
+    rdfs:domain icac-impact:HospitalIntervention ;
+    rdfs:range xsd:decimal .
+
+icac-impact:dischargeDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "discharge date"@en ;
+    rdfs:comment "Date when victim was discharged from hospital."@en ;
+    rdfs:domain icac-impact:HospitalDischarge ;
+    rdfs:range xsd:dateTime .
+
+icac-impact:dischargeCondition rdf:type owl:DatatypeProperty ;
+    rdfs:label "discharge condition"@en ;
+    rdfs:comment "Condition of victim at discharge (stable, improved, requires_followup)."@en ;
+    rdfs:domain icac-impact:HospitalDischarge ;
+    rdfs:range xsd:string .
+
+# Transportation Assistance Properties
+icac-impact:transportationType rdf:type owl:DatatypeProperty ;
+    rdfs:label "transportation type"@en ;
+    rdfs:comment "Type of transportation provided (bus_ticket, train_ticket, safe_transport, flight)."@en ;
+    rdfs:domain icac-impact:VictimTransportationAssistance ;
+    rdfs:range xsd:string .
+
+icac-impact:transportationDestination rdf:type owl:DatatypeProperty ;
+    rdfs:label "transportation destination"@en ;
+    rdfs:comment "Destination for victim transportation assistance."@en ;
+    rdfs:domain icac-impact:VictimTransportationAssistance ;
+    rdfs:range xsd:string .
+
+icac-impact:transportationCost rdf:type owl:DatatypeProperty ;
+    rdfs:label "transportation cost"@en ;
+    rdfs:comment "Cost of transportation assistance provided in USD."@en ;
+    rdfs:domain icac-impact:VictimTransportationAssistance ;
+    rdfs:range xsd:decimal .
+
+# Multi-Agency Response Properties
+icac-impact:agencyCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "agency count"@en ;
+    rdfs:comment "Number of agencies involved in victim response."@en ;
+    rdfs:domain icac-impact:MultiAgencyVictimResponse ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-impact:coordinationComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:label "coordination complexity"@en ;
+    rdfs:comment "Complexity level of multi-agency coordination (simple, moderate, complex, highly_complex)."@en ;
+    rdfs:domain icac-impact:VictimServiceCoordination ;
+    rdfs:range xsd:string .
+
+icac-impact:jurisdictionsInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:label "jurisdictions involved"@en ;
+    rdfs:comment "Number of jurisdictions involved in victim services coordination."@en ;
+    rdfs:domain icac-impact:InterstateVictimServices ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Reintegration Properties
+icac-impact:reintegrationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "reintegration duration"@en ;
+    rdfs:comment "Expected duration of reintegration process in months."@en ;
+    rdfs:domain icac-impact:VictimReintegration ;
+    rdfs:range xsd:decimal .
+
+icac-impact:familyContactEstablished rdf:type owl:DatatypeProperty ;
+    rdfs:label "family contact established"@en ;
+    rdfs:comment "Whether contact with victim's family has been established."@en ;
+    rdfs:domain icac-impact:FamilyReunification ;
+    rdfs:range xsd:boolean .
+
+icac-impact:hometownLocation rdf:type owl:DatatypeProperty ;
+    rdfs:label "hometown location"@en ;
+    rdfs:comment "Location of victim's hometown for return planning."@en ;
+    rdfs:domain icac-impact:HometownReturn ;
+    rdfs:range xsd:string .
+
+# =============================================================================
+# HOSPITAL INTERVENTION RELATIONSHIPS
+# =============================================================================
+
+icac-impact:treatedAt rdf:type owl:ObjectProperty ;
+    rdfs:label "treated at"@en ;
+    rdfs:comment "Links victim to hospital where they received treatment."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range uco-location:Location .
+
+icac-impact:resultsinHospitalization rdf:type owl:ObjectProperty ;
+    rdfs:label "results in hospitalization"@en ;
+    rdfs:comment "Links emergency response to hospitalization that resulted."@en ;
+    rdfs:domain icac-impact:EmergencyResponse ;
+    rdfs:range icac-impact:HospitalIntervention .
+
+icac-impact:followedByDischarge rdf:type owl:ObjectProperty ;
+    rdfs:label "followed by discharge"@en ;
+    rdfs:comment "Links hospital intervention to discharge process."@en ;
+    rdfs:domain icac-impact:HospitalIntervention ;
+    rdfs:range icac-impact:HospitalDischarge .
+
+icac-impact:includesTransportation rdf:type owl:ObjectProperty ;
+    rdfs:label "includes transportation"@en ;
+    rdfs:comment "Links hospital discharge to transportation assistance provided."@en ;
+    rdfs:domain icac-impact:HospitalDischarge ;
+    rdfs:range icac-impact:VictimTransportationAssistance .
+
+# Multi-Agency Relationships
+icac-impact:coordinatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated by"@en ;
+    rdfs:comment "Links victim response to agency that coordinated it."@en ;
+    rdfs:domain icac-impact:MultiAgencyVictimResponse ;
+    rdfs:range uco-identity:Organization .
+
+icac-impact:participatesInResponse rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in response"@en ;
+    rdfs:comment "Links agency to victim response they participated in."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-impact:MultiAgencyVictimResponse .
+
+icac-impact:providesSpecializedSupport rdf:type owl:ObjectProperty ;
+    rdfs:label "provides specialized support"@en ;
+    rdfs:comment "Links organization to specialized support services they provide."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-impact:VictimSupport .
+
+# Reintegration Relationships
+icac-impact:facilitatesReintegration rdf:type owl:ObjectProperty ;
+    rdfs:label "facilitates reintegration"@en ;
+    rdfs:comment "Links support services to reintegration process they facilitate."@en ;
+    rdfs:domain icac-impact:VictimSupport ;
+    rdfs:range icac-impact:VictimReintegration .
+
+icac-impact:returnsTo rdf:type owl:ObjectProperty ;
+    rdfs:label "returns to"@en ;
+    rdfs:comment "Links victim to location they return to during reintegration."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range uco-location:Location .
+
+icac-impact:reunitesWith rdf:type owl:ObjectProperty ;
+    rdfs:label "reunites with"@en ;
+    rdfs:comment "Links victim to family members they reunite with."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range uco-identity:Person . 

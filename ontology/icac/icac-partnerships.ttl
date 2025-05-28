@@ -1,0 +1,437 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-partnerships: <https://ontology.unifiedcyberontology.org/icac/partnerships#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/partnerships/0.1> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Public-Private Partnerships Ontology"@en ;
+    rdfs:comment "An ontology for representing public-private partnerships, multi-stakeholder coordination, and collaborative frameworks in child protection. Based on analysis of Europol's collaborative approaches with technology companies, NGOs, and civil society organizations in initiatives like 'Stop Child Abuse - Trace an Object'."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/partnerships/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2025-05-23"^^xsd:date ;
+    dcterms:modified "2025-05-23"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
+                <https://ontology.unifiedcyberontology.org/uco/identity> ,
+                <https://ontology.unifiedcyberontology.org/uco/observable> ,
+                <https://ontology.unifiedcyberontology.org/uco/action> ,
+                <https://ontology.unifiedcyberontology.org/uco/role> ,
+                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+
+# =============================================================================
+# PARTNERSHIP FRAMEWORK CLASSES (extending UCO Core)
+# =============================================================================
+
+icac-partnerships:PublicPrivatePartnership rdf:type owl:Class ;
+    rdfs:label "Public-Private Partnership"@en ;
+    rdfs:comment "Formal partnership between government/law enforcement agencies and private sector organizations for child protection initiatives."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-partnerships:MultiStakeholderInitiative rdf:type owl:Class ;
+    rdfs:label "Multi-Stakeholder Initiative"@en ;
+    rdfs:comment "Initiative involving multiple types of organizations including law enforcement, technology companies, NGOs, and civil society groups."@en ;
+    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .
+
+icac-partnerships:TechIndustryCooperation rdf:type owl:Class ;
+    rdfs:label "Tech Industry Cooperation"@en ;
+    rdfs:comment "Cooperation framework between law enforcement and technology companies for content detection, platform monitoring, and data sharing."@en ;
+    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .
+
+icac-partnerships:NGOCoordination rdf:type owl:Class ;
+    rdfs:label "NGO Coordination"@en ;
+    rdfs:comment "Coordination framework with non-governmental organizations specializing in child protection and victim advocacy."@en ;
+    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .
+
+icac-partnerships:CivilSocietyEngagement rdf:type owl:Class ;
+    rdfs:label "Civil Society Engagement"@en ;
+    rdfs:comment "Framework for engaging civil society, volunteers, and public participation in child protection initiatives."@en ;
+    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .
+
+icac-partnerships:AcademicPartnership rdf:type owl:Class ;
+    rdfs:label "Academic Partnership"@en ;
+    rdfs:comment "Partnership with academic institutions for research, training, and technology development in child protection."@en ;
+    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .
+
+# =============================================================================
+# CROWDSOURCING AND PUBLIC PARTICIPATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-partnerships:CrowdsourcingInvestigation rdf:type owl:Class ;
+    rdfs:label "Crowdsourcing Investigation"@en ;
+    rdfs:comment "Investigation leveraging public participation for object identification, geolocation, and evidence analysis."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-partnerships:ObjectIdentificationRequest rdf:type owl:Class ;
+    rdfs:label "Object Identification Request"@en ;
+    rdfs:comment "Request for public assistance in identifying objects, locations, or other evidence from case materials."@en ;
+    rdfs:subClassOf icac-partnerships:CrowdsourcingInvestigation .
+
+icac-partnerships:GeolocationRequest rdf:type owl:Class ;
+    rdfs:label "Geolocation Request"@en ;
+    rdfs:comment "Request for public assistance in identifying geographic locations from visual evidence."@en ;
+    rdfs:subClassOf icac-partnerships:CrowdsourcingInvestigation .
+
+icac-partnerships:PublicTip rdf:type owl:Class ;
+    rdfs:label "Public Tip"@en ;
+    rdfs:comment "Information provided by members of the public in response to crowdsourcing requests."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-partnerships:CommunityAnalysis rdf:type owl:Class ;
+    rdfs:label "Community Analysis"@en ;
+    rdfs:comment "Analysis performed by volunteer researchers and civil society organizations using open source intelligence methods."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-partnerships:OSINTInvestigation rdf:type owl:Class ;
+    rdfs:label "OSINT Investigation"@en ;
+    rdfs:comment "Open source intelligence investigation conducted by skilled volunteers and researchers."@en ;
+    rdfs:subClassOf icac-partnerships:CommunityAnalysis .
+
+# =============================================================================
+# INFORMATION SHARING FRAMEWORKS (extending UCO Action)
+# =============================================================================
+
+icac-partnerships:InformationSharingFramework rdf:type owl:Class ;
+    rdfs:label "Information Sharing Framework"@en ;
+    rdfs:comment "Framework governing how information is shared between public and private partners while protecting privacy and investigation integrity."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-partnerships:DataSharingAgreement rdf:type owl:Class ;
+    rdfs:label "Data Sharing Agreement"@en ;
+    rdfs:comment "Legal agreement governing data sharing between partners, including scope, limitations, and privacy protections."@en ;
+    rdfs:subClassOf icac-partnerships:InformationSharingFramework .
+
+icac-partnerships:TechnicalIntegration rdf:type owl:Class ;
+    rdfs:label "Technical Integration"@en ;
+    rdfs:comment "Technical integration between partner systems for automated information sharing and analysis."@en ;
+    rdfs:subClassOf icac-partnerships:InformationSharingFramework .
+
+icac-partnerships:HashSharingProtocol rdf:type owl:Class ;
+    rdfs:label "Hash Sharing Protocol"@en ;
+    rdfs:comment "Protocol for sharing cryptographic hashes of illegal content between partners for detection and prevention."@en ;
+    rdfs:subClassOf icac-partnerships:TechnicalIntegration .
+
+icac-partnerships:IntelligenceSharing rdf:type owl:Class ;
+    rdfs:label "Intelligence Sharing"@en ;
+    rdfs:comment "Sharing of actionable intelligence between partners while maintaining operational security."@en ;
+    rdfs:subClassOf icac-partnerships:InformationSharingFramework .
+
+# =============================================================================
+# TECHNOLOGY COOPERATION CLASSES (extending UCO Action)
+# =============================================================================
+
+icac-partnerships:TechnologyCooperation rdf:type owl:Class ;
+    rdfs:label "Technology Cooperation"@en ;
+    rdfs:comment "Cooperation in developing and deploying technology solutions for child protection."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-partnerships:ContentDetectionCooperation rdf:type owl:Class ;
+    rdfs:label "Content Detection Cooperation"@en ;
+    rdfs:comment "Cooperation in developing and improving automated content detection systems."@en ;
+    rdfs:subClassOf icac-partnerships:TechnologyCooperation .
+
+icac-partnerships:PlatformMonitoring rdf:type owl:Class ;
+    rdfs:label "Platform Monitoring"@en ;
+    rdfs:comment "Cooperative monitoring of platforms and services for illegal content and activities."@en ;
+    rdfs:subClassOf icac-partnerships:TechnologyCooperation .
+
+icac-partnerships:ToolDevelopment rdf:type owl:Class ;
+    rdfs:label "Tool Development"@en ;
+    rdfs:comment "Joint development of investigative tools and technologies for law enforcement use."@en ;
+    rdfs:subClassOf icac-partnerships:TechnologyCooperation .
+
+icac-partnerships:AICooperation rdf:type owl:Class ;
+    rdfs:label "AI Cooperation"@en ;
+    rdfs:comment "Cooperation in developing AI-based solutions for detection, analysis, and prevention of child exploitation."@en ;
+    rdfs:subClassOf icac-partnerships:TechnologyCooperation .
+
+# =============================================================================
+# COORDINATION MECHANISMS (extending UCO Action)
+# =============================================================================
+
+icac-partnerships:CoordinationMechanism rdf:type owl:Class ;
+    rdfs:label "Coordination Mechanism"@en ;
+    rdfs:comment "Mechanism for coordinating activities and sharing information between partners."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-partnerships:TaskForceCoordination rdf:type owl:Class ;
+    rdfs:label "Task Force Coordination"@en ;
+    rdfs:comment "Coordination through multi-partner task forces with representatives from different organizations."@en ;
+    rdfs:subClassOf icac-partnerships:CoordinationMechanism .
+
+icac-partnerships:RegularMeeting rdf:type owl:Class ;
+    rdfs:label "Regular Meeting"@en ;
+    rdfs:comment "Regular meetings between partners for coordination, information sharing, and strategic planning."@en ;
+    rdfs:subClassOf icac-partnerships:CoordinationMechanism .
+
+icac-partnerships:EmergencyCoordination rdf:type owl:Class ;
+    rdfs:label "Emergency Coordination"@en ;
+    rdfs:comment "Rapid coordination mechanism for urgent situations requiring immediate partner response."@en ;
+    rdfs:subClassOf icac-partnerships:CoordinationMechanism .
+
+icac-partnerships:JointOperation rdf:type owl:Class ;
+    rdfs:label "Joint Operation"@en ;
+    rdfs:comment "Operation conducted jointly by multiple partners with shared resources and coordination."@en ;
+    rdfs:subClassOf icac-partnerships:CoordinationMechanism .
+
+# =============================================================================
+# PARTNER ROLES AND RESPONSIBILITIES (extending UCO Role)
+# =============================================================================
+
+icac-partnerships:PartnerRole rdf:type owl:Class ;
+    rdfs:label "Partner Role"@en ;
+    rdfs:comment "Role played by an organization within a public-private partnership framework."@en ;
+    rdfs:subClassOf uco-role:Role .
+
+icac-partnerships:LawEnforcementPartner rdf:type owl:Class ;
+    rdfs:label "Law Enforcement Partner"@en ;
+    rdfs:comment "Law enforcement agency participating in partnership with investigative and enforcement responsibilities."@en ;
+    rdfs:subClassOf icac-partnerships:PartnerRole .
+
+icac-partnerships:TechnologyPartner rdf:type owl:Class ;
+    rdfs:label "Technology Partner"@en ;
+    rdfs:comment "Technology company providing platforms, tools, or technical expertise to the partnership."@en ;
+    rdfs:subClassOf icac-partnerships:PartnerRole .
+
+icac-partnerships:NGOPartner rdf:type owl:Class ;
+    rdfs:label "NGO Partner"@en ;
+    rdfs:comment "Non-governmental organization providing advocacy, victim services, or specialized expertise."@en ;
+    rdfs:subClassOf icac-partnerships:PartnerRole .
+
+icac-partnerships:AcademicPartner rdf:type owl:Class ;
+    rdfs:label "Academic Partner"@en ;
+    rdfs:comment "Academic institution providing research, analysis, or training capabilities."@en ;
+    rdfs:subClassOf icac-partnerships:PartnerRole .
+
+icac-partnerships:CivilSocietyPartner rdf:type owl:Class ;    rdfs:label "Civil Society Partner"@en ;    rdfs:comment "Civil society organization or volunteer group contributing to partnership activities."@en ;    rdfs:subClassOf icac-partnerships:PartnerRole .# =============================================================================# NATIONAL INITIATIVE PROGRAMS (Vermont Case Enhancement)# =============================================================================icac-partnerships:NationalInitiativeProgram rdf:type owl:Class ;    rdfs:label "National Initiative Program"@en ;    rdfs:comment "Federal program coordinating child protection efforts across jurisdictions."@en ;    rdfs:subClassOf icac-partnerships:PublicPrivatePartnership .icac-partnerships:ProjectSafeChildhoodCase rdf:type owl:Class ;    rdfs:label "Project Safe Childhood Case"@en ;    rdfs:comment "Case prosecuted under the Department of Justice Project Safe Childhood initiative."@en ;    rdfs:subClassOf icac:Investigation .icac-partnerships:FederalTaskForceProgram rdf:type owl:Class ;    rdfs:label "Federal Task Force Program"@en ;    rdfs:comment "Multi-agency federal program coordinating with state and local law enforcement."@en ;    rdfs:subClassOf icac-partnerships:NationalInitiativeProgram .# =============================================================================# PARTNERSHIP PROPERTIES# =============================================================================
+
+# National Initiative Program Properties (Vermont Case Enhancement)icac-partnerships:initiativeName rdf:type owl:DatatypeProperty ;    rdfs:label "initiative name"@en ;    rdfs:comment "Name of federal initiative (Project_Safe_Childhood, Operation_Avalanche, etc.)."@en ;    rdfs:domain icac-partnerships:NationalInitiativeProgram ;    rdfs:range xsd:string .icac-partnerships:launchedDate rdf:type owl:DatatypeProperty ;    rdfs:label "launched date"@en ;    rdfs:comment "Date when national initiative was launched."@en ;    rdfs:domain icac-partnerships:NationalInitiativeProgram ;    rdfs:range xsd:dateTime .icac-partnerships:programScope rdf:type owl:DatatypeProperty ;    rdfs:label "program scope"@en ;    rdfs:comment "Scope of national initiative program (federal, state_coordination, local_support)."@en ;    rdfs:domain icac-partnerships:NationalInitiativeProgram ;    rdfs:range xsd:string .icac-partnerships:leadAgency rdf:type owl:DatatypeProperty ;    rdfs:label "lead agency"@en ;    rdfs:comment "Primary federal agency leading the initiative (DOJ, DHS, FBI)."@en ;    rdfs:domain icac-partnerships:NationalInitiativeProgram ;    rdfs:range xsd:string .icac-partnerships:casesProcessed rdf:type owl:DatatypeProperty ;    rdfs:label "cases processed"@en ;    rdfs:comment "Number of cases processed under the national initiative program."@en ;    rdfs:domain icac-partnerships:NationalInitiativeProgram ;    rdfs:range xsd:nonNegativeInteger .# Partnership Characteristicsicac-partnerships:partnerCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "partner count"@en ;
+    rdfs:comment "Number of organizations participating in the partnership."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-partnerships:partnershipScope rdf:type owl:DatatypeProperty ;
+    rdfs:label "partnership scope"@en ;
+    rdfs:comment "Geographic or functional scope of the partnership (local, national, regional, global)."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range xsd:string .
+
+icac-partnerships:partnershipDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "partnership duration"@en ;
+    rdfs:comment "Duration of the partnership in months."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range xsd:decimal .
+
+icac-partnerships:formalAgreement rdf:type owl:DatatypeProperty ;
+    rdfs:label "formal agreement"@en ;
+    rdfs:comment "Whether the partnership is based on formal legal agreements."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range xsd:boolean .
+
+# Crowdsourcing Properties
+icac-partnerships:objectsToIdentify rdf:type owl:DatatypeProperty ;
+    rdfs:label "objects to identify"@en ;
+    rdfs:comment "Number of objects or locations requiring public identification."@en ;
+    rdfs:domain icac-partnerships:ObjectIdentificationRequest ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-partnerships:publicTipsReceived rdf:type owl:DatatypeProperty ;
+    rdfs:label "public tips received"@en ;
+    rdfs:comment "Number of tips received from the public in response to requests."@en ;
+    rdfs:domain icac-partnerships:CrowdsourcingInvestigation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-partnerships:identificationSuccessRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "identification success rate"@en ;
+    rdfs:comment "Success rate of object identification through crowdsourcing (0.0-1.0)."@en ;
+    rdfs:domain icac-partnerships:ObjectIdentificationRequest ;
+    rdfs:range xsd:decimal .
+
+icac-partnerships:crowdsourcingPlatform rdf:type owl:DatatypeProperty ;
+    rdfs:label "crowdsourcing platform"@en ;
+    rdfs:comment "Platform used for crowdsourcing (website, social_media, forums, mobile_app)."@en ;
+    rdfs:domain icac-partnerships:CrowdsourcingInvestigation ;
+    rdfs:range xsd:string .
+
+icac-partnerships:volunteerHours rdf:type owl:DatatypeProperty ;
+    rdfs:label "volunteer hours"@en ;
+    rdfs:comment "Total volunteer hours contributed to crowdsourcing investigations."@en ;
+    rdfs:domain icac-partnerships:CommunityAnalysis ;
+    rdfs:range xsd:decimal .
+
+# Information Sharing Properties
+icac-partnerships:dataSharingLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "data sharing level"@en ;
+    rdfs:comment "Level of data sharing permitted (metadata_only, hash_values, intelligence_products, full_data)."@en ;
+    rdfs:domain icac-partnerships:DataSharingAgreement ;
+    rdfs:range xsd:string .
+
+icac-partnerships:automationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "automation level"@en ;
+    rdfs:comment "Level of automation in information sharing (manual, semi_automated, fully_automated)."@en ;
+    rdfs:domain icac-partnerships:TechnicalIntegration ;
+    rdfs:range xsd:string .
+
+icac-partnerships:sharingFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "sharing frequency"@en ;
+    rdfs:comment "Frequency of information sharing (real_time, daily, weekly, monthly, on_demand)."@en ;
+    rdfs:domain icac-partnerships:InformationSharingFramework ;
+    rdfs:range xsd:string .
+
+icac-partnerships:hashDatabaseSize rdf:type owl:DatatypeProperty ;
+    rdfs:label "hash database size"@en ;
+    rdfs:comment "Size of shared hash database in millions of entries."@en ;
+    rdfs:domain icac-partnerships:HashSharingProtocol ;
+    rdfs:range xsd:decimal .
+
+# Technology Cooperation Properties
+icac-partnerships:technologyMaturity rdf:type owl:DatatypeProperty ;
+    rdfs:label "technology maturity"@en ;
+    rdfs:comment "Maturity level of cooperative technology solutions (experimental, pilot, production, mature)."@en ;
+    rdfs:domain icac-partnerships:TechnologyCooperation ;
+    rdfs:range xsd:string .
+
+icac-partnerships:detectionAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "detection accuracy"@en ;
+    rdfs:comment "Accuracy of cooperative detection systems (0.0-1.0)."@en ;
+    rdfs:domain icac-partnerships:ContentDetectionCooperation ;
+    rdfs:range xsd:decimal .
+
+icac-partnerships:developmentInvestment rdf:type owl:DatatypeProperty ;
+    rdfs:label "development investment"@en ;
+    rdfs:comment "Total investment in joint technology development in USD."@en ;
+    rdfs:domain icac-partnerships:ToolDevelopment ;
+    rdfs:range xsd:decimal .
+
+icac-partnerships:platformsCovered rdf:type owl:DatatypeProperty ;
+    rdfs:label "platforms covered"@en ;
+    rdfs:comment "Number of platforms covered by cooperative monitoring."@en ;
+    rdfs:domain icac-partnerships:PlatformMonitoring ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Coordination Properties
+icac-partnerships:meetingFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "meeting frequency"@en ;
+    rdfs:comment "Frequency of coordination meetings (weekly, monthly, quarterly, annual, ad_hoc)."@en ;
+    rdfs:domain icac-partnerships:RegularMeeting ;
+    rdfs:range xsd:string .
+
+icac-partnerships:responseTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "response time"@en ;
+    rdfs:comment "Average response time for emergency coordination in hours."@en ;
+    rdfs:domain icac-partnerships:EmergencyCoordination ;
+    rdfs:range xsd:decimal .
+
+icac-partnerships:operationSuccess rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation success"@en ;
+    rdfs:comment "Success rate of joint operations (0.0-1.0)."@en ;
+    rdfs:domain icac-partnerships:JointOperation ;
+    rdfs:range xsd:decimal .
+
+# =============================================================================
+# PARTNERSHIP RELATIONSHIPS
+# =============================================================================
+
+# Partnership Structure Relationships
+icac-partnerships:includesPartner rdf:type owl:ObjectProperty ;
+    rdfs:label "includes partner"@en ;
+    rdfs:comment "Links partnership to participating organizations."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range uco-identity:Organization .
+
+icac-partnerships:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:comment "Links partner organization to their role in the partnership."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:PartnerRole .
+
+icac-partnerships:coordinatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated by"@en ;
+    rdfs:comment "Links partnership activities to coordinating organization."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range uco-identity:Organization .
+
+# Information Sharing Relationships
+icac-partnerships:governedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "governed by"@en ;
+    rdfs:comment "Links partnership to information sharing frameworks governing it."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range icac-partnerships:InformationSharingFramework .
+
+icac-partnerships:enablesSharing rdf:type owl:ObjectProperty ;
+    rdfs:label "enables sharing"@en ;
+    rdfs:comment "Links technical integration to types of information sharing enabled."@en ;
+    rdfs:domain icac-partnerships:TechnicalIntegration ;
+    rdfs:range icac-partnerships:InformationSharingFramework .
+
+icac-partnerships:sharesIntelligence rdf:type owl:ObjectProperty ;
+    rdfs:label "shares intelligence"@en ;
+    rdfs:comment "Links partners to intelligence sharing arrangements."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:IntelligenceSharing .
+
+# Crowdsourcing Relationships
+icac-partnerships:solicitsHelp rdf:type owl:ObjectProperty ;
+    rdfs:label "solicits help"@en ;
+    rdfs:comment "Links organization to crowdsourcing investigations they conduct."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:CrowdsourcingInvestigation .
+
+icac-partnerships:contributesToAnalysis rdf:type owl:ObjectProperty ;
+    rdfs:label "contributes to analysis"@en ;
+    rdfs:comment "Links civil society partners to community analysis they perform."@en ;
+    rdfs:domain icac-partnerships:CivilSocietyPartner ;
+    rdfs:range icac-partnerships:CommunityAnalysis .
+
+icac-partnerships:generatesRequests rdf:type owl:ObjectProperty ;
+    rdfs:label "generates requests"@en ;
+    rdfs:comment "Links investigation to identification requests generated."@en ;
+    rdfs:domain uco-action:Action ;
+    rdfs:range icac-partnerships:ObjectIdentificationRequest .
+
+# Technology Cooperation Relationships
+icac-partnerships:participatesInDevelopment rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in development"@en ;
+    rdfs:comment "Links technology partners to development projects they participate in."@en ;
+    rdfs:domain icac-partnerships:TechnologyPartner ;
+    rdfs:range icac-partnerships:ToolDevelopment .
+
+icac-partnerships:providesMonitoring rdf:type owl:ObjectProperty ;
+    rdfs:label "provides monitoring"@en ;
+    rdfs:comment "Links technology partners to platform monitoring they provide."@en ;
+    rdfs:domain icac-partnerships:TechnologyPartner ;
+    rdfs:range icac-partnerships:PlatformMonitoring .
+
+icac-partnerships:cooperatesOn rdf:type owl:ObjectProperty ;
+    rdfs:label "cooperates on"@en ;
+    rdfs:comment "Links partners to technology cooperation initiatives."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:TechnologyCooperation .
+
+# Coordination Relationships
+icac-partnerships:coordinatedThrough rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated through"@en ;
+    rdfs:comment "Links partnership activities to coordination mechanisms used."@en ;
+    rdfs:domain icac-partnerships:PublicPrivatePartnership ;
+    rdfs:range icac-partnerships:CoordinationMechanism .
+
+icac-partnerships:participatesInOperation rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in operation"@en ;
+    rdfs:comment "Links partners to joint operations they participate in."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:JointOperation .
+
+icac-partnerships:respondsToEmergency rdf:type owl:ObjectProperty ;
+    rdfs:label "responds to emergency"@en ;
+    rdfs:comment "Links partners to emergency coordination they participate in."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-partnerships:EmergencyCoordination . 

@@ -1,0 +1,793 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix uco-location: <https://ontology.unifiedcyberontology.org/location#> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-physical: <https://ontology.unifiedcyberontology.org/icac/physical-evidence#> .
+
+# =============================================================================
+# PHYSICAL EVIDENCE SHAPES
+# =============================================================================
+
+icac-physical:PhysicalEvidenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:PhysicalEvidence ;
+    rdfs:label "Physical Evidence Shape"@en ;
+    rdfs:comment "Validation shape for physical evidence instances."@en ;
+    sh:property [
+        sh:path icac-physical:evidenceType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "digital_media" "documents" "photographs" "clothing" "biological_samples" "weapons" "contraband" "personal_items" ) ;
+        sh:message "Physical evidence must specify evidence type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:evidenceCategory ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "primary_evidence" "secondary_evidence" "corroborative_evidence" "circumstantial_evidence" "demonstrative_evidence" "real_evidence" ) ;
+        sh:message "Physical evidence must specify evidence category from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:collectionDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Physical evidence must specify collection date."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:collectionLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Physical evidence must specify collection location (5-200 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:evidenceCondition ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "excellent" "good" "fair" "poor" "damaged" "deteriorated" "contaminated" ) ;
+        sh:message "Physical evidence must specify evidence condition from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:evidenceStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "collected" "processed" "analyzed" "stored" "returned" "destroyed" "missing" ) ;
+        sh:message "Physical evidence must specify evidence status from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:evidenceNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 50 ;
+        sh:message "Physical evidence must specify evidence number (5-50 characters)."@en
+    ] .
+
+icac-physical:DigitalMediaShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:DigitalMedia ;
+    rdfs:label "Digital Media Shape"@en ;
+    rdfs:comment "Validation shape for digital media evidence instances."@en ;
+    sh:property [
+        sh:path icac-physical:mediaType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "hard_drive" "usb_drive" "cd_dvd" "memory_card" "mobile_device" "tablet" "computer" "external_drive" ) ;
+        sh:message "Digital media must specify media type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:storageCapacity ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.001 ;
+        sh:maxInclusive 100000.0 ;
+        sh:message "Storage capacity must be between 0.001 and 100000 GB."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:encryptionStatus ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "unencrypted" "partially_encrypted" "fully_encrypted" "password_protected" "unknown" ) ;
+        sh:message "Digital media must specify encryption status from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:writeProtected ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Digital media must specify if write protection is enabled."@en
+    ] .
+
+icac-physical:BiologicalSampleShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:BiologicalSample ;
+    rdfs:label "Biological Sample Shape"@en ;
+    rdfs:comment "Validation shape for biological sample evidence instances."@en ;
+    sh:property [
+        sh:path icac-physical:sampleType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "dna_sample" "blood" "saliva" "hair" "skin_cells" "bodily_fluids" "tissue" "fingerprints" ) ;
+        sh:message "Biological sample must specify sample type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:preservationMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "frozen" "refrigerated" "room_temperature" "dried" "chemical_preservative" "vacuum_sealed" ) ;
+        sh:message "Biological sample must specify preservation method from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:contaminationRisk ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "low" "moderate" "high" "contaminated" "unknown" ) ;
+        sh:message "Biological sample must specify contamination risk from the allowed list."@en
+    ] .
+
+# =============================================================================
+# EVIDENCE COLLECTION SHAPES
+# =============================================================================
+
+icac-physical:EvidenceCollectionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:EvidenceCollection ;
+    rdfs:label "Evidence Collection Shape"@en ;
+    rdfs:comment "Validation shape for evidence collection instances."@en ;
+    sh:property [
+        sh:path icac-physical:collectionMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "search_warrant" "consent_search" "plain_view" "incident_to_arrest" "exigent_circumstances" "inventory_search" ) ;
+        sh:message "Evidence collection must specify collection method from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:collectorName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Evidence collection must specify collector name (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:collectorBadge ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 20 ;
+        sh:message "Evidence collection must specify collector badge number (3-20 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:witnessPresent ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence collection must specify if witness was present."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:photographed ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence collection must specify if evidence was photographed."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:collectionTime ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence collection must specify collection time."@en
+    ] .
+
+icac-physical:SearchWarrantCollectionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:SearchWarrantCollection ;
+    rdfs:label "Search Warrant Collection Shape"@en ;
+    rdfs:comment "Validation shape for search warrant collection instances."@en ;
+    sh:property [
+        sh:path icac-physical:warrantNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 50 ;
+        sh:message "Search warrant collection must specify warrant number (5-50 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:issuingJudge ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 100 ;
+        sh:message "Search warrant collection must specify issuing judge (5-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:warrantScope ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "specific_items" "general_evidence" "premises_only" "person_only" "vehicles" "comprehensive" ) ;
+        sh:message "Search warrant collection must specify warrant scope from the allowed list."@en
+    ] .
+
+# =============================================================================
+# CHAIN OF CUSTODY SHAPES
+# =============================================================================
+
+icac-physical:ChainOfCustodyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:ChainOfCustody ;
+    rdfs:label "Chain of Custody Shape"@en ;
+    rdfs:comment "Validation shape for chain of custody instances."@en ;
+    sh:property [
+        sh:path icac-physical:custodyTransfers ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 100 ;
+        sh:message "Chain of custody must have between 1 and 100 transfers."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:initialCustodian ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Chain of custody must specify initial custodian (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:currentCustodian ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Chain of custody must specify current custodian (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:custodyBreaches ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 10 ;
+        sh:message "Number of custody breaches must be between 0 and 10."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:documentationComplete ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Chain of custody must specify if documentation is complete."@en
+    ] .
+
+icac-physical:CustodyTransferShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:CustodyTransfer ;
+    rdfs:label "Custody Transfer Shape"@en ;
+    rdfs:comment "Validation shape for custody transfer instances."@en ;
+    sh:property [
+        sh:path icac-physical:transferDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Custody transfer must specify transfer date."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:transferFrom ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Custody transfer must specify transferring party (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:transferTo ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Custody transfer must specify receiving party (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:transferReason ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "analysis" "storage" "court_presentation" "return_to_owner" "destruction" "transfer_jurisdiction" ) ;
+        sh:message "Custody transfer must specify transfer reason from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:transferLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Custody transfer must specify transfer location (5-200 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:witnessSignature ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Custody transfer must specify if witness signature is present."@en
+    ] .
+
+# =============================================================================
+# FORENSIC ANALYSIS SHAPES
+# =============================================================================
+
+icac-physical:ForensicAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:ForensicAnalysis ;
+    rdfs:label "Forensic Analysis Shape"@en ;
+    rdfs:comment "Validation shape for forensic analysis instances."@en ;
+    sh:property [
+        sh:path icac-physical:analysisType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "dna_analysis" "fingerprint_analysis" "digital_forensics" "trace_evidence" "ballistics" "document_examination" "toxicology" ) ;
+        sh:message "Forensic analysis must specify analysis type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:analysisDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Forensic analysis must specify analysis date."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:analyst ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Forensic analysis must specify analyst (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:analysisMethod ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "standard_protocol" "enhanced_protocol" "specialized_technique" "comparative_analysis" "quantitative_analysis" "qualitative_analysis" ) ;
+        sh:message "Forensic analysis must specify analysis method from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:analysisResults ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "positive_match" "negative_match" "inconclusive" "partial_match" "no_comparison_possible" "contaminated_sample" ) ;
+        sh:message "Forensic analysis must specify analysis results from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:confidenceLevel ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0 ;
+        sh:message "Confidence level must be between 0.0 and 100.0 percent."@en
+    ] .
+
+icac-physical:DnaAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:DnaAnalysis ;
+    rdfs:label "DNA Analysis Shape"@en ;
+    rdfs:comment "Validation shape for DNA analysis instances."@en ;
+    sh:property [
+        sh:path icac-physical:dnaProfile ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:in ( "complete_profile" "partial_profile" "mixed_profile" "degraded_profile" "no_profile" ) ;
+        sh:message "DNA analysis may specify DNA profile type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:codisMarkers ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 20 ;
+        sh:message "Number of CODIS markers must be between 0 and 20."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:databaseSearch ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "DNA analysis must specify if database search was performed."@en
+    ] .
+
+icac-physical:FingerprintAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:FingerprintAnalysis ;
+    rdfs:label "Fingerprint Analysis Shape"@en ;
+    rdfs:comment "Validation shape for fingerprint analysis instances."@en ;
+    sh:property [
+        sh:path icac-physical:printQuality ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "excellent" "good" "fair" "poor" "unusable" ) ;
+        sh:message "Fingerprint analysis must specify print quality from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:minutiaePoints ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 50 ;
+        sh:message "Number of minutiae points must be between 0 and 50."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:afisSearch ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Fingerprint analysis must specify if AFIS search was performed."@en
+    ] .
+
+# =============================================================================
+# EVIDENCE STORAGE SHAPES
+# =============================================================================
+
+icac-physical:EvidenceStorageShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:EvidenceStorage ;
+    rdfs:label "Evidence Storage Shape"@en ;
+    rdfs:comment "Validation shape for evidence storage instances."@en ;
+    sh:property [
+        sh:path icac-physical:storageLocation ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Evidence storage must specify storage location (5-200 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:storageType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "evidence_locker" "refrigerated_storage" "frozen_storage" "climate_controlled" "secure_vault" "temporary_storage" ) ;
+        sh:message "Evidence storage must specify storage type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:accessControl ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "key_access" "card_access" "biometric_access" "dual_control" "supervisor_access" "restricted_access" ) ;
+        sh:message "Evidence storage must specify access control from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:storageDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence storage must specify storage date."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:retentionPeriod ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1.0 ;
+        sh:maxInclusive 36500.0 ;
+        sh:message "Retention period must be between 1 and 36500 days (100 years)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:environmentalControls ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence storage must specify if environmental controls are present."@en
+    ] .
+
+icac-physical:SecureVaultShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:SecureVault ;
+    rdfs:label "Secure Vault Shape"@en ;
+    rdfs:comment "Validation shape for secure vault storage instances."@en ;
+    sh:property [
+        sh:path icac-physical:vaultLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "level_1" "level_2" "level_3" "level_4" "maximum_security" ) ;
+        sh:message "Secure vault must specify vault security level from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:fireRating ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.5 ;
+        sh:maxInclusive 4.0 ;
+        sh:message "Fire rating must be between 0.5 and 4.0 hours."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:surveillanceMonitoring ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Secure vault must specify if surveillance monitoring is active."@en
+    ] .
+
+# =============================================================================
+# EVIDENCE DISPOSITION SHAPES
+# =============================================================================
+
+icac-physical:EvidenceDispositionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:EvidenceDisposition ;
+    rdfs:label "Evidence Disposition Shape"@en ;
+    rdfs:comment "Validation shape for evidence disposition instances."@en ;
+    sh:property [
+        sh:path icac-physical:dispositionType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "returned_to_owner" "destroyed" "retained_permanently" "transferred_jurisdiction" "court_ordered_disposal" "donated" ) ;
+        sh:message "Evidence disposition must specify disposition type from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:dispositionDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence disposition must specify disposition date."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:dispositionReason ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "case_closed" "court_order" "retention_expired" "owner_request" "space_constraints" "deterioration" ) ;
+        sh:message "Evidence disposition must specify disposition reason from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:authorizingOfficer ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Evidence disposition must specify authorizing officer (3-100 characters)."@en
+    ] ;
+    sh:property [
+        sh:path icac-physical:witnessPresent ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Evidence disposition must specify if witness was present."@en
+    ] .
+
+# =============================================================================
+# OBJECT PROPERTY SHAPES
+# =============================================================================
+
+icac-physical:CollectedByShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:collectedBy ;
+    sh:name "collected by" ;
+    sh:description "Links evidence to collection process" ;
+    sh:class icac-physical:EvidenceCollection ;
+    sh:minCount 1 ;
+    sh:maxCount 1 .
+
+icac-physical:MaintainsCustodyShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:maintainsCustody ;
+    sh:name "maintains custody" ;
+    sh:description "Links evidence to chain of custody" ;
+    sh:class icac-physical:ChainOfCustody ;
+    sh:minCount 1 ;
+    sh:maxCount 1 .
+
+icac-physical:UndergoesAnalysisShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:undergoesAnalysis ;
+    sh:name "undergoes analysis" ;
+    sh:description "Links evidence to forensic analysis" ;
+    sh:class icac-physical:ForensicAnalysis ;
+    sh:minCount 0 .
+
+icac-physical:StoredInShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:storedIn ;
+    sh:name "stored in" ;
+    sh:description "Links evidence to storage location" ;
+    sh:class icac-physical:EvidenceStorage ;
+    sh:minCount 1 ;
+    sh:maxCount 1 .
+
+icac-physical:HasDispositionShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:hasDisposition ;
+    sh:name "has disposition" ;
+    sh:description "Links evidence to final disposition" ;
+    sh:class icac-physical:EvidenceDisposition ;
+    sh:minCount 0 ;
+    sh:maxCount 1 .
+
+icac-physical:IncludesTransferShape rdf:type sh:PropertyShape ;
+    sh:path icac-physical:includesTransfer ;
+    sh:name "includes transfer" ;
+    sh:description "Links chain of custody to transfers" ;
+    sh:class icac-physical:CustodyTransfer ;
+    sh:minCount 1 .
+
+# =============================================================================
+# CROSS-REFERENCE VALIDATION SHAPES
+# =============================================================================
+
+icac-physical:EvidenceCrossReferenceShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:PhysicalEvidence ;
+    rdfs:label "Evidence Cross Reference Shape"@en ;
+    rdfs:comment "Validates cross-references between evidence and related entities."@en ;
+    sh:sparql [
+        sh:message "Physical evidence must have collection process, chain of custody, and storage."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-physical:PhysicalEvidence .
+                FILTER NOT EXISTS {
+                    $this icac-physical:collectedBy ?collection ;
+                          icac-physical:maintainsCustody ?custody ;
+                          icac-physical:storedIn ?storage .
+                }
+            }
+        """
+    ] .
+
+icac-physical:CustodyIntegrityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:ChainOfCustody ;
+    rdfs:label "Custody Integrity Shape"@en ;
+    rdfs:comment "Validates chain of custody integrity."@en ;
+    sh:sparql [
+        sh:message "Chain of custody with breaches should have incomplete documentation flagged."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-physical:custodyBreaches ?breaches ;
+                      icac-physical:documentationComplete true .
+                FILTER (?breaches > 0)
+            }
+        """
+    ] .
+
+icac-physical:AnalysisValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:ForensicAnalysis ;
+    rdfs:label "Analysis Validation Shape"@en ;
+    rdfs:comment "Validates forensic analysis consistency."@en ;
+    sh:sparql [
+        sh:message "Positive matches should have high confidence levels."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-physical:analysisResults "positive_match" ;
+                      icac-physical:confidenceLevel ?confidence .
+                FILTER (?confidence < 95.0)
+            }
+        """
+    ] .
+
+# =============================================================================
+# TEMPORAL VALIDATION SHAPES
+# =============================================================================
+
+icac-physical:TemporalValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:PhysicalEvidence ;
+    rdfs:label "Temporal Validation Shape"@en ;
+    rdfs:comment "Validates temporal consistency in physical evidence."@en ;
+    sh:sparql [
+        sh:message "Evidence collection date should be before analysis date."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-physical:collectionDate ?collectionDate ;
+                      icac-physical:undergoesAnalysis ?analysis .
+                ?analysis icac-physical:analysisDate ?analysisDate .
+                FILTER (?collectionDate > ?analysisDate)
+            }
+        """
+    ] .
+
+icac-physical:CustodyTransferTimingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:CustodyTransfer ;
+    rdfs:label "Custody Transfer Timing Shape"@en ;
+    rdfs:comment "Validates custody transfer timing consistency."@en ;
+    sh:sparql [
+        sh:message "Custody transfers should occur after evidence collection."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                ?custody icac-physical:includesTransfer $this .
+                ?evidence icac-physical:maintainsCustody ?custody ;
+                         icac-physical:collectionDate ?collectionDate .
+                $this icac-physical:transferDate ?transferDate .
+                FILTER (?transferDate < ?collectionDate)
+            }
+        """
+    ] .
+
+icac-physical:StorageTimingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:EvidenceStorage ;
+    rdfs:label "Storage Timing Shape"@en ;
+    rdfs:comment "Validates evidence storage timing."@en ;
+    sh:sparql [
+        sh:message "Storage date should be after collection date."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                ?evidence icac-physical:storedIn $this ;
+                         icac-physical:collectionDate ?collectionDate .
+                $this icac-physical:storageDate ?storageDate .
+                FILTER (?storageDate < ?collectionDate)
+            }
+        """
+    ] .
+
+icac-physical:DispositionTimingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:EvidenceDisposition ;
+    rdfs:label "Disposition Timing Shape"@en ;
+    rdfs:comment "Validates evidence disposition timing."@en ;
+    sh:sparql [
+        sh:message "Disposition date should be after storage date."@en ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                ?evidence icac-physical:hasDisposition $this ;
+                         icac-physical:storedIn ?storage .
+                ?storage icac-physical:storageDate ?storageDate .
+                $this icac-physical:dispositionDate ?dispositionDate .
+                FILTER (?dispositionDate < ?storageDate)
+            }
+        """
+    ] .
+
+# =============================================================================
+# DATA QUALITY SHAPES
+# =============================================================================
+
+icac-physical:DataQualityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-physical:PhysicalEvidence ;
+    rdfs:label "Data Quality Shape"@en ;
+    rdfs:comment "Validates data quality for physical evidence."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Label should be between 5 and 200 characters when provided."@en
+    ] ;
+    sh:property [
+        sh:path rdfs:comment ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 1000 ;
+        sh:message "Comment should be between 10 and 1000 characters when provided."@en
+    ] . 

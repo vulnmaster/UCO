@@ -241,3 +241,87 @@ icac:usesChannel rdf:type owl:ObjectProperty ;
     rdfs:comment "Links an incident (especially live streaming) to the communication channel used."@en ;
     rdfs:domain icac:LiveStreamIncident ; # Or a more general event class
     rdfs:range icac:StreamingPlatformChannel . # Changed to specific channel 
+
+# =============================================================================
+# CONSPIRACY AND COORDINATED CRIMINAL ENTERPRISE CLASSES (Brooklyn Case Enhancement)
+# =============================================================================
+
+icac:ConspiracyToCommitCSA rdf:type owl:Class ;
+    rdfs:label "Conspiracy to Commit Child Sexual Abuse"@en ;
+    rdfs:comment "Criminal conspiracy involving multiple defendants coordinating child sexual abuse or exploitation activities (e.g., 8-defendant Brooklyn trafficking ring)."@en ;
+    rdfs:subClassOf icac:ChildSexualAbuseEvent .
+
+icac:CriminalEnterprise rdf:type owl:Class ;
+    rdfs:label "Criminal Enterprise"@en ;
+    rdfs:comment "Organized criminal group conducting systematic child exploitation activities with defined roles and structure."@en ;
+    rdfs:subClassOf uco-identity:Organization .
+
+icac:CoordinatedOffensePattern rdf:type owl:Class ;
+    rdfs:label "Coordinated Offense Pattern"@en ;
+    rdfs:comment "Pattern of coordinated criminal activities involving multiple perpetrators working together across time and locations."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac:MultiDefendantIndictment rdf:type owl:Class ;
+    rdfs:label "Multi-Defendant Indictment"@en ;
+    rdfs:comment "Legal indictment involving multiple defendants in coordinated criminal enterprise (e.g., 19-count superseding indictment)."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+# Conspiracy Role Classes
+icac:ConspiracyRole rdf:type owl:Class ;
+    rdfs:label "Conspiracy Role"@en ;
+    rdfs:comment "Role of individual within criminal conspiracy."@en ;
+    rdfs:subClassOf uco-role:OffenderRole .
+
+icac:ConspiracyLeaderRole rdf:type owl:Class ;
+    rdfs:label "Conspiracy Leader Role"@en ;
+    rdfs:comment "Leadership role within criminal conspiracy, directing and coordinating activities."@en ;
+    rdfs:subClassOf icac:ConspiracyRole .
+
+icac:ConspiracyMemberRole rdf:type owl:Class ;
+    rdfs:label "Conspiracy Member Role"@en ;
+    rdfs:comment "Member role within criminal conspiracy, participating in coordinated activities."@en ;
+    rdfs:subClassOf icac:ConspiracyRole .
+
+# =============================================================================
+# CONSPIRACY PROPERTIES
+# =============================================================================
+
+icac:conspiracyMemberCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "conspiracy member count"@en ;
+    rdfs:comment "Number of individuals involved in criminal conspiracy (e.g., 8 defendants)."@en ;
+    rdfs:domain icac:ConspiracyToCommitCSA ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac:indictmentCounts rdf:type owl:DatatypeProperty ;
+    rdfs:label "indictment counts"@en ;
+    rdfs:comment "Number of criminal counts in indictment (e.g., 19 counts in superseding indictment)."@en ;
+    rdfs:domain icac:MultiDefendantIndictment ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac:conspiracyDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "conspiracy duration"@en ;
+    rdfs:comment "Duration of criminal conspiracy from start to disruption."@en ;
+    rdfs:domain icac:ConspiracyToCommitCSA ;
+    rdfs:range xsd:duration .
+
+# =============================================================================
+# CONSPIRACY RELATIONSHIPS
+# =============================================================================
+
+icac:participatesInConspiracy rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in conspiracy"@en ;
+    rdfs:comment "Links individual to conspiracy they participate in."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac:ConspiracyToCommitCSA .
+
+icac:leadsConspiracy rdf:type owl:ObjectProperty ;
+    rdfs:label "leads conspiracy"@en ;
+    rdfs:comment "Links individual to conspiracy they lead or direct."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac:ConspiracyToCommitCSA .
+
+icac:resultsinIndictment rdf:type owl:ObjectProperty ;
+    rdfs:label "results in indictment"@en ;
+    rdfs:comment "Links conspiracy to indictment resulting from investigation."@en ;
+    rdfs:domain icac:ConspiracyToCommitCSA ;
+    rdfs:range icac:MultiDefendantIndictment . 
