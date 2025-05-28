@@ -1,6 +1,6 @@
 # ICAC Ontology Family
 
-A comprehensive experimental semantic framework for Internet Crimes Against Children (ICAC) investigations, supporting law enforcement agencies, digital forensics experts, policymakers, technology companies, and hotline operators in building semantically interoperable applications for child protection.
+A comprehensive experimental semantic framework for Internet Crimes Against Children (ICAC) and Child Sex Trafficking investigations, supporting law enforcement agencies, digital forensics experts, policymakers, technology companies, and hotline operators in building semantically interoperable applications for child protection.
 
 ## Overview
 
