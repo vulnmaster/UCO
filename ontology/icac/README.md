@@ -190,6 +190,29 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 - **icac-specialized-units.ttl** - Specialized Units & Advanced Capabilities
 - **icac-sex-offender-registry.ttl** - Sex Offender Registry Management
 
+### 7. Extremist Child Exploitation Enterprises (`icac-extremist-enterprises.ttl`) 🆕
+
+**Purpose**: Models extremist criminal enterprises engaged in child exploitation, including nihilistic violent extremism (NVE) networks, content compilation systems, and enterprise structures.
+
+**Key Features**:
+- **Nihilistic Violent Extremism (NVE) Framework**: Networks with accelerationist goals to destroy civilized society
+- **"Lorebook" Content Compilation**: Edited compilations of victim content used as currency within enterprises
+- **Enterprise Hierarchy Modeling**: Leadership structures, inner cores, and tiered membership systems
+- **Advanced Exploitation Methods**: Self-harm coercion including name cutting, burning, animal abuse
+- **Cross-Platform Coordination**: Multi-platform operations with alternate account systems
+- **International Cooperation**: MLAT (Mutual Legal Assistance Treaty) and cross-border evidence sharing
+- **Covert Investigation Operations**: Online Covert Employee (OCE) infiltration and network mapping
+
+**Classes**: 46 classes across 10 categories including `NihilisticViolentExtremismNetwork`, `ChildExploitationEnterprise`, `Lorebook`, `SelfHarmCoercion`, `CrossPlatformCoordination`, `MutualLegalAssistanceTreatyProcess`
+
+**Properties**: 74 properties including `networkSize`, `contentVolumeItems`, `coercionSeverity`, `infiltrationDuration`, `treatyMechanism`
+
+**Based on**: 764 Network case (United States v. Prasan Nepal and Leonidas Varagiannis, 2025)
+
+**SHACL Shapes**: `icac-extremist-enterprises-shapes.ttl` with 25+ validation shapes and business rules
+
+**Example**: `examples/764-network-extremist-enterprise-example.ttl` - Complete modeling of the 764 network case
+
 ## Educational Exploitation Module (`icac-educational-exploitation.ttl`)
 
 **Purpose**: Models child sexual exploitation within educational institutions, including schools, colleges, and educational programs.

@@ -1820,3 +1820,96 @@ The enhancements maintain full compatibility with existing ICAC ontology modules
 - Basic ontology structure
 - Initial class definitions
 - Property definitions 
+
+## Version 0.10.0 - 2025-01-17
+
+### 764 Network Extremist Enterprise Case Enhancement
+
+**Major Addition**: New `icac-extremist-enterprises.ttl` module based on analysis of United States v. Prasan Nepal and Leonidas Varagiannis (18 U.S.C. § 2252A(g) - Child Exploitation Enterprise).
+
+#### New Ontology Module: Extremist Child Exploitation Enterprises
+- **46 new classes** across 10 major categories
+- **74 properties** (48 datatype + 26 object properties)  
+- **Comprehensive SHACL validation** with 25+ shapes and business rules
+- **Complete case example** with 255 triples modeling the 764 network
+
+#### Key Innovation: "Lorebook" Content Compilation Systems
+- `Lorebook` - Edited compilations of victim content
+- `VictimContentCompilation` - Victim-specific content organization
+- `ContentCurrencySystem` - Content-as-currency advancement economies
+- `ContentValueAssessment` - Quality and notoriety-based value assessment
+- `MembershipAdvancementSystem` - Content-driven hierarchy advancement
+
+#### Nihilistic Violent Extremism (NVE) Framework
+- `NihilisticViolentExtremismNetwork` - Networks with accelerationist goals
+- `ChildExploitationEnterprise` - 18 U.S.C. § 2252A(g) compliant enterprises
+- `AccelerationistGroup` - Groups seeking societal collapse
+- `ExtremistNetworkCell` - Operational cells within networks
+- `CyberExtremistNetwork` - Digital-focused extremist operations
+
+#### Advanced Exploitation Methods
+- `SelfHarmCoercion` - Systematic self-harm coercion campaigns
+- `NameCuttingCoercion` - Coercion to cut names as ownership marking
+- `SelfImmolationCoercion` - Fire-based self-harm coercion
+- `AnimalAbuseCoercion` - Pet/animal abuse coercion
+- `SiblingAbuseCoercion` - Family member abuse coercion
+- `SuicideCoercion` - Ultimate control through suicide pressure
+
+#### Enterprise Structure & Hierarchy
+- `EnterpriseHierarchy` - Organizational structure framework
+- `InnerCore` - Elite member access levels (e.g., "764 Inferno")
+- `LeadershipStructure` - Multi-leader coordination systems
+- `RecruitmentHierarchy` - Content-quality-based recruitment
+- `MembershipTier` - Tiered access and privilege systems
+
+#### Cross-Platform Coordination
+- `CrossPlatformCoordination` - Multi-platform activity coordination
+- `EncryptedChannelNetwork` - Encrypted messaging networks
+- `AlternateAccountSystem` - Alt account evasion systems
+- `PlatformMigrationStrategy` - Platform-switching when restricted
+- `PrivateGroupManagement` - Exclusive group access management
+
+#### Investigation & Evidence Framework
+- `CovertEmployeeOperation` - OCE infiltration operations
+- `EncryptedChannelInfiltration` - Encrypted channel penetration
+- `CrossPlatformEvidenceCorrelation` - Multi-platform evidence linking
+- `IdentityCorrelationAnalysis` - Cross-platform identity correlation
+- `NetworkMappingInvestigation` - Enterprise structure mapping
+
+#### International Cooperation
+- `MutualLegalAssistanceTreatyProcess` - MLAT-based cooperation
+- `CrossBorderDeviceSeizure` - International device seizure
+- `InternationalEvidenceSharing` - Cross-border evidence exchange
+- `CrossJurisdictionalInvestigation` - Multi-country investigations
+- `InternationalNetworkDisruption` - Coordinated network takedowns
+
+#### Key Properties Added
+- Network characteristics: `networkSize`, `operationalScope`, `ideologicalFramework`, `networkNotoriety`
+- Content systems: `contentVolumeItems`, `compilationComplexity`, `contentNotoriety`, `contentValue`
+- Exploitation methods: `coercionSeverity`, `selfHarmType`, `degradationLevel`, `coercionEffectiveness`
+- Investigation: `infiltrationDuration`, `evidenceQuality`, `identityCorrelationAccuracy`, `networkMappingCompleteness`
+- International: `treatyMechanism`, `cooperationResponseTime`, `evidenceSharingVolume`, `disruptionEffectiveness`
+
+#### Files Added
+- `icac-extremist-enterprises.ttl` - Main ontology (545 triples)
+- `icac-extremist-enterprises-shapes.ttl` - SHACL validation (530 triples)
+- `examples/764-network-extremist-enterprise-example.ttl` - Case example (255 triples)
+- `examples/764-network-case-enhancement-summary.md` - Comprehensive documentation
+
+#### Gap Analysis Addressed
+- No extremist enterprise modeling → Comprehensive NVE framework
+- No "lorebook" content systems → Complete content compilation modeling
+- Limited self-harm coercion → Extensive extreme degradation framework
+- Insufficient cross-platform coordination → Advanced multi-platform operations
+- Limited international cooperation → Complete MLAT and treaty mechanisms
+- No advanced investigation techniques → OCE operations and network mapping
+
+#### Technical Achievements
+- **Syntax Validation**: 100% successful for all files
+- **SHACL Compliance**: Comprehensive validation with cross-validation rules
+- **UCO Integration**: Full compatibility with existing modules
+- **Business Rule Enforcement**: Advanced enterprise hierarchy and consistency rules
+
+---
+
+## Version 0.9.2 - 2025-01-15 
