@@ -862,4 +862,196 @@ icac-prevention:monitorsUsageOf rdf:type owl:ObjectProperty ;
     rdfs:domain icac-prevention:FAQUsageMetrics ;
     rdfs:range icac-prevention:FAQKnowledgeBase ;
     rdfs:label "monitors usage of"@en ;
-    rdfs:comment "Usage metrics monitor access patterns of FAQ knowledge base."@en . 
+    rdfs:comment "Usage metrics monitor access patterns of FAQ knowledge base."@en .
+
+# =============================================================================
+# COMMUNITY OUTREACH EFFECTIVENESS (Operation Restore Justice Enhancement)
+# =============================================================================
+
+icac-prevention:CommunityOutreachEffectiveness rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:PreventionMetrics ;
+    rdfs:label "Community Outreach Effectiveness"@en ;
+    rdfs:comment "Measurement of community outreach program effectiveness in generating victim disclosures and arrests."@en .
+
+icac-prevention:SchoolPresentationProgram rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:EducationalOutreach ;
+    rdfs:label "School Presentation Program"@en ;
+    rdfs:comment "FBI school presentation program for child safety education and disclosure encouragement."@en .
+
+icac-prevention:VictimDisclosureTriggering rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:SafetyEducationEvent ;
+    rdfs:label "Victim Disclosure Triggering"@en ;
+    rdfs:comment "Safety education event that triggers victim disclosure of ongoing abuse."@en .
+
+icac-prevention:PostPresentationDisclosure rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Post Presentation Disclosure"@en ;
+    rdfs:comment "Victim disclosure that occurs following a safety presentation or educational event."@en .
+
+icac-prevention:OutreachTriggeredInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Outreach Triggered Investigation"@en ;
+    rdfs:comment "Investigation initiated as direct result of community outreach presentation."@en .
+
+icac-prevention:RapidResponseDisclosureWorkflow rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Rapid Response Disclosure Workflow"@en ;
+    rdfs:comment "Workflow enabling rapid response from victim disclosure to arrest (e.g., 8-hour timeline)."@en .
+
+# =============================================================================
+# PARENTAL VIGILANCE AND COMMUNITY ENGAGEMENT
+# =============================================================================
+
+icac-prevention:ParentalVigilanceProgram rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:CommunityOutreach ;
+    rdfs:label "Parental Vigilance Program"@en ;
+    rdfs:comment "Program educating parents on recognizing signs of child exploitation and reporting."@en .
+
+icac-prevention:CommunityPartnershipInitiative rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:CommunityOutreach ;
+    rdfs:label "Community Partnership Initiative"@en ;
+    rdfs:comment "Initiative building partnerships with community organizations for child protection."@en .
+
+icac-prevention:ChildAbusePreventionMonth rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:PreventionCampaign ;
+    rdfs:label "Child Abuse Prevention Month"@en ;
+    rdfs:comment "National Child Abuse Prevention Month coordinated awareness activities."@en .
+
+icac-prevention:NationwideAwarenessInitiative rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:PreventionCampaign ;
+    rdfs:label "Nationwide Awareness Initiative"@en ;
+    rdfs:comment "Nationwide coordinated awareness campaign involving multiple agencies and communities."@en .
+
+# =============================================================================
+# DISCLOSURE ENCOURAGEMENT AND SUPPORT
+# =============================================================================
+
+icac-prevention:DisclosureEncouragementStrategy rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:SafetyProtocol ;
+    rdfs:label "Disclosure Encouragement Strategy"@en ;
+    rdfs:comment "Strategy for encouraging victims to disclose abuse through education and support."@en .
+
+icac-prevention:SafeDisclosureEnvironment rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:SafetyProtocol ;
+    rdfs:label "Safe Disclosure Environment"@en ;
+    rdfs:comment "Creation of safe environment where victims feel comfortable disclosing abuse."@en .
+
+icac-prevention:TrustedAdultIdentification rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:DisclosureEncouragementStrategy ;
+    rdfs:label "Trusted Adult Identification"@en ;
+    rdfs:comment "Education helping children identify trusted adults for disclosure."@en .
+
+icac-prevention:DisclosureBarrierReduction rdf:type owl:Class ;
+    rdfs:subClassOf icac-prevention:DisclosureEncouragementStrategy ;
+    rdfs:label "Disclosure Barrier Reduction"@en ;
+    rdfs:comment "Strategies to reduce barriers preventing victim disclosure."@en .
+
+# =============================================================================
+# ENHANCED OUTREACH PROPERTIES (Operation Restore Justice)
+# =============================================================================
+
+icac-prevention:disclosuresGenerated rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:CommunityOutreachEffectiveness ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "disclosures generated"@en ;
+    rdfs:comment "Number of victim disclosures generated by outreach program."@en .
+
+icac-prevention:arrestsFromDisclosures rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:CommunityOutreachEffectiveness ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "arrests from disclosures"@en ;
+    rdfs:comment "Number of arrests resulting from outreach-generated disclosures."@en .
+
+icac-prevention:averageDisclosureTime rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:PostPresentationDisclosure ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "average disclosure time"@en ;
+    rdfs:comment "Average time in hours from presentation to victim disclosure."@en .
+
+icac-prevention:rapidResponseCapability rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:RapidResponseDisclosureWorkflow ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "rapid response capability"@en ;
+    rdfs:comment "Whether rapid response (sub-24 hour) capability is available."@en .
+
+icac-prevention:presentationAttendance rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:SchoolPresentationProgram ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "presentation attendance"@en ;
+    rdfs:comment "Number of students attending safety presentation."@en .
+
+icac-prevention:parentalEngagementRate rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:ParentalVigilanceProgram ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "parental engagement rate"@en ;
+    rdfs:comment "Rate of parental engagement in vigilance program (0.0-1.0)."@en .
+
+icac-prevention:communityReportingIncrease rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:CommunityPartnershipInitiative ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "community reporting increase"@en ;
+    rdfs:comment "Percentage increase in community reporting following initiative."@en .
+
+icac-prevention:disclosureBarriersAddressed rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:DisclosureBarrierReduction ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "disclosure barriers addressed"@en ;
+    rdfs:comment "Number of disclosure barriers identified and addressed."@en .
+
+icac-prevention:trustedAdultsIdentified rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-prevention:TrustedAdultIdentification ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "trusted adults identified"@en ;
+    rdfs:comment "Number of trusted adults identified by children in program."@en .
+
+# =============================================================================
+# ENHANCED OUTREACH RELATIONSHIPS (Operation Restore Justice)
+# =============================================================================
+
+icac-prevention:triggersDisclosure rdf:type owl:ObjectProperty ;
+    rdfs:label "triggers disclosure"@en ;
+    rdfs:comment "Links outreach activity to victim disclosure it triggered."@en ;
+    rdfs:domain icac-prevention:VictimDisclosureTriggering ;
+    rdfs:range icac-prevention:PostPresentationDisclosure .
+
+icac-prevention:enablesRapidResponse rdf:type owl:ObjectProperty ;
+    rdfs:label "enables rapid response"@en ;
+    rdfs:comment "Links disclosure to rapid response capability."@en ;
+    rdfs:domain icac-prevention:PostPresentationDisclosure ;
+    rdfs:range icac-prevention:RapidResponseDisclosureWorkflow .
+
+icac-prevention:resultsInArrest rdf:type owl:ObjectProperty ;
+    rdfs:label "results in arrest"@en ;
+    rdfs:comment "Links outreach-triggered investigation to arrest."@en ;
+    rdfs:domain icac-prevention:OutreachTriggeredInvestigation ;
+    rdfs:range uco-action:Action .
+
+icac-prevention:engagesParents rdf:type owl:ObjectProperty ;
+    rdfs:label "engages parents"@en ;
+    rdfs:comment "Links vigilance program to parent participants."@en ;
+    rdfs:domain icac-prevention:ParentalVigilanceProgram ;
+    rdfs:range uco-identity:Person .
+
+icac-prevention:supportedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "supported by"@en ;
+    rdfs:comment "Links disclosure to support system that enabled it."@en ;
+    rdfs:domain icac-prevention:PostPresentationDisclosure ;
+    rdfs:range icac-prevention:SafeDisclosureEnvironment .
+
+icac-prevention:coordinatedWith rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinated with"@en ;
+    rdfs:comment "Links awareness initiative to coordinating agencies."@en ;
+    rdfs:domain icac-prevention:NationwideAwarenessInitiative ;
+    rdfs:range uco-identity:Organization .
+
+icac-prevention:reducesBarrier rdf:type owl:ObjectProperty ;
+    rdfs:label "reduces barrier"@en ;
+    rdfs:comment "Links strategy to disclosure barrier it addresses."@en ;
+    rdfs:domain icac-prevention:DisclosureBarrierReduction ;
+    rdfs:range uco-core:UcoObject .
+
+icac-prevention:identifiesTrustedAdult rdf:type owl:ObjectProperty ;
+    rdfs:label "identifies trusted adult"@en ;
+    rdfs:comment "Links program to trusted adult identification."@en ;
+    rdfs:domain icac-prevention:TrustedAdultIdentification ;
+    rdfs:range uco-identity:Person . 

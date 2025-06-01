@@ -1913,3 +1913,274 @@ The enhancements maintain full compatibility with existing ICAC ontology modules
 ---
 
 ## Version 0.9.2 - 2025-01-15 
+
+## Version 0.11.0 - Utah Operation Hive Strike Enhancement (2025-01-19)
+
+### Added
+- **Named Operation Framework** in icac-multi-jurisdiction.ttl
+  - `NamedOperation` - Operations with specific names and coordinated branding  
+  - `StatewideOperation` - Operations covering entire state with multiple counties
+  - `TaskForceHostedOperation` - Operations hosted by specific task forces
+  - `DualTargetOperation` - Operations targeting multiple offender types simultaneously
+  - `LargeScaleAgencyCoordination` - Coordination involving 25+ agencies
+  - `AgentDeploymentCoordination` - Coordination of agent deployment across agencies
+  - `MultiCountyOperation` - Operations spanning multiple counties within state
+  - `MultiLevelAgencyParticipation` - Mixed federal, state, local agency participation
+  - Properties: `operationName`, `operationBranding`, `operationDurationDays`, `statewideCoverage`, `agencyParticipantCount`, `agentParticipantCount`, `countiesInvolved`, `targetTypeCount`, `targetStrategy`, `chargeTypesDiversity`
+  - Relationships: `hostedBy`, `coversState`, `spansCounties`, `utilizesCoordination`, `targetsOffenderType`, `deploysAgents`
+
+- **Social Media Undercover Operations** in icac-undercover.ttl
+  - `SocialMediaUndercoverOperation` - Operations on social media platforms
+  - `MultiPlatformUndercoverOperation` - Operations across multiple platforms
+  - `UndercoverChatInvestigation` - Chat-based undercover investigations
+  - `MinorPersonaOperation` - Operations using minor personas
+  - `MinorPersonaAgent` - Agent operating as minor persona
+  - `InPersonMeetingSolicitation` - Detection of meeting solicitation attempts
+  - `PredatorTargetingOperation` - Operations targeting online predators
+  - `SocialMediaAgent` - Agent specialized in social media operations
+  - `ChatInvestigationAgent` - Agent specialized in chat investigations
+  - Properties: `socialMediaPlatformsUsed`, `chatPlatformType`, `communicationMethod`, `personaAge`, `personaGender`, `personaLocation`, `personaProfile`, `targetBehaviorType`, `meetingSolicitationAttempts`, `predatorContactAttempts`, `identificationSuccessRate`, `chatDurationHours`, `conversationCount`
+  - Relationships: `conductedOnPlatform`, `utilizesPersona`, `targetsIndividual`, `involvesChatInvestigation`, `identifiesPredator`, `leadsToSolicitation`, `agentOperatesAs`, `generatesEvidence`
+
+- **Utah-Specific Legal Charges** in icac-sentencing.ttl
+  - `Utah_SexualExploitationOfMinor` - Sexual exploitation under Utah Criminal Code
+  - `Utah_DealingInHarmfulMaterialsToMinor` - Dealing harmful materials to minor
+  - `Utah_EnticingAMinor` - Enticing a minor under Utah law
+  - `Utah_AggravatedSexualExploitationOfMinor` - Aggravated sexual exploitation
+  - `Utah_AggravatedSexualAbuseOfChild` - Aggravated sexual abuse of child
+  - `Utah_SodomyOnChild` - Sodomy on child under Utah Criminal Code
+  - `Utah_PossessionOfControlledSubstance` - Possession of controlled substance (ancillary)
+  - `Utah_PossessionOfStolenFirearm` - Possession of stolen firearm (ancillary)
+
+- **Comprehensive Example**: utah-operation-hive-strike-example.ttl (235 triples)
+  - Models 4-day statewide operation with 31 agencies, 80+ agents
+  - 5-county coverage (Davis, Salt Lake, Summit, Utah, Weber)
+  - Social media minor persona operations (ages 13-15)
+  - Dual-target approach (predators + CSAM distributors)
+  - Utah ICAC Task Force hosting
+  - Utah-specific legal charges
+
+- **Documentation**: utah-operation-hive-strike-enhancement-summary.md
+  - Comprehensive analysis of Operation Hive Strike modeling
+  - Technical implementation details
+  - Real-world applicability assessment
+
+### Enhanced
+- **icac-multi-jurisdiction.ttl**: 591 triples (enhanced from original)
+- **icac-undercover.ttl**: 484 triples (enhanced with uco-location prefix)
+- **icac-sentencing.ttl**: 820 triples (enhanced with Utah charges)
+
+### Technical
+- All files successfully validated with RDFLib
+- Proper UCO integration maintained
+- Cross-module compatibility confirmed
+- Total enhancement: 8 new classes, 26 new properties, 12 new relationships, 8 Utah-specific charge classes
+
+### Use Cases
+- Named law enforcement operations (e.g., "Operation Hive Strike")
+- Large-scale multi-agency coordination (30+ agencies, 80+ agents)
+- Social media undercover investigations with minor personas
+- Dual-target operations targeting multiple offender types
+- Multi-county intra-state coordination
+- Utah Criminal Code charge documentation
+
+## Version 0.10.0 - 764 Network Extremist Enterprise Enhancement (2024-12-19)
+
+### Major Enhancement: Nationwide FBI Coordination and Law Enforcement Corruption Framework
+
+Based on comprehensive analysis of Operation Restore Justice, a 5-day nationwide coordinated enforcement effort involving all 55 FBI field offices, resulting in 205 arrests and 115 child rescues.
+
+#### New Module: Law Enforcement Corruption (`icac-law-enforcement-corruption.ttl`)
+
+**Core Corruption Classes (25 new classes):**
+- `LawEnforcementCorruption` - Base corruption involving law enforcement personnel
+- `InsiderThreat` - Threats from within law enforcement/military organizations
+- `UniformBasedExploitation` - Exploitation while wearing official uniform for authority
+- `PositionOfAuthorityAbuse` - Abuse of law enforcement position for exploitation
+- `OfficerProducedCSAM` - CSAM production by law enforcement officers
+- `OfficerChildTrafficking` - Child trafficking conducted by officers
+
+**Corrupt Officer Role Classes:**
+- `CorruptLawEnforcementOfficer` - Base corrupt officer class
+- `CorruptStateTrooper` - Corrupt state troopers (Minneapolis case)
+- `CorruptArmyReservist` - Corrupt military reservists (Minneapolis case)
+- `CorruptMetropolitanPoliceDepartmentOfficer` - Corrupt metro police (D.C. case)
+- `FormerLawEnforcementOfficer` - Former officers using past authority
+
+**Uniform and Authority Exploitation:**
+- `UniformEnhancedProduction` - CSAM production enhanced by wearing uniform
+- `MilitaryUniformProduction` - Production while in military uniform
+- `PoliceUniformProduction` - Production while in police uniform
+- `AuthoritySymbolExploitation` - Use of badges/weapons for exploitation
+- `BadgeDisplayedProduction` - Production with visible law enforcement badge
+- `OfficialVehicleExploitation` - Use of official vehicles in exploitation
+
+**Authority Abuse Patterns:**
+- `InvestigativeAuthorityAbuse` - Abuse of investigative powers for exploitation
+- `AccessPrivilegeAbuse` - Abuse of special law enforcement access privileges
+- `DatabaseAccessAbuse` - Misuse of law enforcement database access
+- `InformationLeakage` - Leaking information to facilitate exploitation
+- `EvidenceManipulation` - Manipulation/destruction of evidence
+
+**Detection and Investigation:**
+- `InsiderThreatDetection` - Detection of corruption within agencies
+- `InternalAffairsInvestigation` - Internal affairs investigations
+- `ExternalOversightInvestigation` - External oversight investigations
+- `WhistleblowerReport` - Insider reports of corruption
+- `PublicIntegrityInvestigation` - Public integrity violation investigations
+
+**New Properties (11 properties):**
+- `yearsOfService` - Years served before corruption discovery
+- `uniformType` - Type of uniform worn (police, military, state_trooper)
+- `authorityLevel` - Level of authority (patrol, detective, supervisor, command)
+- `accessLevel` - System access level (basic, elevated, administrative)
+- `corruptionDuration` - Duration of corruption in months
+- `victimCount` - Number of victims in corruption case
+- `uniformDisplayed` - Whether uniform prominently displayed
+- `badgeVisible` - Whether badge visible during exploitation
+- `departmentAffiliation` - Department or unit affiliation
+- `employmentStatus` - Status during corruption (active, reserve, retired, terminated)
+
+**New Relationships (10 relationships):**
+- `exploitsPosition` - Links corruption to position exploited
+- `wearsUniform` - Links exploitation to uniform worn
+- `displaysAuthority` - Links exploitation to authority symbol
+- `abusesAccess` - Links corruption to access abused
+- `investigatedBy` - Links corruption to investigating agency
+- `employsOfficer` - Links agency to corrupt officer
+- `corruptsEvidence` - Links corruption to evidence manipulated
+- `leaksInformation` - Links corruption to information leaked
+- `detectedBy` - Links corruption to detection method
+- `reportedBy` - Links corruption to reporting person
+
+#### Enhanced Multi-Jurisdictional Coordination (`icac-multi-jurisdiction.ttl`)
+
+**Nationwide Operation Framework (5 new classes):**
+- `NationwideOperation` - Operations coordinated across entire country
+- `AllFBIFieldOfficesOperation` - Operations involving all 55 FBI field offices
+- `CEOSCoordinatedOperation` - Operations coordinated by CEOS
+- `USAttorneyOfficeParticipation` - US Attorney office participation
+- `ProjectSafeChildhoodOperation` - Operations under Project Safe Childhood
+
+**Large-Scale Child Rescue (3 new classes):**
+- `MassChildRescueOperation` - Operations rescuing 100+ children
+- `SimultaneousChildRescue` - Multiple simultaneous rescues
+- `NationwideChildRescueCoordination` - Nationwide rescue coordination
+
+**Rapid Response Integration (3 new classes):**
+- `RapidResponseCoordination` - Sub-24-hour response coordination
+- `CommunityOutreachTriggeredInvestigation` - Outreach-triggered investigations
+- `SchoolPresentationDisclosureWorkflow` - School presentation to arrest workflow
+
+**New Properties (6 properties):**
+- `fbiFieldOfficesInvolved` - Number of FBI field offices (range: 1-55)
+- `childrenRescuedCount` - Number of children rescued
+- `arrestsNationwide` - Total arrests across all jurisdictions
+- `disclosureToArrestHours` - Time from disclosure to arrest
+- `usAttorneyOfficesInvolved` - Number of US Attorney offices
+- `communityOutreachEffectiveness` - Outreach effectiveness rating (0.0-1.0)
+
+**New Relationships (5 relationships):**
+- `coordinatesNationwide` - Links agency to nationwide coordination
+- `rescuesChildren` - Links operation to child rescue activities
+- `triggeredByOutreach` - Links investigation to triggering outreach
+- `enablesRapidResponse` - Links coordination to rapid response
+- `involvesFBIFieldOffice` - Links operation to FBI field offices
+
+#### Enhanced Community Outreach Effectiveness (`icac-prevention.ttl`)
+
+**Community Outreach Effectiveness (6 new classes):**
+- `CommunityOutreachEffectiveness` - Measurement of outreach effectiveness
+- `SchoolPresentationProgram` - FBI school presentation programs
+- `VictimDisclosureTriggering` - Events triggering victim disclosure
+- `PostPresentationDisclosure` - Disclosures following presentations
+- `OutreachTriggeredInvestigation` - Investigations from outreach
+- `RapidResponseDisclosureWorkflow` - Rapid response workflows
+
+**Parental and Community Engagement (4 new classes):**
+- `ParentalVigilanceProgram` - Parent education and vigilance
+- `CommunityPartnershipInitiative` - Community organization partnerships
+- `ChildAbusePreventionMonth` - National prevention month activities
+- `NationwideAwarenessInitiative` - Nationwide awareness campaigns
+
+**Disclosure Support (4 new classes):**
+- `DisclosureEncouragementStrategy` - Strategies encouraging disclosure
+- `SafeDisclosureEnvironment` - Safe environments for disclosure
+- `TrustedAdultIdentification` - Helping children identify trusted adults
+- `DisclosureBarrierReduction` - Reducing disclosure barriers
+
+**New Properties (9 properties):**
+- `disclosuresGenerated` - Number of disclosures from outreach
+- `arrestsFromDisclosures` - Arrests resulting from outreach disclosures
+- `averageDisclosureTime` - Average time from presentation to disclosure
+- `rapidResponseCapability` - Whether rapid response available
+- `presentationAttendance` - Students attending presentations
+- `parentalEngagementRate` - Rate of parent engagement (0.0-1.0)
+- `communityReportingIncrease` - Percentage increase in reporting
+- `disclosureBarriersAddressed` - Number of barriers addressed
+- `trustedAdultsIdentified` - Number of trusted adults identified
+
+**New Relationships (8 relationships):**
+- `triggersDisclosure` - Links activity to disclosure triggered
+- `enablesRapidResponse` - Links disclosure to rapid response
+- `resultsInArrest` - Links investigation to arrest
+- `engagesParents` - Links program to parent participants
+- `supportedBy` - Links disclosure to support system
+- `coordinatedWith` - Links initiative to coordinating agencies
+- `reducesBarrier` - Links strategy to barrier addressed
+- `identifiesTrustedAdult` - Links program to trusted adult
+
+#### New Example: Operation Restore Justice (`operation-restore-justice-example.ttl`)
+
+**Comprehensive demonstration (230 triples) covering:**
+- **Nationwide Coordination**: All 55 FBI field offices, CEOS coordination, US Attorney participation
+- **Law Enforcement Corruption Cases**: Minneapolis uniform-based production, D.C. police trafficking
+- **Community Outreach Effectiveness**: California school presentation with 8-hour rapid response
+- **Mass Child Rescue**: 115 children rescued nationwide with coordination modeling
+- **Project Safe Childhood Integration**: National initiative framework demonstration
+
+#### Real-World Applications
+
+**Law Enforcement Benefits:**
+- Nationwide operation planning with 50+ FBI field office coordination
+- Insider threat detection and corruption pattern analysis
+- Community outreach optimization with evidence-based effectiveness measurement
+- Rapid response capability assessment and implementation
+
+**Prosecution Support:**
+- Comprehensive corruption case documentation with uniform enhancement factors
+- Authority abuse pattern recognition for multiple jurisdictions
+- Community outreach impact evidence for sentencing considerations
+- Cross-jurisdictional prosecution coordination frameworks
+
+**Prevention and Safety:**
+- Data-driven community outreach program development
+- Law enforcement corruption prevention and detection protocols
+- School safety presentation effectiveness optimization
+- Disclosure barrier identification and reduction strategies
+
+#### Technical Validation
+
+**File Statistics:**
+- Enhanced `icac-multi-jurisdiction.ttl`: 690 triples (+99 new triples)
+- New `icac-law-enforcement-corruption.ttl`: 212 triples (new module)
+- Enhanced `icac-prevention.ttl`: 755 triples (+120 new triples)
+- New `operation-restore-justice-example.ttl`: 230 triples (comprehensive example)
+- **Total Enhancement**: 1,887 triples across 4 files
+
+**New Semantic Elements:**
+- **50 new classes** across all enhanced/new modules
+- **27 new properties** (data and object properties)
+- **23 new relationships** (object property relationships)
+- **8 real-world use cases** demonstrated in example
+- **4 major capability areas** enhanced
+
+All files successfully validate with RDFLib and maintain UCO/CASE foundation compatibility.
+
+---
+
+## Version 0.11.0 - Utah Operation Hive Strike Enhancement (2025-01-03)
+
+## Version 0.12.0 - Operation Restore Justice Enhancement (2025-01-04)
+
+### Major Enhancement: Nationwide FBI Coordination and Law Enforcement Corruption Framework

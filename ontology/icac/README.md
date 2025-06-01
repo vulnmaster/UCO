@@ -6,7 +6,7 @@ A comprehensive experimental semantic framework for Internet Crimes Against Chil
 
 The ICAC Ontology Family provides standardized semantic representations for complex child protection investigations, enabling effective data sharing, analysis, and coordination across multiple domains and jurisdictions. The framework covers the complete investigation lifecycle from initial detection (i.e.;NCMEC tips) through final sentencing, with specialized modules for production cases, custodial relationships, victim impact assessment, ICAC task force operations, and comprehensive international coordination based on ICMEC's global partnerships with 120+ countries.
 
-## Ontology Modules (23 Total)
+## Ontology Modules (24 Total)
 
 ### Core Ontologies
 
@@ -111,25 +111,33 @@ The ICAC Ontology Family provides standardized semantic representations for comp
     - Covert surveillance and evidence collection
     - Operation safety and authorization protocols
 
-14. **icac-physical-evidence.ttl** - Physical Evidence & Procurement
+14. **icac-law-enforcement-corruption.ttl** - Law Enforcement Corruption & Insider Threats
+    - Law enforcement corruption in child exploitation cases
+    - Uniform-based exploitation and authority symbol abuse
+    - Insider threats and position of authority abuse
+    - Officer-produced CSAM and child trafficking by police
+    - Internal affairs and external oversight investigations
+    - Whistleblower reporting and corruption detection
+
+15. **icac-physical-evidence.ttl** - Physical Evidence & Procurement
     - Criminal procurement patterns
     - Abuse facilitation items
     - Physical search and seizure operations
     - Evidence chain of custody
 
-15. **icac-tactical.ttl** - Tactical Law Enforcement Operations
+16. **icac-tactical.ttl** - Tactical Law Enforcement Operations
     - SWAT operations and high-risk arrests
     - Tactical team roles and equipment
     - Threat assessment and risk management
     - Barricade situations and negotiations
 
-16. **icac-multi-jurisdiction.ttl** - Multi-Jurisdictional Operations
+17. **icac-multi-jurisdiction.ttl** - Multi-Jurisdictional Operations
     - Inter-agency coordination mechanisms
     - Resource and information sharing
     - Jurisdictional authority and conflicts
     - Cross-border operation management
 
-17. **icac-stranger-abduction.ttl** - Stranger Abduction & Weapon-Based Coercion
+18. **icac-stranger-abduction.ttl** - Stranger Abduction & Weapon-Based Coercion
     - Stranger abduction without prior relationship or grooming
     - Weapon-based coercion (knife threats, firearm intimidation)
     - Disguise-based concealment (ski masks, facial concealment)
@@ -139,7 +147,7 @@ The ICAC Ontology Family provides standardized semantic representations for comp
     - Victim compliance under weapon threats
     - Specialized stranger abduction investigation protocols
 
-18. **icac-street-recruitment.ttl** - Street-Based Recruitment & Rapid Escalation
+19. **icac-street-recruitment.ttl** - Street-Based Recruitment & Rapid Escalation
     - Street-based recruitment in public spaces through direct approach
     - Opportunistic exploitation without prior planning or relationship
     - Rapid escalation from contact to exploitation (same-day progression)
@@ -150,19 +158,19 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 
 ### Technical Support Ontologies
 
-19. **icac-forensics.ttl** - Digital Forensics
+20. **icac-forensics.ttl** - Digital Forensics
     - Forensic tool chains and methodologies
     - Evidence acquisition and verification
     - Chain of custody documentation
     - Expert analysis workflows
 
-20. **icac-detection.ttl** - Content Detection & Classification
+21. **icac-detection.ttl** - Content Detection & Classification
     - CSAM detection algorithms and tools
     - SAR and COPINE classification systems
     - Hash-based content identification
     - Machine learning detection models
 
-21. **icac-platforms.ttl** - Technology Platforms & Service Providers
+22. **icac-platforms.ttl** - Technology Platforms & Service Providers
     - Social media and messaging platforms
     - Content moderation capabilities
     - Legal compliance and cooperation
@@ -170,14 +178,14 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 
 ### Victim Services & Task Force Management
 
-22. **icac-victim-impact.ttl** - Victim Impact Assessment & Recovery
+23. **icac-victim-impact.ttl** - Victim Impact Assessment & Recovery
     - Psychological harm and trauma indicators
     - Therapeutic interventions and support services
     - Recovery processes and milestone tracking
     - Long-term effects and resilience factors
     - Impact assessments for sentencing and restitution
 
-23. **icac-taskforce.ttl** - ICAC Task Force Organization
+24. **icac-taskforce.ttl** - ICAC Task Force Organization
     - Task force structures and specialized units
     - Member roles and training programs
     - Joint operations and resource sharing
@@ -738,4 +746,50 @@ For questions, issues, or contributions:
 
 ---
 
-*This ontology family is developed as part of ongoing efforts to improve semantic interoperability in child protection and law enforcement domains.* 
+*This ontology family is developed as part of ongoing efforts to improve semantic interoperability in child protection and law enforcement domains.*
+
+## Examples
+
+The following examples demonstrate real-world applications of the ICAC ontology:
+
+### Utah Operation Hive Strike (April 2025)
+**File:** `examples/utah-operation-hive-strike-example.ttl` (235 triples)
+
+This example demonstrates a comprehensive 4-day statewide undercover investigation resulting in 15 arrests across 5 Utah counties. Key features include:
+
+- **Named Operation Framework**: "Operation Hive Strike" with coordinated branding and 31 agency participation
+- **Statewide Multi-County Coordination**: Coverage across Davis, Salt Lake, Summit, Utah, and Weber counties
+- **Dual-Target Operations**: Simultaneous targeting of online predators and CSAM offenders
+- **Social Media Undercover Operations**: Multi-platform operations with minor personas across 5 platforms
+- **Large-Scale Agency Coordination**: 31 agencies with 80+ agents deployed
+- **Utah-Specific Legal Charges**: Integration with Utah Criminal Code charges including sexual exploitation and enticing minors
+
+For detailed analysis, see `examples/utah-operation-hive-strike-enhancement-summary.md`.
+
+### Operation Restore Justice (April 2025)
+**File:** `examples/operation-restore-justice-example.ttl` (230 triples)
+
+This example demonstrates a comprehensive 5-day nationwide coordinated enforcement effort involving all 55 FBI field offices, resulting in 205 arrests and 115 child rescues. Key features include:
+
+- **Nationwide FBI Coordination**: All 55 FBI field offices with CEOS coordination and US Attorney participation
+- **Law Enforcement Corruption Cases**: State trooper and Army reservist producing CSAM in uniform, former police officer trafficking
+- **Community Outreach Effectiveness**: School presentation triggering victim disclosure with 8-hour rapid response
+- **Mass Child Rescue Operations**: Coordination resulting in 115 children rescued nationwide
+- **Project Safe Childhood Integration**: Operation conducted under national initiative framework
+- **Rapid Response Capabilities**: Sub-24-hour disclosure-to-arrest workflows
+
+For detailed analysis, see `examples/operation-restore-justice-enhancement-summary.md`.
+
+### 764 Network Extremist Enterprise (Telegram-based)
+**File:** `examples/764-network-example.ttl` (278 triples)
+
+This example demonstrates modeling of extremist enterprise operations using encrypted platforms for child exploitation. Key features include:
+
+- **Extremist Network Structure**: Cell-based organization with distributed leadership
+- **Encrypted Platform Operations**: Telegram channel coordination with bot automation
+- **Member Recruitment and Radicalization**: Pipeline from recruitment to active exploitation
+- **Content Production and Distribution**: Network-based CSAM production and sharing
+- **Cross-Platform Evidence Correlation**: Identity correlation across multiple platforms
+- **International Coordination**: Multi-country membership and operations
+
+For detailed analysis, see `examples/764-network-enhancement-summary.md`. 

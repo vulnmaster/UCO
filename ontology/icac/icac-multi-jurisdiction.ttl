@@ -671,4 +671,277 @@ icac-multi:identifiesVictims rdf:type owl:ObjectProperty ;
     rdfs:label "identifies victims"@en ;
     rdfs:comment "Campaign includes victim identification tasks."@en .
 
-icac-multi:uncoversCrossStateEvidence rdf:type owl:ObjectProperty ;    rdfs:domain icac-multi:MultiStateTraffickingInvestigation ;    rdfs:range icac-multi:CrossStateEvidence ;    rdfs:label "uncovers cross-state evidence"@en ;    rdfs:comment "Investigation uncovers evidence across multiple states."@en .# =============================================================================# INTERSTATE TRANSPORTATION PROPERTIES (Buffalo/Vermont Case Enhancement)# =============================================================================# Transportation Offense Propertiesicac-multi:transportationIntent rdf:type owl:DatatypeProperty ;    rdfs:label "transportation intent"@en ;    rdfs:comment "Intent for transportation (sexual_activity, sexual_conduct, avoiding_prosecution)."@en ;    rdfs:domain icac-multi:TransportationForIllegalPurpose ;    rdfs:range xsd:string .icac-multi:statesCrossed rdf:type owl:DatatypeProperty ;    rdfs:label "states crossed"@en ;    rdfs:comment "Number of state boundaries crossed during transportation."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range xsd:integer .icac-multi:crossingDocumentation rdf:type owl:DatatypeProperty ;    rdfs:label "crossing documentation"@en ;    rdfs:comment "Type of documentation evidencing state line crossing (gps, toll_records, surveillance, witness)."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range xsd:string .icac-multi:transportationMethod rdf:type owl:DatatypeProperty ;    rdfs:label "transportation method"@en ;    rdfs:comment "Method of transportation (vehicle, bus, train, plane, other)."@en ;    rdfs:domain icac-multi:InterstateVictimTransport ;    rdfs:range xsd:string .icac-multi:jurisdictionTriggerType rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdiction trigger type"@en ;    rdfs:comment "Type of federal jurisdiction trigger (interstate_transport, wire_communication, federal_property)."@en ;    rdfs:domain icac-multi:FederalJurisdictionTrigger ;    rdfs:range xsd:string .icac-multi:prosecutionAvoidanceBehavior rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution avoidance behavior"@en ;    rdfs:comment "Behavior indicating attempt to avoid prosecution through flight."@en ;    rdfs:domain icac-multi:InterstateFlightFromProsecution ;    rdfs:range xsd:string .# Coordination Propertiesicac-multi:handoffType rdf:type owl:DatatypeProperty ;    rdfs:label "handoff type"@en ;    rdfs:comment "Type of jurisdictional handoff (state_to_federal, federal_to_state, state_to_state)."@en ;    rdfs:domain icac-multi:JurisdictionalHandoff ;    rdfs:range xsd:string .icac-multi:coordinationComplexity rdf:type owl:DatatypeProperty ;    rdfs:label "coordination complexity"@en ;    rdfs:comment "Complexity level of interstate coordination (simple, moderate, complex, highly_complex)."@en ;    rdfs:domain icac-multi:InterstateCoordination ;    rdfs:range xsd:string .icac-multi:crossStateCommunication rdf:type owl:DatatypeProperty ;    rdfs:label "cross state communication"@en ;    rdfs:comment "Communication methods used for cross-state coordination."@en ;    rdfs:domain icac-multi:InterstateCoordination ;    rdfs:range xsd:string .# Interstate Transportation Object Propertiesicac-multi:involvesStateLineCrossing rdf:type owl:ObjectProperty ;    rdfs:label "involves state line crossing"@en ;    rdfs:comment "Links transportation offense to state line crossing events."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:StateLineCrossing .icac-multi:triggersJurisdiction rdf:type owl:ObjectProperty ;    rdfs:label "triggers jurisdiction"@en ;    rdfs:comment "Links transportation offense to federal jurisdiction trigger."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:FederalJurisdictionTrigger .icac-multi:requiresHandoff rdf:type owl:ObjectProperty ;    rdfs:label "requires handoff"@en ;    rdfs:comment "Links interstate offense to required jurisdictional handoff."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:JurisdictionalHandoff .icac-multi:facilitatedByCoordination rdf:type owl:ObjectProperty ;    rdfs:label "facilitated by coordination"@en ;    rdfs:comment "Links interstate investigation to coordination mechanism used."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:InterstateCoordination .icac-multi:originatingState rdf:type owl:ObjectProperty ;    rdfs:label "originating state"@en ;    rdfs:comment "State where transportation originated."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range uco-location:Location .icac-multi:destinationState rdf:type owl:ObjectProperty ;    rdfs:label "destination state"@en ;    rdfs:comment "State where transportation terminated."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range uco-location:Location .# =============================================================================# MASS PROSECUTION FRAMEWORK (Kidflix/Europol Large-Scale Operations)# =============================================================================icac-multi:MassProsecutionCoordination rdf:type owl:Class ;    rdfs:label "Mass Prosecution Coordination"@en ;    rdfs:comment "Coordination of prosecutions for massive user bases from large-scale platform takedowns requiring simultaneous action across multiple jurisdictions (nearly 2 million users for Kidflix operation)."@en ;    rdfs:subClassOf icac-multi:MultiJurisdictionalOperation .icac-multi:InternationalProsecutionFramework rdf:type owl:Class ;    rdfs:label "International Prosecution Framework"@en ;    rdfs:comment "Framework for coordinating prosecutions across multiple countries for global platform takedowns."@en ;    rdfs:subClassOf icac-multi:CrossBorderOperation .icac-multi:UserTriageProsecution rdf:type owl:Class ;    rdfs:label "User Triage Prosecution"@en ;    rdfs:comment "Prosecution strategy based on automated triage of user risk levels and evidence strength for massive user databases."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:PriorityProsecutionTrack rdf:type owl:Class ;    rdfs:label "Priority Prosecution Track"@en ;    rdfs:comment "High-priority prosecution track for most serious offenders identified in mass user analysis."@en ;    rdfs:subClassOf icac-multi:UserTriageProsecution .icac-multi:DistributedProsecutionTeam rdf:type owl:Class ;    rdfs:label "Distributed Prosecution Team"@en ;    rdfs:comment "Prosecution team distributed across multiple jurisdictions for handling massive caseloads."@en ;    rdfs:subClassOf uco-identity:Organization .icac-multi:AutomatedEvidenceDistribution rdf:type owl:Class ;    rdfs:label "Automated Evidence Distribution"@en ;    rdfs:comment "Automated system for distributing evidence packages to appropriate jurisdictions based on user location and evidence strength."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:MassUserJurisdictionMapping rdf:type owl:Class ;    rdfs:label "Mass User Jurisdiction Mapping"@en ;    rdfs:comment "Mapping of massive user bases to appropriate jurisdictions for prosecution based on location and legal frameworks."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:ProsecutionCapacityAnalysis rdf:type owl:Class ;    rdfs:label "Prosecution Capacity Analysis"@en ;    rdfs:comment "Analysis of prosecution capacity across jurisdictions to optimize case distribution for massive operations."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:CoordinatedCharging rdf:type owl:Class ;    rdfs:label "Coordinated Charging"@en ;    rdfs:comment "Coordinated charging decisions across multiple jurisdictions to ensure consistent prosecution approach."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:InternationalLegalHarmonization rdf:type owl:Class ;    rdfs:label "International Legal Harmonization"@en ;    rdfs:comment "Harmonization of legal approaches across countries for consistent prosecution of global platform users."@en ;    rdfs:subClassOf icac-multi:InternationalProsecutionFramework .# =============================================================================# MASS PROSECUTION PROPERTIES# =============================================================================# Scale and Volume Propertiesicac-multi:usersForProsecutionMillions rdf:type owl:DatatypeProperty ;    rdfs:label "users for prosecution millions"@en ;    rdfs:comment "Number of users identified for prosecution in millions (nearly 2 million for Kidflix operation)."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:jurisdictionsInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdictions involved"@en ;    rdfs:comment "Number of jurisdictions involved in mass prosecution coordination."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:nonNegativeInteger .icac-multi:prosecutionTimeframeMonths rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution timeframe months"@en ;    rdfs:comment "Estimated timeframe for completing mass prosecution in months."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:evidencePackagesDistributed rdf:type owl:DatatypeProperty ;    rdfs:label "evidence packages distributed"@en ;    rdfs:comment "Number of evidence packages distributed to jurisdictions."@en ;    rdfs:domain icac-multi:AutomatedEvidenceDistribution ;    rdfs:range xsd:nonNegativeInteger .# Triage and Priority Propertiesicac-multi:highPriorityUsers rdf:type owl:DatatypeProperty ;    rdfs:label "high priority users"@en ;    rdfs:comment "Number of users classified as high priority for prosecution."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:nonNegativeInteger .icac-multi:priorityClassificationCriteria rdf:type owl:DatatypeProperty ;    rdfs:label "priority classification criteria"@en ;    rdfs:comment "Criteria used for priority classification (content severity, contact offenses, victim production)."@en ;    rdfs:domain icac-multi:PriorityProsecutionTrack ;    rdfs:range xsd:string .icac-multi:automationPercentage rdf:type owl:DatatypeProperty ;    rdfs:label "automation percentage"@en ;    rdfs:comment "Percentage of triage process performed through automation."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:decimal .icac-multi:triageAccuracyRate rdf:type owl:DatatypeProperty ;    rdfs:label "triage accuracy rate"@en ;    rdfs:comment "Accuracy rate of automated triage system (0.0-1.0)."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:decimal .# Team and Resource Propertiesicac-multi:prosecutorsDeployed rdf:type owl:DatatypeProperty ;    rdfs:label "prosecutors deployed"@en ;    rdfs:comment "Number of prosecutors deployed across distributed prosecution team."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .icac-multi:prosecutionOfficesInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution offices involved"@en ;    rdfs:comment "Number of prosecution offices involved in distributed team."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .icac-multi:specializedProsecutionUnits rdf:type owl:DatatypeProperty ;    rdfs:label "specialized prosecution units"@en ;    rdfs:comment "Number of specialized units for child exploitation prosecution involved."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .# Capacity and Distribution Propertiesicac-multi:prosecutionCapacityScore rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution capacity score"@en ;    rdfs:comment "Capacity score for handling mass prosecution cases (0-100)."@en ;    rdfs:domain icac-multi:ProsecutionCapacityAnalysis ;    rdfs:range xsd:decimal .icac-multi:optimalCaseDistribution rdf:type owl:DatatypeProperty ;    rdfs:label "optimal case distribution"@en ;    rdfs:comment "Optimal number of cases per jurisdiction based on capacity analysis."@en ;    rdfs:domain icac-multi:ProsecutionCapacityAnalysis ;    rdfs:range xsd:nonNegativeInteger .icac-multi:jurisdictionMappingAccuracy rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdiction mapping accuracy"@en ;    rdfs:comment "Accuracy of automated jurisdiction mapping (0.0-1.0)."@en ;    rdfs:domain icac-multi:MassUserJurisdictionMapping ;    rdfs:range xsd:decimal .# Coordination and Harmonization Propertiesicac-multi:chargingConsistencyRate rdf:type owl:DatatypeProperty ;    rdfs:label "charging consistency rate"@en ;    rdfs:comment "Rate of consistent charging decisions across jurisdictions (0.0-1.0)."@en ;    rdfs:domain icac-multi:CoordinatedCharging ;    rdfs:range xsd:decimal .icac-multi:legalHarmonizationLevel rdf:type owl:DatatypeProperty ;    rdfs:label "legal harmonization level"@en ;    rdfs:comment "Level of legal approach harmonization (basic, moderate, high, full)."@en ;    rdfs:domain icac-multi:InternationalLegalHarmonization ;    rdfs:range xsd:string .icac-multi:crossBorderProsecutionAgreements rdf:type owl:DatatypeProperty ;    rdfs:label "cross-border prosecution agreements"@en ;    rdfs:comment "Number of cross-border prosecution agreements in place."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range xsd:nonNegativeInteger .# Outcome and Success Propertiesicac-multi:prosecutionSuccessRate rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution success rate"@en ;    rdfs:comment "Success rate of mass prosecution efforts (0.0-1.0)."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:convictionRate rdf:type owl:DatatypeProperty ;    rdfs:label "conviction rate"@en ;    rdfs:comment "Conviction rate for cases from mass prosecution coordination."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:averageSentenceLength rdf:type owl:DatatypeProperty ;    rdfs:label "average sentence length"@en ;    rdfs:comment "Average sentence length in months for mass prosecution cases."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .# =============================================================================# MASS PROSECUTION RELATIONSHIPS# =============================================================================# Coordination Relationshipsicac-multi:coordinatesMassProsecution rdf:type owl:ObjectProperty ;    rdfs:label "coordinates mass prosecution"@en ;    rdfs:comment "Links operation to mass prosecution coordination efforts."@en ;    rdfs:domain icac-multi:LargeScaleOperation ;    rdfs:range icac-multi:MassProsecutionCoordination .icac-multi:utilizesInternationalFramework rdf:type owl:ObjectProperty ;    rdfs:label "utilizes international framework"@en ;    rdfs:comment "Links mass prosecution to international framework used."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:InternationalProsecutionFramework .icac-multi:deploysDistributedTeam rdf:type owl:ObjectProperty ;    rdfs:label "deploys distributed team"@en ;    rdfs:comment "Links mass prosecution to distributed prosecution team."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:DistributedProsecutionTeam .# Triage and Distribution Relationshipsicac-multi:performsUserTriage rdf:type owl:ObjectProperty ;    rdfs:label "performs user triage"@en ;    rdfs:comment "Links mass prosecution to user triage prosecution strategy."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:UserTriageProsecution .icac-multi:establisehriorityTrack rdf:type owl:ObjectProperty ;    rdfs:label "establishes priority track"@en ;    rdfs:comment "Links user triage to priority prosecution tracks established."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range icac-multi:PriorityProsecutionTrack .icac-multi:automatesEvidenceDistribution rdf:type owl:ObjectProperty ;    rdfs:label "automates evidence distribution"@en ;    rdfs:comment "Links mass prosecution to automated evidence distribution systems."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:AutomatedEvidenceDistribution .icac-multi:performsJurisdictionMapping rdf:type owl:ObjectProperty ;    rdfs:label "performs jurisdiction mapping"@en ;    rdfs:comment "Links prosecution coordination to jurisdiction mapping process."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:MassUserJurisdictionMapping .# Analysis and Optimization Relationshipsicac-multi:analysesCapacity rdf:type owl:ObjectProperty ;    rdfs:label "analyses capacity"@en ;    rdfs:comment "Links prosecution coordination to capacity analysis performed."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:ProsecutionCapacityAnalysis .icac-multi:coordinatesCharging rdf:type owl:ObjectProperty ;    rdfs:label "coordinates charging"@en ;    rdfs:comment "Links international framework to coordinated charging process."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range icac-multi:CoordinatedCharging .icac-multi:harmonizesLegalApproaches rdf:type owl:ObjectProperty ;    rdfs:label "harmonizes legal approaches"@en ;    rdfs:comment "Links international framework to legal harmonization efforts."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range icac-multi:InternationalLegalHarmonization .# Evidence and Case Relationshipsicac-multi:distributesEvidencePackages rdf:type owl:ObjectProperty ;    rdfs:label "distributes evidence packages"@en ;    rdfs:comment "Links evidence distribution to packages distributed."@en ;    rdfs:domain icac-multi:AutomatedEvidenceDistribution ;    rdfs:range uco-observable:ObservableObject .icac-multi:mapsToJurisdiction rdf:type owl:ObjectProperty ;    rdfs:label "maps to jurisdiction"@en ;    rdfs:comment "Links user jurisdiction mapping to specific jurisdictions."@en ;    rdfs:domain icac-multi:MassUserJurisdictionMapping ;    rdfs:range uco-location:Location .icac-multi:involvesSpecializedUnit rdf:type owl:ObjectProperty ;    rdfs:label "involves specialized unit"@en ;    rdfs:comment "Links distributed team to specialized prosecution units involved."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range uco-identity:Organization .# Results and Outcomes Relationshipsicac-multi:generatesProsecutionResults rdf:type owl:ObjectProperty ;    rdfs:label "generates prosecution results"@en ;    rdfs:comment "Links mass prosecution coordination to results generated."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-observable:ObservableObject .icac-multi:achievesConvictions rdf:type owl:ObjectProperty ;    rdfs:label "achieves convictions"@en ;    rdfs:comment "Links prosecution efforts to convictions achieved."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-action:Action .icac-multi:resultsinSentencing rdf:type owl:ObjectProperty ;    rdfs:label "results in sentencing"@en ;    rdfs:comment "Links prosecution coordination to sentencing outcomes."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-action:Action . 
+icac-multi:uncoversCrossStateEvidence rdf:type owl:ObjectProperty ;    rdfs:domain icac-multi:MultiStateTraffickingInvestigation ;    rdfs:range icac-multi:CrossStateEvidence ;    rdfs:label "uncovers cross-state evidence"@en ;    rdfs:comment "Investigation uncovers evidence across multiple states."@en .# =============================================================================# INTERSTATE TRANSPORTATION PROPERTIES (Buffalo/Vermont Case Enhancement)# =============================================================================# Transportation Offense Propertiesicac-multi:transportationIntent rdf:type owl:DatatypeProperty ;    rdfs:label "transportation intent"@en ;    rdfs:comment "Intent for transportation (sexual_activity, sexual_conduct, avoiding_prosecution)."@en ;    rdfs:domain icac-multi:TransportationForIllegalPurpose ;    rdfs:range xsd:string .icac-multi:statesCrossed rdf:type owl:DatatypeProperty ;    rdfs:label "states crossed"@en ;    rdfs:comment "Number of state boundaries crossed during transportation."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range xsd:integer .icac-multi:crossingDocumentation rdf:type owl:DatatypeProperty ;    rdfs:label "crossing documentation"@en ;    rdfs:comment "Type of documentation evidencing state line crossing (gps, toll_records, surveillance, witness)."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range xsd:string .icac-multi:transportationMethod rdf:type owl:DatatypeProperty ;    rdfs:label "transportation method"@en ;    rdfs:comment "Method of transportation (vehicle, bus, train, plane, other)."@en ;    rdfs:domain icac-multi:InterstateVictimTransport ;    rdfs:range xsd:string .icac-multi:jurisdictionTriggerType rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdiction trigger type"@en ;    rdfs:comment "Type of federal jurisdiction trigger (interstate_transport, wire_communication, federal_property)."@en ;    rdfs:domain icac-multi:FederalJurisdictionTrigger ;    rdfs:range xsd:string .icac-multi:prosecutionAvoidanceBehavior rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution avoidance behavior"@en ;    rdfs:comment "Behavior indicating attempt to avoid prosecution through flight."@en ;    rdfs:domain icac-multi:InterstateFlightFromProsecution ;    rdfs:range xsd:string .# Coordination Propertiesicac-multi:handoffType rdf:type owl:DatatypeProperty ;    rdfs:label "handoff type"@en ;    rdfs:comment "Type of jurisdictional handoff (state_to_federal, federal_to_state, state_to_state)."@en ;    rdfs:domain icac-multi:JurisdictionalHandoff ;    rdfs:range xsd:string .icac-multi:coordinationComplexity rdf:type owl:DatatypeProperty ;    rdfs:label "coordination complexity"@en ;    rdfs:comment "Complexity level of interstate coordination (simple, moderate, complex, highly_complex)."@en ;    rdfs:domain icac-multi:InterstateCoordination ;    rdfs:range xsd:string .icac-multi:crossStateCommunication rdf:type owl:DatatypeProperty ;    rdfs:label "cross state communication"@en ;    rdfs:comment "Communication methods used for cross-state coordination."@en ;    rdfs:domain icac-multi:InterstateCoordination ;    rdfs:range xsd:string .# Interstate Transportation Object Propertiesicac-multi:involvesStateLineCrossing rdf:type owl:ObjectProperty ;    rdfs:label "involves state line crossing"@en ;    rdfs:comment "Links transportation offense to state line crossing events."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:StateLineCrossing .icac-multi:triggersJurisdiction rdf:type owl:ObjectProperty ;    rdfs:label "triggers jurisdiction"@en ;    rdfs:comment "Links transportation offense to federal jurisdiction trigger."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:FederalJurisdictionTrigger .icac-multi:requiresHandoff rdf:type owl:ObjectProperty ;    rdfs:label "requires handoff"@en ;    rdfs:comment "Links interstate offense to required jurisdictional handoff."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:JurisdictionalHandoff .icac-multi:facilitatedByCoordination rdf:type owl:ObjectProperty ;    rdfs:label "facilitated by coordination"@en ;    rdfs:comment "Links interstate investigation to coordination mechanism used."@en ;    rdfs:domain icac-multi:InterstateTransportationOffense ;    rdfs:range icac-multi:InterstateCoordination .icac-multi:originatingState rdf:type owl:ObjectProperty ;    rdfs:label "originating state"@en ;    rdfs:comment "State where transportation originated."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range uco-location:Location .icac-multi:destinationState rdf:type owl:ObjectProperty ;    rdfs:label "destination state"@en ;    rdfs:comment "State where transportation terminated."@en ;    rdfs:domain icac-multi:StateLineCrossing ;    rdfs:range uco-location:Location .# =============================================================================# MASS PROSECUTION FRAMEWORK (Kidflix/Europol Large-Scale Operations)# =============================================================================icac-multi:MassProsecutionCoordination rdf:type owl:Class ;    rdfs:label "Mass Prosecution Coordination"@en ;    rdfs:comment "Coordination of prosecutions for massive user bases from large-scale platform takedowns requiring simultaneous action across multiple jurisdictions (nearly 2 million users for Kidflix operation)."@en ;    rdfs:subClassOf icac-multi:MultiJurisdictionalOperation .icac-multi:InternationalProsecutionFramework rdf:type owl:Class ;    rdfs:label "International Prosecution Framework"@en ;    rdfs:comment "Framework for coordinating prosecutions across multiple countries for global platform takedowns."@en ;    rdfs:subClassOf icac-multi:CrossBorderOperation .icac-multi:UserTriageProsecution rdf:type owl:Class ;    rdfs:label "User Triage Prosecution"@en ;    rdfs:comment "Prosecution strategy based on automated triage of user risk levels and evidence strength for massive user databases."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:PriorityProsecutionTrack rdf:type owl:Class ;    rdfs:label "Priority Prosecution Track"@en ;    rdfs:comment "High-priority prosecution track for most serious offenders identified in mass user analysis."@en ;    rdfs:subClassOf icac-multi:UserTriageProsecution .icac-multi:DistributedProsecutionTeam rdf:type owl:Class ;    rdfs:label "Distributed Prosecution Team"@en ;    rdfs:comment "Prosecution team distributed across multiple jurisdictions for handling massive caseloads."@en ;    rdfs:subClassOf uco-identity:Organization .icac-multi:AutomatedEvidenceDistribution rdf:type owl:Class ;    rdfs:label "Automated Evidence Distribution"@en ;    rdfs:comment "Automated system for distributing evidence packages to appropriate jurisdictions based on user location and evidence strength."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:MassUserJurisdictionMapping rdf:type owl:Class ;    rdfs:label "Mass User Jurisdiction Mapping"@en ;    rdfs:comment "Mapping of massive user bases to appropriate jurisdictions for prosecution based on location and legal frameworks."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:ProsecutionCapacityAnalysis rdf:type owl:Class ;    rdfs:label "Prosecution Capacity Analysis"@en ;    rdfs:comment "Analysis of prosecution capacity across jurisdictions to optimize case distribution for massive operations."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:CoordinatedCharging rdf:type owl:Class ;    rdfs:label "Coordinated Charging"@en ;    rdfs:comment "Coordinated charging decisions across multiple jurisdictions to ensure consistent prosecution approach."@en ;    rdfs:subClassOf uco-action:Action .icac-multi:InternationalLegalHarmonization rdf:type owl:Class ;    rdfs:label "International Legal Harmonization"@en ;    rdfs:comment "Harmonization of legal approaches across countries for consistent prosecution of global platform users."@en ;    rdfs:subClassOf icac-multi:InternationalProsecutionFramework .# =============================================================================# MASS PROSECUTION PROPERTIES# =============================================================================# Scale and Volume Propertiesicac-multi:usersForProsecutionMillions rdf:type owl:DatatypeProperty ;    rdfs:label "users for prosecution millions"@en ;    rdfs:comment "Number of users identified for prosecution in millions (nearly 2 million for Kidflix operation)."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:jurisdictionsInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdictions involved"@en ;    rdfs:comment "Number of jurisdictions involved in mass prosecution coordination."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:nonNegativeInteger .icac-multi:prosecutionTimeframeMonths rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution timeframe months"@en ;    rdfs:comment "Estimated timeframe for completing mass prosecution in months."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:evidencePackagesDistributed rdf:type owl:DatatypeProperty ;    rdfs:label "evidence packages distributed"@en ;    rdfs:comment "Number of evidence packages distributed to jurisdictions."@en ;    rdfs:domain icac-multi:AutomatedEvidenceDistribution ;    rdfs:range xsd:nonNegativeInteger .# Triage and Priority Propertiesicac-multi:highPriorityUsers rdf:type owl:DatatypeProperty ;    rdfs:label "high priority users"@en ;    rdfs:comment "Number of users classified as high priority for prosecution."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:nonNegativeInteger .icac-multi:priorityClassificationCriteria rdf:type owl:DatatypeProperty ;    rdfs:label "priority classification criteria"@en ;    rdfs:comment "Criteria used for priority classification (content severity, contact offenses, victim production)."@en ;    rdfs:domain icac-multi:PriorityProsecutionTrack ;    rdfs:range xsd:string .icac-multi:automationPercentage rdf:type owl:DatatypeProperty ;    rdfs:label "automation percentage"@en ;    rdfs:comment "Percentage of triage process performed through automation."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:decimal .icac-multi:triageAccuracyRate rdf:type owl:DatatypeProperty ;    rdfs:label "triage accuracy rate"@en ;    rdfs:comment "Accuracy rate of automated triage system (0.0-1.0)."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range xsd:decimal .# Team and Resource Propertiesicac-multi:prosecutorsDeployed rdf:type owl:DatatypeProperty ;    rdfs:label "prosecutors deployed"@en ;    rdfs:comment "Number of prosecutors deployed across distributed prosecution team."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .icac-multi:prosecutionOfficesInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution offices involved"@en ;    rdfs:comment "Number of prosecution offices involved in distributed team."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .icac-multi:specializedProsecutionUnits rdf:type owl:DatatypeProperty ;    rdfs:label "specialized prosecution units"@en ;    rdfs:comment "Number of specialized units for child exploitation prosecution involved."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range xsd:nonNegativeInteger .# Capacity and Distribution Propertiesicac-multi:prosecutionCapacityScore rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution capacity score"@en ;    rdfs:comment "Capacity score for handling mass prosecution cases (0-100)."@en ;    rdfs:domain icac-multi:ProsecutionCapacityAnalysis ;    rdfs:range xsd:decimal .icac-multi:optimalCaseDistribution rdf:type owl:DatatypeProperty ;    rdfs:label "optimal case distribution"@en ;    rdfs:comment "Optimal number of cases per jurisdiction based on capacity analysis."@en ;    rdfs:domain icac-multi:ProsecutionCapacityAnalysis ;    rdfs:range xsd:nonNegativeInteger .icac-multi:jurisdictionMappingAccuracy rdf:type owl:DatatypeProperty ;    rdfs:label "jurisdiction mapping accuracy"@en ;    rdfs:comment "Accuracy of automated jurisdiction mapping (0.0-1.0)."@en ;    rdfs:domain icac-multi:MassUserJurisdictionMapping ;    rdfs:range xsd:decimal .# Coordination and Harmonization Propertiesicac-multi:chargingConsistencyRate rdf:type owl:DatatypeProperty ;    rdfs:label "charging consistency rate"@en ;    rdfs:comment "Rate of consistent charging decisions across jurisdictions (0.0-1.0)."@en ;    rdfs:domain icac-multi:CoordinatedCharging ;    rdfs:range xsd:decimal .icac-multi:legalHarmonizationLevel rdf:type owl:DatatypeProperty ;    rdfs:label "legal harmonization level"@en ;    rdfs:comment "Level of legal approach harmonization (basic, moderate, high, full)."@en ;    rdfs:domain icac-multi:InternationalLegalHarmonization ;    rdfs:range xsd:string .icac-multi:crossBorderProsecutionAgreements rdf:type owl:DatatypeProperty ;    rdfs:label "cross-border prosecution agreements"@en ;    rdfs:comment "Number of cross-border prosecution agreements in place."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range xsd:nonNegativeInteger .# Outcome and Success Propertiesicac-multi:prosecutionSuccessRate rdf:type owl:DatatypeProperty ;    rdfs:label "prosecution success rate"@en ;    rdfs:comment "Success rate of mass prosecution efforts (0.0-1.0)."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:convictionRate rdf:type owl:DatatypeProperty ;    rdfs:label "conviction rate"@en ;    rdfs:comment "Conviction rate for cases from mass prosecution coordination."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .icac-multi:averageSentenceLength rdf:type owl:DatatypeProperty ;    rdfs:label "average sentence length"@en ;    rdfs:comment "Average sentence length in months for mass prosecution cases."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range xsd:decimal .# =============================================================================# MASS PROSECUTION RELATIONSHIPS# =============================================================================# Coordination Relationshipsicac-multi:coordinatesMassProsecution rdf:type owl:ObjectProperty ;    rdfs:label "coordinates mass prosecution"@en ;    rdfs:comment "Links operation to mass prosecution coordination efforts."@en ;    rdfs:domain icac-multi:LargeScaleOperation ;    rdfs:range icac-multi:MassProsecutionCoordination .icac-multi:utilizesInternationalFramework rdf:type owl:ObjectProperty ;    rdfs:label "utilizes international framework"@en ;    rdfs:comment "Links mass prosecution to international framework used."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:InternationalProsecutionFramework .icac-multi:deploysDistributedTeam rdf:type owl:ObjectProperty ;    rdfs:label "deploys distributed team"@en ;    rdfs:comment "Links mass prosecution to distributed prosecution team."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:DistributedProsecutionTeam .# Triage and Distribution Relationshipsicac-multi:performsUserTriage rdf:type owl:ObjectProperty ;    rdfs:label "performs user triage"@en ;    rdfs:comment "Links mass prosecution to user triage prosecution strategy."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:UserTriageProsecution .icac-multi:establisehriorityTrack rdf:type owl:ObjectProperty ;    rdfs:label "establishes priority track"@en ;    rdfs:comment "Links user triage to priority prosecution tracks established."@en ;    rdfs:domain icac-multi:UserTriageProsecution ;    rdfs:range icac-multi:PriorityProsecutionTrack .icac-multi:automatesEvidenceDistribution rdf:type owl:ObjectProperty ;    rdfs:label "automates evidence distribution"@en ;    rdfs:comment "Links mass prosecution to automated evidence distribution systems."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:AutomatedEvidenceDistribution .icac-multi:performsJurisdictionMapping rdf:type owl:ObjectProperty ;    rdfs:label "performs jurisdiction mapping"@en ;    rdfs:comment "Links prosecution coordination to jurisdiction mapping process."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:MassUserJurisdictionMapping .# Analysis and Optimization Relationshipsicac-multi:analysesCapacity rdf:type owl:ObjectProperty ;    rdfs:label "analyses capacity"@en ;    rdfs:comment "Links prosecution coordination to capacity analysis performed."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range icac-multi:ProsecutionCapacityAnalysis .icac-multi:coordinatesCharging rdf:type owl:ObjectProperty ;    rdfs:label "coordinates charging"@en ;    rdfs:comment "Links international framework to coordinated charging process."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range icac-multi:CoordinatedCharging .icac-multi:harmonizesLegalApproaches rdf:type owl:ObjectProperty ;    rdfs:label "harmonizes legal approaches"@en ;    rdfs:comment "Links international framework to legal harmonization efforts."@en ;    rdfs:domain icac-multi:InternationalProsecutionFramework ;    rdfs:range icac-multi:InternationalLegalHarmonization .# Evidence and Case Relationshipsicac-multi:distributesEvidencePackages rdf:type owl:ObjectProperty ;    rdfs:label "distributes evidence packages"@en ;    rdfs:comment "Links evidence distribution to packages distributed."@en ;    rdfs:domain icac-multi:AutomatedEvidenceDistribution ;    rdfs:range uco-observable:ObservableObject .icac-multi:mapsToJurisdiction rdf:type owl:ObjectProperty ;    rdfs:label "maps to jurisdiction"@en ;    rdfs:comment "Links user jurisdiction mapping to specific jurisdictions."@en ;    rdfs:domain icac-multi:MassUserJurisdictionMapping ;    rdfs:range uco-location:Location .icac-multi:involvesSpecializedUnit rdf:type owl:ObjectProperty ;    rdfs:label "involves specialized unit"@en ;    rdfs:comment "Links distributed team to specialized prosecution units involved."@en ;    rdfs:domain icac-multi:DistributedProsecutionTeam ;    rdfs:range uco-identity:Organization .# Results and Outcomes Relationshipsicac-multi:generatesProsecutionResults rdf:type owl:ObjectProperty ;    rdfs:label "generates prosecution results"@en ;    rdfs:comment "Links mass prosecution coordination to results generated."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-observable:ObservableObject .icac-multi:achievesConvictions rdf:type owl:ObjectProperty ;    rdfs:label "achieves convictions"@en ;    rdfs:comment "Links prosecution efforts to convictions achieved."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-action:Action .icac-multi:resultsinSentencing rdf:type owl:ObjectProperty ;    rdfs:label "results in sentencing"@en ;    rdfs:comment "Links prosecution coordination to sentencing outcomes."@en ;    rdfs:domain icac-multi:MassProsecutionCoordination ;    rdfs:range uco-action:Action .# =============================================================================# NAMED OPERATION FRAMEWORK# =============================================================================icac-multi:NamedOperation rdf:type owl:Class ;    rdfs:label "Named Operation"@en ;    rdfs:comment "Law enforcement operation with specific name and coordinated branding (e.g., Operation Hive Strike, Operation Avalanche)."@en ;    rdfs:subClassOf icac-multi:MultiJurisdictionalOperation .icac-multi:StatewideOperation rdf:type owl:Class ;    rdfs:label "Statewide Operation"@en ;    rdfs:comment "Operation covering entire state with coordination across multiple counties and jurisdictions."@en ;    rdfs:subClassOf icac-multi:NamedOperation .icac-multi:DualTargetOperation rdf:type owl:Class ;    rdfs:label "Dual Target Operation"@en ;    rdfs:comment "Operation simultaneously targeting multiple types of offenders (e.g., online predators and CSAM distributors)."@en ;    rdfs:subClassOf icac-multi:MultiJurisdictionalOperation .icac-multi:TaskForceHostedOperation rdf:type owl:Class ;    rdfs:label "Task Force Hosted Operation"@en ;    rdfs:comment "Multi-agency operation hosted and coordinated by specific task force (e.g., Utah ICAC Task Force)."@en ;    rdfs:subClassOf icac-multi:StatewideOperation .icac-multi:MultiCountyOperation rdf:type owl:Class ;    rdfs:label "Multi County Operation"@en ;    rdfs:comment "Operation spanning multiple counties within single state with coordinated law enforcement response."@en ;    rdfs:subClassOf icac-multi:StatewideOperation .# =============================================================================# ENHANCED COORDINATION CLASSES# =============================================================================icac-multi:LargeScaleAgencyCoordination rdf:type owl:Class ;    rdfs:label "Large Scale Agency Coordination"@en ;    rdfs:comment "Coordination involving 30+ agencies and 80+ agents in single operation."@en ;    rdfs:subClassOf icac-multi:InterAgencyCoordination .icac-multi:MultiLevelAgencyParticipation rdf:type owl:Class ;    rdfs:label "Multi Level Agency Participation"@en ;    rdfs:comment "Agency participation across federal, state, and local levels in coordinated operation."@en ;    rdfs:subClassOf icac-multi:LargeScaleAgencyCoordination .icac-multi:AgentDeploymentCoordination rdf:type owl:Class ;    rdfs:label "Agent Deployment Coordination"@en ;    rdfs:comment "Coordination of agent deployment across multiple agencies for specific operation."@en ;    rdfs:subClassOf uco-action:Action .# =============================================================================# NAMED OPERATION PROPERTIES# =============================================================================
+
+# Operation Identification Properties
+icac-multi:operationName rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation name"@en ;
+    rdfs:comment "Official name of coordinated operation (e.g., Operation Hive Strike, Operation Avalanche)."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:string .
+
+icac-multi:operationBranding rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation branding"@en ;
+    rdfs:comment "Branding and marketing approach for operation (branded, low_profile, standard)."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:string .
+
+icac-multi:operationDurationDays rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation duration days"@en ;
+    rdfs:comment "Duration of operation in days (e.g., 4 days for Operation Hive Strike)."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:decimal .
+
+# Agency Coordination Properties
+icac-multi:agencyParticipantCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "agency participant count"@en ;
+    rdfs:comment "Number of agencies participating in operation (e.g., 31 agencies in Operation Hive Strike)."@en ;
+    rdfs:domain icac-multi:LargeScaleAgencyCoordination ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:agentParticipantCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "agent participant count"@en ;
+    rdfs:comment "Number of individual agents deployed in operation (e.g., 80+ agents in Operation Hive Strike)."@en ;
+    rdfs:domain icac-multi:AgentDeploymentCoordination ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:agencyLevelsMixed rdf:type owl:DatatypeProperty ;
+    rdfs:label "agency levels mixed"@en ;
+    rdfs:comment "Whether operation includes federal, state, and local agencies (true/false)."@en ;
+    rdfs:domain icac-multi:MultiLevelAgencyParticipation ;
+    rdfs:range xsd:boolean .
+
+# Geographic Scope Properties
+icac-multi:countiesInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:label "counties involved"@en ;
+    rdfs:comment "Number of counties involved in statewide operation (e.g., 5 counties in Operation Hive Strike)."@en ;
+    rdfs:domain icac-multi:MultiCountyOperation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:statewideCoverage rdf:type owl:DatatypeProperty ;
+    rdfs:label "statewide coverage"@en ;
+    rdfs:comment "Whether operation covers entire state (true) or limited geographic area (false)."@en ;
+    rdfs:domain icac-multi:StatewideOperation ;
+    rdfs:range xsd:boolean .
+
+# Target and Strategy Properties
+icac-multi:targetTypeCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "target type count"@en ;
+    rdfs:comment "Number of different offender types targeted simultaneously (e.g., 2 for predators and distributors)."@en ;
+    rdfs:domain icac-multi:DualTargetOperation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:targetStrategy rdf:type owl:DatatypeProperty ;
+    rdfs:label "target strategy"@en ;
+    rdfs:comment "Strategy for targeting multiple offender types (simultaneous, sequential, integrated)."@en ;
+    rdfs:domain icac-multi:DualTargetOperation ;
+    rdfs:range xsd:string .
+
+# Results and Metrics Properties
+icac-multi:totalArrests rdf:type owl:DatatypeProperty ;
+    rdfs:label "total arrests"@en ;
+    rdfs:comment "Total number of arrests made during operation."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:searchWarrantsExecuted rdf:type owl:DatatypeProperty ;
+    rdfs:label "search warrants executed"@en ;
+    rdfs:comment "Number of search warrants executed during operation."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-multi:chargeTypesDiversity rdf:type owl:DatatypeProperty ;
+    rdfs:label "charge types diversity"@en ;
+    rdfs:comment "Number of different charge types resulting from operation."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# =============================================================================
+# NAMED OPERATION RELATIONSHIPS
+# =============================================================================
+
+# Operation Organization Relationships
+icac-multi:hostedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "hosted by"@en ;
+    rdfs:comment "Links operation to hosting task force or agency."@en ;
+    rdfs:domain icac-multi:TaskForceHostedOperation ;
+    rdfs:range uco-identity:Organization .
+
+icac-multi:coordinatesAgencies rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinates agencies"@en ;
+    rdfs:comment "Links coordination mechanism to participating agencies."@en ;
+    rdfs:domain icac-multi:LargeScaleAgencyCoordination ;
+    rdfs:range uco-identity:Organization .
+
+icac-multi:deploysAgents rdf:type owl:ObjectProperty ;
+    rdfs:label "deploys agents"@en ;
+    rdfs:comment "Links agent deployment coordination to individual agents or agent groups."@en ;
+    rdfs:domain icac-multi:AgentDeploymentCoordination ;
+    rdfs:range uco-role:Role .
+
+# Geographic Relationships
+icac-multi:spansCounties rdf:type owl:ObjectProperty ;
+    rdfs:label "spans counties"@en ;
+    rdfs:comment "Links multi-county operation to specific counties involved."@en ;
+    rdfs:domain icac-multi:MultiCountyOperation ;
+    rdfs:range uco-location:Location .
+
+icac-multi:coversState rdf:type owl:ObjectProperty ;
+    rdfs:label "covers state"@en ;
+    rdfs:comment "Links statewide operation to state jurisdiction covered."@en ;
+    rdfs:domain icac-multi:StatewideOperation ;
+    rdfs:range uco-location:Location .
+
+# Target and Strategy Relationships
+icac-multi:targetsOffenderType rdf:type owl:ObjectProperty ;
+    rdfs:label "targets offender type"@en ;
+    rdfs:comment "Links dual target operation to specific offender types targeted."@en ;
+    rdfs:domain icac-multi:DualTargetOperation ;
+    rdfs:range uco-role:Role .
+
+icac-multi:utilizesCoordination rdf:type owl:ObjectProperty ;
+    rdfs:label "utilizes coordination"@en ;
+    rdfs:comment "Links named operation to coordination mechanisms used."@en ;
+    rdfs:domain icac-multi:NamedOperation ;
+    rdfs:range icac-multi:LargeScaleAgencyCoordination .
+
+# =============================================================================
+# NATIONWIDE COORDINATION FRAMEWORK (Operation Restore Justice Enhancement)
+# =============================================================================
+
+icac-multi:NationwideOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NamedMultiJurisdictionalOperation ;
+    rdfs:label "Nationwide Operation"@en ;
+    rdfs:comment "Law enforcement operation coordinated across entire country involving all FBI field offices."@en .
+
+icac-multi:AllFBIFieldOfficesOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NationwideOperation ;
+    rdfs:label "All FBI Field Offices Operation"@en ;
+    rdfs:comment "Operation involving all 55 FBI field offices in coordinated enforcement effort."@en .
+
+icac-multi:CEOSCoordinatedOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NationwideOperation ;
+    rdfs:label "CEOS Coordinated Operation"@en ;
+    rdfs:comment "Operation coordinated by Child Exploitation and Obscenity Section (CEOS)."@en .
+
+icac-multi:USAttorneyOfficeParticipation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiLevelAgencyParticipation ;
+    rdfs:label "US Attorney Office Participation"@en ;
+    rdfs:comment "Participation of US Attorney's Offices around the country in coordinated operation."@en .
+
+icac-multi:ProjectSafeChildhoodOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:NationwideOperation ;
+    rdfs:label "Project Safe Childhood Operation"@en ;
+    rdfs:comment "Operation conducted under Project Safe Childhood initiative framework."@en .
+
+# =============================================================================
+# LARGE-SCALE CHILD RESCUE COORDINATION
+# =============================================================================
+
+icac-multi:MassChildRescueOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:ChildRescueCoordination ;
+    rdfs:label "Mass Child Rescue Operation"@en ;
+    rdfs:comment "Large-scale operation resulting in rescue of 100+ children."@en .
+
+icac-multi:SimultaneousChildRescue rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MassChildRescueOperation ;
+    rdfs:label "Simultaneous Child Rescue"@en ;
+    rdfs:comment "Rescue of multiple children across different locations simultaneously."@en .
+
+icac-multi:NationwideChildRescueCoordination rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MassChildRescueOperation ;
+    rdfs:label "Nationwide Child Rescue Coordination"@en ;
+    rdfs:comment "Coordination of child rescue operations across entire country."@en .
+
+# =============================================================================
+# RAPID RESPONSE AND COMMUNITY OUTREACH INTEGRATION
+# =============================================================================
+
+icac-multi:RapidResponseCoordination rdf:type owl:Class ;
+    rdfs:subClassOf uco-action:Action ;
+    rdfs:label "Rapid Response Coordination"@en ;
+    rdfs:comment "Coordination enabling rapid response from victim disclosure to arrest."@en .
+
+icac-multi:CommunityOutreachTriggeredInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:MultiJurisdictionalInvestigation ;
+    rdfs:label "Community Outreach Triggered Investigation"@en ;
+    rdfs:comment "Investigation triggered by victim disclosure following community outreach presentation."@en .
+
+icac-multi:SchoolPresentationDisclosureWorkflow rdf:type owl:Class ;
+    rdfs:subClassOf icac-multi:RapidResponseCoordination ;
+    rdfs:label "School Presentation Disclosure Workflow"@en ;
+    rdfs:comment "Workflow from school safety presentation to victim disclosure to rapid arrest."@en .
+
+# =============================================================================
+# ENHANCED OPERATIONAL SCALE PROPERTIES (Operation Restore Justice)
+# =============================================================================
+
+icac-multi:fbiFieldOfficesInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:AllFBIFieldOfficesOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "FBI field offices involved"@en ;
+    rdfs:comment "Number of FBI field offices participating in operation."@en .
+
+icac-multi:childrenRescuedCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:MassChildRescueOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "children rescued count"@en ;
+    rdfs:comment "Total number of children rescued during operation."@en .
+
+icac-multi:arrestsNationwide rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:NationwideOperation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "arrests nationwide"@en ;
+    rdfs:comment "Total number of arrests made across all participating jurisdictions."@en .
+
+icac-multi:disclosureToArrestHours rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:RapidResponseCoordination ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "disclosure to arrest hours"@en ;
+    rdfs:comment "Time in hours from victim disclosure to suspect arrest."@en .
+
+icac-multi:usAttorneyOfficesInvolved rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:USAttorneyOfficeParticipation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "US Attorney offices involved"@en ;
+    rdfs:comment "Number of US Attorney's Offices participating in operation."@en .
+
+icac-multi:communityOutreachEffectiveness rdf:type owl:DatatypeProperty ;
+    rdfs:domain icac-multi:CommunityOutreachTriggeredInvestigation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "community outreach effectiveness"@en ;
+    rdfs:comment "Effectiveness rating of community outreach in generating disclosures (0.0-1.0)."@en .
+
+# =============================================================================
+# ENHANCED RELATIONSHIPS (Operation Restore Justice)
+# =============================================================================
+
+icac-multi:coordinatesNationwide rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinates nationwide"@en ;
+    rdfs:comment "Links agency to nationwide coordination role."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range icac-multi:NationwideOperation .
+
+icac-multi:rescuesChildren rdf:type owl:ObjectProperty ;
+    rdfs:label "rescues children"@en ;
+    rdfs:comment "Links operation to child rescue activities."@en ;
+    rdfs:domain icac-multi:MassChildRescueOperation ;
+    rdfs:range uco-identity:Person .
+
+icac-multi:triggeredByOutreach rdf:type owl:ObjectProperty ;
+    rdfs:label "triggered by outreach"@en ;
+    rdfs:comment "Links investigation to community outreach that triggered it."@en ;
+    rdfs:domain icac-multi:CommunityOutreachTriggeredInvestigation ;
+    rdfs:range uco-action:Action .
+
+icac-multi:enablesRapidResponse rdf:type owl:ObjectProperty ;
+    rdfs:label "enables rapid response"@en ;
+    rdfs:comment "Links coordination mechanism to rapid response capability."@en ;
+    rdfs:domain icac-multi:RapidResponseCoordination ;
+    rdfs:range uco-action:Action .
+
+icac-multi:involvesFBIFieldOffice rdf:type owl:ObjectProperty ;
+    rdfs:label "involves FBI field office"@en ;
+    rdfs:comment "Links operation to participating FBI field office."@en ;
+    rdfs:domain icac-multi:AllFBIFieldOfficesOperation ;
+    rdfs:range uco-identity:Organization . 
