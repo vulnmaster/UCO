@@ -6,7 +6,7 @@ A comprehensive experimental semantic framework for Internet Crimes Against Chil
 
 The ICAC Ontology Family provides standardized semantic representations for complex child protection investigations, enabling effective data sharing, analysis, and coordination across multiple domains and jurisdictions. The framework covers the complete investigation lifecycle from initial detection (i.e.;NCMEC tips) through final sentencing, with specialized modules for production cases, custodial relationships, victim impact assessment, ICAC task force operations, and comprehensive international coordination based on ICMEC's global partnerships with 120+ countries.
 
-## Ontology Modules (24 Total)
+## Ontology Modules (25 Total)
 
 ### Core Ontologies
 
@@ -119,25 +119,35 @@ The ICAC Ontology Family provides standardized semantic representations for comp
     - Internal affairs and external oversight investigations
     - Whistleblower reporting and corruption detection
 
-15. **icac-physical-evidence.ttl** - Physical Evidence & Procurement
+15. **icac-institutional-exploitation.ttl** - Institutional Exploitation & Charitable Organizations
+    - Charitable organization exploitation and humanitarian cover operations
+    - Orphanage, religious institution, and care facility abuse patterns
+    - Cross-border personal travel for exploitation purposes
+    - Long-term institutional control and vulnerable population targeting
+    - Financial manipulation of donors and support networks
+    - International prosecution of crimes committed abroad
+    - Multi-modal institutional abuse (sexual, physical, emotional)
+    - Position of trust exploitation in care settings
+
+16. **icac-physical-evidence.ttl** - Physical Evidence & Procurement
     - Criminal procurement patterns
     - Abuse facilitation items
     - Physical search and seizure operations
     - Evidence chain of custody
 
-16. **icac-tactical.ttl** - Tactical Law Enforcement Operations
+17. **icac-tactical.ttl** - Tactical Law Enforcement Operations
     - SWAT operations and high-risk arrests
     - Tactical team roles and equipment
     - Threat assessment and risk management
     - Barricade situations and negotiations
 
-17. **icac-multi-jurisdiction.ttl** - Multi-Jurisdictional Operations
+18. **icac-multi-jurisdiction.ttl** - Multi-Jurisdictional Operations
     - Inter-agency coordination mechanisms
     - Resource and information sharing
     - Jurisdictional authority and conflicts
     - Cross-border operation management
 
-18. **icac-stranger-abduction.ttl** - Stranger Abduction & Weapon-Based Coercion
+19. **icac-stranger-abduction.ttl** - Stranger Abduction & Weapon-Based Coercion
     - Stranger abduction without prior relationship or grooming
     - Weapon-based coercion (knife threats, firearm intimidation)
     - Disguise-based concealment (ski masks, facial concealment)
@@ -147,7 +157,7 @@ The ICAC Ontology Family provides standardized semantic representations for comp
     - Victim compliance under weapon threats
     - Specialized stranger abduction investigation protocols
 
-19. **icac-street-recruitment.ttl** - Street-Based Recruitment & Rapid Escalation
+20. **icac-street-recruitment.ttl** - Street-Based Recruitment & Rapid Escalation
     - Street-based recruitment in public spaces through direct approach
     - Opportunistic exploitation without prior planning or relationship
     - Rapid escalation from contact to exploitation (same-day progression)
@@ -158,19 +168,19 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 
 ### Technical Support Ontologies
 
-20. **icac-forensics.ttl** - Digital Forensics
+21. **icac-forensics.ttl** - Digital Forensics
     - Forensic tool chains and methodologies
     - Evidence acquisition and verification
     - Chain of custody documentation
     - Expert analysis workflows
 
-21. **icac-detection.ttl** - Content Detection & Classification
+22. **icac-detection.ttl** - Content Detection & Classification
     - CSAM detection algorithms and tools
     - SAR and COPINE classification systems
     - Hash-based content identification
     - Machine learning detection models
 
-22. **icac-platforms.ttl** - Technology Platforms & Service Providers
+23. **icac-platforms.ttl** - Technology Platforms & Service Providers
     - Social media and messaging platforms
     - Content moderation capabilities
     - Legal compliance and cooperation
@@ -178,14 +188,14 @@ The ICAC Ontology Family provides standardized semantic representations for comp
 
 ### Victim Services & Task Force Management
 
-23. **icac-victim-impact.ttl** - Victim Impact Assessment & Recovery
+24. **icac-victim-impact.ttl** - Victim Impact Assessment & Recovery
     - Psychological harm and trauma indicators
     - Therapeutic interventions and support services
     - Recovery processes and milestone tracking
     - Long-term effects and resilience factors
     - Impact assessments for sentencing and restitution
 
-24. **icac-taskforce.ttl** - ICAC Task Force Organization
+25. **icac-taskforce.ttl** - ICAC Task Force Organization
     - Task force structures and specialized units
     - Member roles and training programs
     - Joint operations and resource sharing
@@ -779,6 +789,22 @@ This example demonstrates a comprehensive 5-day nationwide coordinated enforceme
 - **Rapid Response Capabilities**: Sub-24-hour disclosure-to-arrest workflows
 
 For detailed analysis, see `examples/operation-restore-justice-enhancement-summary.md`.
+
+### Haitian Orphanage Geilenfeld Case (May 2025)
+**File:** `examples/haitian-orphanage-geilenfeld-example.ttl` (384 triples)
+
+This example demonstrates comprehensive modeling of institutional exploitation within charitable organizations using the Michael Karl Geilenfeld Haitian orphanage case. Key features include:
+
+- **Charitable Organization Exploitation**: 25-year operation of St. Joseph's Home for Boys as cover for systematic abuse
+- **Cross-Border Personal Travel**: Repeated US-Haiti travel pattern for exploitation spanning 25 years
+- **Long-Term Institutional Control**: Complete authority over orphaned and vulnerable children in care setting
+- **Multiple Victim Testimony**: Six adult victims testifying about childhood exploitation with corroborating evidence
+- **Financial Manipulation**: Donor manipulation of estimated 50 US supporters over $500,000 in funding
+- **International Prosecution**: US prosecution for crimes committed abroad with 210-year sentence
+- **Multi-Modal Abuse**: Sexual, physical, and emotional abuse patterns within institutional setting
+- **Foreign Commerce Charges**: 1 foreign commerce offense and 6 foreign place offenses
+
+For detailed analysis, see `examples/haitian-orphanage-geilenfeld-enhancement-summary.md`.
 
 ### 764 Network Extremist Enterprise (Telegram-based)
 **File:** `examples/764-network-example.ttl` (278 triples)
