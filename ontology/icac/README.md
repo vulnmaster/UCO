@@ -806,6 +806,24 @@ This example demonstrates comprehensive modeling of institutional exploitation w
 
 For detailed analysis, see `examples/haitian-orphanage-geilenfeld-enhancement-summary.md`.
 
+### Palmisano Louisiana Registered Sex Offender Case (May 2025)
+**File:** `examples/palmisano-louisiana-registered-offender-example.ttl` (320+ triples)
+
+This example demonstrates comprehensive modeling of registered sex offender recidivism patterns using the Nicolas James Palmisano case. Key features include:
+
+- **Registered Sex Offender Recidivism**: Prior 2019 Louisiana conviction, 4-year sentence, 2024 cross-state reoffense
+- **Cross-State Digital Exploitation**: Louisiana resident targeting 15-year-old Martin County, Florida minor
+- **Age-Aware Continuing Exploitation**: Acknowledged victim's 15-year-old age but continued sending explicit content
+- **High-Volume Digital Communications**: Thousands of sexually explicit messages over 2+ month period
+- **Bidirectional Content Exchange**: Both sent explicit content to victim AND solicited/received explicit images
+- **Multi-Modal Evidence Recovery**: Text, images, audio, video evidence from victim's cellular phone
+- **Compliance-Based Arrest Coordination**: Arrested during annual sex offender registration review at Sheriff's Office
+- **Multi-Agency Investigation**: FBI Fort Pierce, FBI New Orleans, Martin County SO, St. Charles Parish SO coordination
+- **Federal Sentencing Enhancement**: Mandatory minimum 35 years to life with lifetime supervised release
+- **Project Safe Childhood Integration**: Case prosecuted under nationwide initiative framework
+
+For detailed analysis, see `examples/palmisano-louisiana-registered-offender-enhancement-summary.md`.
+
 ### 764 Network Extremist Enterprise (Telegram-based)
 **File:** `examples/764-network-example.ttl` (278 triples)
 

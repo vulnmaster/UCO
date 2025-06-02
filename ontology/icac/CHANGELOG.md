@@ -93,6 +93,171 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Based on**: Brooklyn DA press release "Teacher Arraigned on Indictment Charging Him with Sexual Abuse of Two Students" (February 14, 2024)
 
+## [1.8.0] - 2025-05-30
+
+### Added - Palmisano Louisiana Registered Sex Offender Case Enhancements
+
+Based on analysis of Justice Department press release "Fort Pierce Jury Convicts a Louisiana Registered Sex Offender of Various Internet Sex Crimes Involving a Martin County Minor" (May 29, 2025) regarding Nicolas James Palmisano, 45, this enhancement significantly expands the ICAC Sex Offender Registry Ontology to address critical gaps in recidivism modeling, cross-state digital exploitation, and compliance-based arrest coordination.
+
+#### Enhanced Sex Offender Registry Module - `icac-sex-offender-registry.ttl` (45 new semantic elements):
+
+**Recidivism and Repeat Offense Pattern Classes (7 classes):**
+- `RecidivistSexOffender` - Registered sex offender who has committed subsequent sexual offenses after initial conviction and registration
+- `CrossStateRecidivism` - Pattern of recidivism involving offenses across state boundaries
+- `DigitalRecidivismPattern` - Pattern of repeat sexual offenses using digital communication platforms
+- `AgeAwareExploitation` - Exploitation where offender explicitly acknowledges victim's minor status but continues criminal activity
+- `HighVolumeDigitalExploitation` - Digital exploitation involving thousands of messages or communications over extended period
+- `BidirectionalContentExchange` - Exchange where offender both sends explicit content to victim AND solicits/receives explicit content from victim
+- `MultiModalDigitalEvidence` - Digital evidence containing multiple content types (text, images, audio, video) in single exploitation case
+
+**Compliance-Based Arrest Coordination Classes (4 classes):**
+- `ComplianceBasedArrest` - Arrest coordinated with scheduled compliance activity such as annual registration review
+- `RegistrationReviewArrest` - Arrest executed when offender arrives for scheduled registration review or update
+- `AnnualRegistrationReview` - Annual review and update of sex offender registration information
+- `ComplianceScheduleCoordination` - Coordination between law enforcement investigations and compliance schedules for arrest timing
+
+**Cross-Jurisdictional Digital Investigation Classes (4 classes):**
+- `CrossStateDigitalInvestigation` - Investigation involving registered sex offender targeting victims across state boundaries using digital platforms
+- `VictimDeviceForensics` - Forensic examination of victim's device to recover evidence of digital exploitation
+- `OffenderDeviceSearchWarrant` - Search warrant executed on registered sex offender's residence and devices for digital evidence recovery
+
+**Enhanced Properties Framework (18 properties):**
+
+*Recidivism Pattern Properties:*
+- `priorConvictionCount` - Number of prior sexual offense convictions
+- `yearsBetweenOffenses` - Years between release from prior offense and new offense
+- `sentenceServed` - Sentence served for prior conviction before reoffending
+- `recidivismPattern` - Pattern of recidivism (escalation, similar_mo, cross_jurisdictional)
+
+*Digital Exploitation Properties:*
+- `messageCount` - Total number of messages sent in digital exploitation
+- `exploitationDurationMonths` - Duration of digital exploitation in months
+- `victimAgeAcknowledged` - Age of victim that offender explicitly acknowledged
+- `ageAcknowledgmentMethod` - Method by which offender acknowledged victim's age (verbal, written, direct_question)
+- `contentTypesSent` - Types of explicit content sent to victim (text, images, audio, video)
+- `contentTypesReceived` - Types of explicit content solicited and received from victim
+
+*Compliance and Arrest Coordination Properties:*
+- `arrestTiming` - Timing of arrest in relation to compliance activity (arrival, during, departure)
+- `complianceType` - Type of compliance activity used for arrest coordination (annual_review, quarterly_check, address_update)
+- `coordinationTimeframe` - Timeframe in days between investigation completion and compliance-based arrest
+
+*Federal Charges and Sentencing Properties:*
+- `mandatoryMinimumYears` - Mandatory minimum sentence in years for recidivist offense
+- `maximumSentenceYears` - Maximum sentence exposure (years or life)
+- `lifetimeSupervision` - Whether lifetime supervised release is required
+
+**Comprehensive Relationship Framework (12 relationships):**
+
+*Recidivism Relationships:*
+- `exhibitsRecidivism` - Links registered offender to recidivist classification
+- `involvesPattern` - Links recidivist offender to digital exploitation pattern
+- `demonstratesAgeAwareness` - Links exploitation pattern to age-aware criminal activity
+- `involvesHighVolumeExploitation` - Links pattern to high-volume communication exploitation
+- `involvesBidirectionalExchange` - Links high-volume exploitation to bidirectional content exchange
+
+*Compliance and Investigation Relationships:*
+- `coordinatedWithCompliance` - Links investigation to compliance-based arrest coordination
+- `executedDuring` - Links arrest to specific compliance activity during which it was executed
+- `triggersInvestigation` - Links recidivist activity to cross-state digital investigation
+- `recoversEvidence` - Links forensic examination to multi-modal digital evidence recovered
+
+*Cross-Jurisdictional Relationships:*
+- `crossesStates` - Links cross-state recidivism to states involved
+- `targetsCrossState` - Links investigation to cross-state victim targeting
+- `coordinatesBetweenAgencies` - Links investigation to agencies coordinating across state boundaries
+
+#### Comprehensive Example - `palmisano-louisiana-registered-offender-example.ttl` (320+ triples):
+
+**Complete Case Modeling:**
+- Nicolas James Palmisano (45-year-old from Destrehan, Louisiana)
+- 2019 conviction in St. Charles Parish for sexual offenses involving juvenile (4-year sentence)
+- 2024 cross-state digital exploitation of 15-year-old Martin County, Florida minor
+- Age-aware exploitation: acknowledged victim was 15 but continued sending explicit content
+- High-volume communications: thousands of sexually explicit messages (February 22 - May 6, 2024)
+- Bidirectional content exchange: sent explicit content AND solicited/received explicit images
+- Multi-modal evidence: text messages, images, audio recordings, video recordings
+- Compliance-based arrest: arrested during annual sex offender registration review at Sheriff's Office
+- Multi-agency coordination: FBI Fort Pierce, FBI New Orleans, Martin County SO, St. Charles Parish SO
+- Federal charges: attempted enticement, attempted production, receipt of CSAM, transfer of obscene material, offense by registered sex offender
+- Severe sentencing: mandatory minimum 35 years to life with lifetime supervised release
+- Project Safe Childhood integration
+
+**Enhancement Documentation:**
+- Complete technical analysis (`palmisano-louisiana-registered-offender-enhancement-summary.md`) with 6,000+ words
+- Real-world applications for law enforcement, prosecution, registry management, digital forensics
+- Integration patterns with existing ICAC framework modules
+- Future enhancement opportunities including predictive analytics and international coordination
+
+#### Key Capabilities Added:
+
+**Registered Sex Offender Recidivism Framework:**
+- Cross-state recidivism pattern detection and modeling
+- Digital escalation pattern analysis for registered offenders
+- Age-aware exploitation documentation for cases where offender acknowledges victim's minor status
+- High-volume digital communication pattern analysis (thousands of messages)
+- Bidirectional content exchange modeling (both sending and receiving explicit content)
+
+**Compliance-Based Arrest Coordination Framework:**
+- Registration compliance schedule integration with active investigations
+- Annual registration review arrest coordination protocols
+- Multi-agency coordination for compliance-based arrests
+- Timeframe tracking for investigation completion to compliance-based arrest
+
+**Cross-State Digital Investigation Framework:**
+- Multi-jurisdictional coordination for registered sex offender cases
+- Victim device forensics specialized for registered offender investigations
+- Offender device search warrant coordination across state boundaries
+- Multi-modal digital evidence recovery and correlation
+
+**Federal Sentencing Enhancement Framework:**
+- Registered sex offender status enhancement modeling
+- Mandatory minimum sentencing for recidivist offenses
+- Lifetime supervised release requirements
+- Federal charge coordination and enhancement patterns
+
+### Real-World Impact:
+
+**Law Enforcement Operations:**
+- Enhanced recidivism risk assessment for registered sex offenders
+- Cross-state coordination protocols for digital exploitation cases
+- Compliance monitoring integration with active investigation timing
+- Multi-modal digital evidence analysis frameworks
+
+**Prosecution Support:**
+- Federal sentencing enhancement documentation
+- Evidence correlation between victim and offender devices
+- Multi-agency case building support
+- Recidivism pattern documentation for sentencing
+
+**Registry Management:**
+- Compliance-based operation coordination
+- Cross-state tracking for offenders targeting victims across boundaries
+- Risk escalation monitoring for digital exploitation patterns
+- Registration review integration with law enforcement operations
+
+**Digital Forensics:**
+- Victim device analysis specialized for registered offender cases
+- Multi-modal evidence coordination (text, images, audio, video)
+- Cross-platform investigation frameworks
+- Bidirectional content analysis support
+
+### Integration with ICAC Framework:
+
+**Enhanced Module Connections:**
+- `icac-multi-jurisdiction.ttl` - Cross-state recidivism patterns integrate with multi-jurisdictional operations
+- `icac-forensics.ttl` - Victim device forensics and multi-modal evidence analysis enhancement
+- `icac-sentencing.ttl` - Federal sentencing enhancements for registered sex offender status
+- `icac-core.ttl` - Project Safe Childhood case integration and investigation lifecycle
+
+**UCO/CASE Compatibility:**
+- All new classes extend existing UCO core concepts (UcoObject, Action, ObservableObject)
+- Maintains semantic interoperability with UCO identity, location, and observable frameworks
+- Follows established property patterns and relationship modeling
+- Compatible with existing CASE investigation and evidence modeling
+
+**Based on**: DOJ Press Release "Fort Pierce Jury Convicts a Louisiana Registered Sex Offender of Various Internet Sex Crimes Involving a Martin County Minor" (May 29, 2025)
+
 ## [1.7.0] - 2025-01-28
 
 ### Added - October 2024 Brooklyn Athletic Coaching Exploitation Case Enhancements
@@ -434,103 +599,6 @@ Based on analysis of Brooklyn District Attorney press release (November 22, 2024
 - Extends grooming module with rapid escalation patterns
 - Enhances physical evidence and investigation modules
 - Complements sex trafficking and victim impact frameworks
-
-## [1.8.0] - 2025-01-15
-
-### Added - Brooklyn DA "Blue Cheese" Sex Trafficking Case Enhancements
-
-Based on analysis of Brooklyn District Attorney press release regarding Texas man indicted for sex trafficking and promoting prostitution, the following critical enhancements were implemented to address victim branding, escalating violence, and emergency communication patterns:
-
-#### Enhanced Sex Trafficking Ontology (`icac-sex-trafficking.ttl`):
-
-**Victim Branding and Control Methods:**
-- `VictimBranding` - Physical marking of trafficking victims to indicate ownership and control
-- `TraffickerTattoo` - Tattoo placed on victim containing trafficker's name, nickname, or identifying symbol
-- `FacialBranding` - Branding or tattooing on victim's face for maximum visibility and humiliation (e.g., "Blue Cheese" tattoos)
-- `ForcedTattooing` - Coercing or forcing victim to receive tattoo at tattoo parlor as form of branding
-
-**Physical Violence and Control Escalation:**
-- `PhysicalViolenceControl` - Use of physical violence to maintain control over trafficking victims
-- `EscalatingViolence` - Progressive increase in severity of violence used against victims
-- `WeaponBasedViolence` - Use of weapons (scissors, torch lighter, etc.) to inflict violence on trafficking victims
-- `BurningTorture` - Use of fire or heated objects to burn victims as punishment or control method
-- `StabbingAssault` - Stabbing or cutting victims with sharp objects as violence control method
-- `SeizureInducingViolence` - Severe physical violence causing medical emergencies such as seizures
-- `PropertyDestruction` - Destruction of property (car windows, etc.) to intimidate and control victims
-
-**Medical Consequences and Health Impacts:**
-- `MedicalConsequences` - Health impacts and medical conditions resulting from trafficking exploitation
-- `ExploitationRelatedInfection` - Infections contracted as direct result of forced sexual exploitation
-- `ViralThroatInfection` - Throat infection caused by forced oral sexual acts in trafficking situation
-- `HospitalTreatment` - Medical treatment received by trafficking victim for exploitation-related injuries
-
-**Street-Level Operations ("Walking the Track"):**
-- `StreetLevelProstitution` - Street-based commercial sexual exploitation where victims solicit customers
-- `WalkingTheTrack` - Forcing victims to walk designated street areas to solicit customers
-- `TrackAssignment` - Assignment of specific street areas or "tracks" where victims must solicit customers
-- `StreetSolicitation` - Solicitation of customers for commercial sexual acts on public streets
-
-**Emergency Communication and Rescue:**
-- `VictimEmergencyCommunication` - Communication by trafficking victim to seek help or report their situation
-- `TextMessageRescueRequest` - Text message sent by victim to request rescue, often including location details
-- `LocationDetailSharing` - Sharing of specific location information (hotel name, address, room number) for rescue
-- `CrossStateRescueRequest` - Rescue request sent to contacts in different state from where victim is being held
-
-#### Enhanced SHACL Validation (`icac-trafficking-shapes.ttl`):
-
-**15+ New Validation Shapes:**
-- `VictimBrandingShape` - Validates branding type and visibility requirements
-- `TraffickerTattooShape` - Validates tattoo content and location specifications
-- `FacialBrandingShape` - Ensures facial branding is marked as highly visible
-- `PhysicalViolenceControlShape` - Validates violence types and injury severity
-- `WeaponBasedViolenceShape` - Validates weapon types and injury severity constraints
-- `SeizureInducingViolenceShape` - Ensures medical emergency flag for severe violence
-- `MedicalConsequencesShape` - Validates medical consequence timing and documentation
-- `ExploitationRelatedInfectionShape` - Validates infection type classification
-- `HospitalTreatmentShape` - Validates treatment date and location requirements
-- `WalkingTheTrackShape` - Validates track location and geographic requirements
-- `StreetSolicitationShape` - Validates solicitation hours (0-24 hours per day)
-- `VictimEmergencyCommunicationShape` - Validates emergency contact methods
-- `TextMessageRescueRequestShape` - Validates text message rescue request requirements
-- `LocationDetailSharingShape` - Validates location information sharing requirements
-- `CrossStateRescueRequestShape` - Validates cross-state distance calculations
-
-#### Enhanced JSON-LD Context (`icac-comprehensive.jsonld`):
-
-**New Concept Mappings:**
-- Added 9 new class mappings for victim branding, violence, medical consequences, street operations, and emergency communication
-- Added 20+ new property mappings for branding details, violence types, medical information, track operations, and emergency communication
-- Added 16 new relationship mappings for victim-trafficker interactions, medical treatment, street operations, and rescue communications
-
-#### Technical Improvements:
-
-**Data Quality Enhancements:**
-- Comprehensive enumeration constraints for violence types, weapon types, injury severity levels
-- Cross-reference validation between violence and medical consequences
-- Temporal validation for treatment dates and emergency communications
-- Geographic validation for track locations and cross-state distances
-
-**Business Logic Validation:**
-- Facial branding must be marked as highly visible
-- Weapon-based violence must cause moderate to life-threatening injuries
-- Seizure-inducing violence must trigger medical emergency flag
-- Text message rescue requests must contact at least one person for help
-- Location detail sharing must reference exactly one location
-
-**Real-World Case Integration:**
-- All concepts derived from actual Brooklyn DA case details
-- Validation rules based on documented case patterns
-- Property constraints reflect real-world operational requirements
-- Relationship modeling captures actual victim-trafficker dynamics
-
-### Technical Details:
-- **Total New Triples**: 400+ additional triples in sex trafficking ontology
-- **SHACL Coverage**: 15 new comprehensive validation shapes
-- **Context Integration**: Full JSON-LD context support for all new concepts
-- **Validation Quality**: All files validated as syntactically correct RDF/Turtle
-- **Documentation**: Complete integration with README, CHANGELOG, and user documentation
-
-This enhancement significantly strengthens the ontology's ability to model severe trafficking cases involving victim branding, escalating violence, medical consequences, and emergency rescue scenarios, providing law enforcement with comprehensive semantic tools for documenting and analyzing complex trafficking operations.
 
 ## [1.5.0] - 2025-05-28
 
