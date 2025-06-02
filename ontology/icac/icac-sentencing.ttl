@@ -93,7 +93,68 @@ icac-sentencing:CSAM_Distribution rdf:type owl:Class ;
     rdfs:comment "Charge for distribution of child sexual abuse material."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
-icac-sentencing:CSAM_Production rdf:type owl:Class ;    rdfs:label "CSAM Production"@en ;    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .# SA JACET-inspired Mandatory Sentencing Classesicac-sentencing:MandatoryMinimumSentencing rdf:type owl:Class ;    rdfs:label "Mandatory Minimum Sentencing"@en ;    rdfs:comment "Sentencing under mandatory minimum provisions for Commonwealth child sexual abuse offenses."@en ;    rdfs:subClassOf icac-sentencing:PrisonSentence .icac-sentencing:CommonwealthChildAbuseOffense rdf:type owl:Class ;    rdfs:label "Commonwealth Child Abuse Offense"@en ;    rdfs:comment "Child abuse offense under Commonwealth law subject to mandatory minimum sentencing provisions."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .icac-sentencing:LiveStreamingOffense rdf:type owl:Class ;    rdfs:label "Live Streaming Offense"@en ;    rdfs:comment "Offense involving live streaming of child abuse, often carrying severe sentences."@en ;    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .icac-sentencing:SolicitingExplicitMaterial rdf:type owl:Class ;    rdfs:label "Soliciting Explicit Material"@en ;    rdfs:comment "Offense of soliciting sexually explicit material from children (e.g., from 10 foreign children via social media)."@en ;    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .# WA Sextortion Case Specific Chargesicac-sentencing:CarriageServiceCSAMTransmission rdf:type owl:Class ;    rdfs:label "Carriage Service CSAM Transmission"@en ;    rdfs:comment "Use of carriage service to cause child abuse material to be transmitted to self, contrary to section 474.22(1)(a)(ii) Criminal Code (Cth). Maximum penalty 15 years imprisonment."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .icac-sentencing:CarriageServiceIndecentCommunication rdf:type owl:Class ;    rdfs:label "Carriage Service Indecent Communication"@en ;    rdfs:comment "Use of carriage service to transmit indecent communication to person under 16 years, contrary to section 474.27A Criminal Code (Cth). Maximum penalty 10 years imprisonment."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .icac-sentencing:SextortionCharge rdf:type owl:Class ;    rdfs:label "Sextortion Charge"@en ;    rdfs:comment "Criminal charge specifically related to sextortion involving sexual extortion of children through online blackmail."@en ;    rdfs:subClassOf icac-sentencing:FederalCharge .icac-sentencing:OnlineEnticement rdf:type owl:Class ;
+icac-sentencing:CSAM_Production rdf:type owl:Class ;
+    rdfs:label "CSAM Production"@en ;
+    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences."@en ;
+    rdfs:subClassOf icac-sentencing:FederalCharge .
+
+# =============================================================================
+# MARYLAND CASE ENHANCEMENT - CAUSING PRODUCTION CHARGES
+# =============================================================================
+
+icac-sentencing:CSAM_CausingProduction rdf:type owl:Class ;
+    rdfs:label "CSAM Causing Production"@en ;
+    rdfs:comment "Charge for causing or facilitating the production of child sexual abuse material, distinct from direct production."@en ;
+    rdfs:subClassOf icac-sentencing:CSAM_Production .
+
+icac-sentencing:CSAM_AccessingAndViewing rdf:type owl:Class ;
+    rdfs:label "CSAM Accessing and Viewing"@en ;
+    rdfs:comment "Charge for intentionally accessing and viewing child sexual abuse material."@en ;
+    rdfs:subClassOf icac-sentencing:CSAM_Possession .
+
+icac-sentencing:CSAM_ReceivingOnCellularDevice rdf:type owl:Class ;
+    rdfs:label "CSAM Receiving on Cellular Device"@en ;
+    rdfs:comment "Charge for receiving child sexual abuse material on cellular phone or mobile device."@en ;
+    rdfs:subClassOf icac-sentencing:CSAM_Possession .
+
+# SA JACET-inspired Mandatory Sentencing Classes
+icac-sentencing:MandatoryMinimumSentencing rdf:type owl:Class ;
+    rdfs:label "Mandatory Minimum Sentencing"@en ;
+    rdfs:comment "Sentencing under mandatory minimum provisions for Commonwealth child sexual abuse offenses."@en ;
+    rdfs:subClassOf icac-sentencing:PrisonSentence .
+
+icac-sentencing:CommonwealthChildAbuseOffense rdf:type owl:Class ;
+    rdfs:label "Commonwealth Child Abuse Offense"@en ;
+    rdfs:comment "Child abuse offense under Commonwealth law subject to mandatory minimum sentencing provisions."@en ;
+    rdfs:subClassOf icac-sentencing:FederalCharge .
+
+icac-sentencing:LiveStreamingOffense rdf:type owl:Class ;
+    rdfs:label "Live Streaming Offense"@en ;
+    rdfs:comment "Offense involving live streaming of child abuse, often carrying severe sentences."@en ;
+    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .
+
+icac-sentencing:SolicitingExplicitMaterial rdf:type owl:Class ;
+    rdfs:label "Soliciting Explicit Material"@en ;
+    rdfs:comment "Offense of soliciting sexually explicit material from children (e.g., from 10 foreign children via social media)."@en ;
+    rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .
+
+# WA Sextortion Case Specific Charges
+icac-sentencing:CarriageServiceCSAMTransmission rdf:type owl:Class ;
+    rdfs:label "Carriage Service CSAM Transmission"@en ;
+    rdfs:comment "Use of carriage service to cause child abuse material to be transmitted to self, contrary to section 474.22(1)(a)(ii) Criminal Code (Cth). Maximum penalty 15 years imprisonment."@en ;
+    rdfs:subClassOf icac-sentencing:FederalCharge .
+
+icac-sentencing:CarriageServiceIndecentCommunication rdf:type owl:Class ;
+    rdfs:label "Carriage Service Indecent Communication"@en ;
+    rdfs:comment "Use of carriage service to transmit indecent communication to person under 16 years, contrary to section 474.27A Criminal Code (Cth). Maximum penalty 10 years imprisonment."@en ;
+    rdfs:subClassOf icac-sentencing:FederalCharge .
+
+icac-sentencing:SextortionCharge rdf:type owl:Class ;
+    rdfs:label "Sextortion Charge"@en ;
+    rdfs:comment "Criminal charge specifically related to sextortion involving sexual extortion of children through online blackmail."@en ;
+    rdfs:subClassOf icac-sentencing:FederalCharge .
+
+icac-sentencing:OnlineEnticement rdf:type owl:Class ;
     rdfs:label "Online Enticement"@en ;
     rdfs:comment "Charge for online enticement of minors for illegal sexual activity."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
@@ -1039,4 +1100,48 @@ icac-sentencing:restrictsAccessTo rdf:type owl:ObjectProperty ;
     rdfs:label "restricts access to"@en ;
     rdfs:comment "Links restriction to platform or service being restricted."@en ;
     rdfs:domain icac-sentencing:DigitalCommunicationRestriction ;
-    rdfs:range uco-observable:ObservableObject . 
+    rdfs:range uco-observable:ObservableObject .
+
+# =============================================================================
+# UTAH-SPECIFIC CHARGE CLASSIFICATIONS (Operation Hive Strike Enhancement)
+# =============================================================================
+
+icac-sentencing:Utah_SexualExploitationOfMinor rdf:type owl:Class ;
+    rdfs:label "Utah Sexual Exploitation of Minor"@en ;
+    rdfs:comment "Utah-specific charge for sexual exploitation of a minor under Utah Criminal Code."@en ;
+    rdfs:subClassOf icac-sentencing:StateLevelCharge .
+
+icac-sentencing:Utah_DealingInHarmfulMaterialsToMinor rdf:type owl:Class ;
+    rdfs:label "Utah Dealing in Harmful Materials to Minor"@en ;
+    rdfs:comment "Utah-specific charge for dealing in harmful materials to a minor under Utah law."@en ;
+    rdfs:subClassOf icac-sentencing:StateLevelCharge .
+
+icac-sentencing:Utah_EnticingAMinor rdf:type owl:Class ;
+    rdfs:label "Utah Enticing a Minor"@en ;
+    rdfs:comment "Utah-specific charge for enticing a minor under Utah Criminal Code."@en ;
+    rdfs:subClassOf icac-sentencing:StateLevelCharge .
+
+icac-sentencing:Utah_AggravatedSexualExploitationOfMinor rdf:type owl:Class ;
+    rdfs:label "Utah Aggravated Sexual Exploitation of Minor"@en ;
+    rdfs:comment "Utah-specific aggravated charge for sexual exploitation of a minor with enhanced penalties."@en ;
+    rdfs:subClassOf icac-sentencing:Utah_SexualExploitationOfMinor .
+
+icac-sentencing:Utah_AggravatedSexualAbuseOfChild rdf:type owl:Class ;
+    rdfs:label "Utah Aggravated Sexual Abuse of Child"@en ;
+    rdfs:comment "Utah-specific aggravated charge for sexual abuse of a child under Utah Criminal Code."@en ;
+    rdfs:subClassOf icac-sentencing:StateLevelCharge .
+
+icac-sentencing:Utah_SodomyOnChild rdf:type owl:Class ;
+    rdfs:label "Utah Sodomy on Child"@en ;
+    rdfs:comment "Utah-specific charge for sodomy on a child under Utah Criminal Code."@en ;
+    rdfs:subClassOf icac-sentencing:StateLevelCharge .
+
+icac-sentencing:Utah_PossessionOfControlledSubstance rdf:type owl:Class ;
+    rdfs:label "Utah Possession of Controlled Substance"@en ;
+    rdfs:comment "Utah-specific charge for possession of a controlled substance, often accompanying ICAC charges."@en ;
+    rdfs:subClassOf icac-sentencing:AncillaryCharge .
+
+icac-sentencing:Utah_PossessionOfStolenFirearm rdf:type owl:Class ;
+    rdfs:label "Utah Possession of Stolen Firearm"@en ;
+    rdfs:comment "Utah-specific charge for possession of a stolen firearm, often discovered during ICAC investigations."@en ;
+    rdfs:subClassOf icac-sentencing:AncillaryCharge . 

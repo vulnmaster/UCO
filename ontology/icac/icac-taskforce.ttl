@@ -182,7 +182,54 @@ icac-taskforce:IntelligenceSharing rdf:type owl:Class ;
     rdfs:comment "Sharing of intelligence and investigative information."@en ;
     rdfs:subClassOf icac-taskforce:ResourceSharing .
 
-# =============================================================================# COORDINATION MECHANISM CLASSES (extending UCO Observable)# =============================================================================icac-taskforce:CoordinationMechanism rdf:type owl:Class ;    rdfs:label "Coordination Mechanism"@en ;    rdfs:comment "Formal mechanism for coordinating task force activities."@en ;    rdfs:subClassOf uco-observable:ObservableObject .icac-taskforce:TaskForceAlliance rdf:type owl:Class ;    rdfs:label "Task Force Alliance"@en ;    rdfs:comment "Formal alliance between multiple ICAC task forces."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .# SA JACET-inspired Joint Operationsicac-taskforce:JointAntiChildExploitationTeam rdf:type owl:Class ;    rdfs:label "Joint Anti Child Exploitation Team"@en ;    rdfs:comment "Joint taskforce between federal and state agencies for coordinated investigative response (based on SA JACET model)."@en ;    rdfs:subClassOf icac-taskforce:ICACtaskForce .icac-taskforce:CoLocatedTaskForce rdf:type owl:Class ;    rdfs:label "Co-Located Task Force"@en ;    rdfs:comment "Task force with co-located federal and state investigators enabling rapid intelligence sharing."@en ;    rdfs:subClassOf icac-taskforce:JointAntiChildExploitationTeam .icac-taskforce:StateFederalPartnership rdf:type owl:Class ;    rdfs:label "State Federal Partnership"@en ;    rdfs:comment "Partnership between state police and federal agencies (e.g., AFP) for child exploitation investigations."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .icac-taskforce:InternationalTaskForceNetwork rdf:type owl:Class ;    rdfs:label "International Task Force Network"@en ;    rdfs:comment "Network of JACET teams across states and territories connected to international partners."@en ;    rdfs:subClassOf icac-taskforce:CoordinationMechanism .# WA JACET (Western Australia) - based on WA press releaseicac-taskforce:WA_JACET rdf:type owl:Class ;    rdfs:label "Western Australia Joint Anti Child Exploitation Team"@en ;    rdfs:comment "Western Australia JACET comprising AFP and WA Police Force investigators for coordinated response to child exploitation crimes including sextortion cases."@en ;    rdfs:subClassOf icac-taskforce:JointAntiChildExploitationTeam .icac-taskforce:WA_AFP_Partnership rdf:type owl:Class ;    rdfs:label "WA AFP Partnership"@en ;    rdfs:comment "Partnership between Australian Federal Police and Western Australia Police Force for joint investigations and prosecutions."@en ;    rdfs:subClassOf icac-taskforce:StateFederalPartnership .icac-taskforce:RegionalCoordination rdf:type owl:Class ;    rdfs:label "Regional Coordination"@en ;
+# =============================================================================
+# COORDINATION MECHANISM CLASSES (extending UCO Observable)
+# =============================================================================
+
+icac-taskforce:CoordinationMechanism rdf:type owl:Class ;
+    rdfs:label "Coordination Mechanism"@en ;
+    rdfs:comment "Formal mechanism for coordinating task force activities."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject .
+
+icac-taskforce:TaskForceAlliance rdf:type owl:Class ;
+    rdfs:label "Task Force Alliance"@en ;
+    rdfs:comment "Formal alliance between multiple ICAC task forces."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+# SA JACET-inspired Joint Operations
+icac-taskforce:JointAntiChildExploitationTeam rdf:type owl:Class ;
+    rdfs:label "Joint Anti Child Exploitation Team"@en ;
+    rdfs:comment "Joint taskforce between federal and state agencies for coordinated investigative response (based on SA JACET model)."@en ;
+    rdfs:subClassOf icac-taskforce:ICACtaskForce .
+
+icac-taskforce:CoLocatedTaskForce rdf:type owl:Class ;
+    rdfs:label "Co-Located Task Force"@en ;
+    rdfs:comment "Task force with co-located federal and state investigators enabling rapid intelligence sharing."@en ;
+    rdfs:subClassOf icac-taskforce:JointAntiChildExploitationTeam .
+
+icac-taskforce:StateFederalPartnership rdf:type owl:Class ;
+    rdfs:label "State Federal Partnership"@en ;
+    rdfs:comment "Partnership between state police and federal agencies (e.g., AFP) for child exploitation investigations."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+icac-taskforce:InternationalTaskForceNetwork rdf:type owl:Class ;
+    rdfs:label "International Task Force Network"@en ;
+    rdfs:comment "Network of JACET teams across states and territories connected to international partners."@en ;
+    rdfs:subClassOf icac-taskforce:CoordinationMechanism .
+
+# WA JACET (Western Australia) - based on WA press release
+icac-taskforce:WA_JACET rdf:type owl:Class ;
+    rdfs:label "Western Australia Joint Anti Child Exploitation Team"@en ;
+    rdfs:comment "Western Australia JACET comprising AFP and WA Police Force investigators for coordinated response to child exploitation crimes including sextortion cases."@en ;
+    rdfs:subClassOf icac-taskforce:JointAntiChildExploitationTeam .
+
+icac-taskforce:WA_AFP_Partnership rdf:type owl:Class ;
+    rdfs:label "WA AFP Partnership"@en ;
+    rdfs:comment "Partnership between Australian Federal Police and Western Australia Police Force for joint investigations and prosecutions."@en ;
+    rdfs:subClassOf icac-taskforce:StateFederalPartnership .
+
+icac-taskforce:RegionalCoordination rdf:type owl:Class ;
+    rdfs:label "Regional Coordination"@en ;
     rdfs:comment "Coordination mechanism for regional task force cooperation."@en ;
     rdfs:subClassOf icac-taskforce:CoordinationMechanism .
 
@@ -534,15 +581,24 @@ icac-taskforce:IllinoisICACtaskForce rdf:type owl:Class ;
     rdfs:label "Illinois ICAC Task Force"@en ;
     rdfs:comment "Illinois state ICAC task force with specialized capabilities and extensive network partnerships."@en .
 
-icac-taskforce:FederalLawEnforcementPartner rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "Federal Law Enforcement Partner"@en ;
-    rdfs:comment "Federal law enforcement agency partnering with ICAC task force."@en .
+# =============================================================================
+# MARYLAND ICAC TASK FORCE FRAMEWORK (Maryland Case Enhancement)
+# =============================================================================
 
-icac-taskforce:LocalLawEnforcementPartner rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "Local Law Enforcement Partner"@en ;
-    rdfs:comment "Local law enforcement agency partnering with ICAC task force."@en .
+icac-taskforce:MarylandICACtaskForce rdf:type owl:Class ;
+    rdfs:subClassOf icac-taskforce:StateICACtaskForce ;
+    rdfs:label "Maryland ICAC Task Force"@en ;
+    rdfs:comment "Maryland state ICAC task force coordinated by Maryland State Police Computer Crimes Unit with Governor's Office for Crime Prevention and Policy funding."@en .
+
+icac-taskforce:GovernorsOfficeCrimePreventionFunding rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "Governor's Office Crime Prevention Funding"@en ;
+    rdfs:comment "State-level funding provided by Governor's Office for Crime Prevention and Policy for ICAC task force operations."@en .
+
+icac-taskforce:StateLocalFundingCombination rdf:type owl:Class ;
+    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:label "State Local Funding Combination"@en ;
+    rdfs:comment "Combined funding from state Governor's Office and federal DOJ grants for task force operations."@en .
 
 # =============================================================================
 # PERFORMANCE METRICS PROPERTIES (Illinois Framework)

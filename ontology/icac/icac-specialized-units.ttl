@@ -113,6 +113,40 @@ icac-specialized:CyberCrimeUnit rdf:type owl:Class ;
     rdfs:label "Cyber Crime Unit"@en ;
     rdfs:comment "Unit specialized in cyber crime investigations."@en .
 
+# =============================================================================
+# STATE POLICE COMPUTER CRIMES UNITS (Maryland Case Enhancement)
+# =============================================================================
+
+icac-specialized:StatePoliceComputerCrimesUnit rdf:type owl:Class ;
+    rdfs:subClassOf icac-specialized:CyberCrimeUnit ;
+    rdfs:label "State Police Computer Crimes Unit"@en ;
+    rdfs:comment "State police unit specialized in computer crimes and digital investigations involving child exploitation."@en .
+
+icac-specialized:MarylandStatePoliceComputerCrimesUnit rdf:type owl:Class ;
+    rdfs:subClassOf icac-specialized:StatePoliceComputerCrimesUnit ;
+    rdfs:label "Maryland State Police Computer Crimes Unit"@en ;
+    rdfs:comment "Maryland State Police unit coordinating the Maryland Internet Crimes Against Children Task Force."@en .
+
+icac-specialized:StatePoliceBarrack rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "State Police Barrack"@en ;
+    rdfs:comment "Regional state police barrack providing local law enforcement support and coordination."@en .
+
+icac-specialized:CollegeParkBarrack rdf:type owl:Class ;
+    rdfs:subClassOf icac-specialized:StatePoliceBarrack ;
+    rdfs:label "College Park Barrack"@en ;
+    rdfs:comment "Maryland State Police College Park Barrack supporting computer crimes investigations."@en .
+
+icac-specialized:CountyPoliceSupport rdf:type owl:Class ;
+    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:label "County Police Support"@en ;
+    rdfs:comment "County-level police department providing support to state computer crimes investigations."@en .
+
+icac-specialized:PrinceGeorgesCountyPolice rdf:type owl:Class ;
+    rdfs:subClassOf icac-specialized:CountyPoliceSupport ;
+    rdfs:label "Prince George's County Police"@en ;
+    rdfs:comment "Prince George's County Police Department supporting Maryland State Police computer crimes investigations."@en .
+
 icac-specialized:DigitalForensicsUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Digital Forensics Unit"@en ;

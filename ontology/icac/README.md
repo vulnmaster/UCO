@@ -824,6 +824,22 @@ This example demonstrates comprehensive modeling of registered sex offender reci
 
 For detailed analysis, see `examples/palmisano-louisiana-registered-offender-enhancement-summary.md`.
 
+### Maryland Valdez Olivar Case (May 2025)  
+**File:** `examples/valdez-olivar-maryland-case-example.ttl` (120+ triples)
+
+This example demonstrates Maryland State Police Computer Crimes Unit coordination with Governor's Office crime prevention funding. Key features include:
+
+- **Maryland ICAC Task Force**: State police computer crimes unit coordination with College Park Barrack support
+- **Governor's Office Crime Prevention Funding**: State-level funding combined with federal DOJ grants
+- **Multi-County Coordination**: Prince George's County Police support for state police investigations
+- **"Causing Production" Charges**: 10 felony counts for causing production of CSAM
+- **Cellular Device Evidence**: Forensic analysis of cellular phone revealing child sexual abuse images
+- **Multi-Count CSAM Charges**: 20 total felony counts across accessing/viewing (5) and receiving on cellular device (5)
+- **State Police Barrack Coordination**: College Park Barrack providing regional support for computer crimes unit
+- **Combined State-Federal Funding**: Maryland Governor's Office for Crime Prevention and Policy + DOJ grants
+
+For detailed analysis, see `examples/valdez-olivar-maryland-case-enhancement-summary.md`.
+
 ### 764 Network Extremist Enterprise (Telegram-based)
 **File:** `examples/764-network-example.ttl` (278 triples)
 
