@@ -12,43 +12,70 @@
 @prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-production: <https://ontology.unifiedcyberontology.org/icac/production#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/production/0.1> rdf:type owl:Ontology ;
     rdfs:label "ICAC Child Sexual Abuse Material Production Ontology"@en ;
-    rdfs:comment "An ontology for representing the production of child sexual abuse material, including recording activities, equipment used, production sessions, and content creation patterns in ICAC investigations, extending UCO and CASE."@en ;
+    rdfs:comment "An ontology for representing the production of child sexual abuse material, including recording activities, equipment used, production sessions, and content creation patterns in ICAC investigations, extending UCO and CASE with gUFO foundational ontology enhancements."@en ;
     owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/production/0.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2024-12-19"^^xsd:date ;
-    dcterms:modified "2024-12-19"^^xsd:date ;
+    dcterms:modified "2025-01-02"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
                 <https://ontology.unifiedcyberontology.org/uco/identity> ,
                 <https://ontology.unifiedcyberontology.org/uco/observable> ,
                 <https://ontology.unifiedcyberontology.org/uco/action> ,
                 <https://ontology.unifiedcyberontology.org/uco/location> ,
                 <https://ontology.unifiedcyberontology.org/uco/role> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# PRODUCTION OFFENSE CLASSES (extending UCO Action)
+# PRODUCTION OFFENSE CLASSES (extending UCO Action with gUFO Event)
 # =============================================================================
 
 icac-production:ProductionOffense rdf:type owl:Class ;
     rdfs:label "Production Offense"@en ;
     rdfs:comment "Criminal offense involving the production, creation, or manufacturing of child sexual abuse material."@en ;
-    rdfs:subClassOf uco-action:Crime .
+    rdfs:subClassOf uco-action:Crime, gufo:Event ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
 
 icac-production:LiveProductionEvent rdf:type owl:Class ;
     rdfs:label "Live Production Event"@en ;
     rdfs:comment "Real-time production of child sexual abuse material involving live victims."@en ;
-    rdfs:subClassOf icac-production:ProductionOffense .
+    rdfs:subClassOf icac-production:ProductionOffense, gufo:Event .
 
-icac-production:RecordingAction rdf:type owl:Class ;    rdfs:label "Recording Action"@en ;    rdfs:comment "Action of recording child sexual abuse for the purpose of creating illegal material."@en ;    rdfs:subClassOf uco-action:Action .icac-production:PrivateSpaceSurveillance rdf:type owl:Class ;    rdfs:label "Private Space Surveillance"@en ;    rdfs:comment "Covert surveillance of private spaces where victims have expectation of privacy."@en ;    rdfs:subClassOf icac-production:RecordingAction .icac-production:BathroomSurveillance rdf:type owl:Class ;    rdfs:label "Bathroom Surveillance"@en ;    rdfs:comment "Specific surveillance of bathroom facilities, as observed in Vermont case."@en ;    rdfs:subClassOf icac-production:PrivateSpaceSurveillance .icac-production:BedroomSurveillance rdf:type owl:Class ;    rdfs:label "Bedroom Surveillance"@en ;    rdfs:comment "Specific surveillance of sleeping areas and bedrooms."@en ;    rdfs:subClassOf icac-production:PrivateSpaceSurveillance .icac-production:PhysicalDeviceModification rdf:type owl:Class ;    rdfs:label "Physical Device Modification"@en ;    rdfs:comment "Physical alterations made to recording devices to enable concealment."@en ;    rdfs:subClassOf uco-action:Action .
+icac-production:RecordingAction rdf:type owl:Class ;
+    rdfs:label "Recording Action"@en ;
+    rdfs:comment "Action of recording child sexual abuse for the purpose of creating illegal material."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+icac-production:PrivateSpaceSurveillance rdf:type owl:Class ;
+    rdfs:label "Private Space Surveillance"@en ;
+    rdfs:comment "Covert surveillance of private spaces where victims have expectation of privacy."@en ;
+    rdfs:subClassOf icac-production:RecordingAction .
+
+icac-production:BathroomSurveillance rdf:type owl:Class ;
+    rdfs:label "Bathroom Surveillance"@en ;
+    rdfs:comment "Specific surveillance of bathroom facilities, as observed in Vermont case."@en ;
+    rdfs:subClassOf icac-production:PrivateSpaceSurveillance .
+
+icac-production:BedroomSurveillance rdf:type owl:Class ;
+    rdfs:label "Bedroom Surveillance"@en ;
+    rdfs:comment "Specific surveillance of sleeping areas and bedrooms."@en ;
+    rdfs:subClassOf icac-production:PrivateSpaceSurveillance .
+
+icac-production:PhysicalDeviceModification rdf:type owl:Class ;
+    rdfs:label "Physical Device Modification"@en ;
+    rdfs:comment "Physical alterations made to recording devices to enable concealment."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-production:ContentCreation rdf:type owl:Class ;
     rdfs:label "Content Creation"@en ;
     rdfs:comment "Process of creating, editing, or enhancing child sexual abuse material."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-production:DigitalManipulation rdf:type owl:Class ;
     rdfs:label "Digital Manipulation"@en ;
@@ -56,18 +83,37 @@ icac-production:DigitalManipulation rdf:type owl:Class ;
     rdfs:subClassOf icac-production:ContentCreation .
 
 # =============================================================================
-# PRODUCTION SESSION CLASSES (extending UCO Observable)
+# PRODUCTION PHASES (gUFO Phase anti-rigid modeling)
+# =============================================================================
+
+icac-production:ActiveProductionPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Active Production Phase"@en ;
+    rdfs:comment "Phase during which production activities are actively occurring."@en ;
+    rdfs:subClassOf icac-production:ProductionOffense .
+
+icac-production:ProductionPreparationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Production Preparation Phase"@en ;
+    rdfs:comment "Phase involving preparation and setup for production activities."@en ;
+    rdfs:subClassOf icac-production:ProductionOffense .
+
+icac-production:ProductionDistributionPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Production Distribution Phase"@en ;
+    rdfs:comment "Phase during which produced content is distributed or shared."@en ;
+    rdfs:subClassOf icac-production:ProductionOffense .
+
+# =============================================================================
+# PRODUCTION SESSION CLASSES (extending UCO Observable with gUFO Situation)
 # =============================================================================
 
 icac-production:ProductionSession rdf:type owl:Class ;
     rdfs:label "Production Session"@en ;
     rdfs:comment "Individual instance or session of producing child sexual abuse material."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Situation .
 
 icac-production:ExtendedProductionPeriod rdf:type owl:Class ;
     rdfs:label "Extended Production Period"@en ;
     rdfs:comment "Ongoing pattern of production over an extended time period."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Situation .
 
 icac-production:ProductionSeries rdf:type owl:Class ;
     rdfs:label "Production Series"@en ;
@@ -75,13 +121,13 @@ icac-production:ProductionSeries rdf:type owl:Class ;
     rdfs:subClassOf icac-production:ExtendedProductionPeriod .
 
 # =============================================================================
-# PRODUCTION EQUIPMENT CLASSES (extending UCO Observable)
+# PRODUCTION EQUIPMENT CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
 icac-production:ProductionEquipment rdf:type owl:Class ;
     rdfs:label "Production Equipment"@en ;
     rdfs:comment "Devices and equipment used to produce child sexual abuse material."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-production:RecordingDevice rdf:type owl:Class ;
     rdfs:label "Recording Device"@en ;
@@ -98,16 +144,34 @@ icac-production:StationaryCamera rdf:type owl:Class ;
     rdfs:comment "Fixed camera equipment including webcams, digital cameras, and video cameras."@en ;
     rdfs:subClassOf icac-production:RecordingDevice .
 
-icac-production:HiddenRecordingDevice rdf:type owl:Class ;    rdfs:label "Hidden Recording Device"@en ;    rdfs:comment "Covert recording equipment designed to capture content without victim awareness."@en ;    rdfs:subClassOf icac-production:RecordingDevice .icac-production:DeviceConcealment rdf:type owl:Class ;    rdfs:label "Device Concealment"@en ;    rdfs:comment "Specific methods and techniques used to hide recording devices for covert surveillance operations."@en ;    rdfs:subClassOf icac-production:ProductionEquipment .icac-production:ConcealmentContainer rdf:type owl:Class ;    rdfs:label "Concealment Container"@en ;    rdfs:comment "Object used to hide recording equipment such as backpacks, furniture, or everyday items with modifications."@en ;    rdfs:subClassOf uco-observable:ObservableObject .icac-production:EditingEquipment rdf:type owl:Class ;    rdfs:label "Editing Equipment"@en ;    rdfs:comment "Computer hardware and software used to edit or enhance produced material."@en ;    rdfs:subClassOf icac-production:ProductionEquipment .
+icac-production:HiddenRecordingDevice rdf:type owl:Class ;
+    rdfs:label "Hidden Recording Device"@en ;
+    rdfs:comment "Covert recording equipment designed to capture content without victim awareness."@en ;
+    rdfs:subClassOf icac-production:RecordingDevice .
+
+icac-production:DeviceConcealment rdf:type owl:Class ;
+    rdfs:label "Device Concealment"@en ;
+    rdfs:comment "Specific methods and techniques used to hide recording devices for covert surveillance operations."@en ;
+    rdfs:subClassOf icac-production:ProductionEquipment .
+
+icac-production:ConcealmentContainer rdf:type owl:Class ;
+    rdfs:label "Concealment Container"@en ;
+    rdfs:comment "Object used to hide recording equipment such as backpacks, furniture, or everyday items with modifications."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
+
+icac-production:EditingEquipment rdf:type owl:Class ;
+    rdfs:label "Editing Equipment"@en ;
+    rdfs:comment "Computer hardware and software used to edit or enhance produced material."@en ;
+    rdfs:subClassOf icac-production:ProductionEquipment .
 
 # =============================================================================
-# PRODUCTION CONTENT CLASSES (extending UCO Observable)  
+# PRODUCTION CONTENT CLASSES (extending UCO Observable with gUFO Object)  
 # =============================================================================
 
 icac-production:ProducedContent rdf:type owl:Class ;
     rdfs:label "Produced Content"@en ;
     rdfs:comment "Child sexual abuse material created through production activities."@en ;
-    rdfs:subClassOf uco-observable:DigitalArtifact .
+    rdfs:subClassOf uco-observable:DigitalArtifact, gufo:Object .
 
 icac-production:ProducedImage rdf:type owl:Class ;
     rdfs:label "Produced Image"@en ;
@@ -130,13 +194,13 @@ icac-production:EditedContent rdf:type owl:Class ;
     rdfs:subClassOf icac-production:ProducedContent .
 
 # =============================================================================
-# PRODUCTION LOCATION CLASSES (extending UCO Location)
+# PRODUCTION LOCATION CLASSES (extending UCO Location with gUFO Object)
 # =============================================================================
 
 icac-production:ProductionLocation rdf:type owl:Class ;
     rdfs:label "Production Location"@en ;
     rdfs:comment "Physical location where child sexual abuse material production occurred."@en ;
-    rdfs:subClassOf uco-location:Location .
+    rdfs:subClassOf uco-location:Location, gufo:Object .
 
 icac-production:ResidentialProductionSite rdf:type owl:Class ;
     rdfs:label "Residential Production Site"@en ;
@@ -149,23 +213,57 @@ icac-production:ControlledEnvironment rdf:type owl:Class ;
     rdfs:subClassOf icac-production:ProductionLocation .
 
 # =============================================================================
-# VICTIM RELATIONSHIP CLASSES (extending UCO Role)
+# VICTIM RELATIONSHIP CLASSES (extending UCO Role with gUFO Role anti-rigid)
 # =============================================================================
 
-icac-production:ProductionVictim rdf:type owl:Class ;
+icac-production:ProductionVictim rdf:type owl:Class, gufo:Role ;
     rdfs:label "Production Victim"@en ;
     rdfs:comment "Child victim directly involved in production of sexual abuse material."@en ;
-    rdfs:subClassOf uco-role:VictimRole .
+    rdfs:subClassOf uco-role:VictimRole ;
+    owl:equivalentClass icac-gufo:VictimRole .
 
-icac-production:Producer rdf:type owl:Class ;
+icac-production:Producer rdf:type owl:Class, gufo:Role ;
     rdfs:label "Producer"@en ;
     rdfs:comment "Individual who creates, directs, or facilitates the production of child sexual abuse material."@en ;
-    rdfs:subClassOf uco-role:OffenderRole .
+    rdfs:subClassOf uco-role:OffenderRole ;
+    owl:equivalentClass icac-gufo:OffenderRole .
 
-icac-production:ProductionFacilitator rdf:type owl:Class ;
+icac-production:ProductionFacilitator rdf:type owl:Class, gufo:Role ;
     rdfs:label "Production Facilitator"@en ;
     rdfs:comment "Individual who assists in or enables production activities without directly producing content."@en ;
     rdfs:subClassOf uco-role:OffenderRole .
+
+# =============================================================================
+# gUFO TEMPORAL PROPERTIES
+# =============================================================================
+
+icac-production:hasProductionPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has production phase begin point"@en ;
+    rdfs:comment "Temporal begin point for production phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-production:hasProductionPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has production phase end point"@en ;
+    rdfs:comment "Temporal end point for production phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-production:hasRoleBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role begin point"@en ;
+    rdfs:comment "Temporal begin point for production role."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-production:hasRoleEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role end point"@en ;
+    rdfs:comment "Temporal end point for production role."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
 
 # =============================================================================
 # PRODUCTION PROPERTIES
@@ -259,7 +357,64 @@ icac-production:recordingCapability rdf:type owl:DatatypeProperty ;
     rdfs:domain icac-production:RecordingDevice ;
     rdfs:range xsd:string .
 
-icac-production:storageCapacity rdf:type owl:DatatypeProperty ;    rdfs:label "storage capacity"@en ;    rdfs:comment "Storage capacity of recording device in gigabytes."@en ;    rdfs:domain icac-production:RecordingDevice ;    rdfs:range xsd:decimal .# Concealment Properties (Vermont Case Enhancement)icac-production:concealmentMethod rdf:type owl:DatatypeProperty ;    rdfs:label "concealment method"@en ;    rdfs:comment "Specific technique used to hide recording device (fabric_cut, false_bottom, hollow_object)."@en ;    rdfs:domain icac-production:DeviceConcealment ;    rdfs:range xsd:string .icac-production:modificationDescription rdf:type owl:DatatypeProperty ;    rdfs:label "modification description"@en ;    rdfs:comment "Description of physical modifications made to enable concealment."@en ;    rdfs:domain icac-production:PhysicalDeviceModification ;    rdfs:range xsd:string .icac-production:concealmentLocation rdf:type owl:DatatypeProperty ;    rdfs:label "concealment location"@en ;    rdfs:comment "Specific location where device was concealed (bathroom, bedroom, living_area)."@en ;    rdfs:domain icac-production:DeviceConcealment ;    rdfs:range xsd:string .# Private Space Surveillance Properties (Vermont Case Enhancement)icac-production:privacyExpectation rdf:type owl:DatatypeProperty ;    rdfs:label "privacy expectation"@en ;    rdfs:comment "Level of privacy expectation in surveillance location (high, medium, low)."@en ;    rdfs:domain icac-production:PrivateSpaceSurveillance ;    rdfs:range xsd:string .icac-production:surveillanceAngle rdf:type owl:DatatypeProperty ;    rdfs:label "surveillance angle"@en ;    rdfs:comment "Camera angle or positioning for surveillance (pointing_toward_bathroom, wide_angle, focused)."@en ;    rdfs:domain icac-production:PrivateSpaceSurveillance ;    rdfs:range xsd:string .# Enhanced Production Period Properties (Vermont Case Enhancement)icac-production:developmentalDocumentation rdf:type owl:DatatypeProperty ;    rdfs:label "developmental documentation"@en ;    rdfs:comment "Whether abuse documentation captured victim's physical development over time."@en ;    rdfs:domain icac-production:ExtendedProductionPeriod ;    rdfs:range xsd:boolean .icac-production:victimAgeProgression rdf:type owl:DatatypeProperty ;    rdfs:label "victim age progression"@en ;    rdfs:comment "Age range documented showing victim's development (e.g., '13-16')."@en ;    rdfs:domain icac-production:ExtendedProductionPeriod ;    rdfs:range xsd:string .icac-production:systematicNature rdf:type owl:DatatypeProperty ;    rdfs:label "systematic nature"@en ;    rdfs:comment "Whether production shows systematic, ongoing pattern rather than isolated incidents."@en ;    rdfs:domain icac-production:ExtendedProductionPeriod ;    rdfs:range xsd:boolean .# Location Properties
+icac-production:storageCapacity rdf:type owl:DatatypeProperty ;
+    rdfs:label "storage capacity"@en ;
+    rdfs:comment "Storage capacity of recording device in gigabytes."@en ;
+    rdfs:domain icac-production:RecordingDevice ;
+    rdfs:range xsd:decimal .
+
+# Concealment Properties (Vermont Case Enhancement)
+icac-production:concealmentMethod rdf:type owl:DatatypeProperty ;
+    rdfs:label "concealment method"@en ;
+    rdfs:comment "Specific technique used to hide recording device (fabric_cut, false_bottom, hollow_object)."@en ;
+    rdfs:domain icac-production:DeviceConcealment ;
+    rdfs:range xsd:string .
+
+icac-production:modificationDescription rdf:type owl:DatatypeProperty ;
+    rdfs:label "modification description"@en ;
+    rdfs:comment "Description of physical modifications made to enable concealment."@en ;
+    rdfs:domain icac-production:PhysicalDeviceModification ;
+    rdfs:range xsd:string .
+
+icac-production:concealmentLocation rdf:type owl:DatatypeProperty ;
+    rdfs:label "concealment location"@en ;
+    rdfs:comment "Specific location where device was concealed (bathroom, bedroom, living_area)."@en ;
+    rdfs:domain icac-production:DeviceConcealment ;
+    rdfs:range xsd:string .
+
+# Private Space Surveillance Properties (Vermont Case Enhancement)
+icac-production:privacyExpectation rdf:type owl:DatatypeProperty ;
+    rdfs:label "privacy expectation"@en ;
+    rdfs:comment "Level of privacy expectation in surveillance location (high, medium, low)."@en ;
+    rdfs:domain icac-production:PrivateSpaceSurveillance ;
+    rdfs:range xsd:string .
+
+icac-production:surveillanceAngle rdf:type owl:DatatypeProperty ;
+    rdfs:label "surveillance angle"@en ;
+    rdfs:comment "Camera angle or positioning for surveillance (pointing_toward_bathroom, wide_angle, focused)."@en ;
+    rdfs:domain icac-production:PrivateSpaceSurveillance ;
+    rdfs:range xsd:string .
+
+# Enhanced Production Period Properties (Vermont Case Enhancement)
+icac-production:developmentalDocumentation rdf:type owl:DatatypeProperty ;
+    rdfs:label "developmental documentation"@en ;
+    rdfs:comment "Whether abuse documentation captured victim's physical development over time."@en ;
+    rdfs:domain icac-production:ExtendedProductionPeriod ;
+    rdfs:range xsd:boolean .
+
+icac-production:victimAgeProgression rdf:type owl:DatatypeProperty ;
+    rdfs:label "victim age progression"@en ;
+    rdfs:comment "Age range documented showing victim's development (e.g., '13-16')."@en ;
+    rdfs:domain icac-production:ExtendedProductionPeriod ;
+    rdfs:range xsd:string .
+
+icac-production:systematicNature rdf:type owl:DatatypeProperty ;
+    rdfs:label "systematic nature"@en ;
+    rdfs:comment "Whether production shows systematic, ongoing pattern rather than isolated incidents."@en ;
+    rdfs:domain icac-production:ExtendedProductionPeriod ;
+    rdfs:range xsd:boolean .
+
+# Location Properties
 icac-production:locationSecurity rdf:type owl:DatatypeProperty ;
     rdfs:label "location security"@en ;
     rdfs:comment "Security measures at production location (isolated, private, public)."@en ;

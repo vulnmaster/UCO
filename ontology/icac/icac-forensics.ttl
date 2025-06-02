@@ -4,128 +4,227 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
-@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
-@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
-@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
-@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool#> .
-@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types#> .
-@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity/> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action/> .
+@prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool/> .
+@prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation/> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-forensics: <https://ontology.unifiedcyberontology.org/icac/forensics#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/forensics/0.1> rdf:type owl:Ontology ;
     rdfs:label "ICAC Digital Forensics Ontology"@en ;
-    rdfs:comment "An ontology for representing digital forensics concepts specific to Internet Crimes Against Children investigations, extending UCO and CASE. This ontology provides forensic acquisition, chain of custody, evidence handling, and tool provenance capabilities."@en ;
+    rdfs:comment "An ontology for representing digital forensics concepts specific to Internet Crimes Against Children investigations, extending UCO and CASE with gUFO foundational ontology enhancements. This ontology provides forensic acquisition, chain of custody, evidence handling, and tool provenance capabilities."@en ;
     owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/forensics/0.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2024-12-19"^^xsd:date ;
-    dcterms:modified "2024-12-19"^^xsd:date ;
+    dcterms:modified "2025-06-02"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/uco/core/> ,
                 <https://ontology.unifiedcyberontology.org/uco/observable/> ,
                 <https://ontology.unifiedcyberontology.org/uco/action/> ,
                 <https://ontology.unifiedcyberontology.org/uco/tool/> ,
                 <https://ontology.caseontology.org/case/> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# FORENSIC TOOL CLASSES (extending UCO Tool)
+# FORENSIC TOOL CLASSES (extending UCO Tool with gUFO Object)
 # =============================================================================
 
 icac-forensics:ForensicImagingTool rdf:type owl:Class ;
     rdfs:label "Forensic Imaging Tool"@en ;
     rdfs:comment "A tool specialized for creating forensic images of digital media using write-blocking and verification methods (e.g., FTK Imager, dd, Guymager, PALADIN)."@en ;
-    rdfs:subClassOf uco-tool:AnalyticTool .
+    rdfs:subClassOf uco-tool:AnalyticTool, gufo:Object .
 
 icac-forensics:MobileForensicTool rdf:type owl:Class ;
     rdfs:label "Mobile Forensic Tool"@en ;
     rdfs:comment "A tool specialized for mobile device forensics including logical and physical extraction (e.g., Cellebrite UFED, MSAB XRY, Oxygen Detective Suite)."@en ;
-    rdfs:subClassOf uco-tool:AnalyticTool .
+    rdfs:subClassOf uco-tool:AnalyticTool, gufo:Object .
 
 icac-forensics:NetworkForensicTool rdf:type owl:Class ;
     rdfs:label "Network Forensic Tool"@en ;
     rdfs:comment "A tool specialized for network traffic analysis and packet capture (e.g., Wireshark, NetworkMiner, Xplico)."@en ;
-    rdfs:subClassOf uco-tool:AnalyticTool .
+    rdfs:subClassOf uco-tool:AnalyticTool, gufo:Object .
 
 icac-forensics:MemoryForensicTool rdf:type owl:Class ;
     rdfs:label "Memory Forensic Tool"@en ;
     rdfs:comment "A tool specialized for analyzing volatile memory dumps (e.g., Volatility, Rekall, MAGNET RAM Capture)."@en ;
-    rdfs:subClassOf uco-tool:AnalyticTool .
+    rdfs:subClassOf uco-tool:AnalyticTool, gufo:Object .
 
 icac-forensics:HashingTool rdf:type owl:Class ;
     rdfs:label "Hashing Tool"@en ;
     rdfs:comment "A tool specialized for generating cryptographic hashes for evidence verification (e.g., hashdeep, md5deep, NIST NSRL)."@en ;
-    rdfs:subClassOf uco-tool:AnalyticTool .
+    rdfs:subClassOf uco-tool:AnalyticTool, gufo:Object .
 
 # =============================================================================
-# FORENSIC ACTION CLASSES (extending UCO Action)
+# FORENSIC ACTION CLASSES (extending UCO Action with gUFO Event)
 # =============================================================================
 
 icac-forensics:ForensicAcquisitionAction rdf:type owl:Class ;
     rdfs:label "Forensic Acquisition Action"@en ;
     rdfs:comment "The action of creating a forensically sound copy of digital evidence using write-blocking and verification procedures."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-forensics:ChainOfCustodyAction rdf:type owl:Class ;
     rdfs:label "Chain of Custody Action"@en ;
     rdfs:comment "An action that documents evidence handling, transfer, and custody maintaining legal admissibility."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-forensics:EvidenceVerificationAction rdf:type owl:Class ;
     rdfs:label "Evidence Verification Action"@en ;
     rdfs:comment "The action of verifying evidence integrity using cryptographic hashes and comparison methods."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-forensics:TimelineAnalysisAction rdf:type owl:Class ;
     rdfs:label "Timeline Analysis Action"@en ;
     rdfs:comment "The action of creating chronological sequences of digital artifacts and events for investigation analysis."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
-icac-forensics:MetadataExtractionAction rdf:type owl:Class ;    rdfs:label "Metadata Extraction Action"@en ;    rdfs:comment "The action of extracting metadata from digital artifacts including EXIF, file system timestamps, and application metadata."@en ;    rdfs:subClassOf uco-action:Action .# SA JACET-inspired Victim Identification Actionsicac-forensics:VictimIdentificationProcess rdf:type owl:Class ;    rdfs:label "Victim Identification Process"@en ;    rdfs:comment "Systematic process for identifying child victims from seized images and videos during long-term investigations."@en ;    rdfs:subClassOf uco-action:Action .icac-forensics:ImageAnalysisForVictimID rdf:type owl:Class ;    rdfs:label "Image Analysis for Victim Identification"@en ;    rdfs:comment "Analysis of seized images to identify and remove child victims from continued exploitation."@en ;    rdfs:subClassOf icac-forensics:VictimIdentificationProcess .icac-forensics:CrossReferenceAnalysis rdf:type owl:Class ;    rdfs:label "Cross Reference Analysis"@en ;    rdfs:comment "Cross-referencing of digital evidence across multiple cases and international databases for victim identification."@en ;    rdfs:subClassOf icac-forensics:VictimIdentificationProcess .icac-forensics:VictimRemovalAction rdf:type owl:Class ;    rdfs:label "Victim Removal Action"@en ;    rdfs:comment "Action taken to remove identified victims from further harm and exploitation."@en ;    rdfs:subClassOf uco-action:Action .icac-forensics:ExtendedInvestigationTimeline rdf:type owl:Class ;    rdfs:label "Extended Investigation Timeline"@en ;    rdfs:comment "Investigation timeline spanning weeks, months, or years for complex child exploitation cases."@en ;    rdfs:subClassOf icac-forensics:TimelineAnalysisAction .
+icac-forensics:MetadataExtractionAction rdf:type owl:Class ;
+    rdfs:label "Metadata Extraction Action"@en ;
+    rdfs:comment "The action of extracting metadata from digital artifacts including EXIF, file system timestamps, and application metadata."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+# Victim Identification Actions
+icac-forensics:VictimIdentificationProcess rdf:type owl:Class ;
+    rdfs:label "Victim Identification Process"@en ;
+    rdfs:comment "Systematic process for identifying child victims from seized images and videos during long-term investigations."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+icac-forensics:ImageAnalysisForVictimID rdf:type owl:Class ;
+    rdfs:label "Image Analysis for Victim Identification"@en ;
+    rdfs:comment "Analysis of seized images to identify and remove child victims from continued exploitation."@en ;
+    rdfs:subClassOf icac-forensics:VictimIdentificationProcess .
+
+icac-forensics:CrossReferenceAnalysis rdf:type owl:Class ;
+    rdfs:label "Cross Reference Analysis"@en ;
+    rdfs:comment "Cross-referencing of digital evidence across multiple cases and international databases for victim identification."@en ;
+    rdfs:subClassOf icac-forensics:VictimIdentificationProcess .
+
+icac-forensics:VictimRemovalAction rdf:type owl:Class ;
+    rdfs:label "Victim Removal Action"@en ;
+    rdfs:comment "Action taken to remove identified victims from further harm and exploitation."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+icac-forensics:ExtendedInvestigationTimeline rdf:type owl:Class ;
+    rdfs:label "Extended Investigation Timeline"@en ;
+    rdfs:comment "Investigation timeline spanning weeks, months, or years for complex child exploitation cases."@en ;
+    rdfs:subClassOf icac-forensics:TimelineAnalysisAction .
 
 # =============================================================================
-# FORENSIC ARTIFACT CLASSES (extending UCO Observable)
+# FORENSIC PHASES (gUFO Phase anti-rigid modeling)
+# =============================================================================
+
+icac-forensics:AcquisitionPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Acquisition Phase"@en ;
+    rdfs:comment "Phase involving forensic acquisition of digital evidence."@en ;
+    rdfs:subClassOf icac-forensics:ForensicAcquisitionAction .
+
+icac-forensics:AnalysisPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Analysis Phase"@en ;
+    rdfs:comment "Phase involving detailed forensic analysis of acquired evidence."@en ;
+    rdfs:subClassOf icac-forensics:TimelineAnalysisAction .
+
+icac-forensics:ReportingPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Reporting Phase"@en ;
+    rdfs:comment "Phase involving preparation of forensic reports and findings."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-forensics:TestimonyPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Testimony Phase"@en ;
+    rdfs:comment "Phase involving expert testimony and courtroom presentation."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# =============================================================================
+# FORENSIC ARTIFACT CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
 icac-forensics:ForensicImage rdf:type owl:Class ;
     rdfs:label "Forensic Image"@en ;
     rdfs:comment "A bit-for-bit copy of digital media created using forensically sound methods, maintaining evidence integrity."@en ;
-    rdfs:subClassOf uco-observable:Image .
+    rdfs:subClassOf uco-observable:Image, gufo:Object .
 
 icac-forensics:RecoveredFile rdf:type owl:Class ;
     rdfs:label "Recovered File"@en ;
     rdfs:comment "A file recovered from deleted or unallocated space on digital media through forensic analysis techniques."@en ;
-    rdfs:subClassOf uco-observable:File .
+    rdfs:subClassOf uco-observable:File, gufo:Object .
 
 icac-forensics:MemoryDump rdf:type owl:Class ;
     rdfs:label "Memory Dump"@en ;
     rdfs:comment "A snapshot of volatile system memory captured for forensic analysis."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-forensics:NetworkCapture rdf:type owl:Class ;
     rdfs:label "Network Capture"@en ;
     rdfs:comment "A capture of network traffic packets for forensic analysis."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-forensics:CustodyDocument rdf:type owl:Class ;
     rdfs:label "Custody Document"@en ;
     rdfs:comment "Documentation recording the handling and transfer of evidence maintaining chain of custody."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 # =============================================================================
-# FORENSIC PROCESS ROLES (extending UCO Role)
+# FORENSIC PROCESS ROLES (extending UCO Role with gUFO Role)
 # =============================================================================
 
-icac-forensics:ForensicExaminerRole rdf:type owl:Class ;
+icac-forensics:ForensicExaminerRole rdf:type owl:Class, gufo:Role ;
     rdfs:label "Forensic Examiner Role"@en ;
     rdfs:comment "Role of a person conducting digital forensic examination and analysis."@en ;
     rdfs:subClassOf uco-core:Role .
 
-icac-forensics:EvidenceCustodianRole rdf:type owl:Class ;
+icac-forensics:EvidenceCustodianRole rdf:type owl:Class, gufo:Role ;
     rdfs:label "Evidence Custodian Role"@en ;
     rdfs:comment "Role of a person responsible for evidence custody and security."@en ;
     rdfs:subClassOf uco-core:Role .
+
+icac-forensics:VictimIdentificationSpecialist rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Victim Identification Specialist"@en ;
+    rdfs:comment "Role of specialist focused on identifying child victims from digital evidence."@en ;
+    rdfs:subClassOf uco-core:Role .
+
+# =============================================================================
+# gUFO TEMPORAL PROPERTIES
+# =============================================================================
+
+icac-forensics:hasForensicPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has forensic phase begin point"@en ;
+    rdfs:comment "Temporal begin point for forensic phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-forensics:hasForensicPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has forensic phase end point"@en ;
+    rdfs:comment "Temporal end point for forensic phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-forensics:hasRoleBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role begin point"@en ;
+    rdfs:comment "Temporal begin point for forensic role."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-forensics:hasRoleEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role end point"@en ;
+    rdfs:comment "Temporal end point for forensic role."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-forensics:forensicPhaseDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "forensic phase duration"@en ;
+    rdfs:comment "Duration of forensic phase."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:duration .
 
 # =============================================================================
 # FORENSIC PROPERTIES
@@ -194,7 +293,42 @@ icac-forensics:timelineEvent rdf:type owl:ObjectProperty ;
     rdfs:domain icac-forensics:TimelineAnalysisAction ;
     rdfs:range uco-core:UcoObject .
 
-# Victim Identification Properties (based on SA JACET statistics)icac-forensics:victimsIdentifiedCount rdf:type owl:DatatypeProperty ;    rdfs:label "victims identified count"@en ;    rdfs:comment "Number of child victims identified and removed from harm (e.g., 370+ for SA JACET over 10 years)."@en ;    rdfs:domain icac-forensics:VictimIdentificationProcess ;    rdfs:range xsd:nonNegativeInteger .icac-forensics:victimGeographicOrigin rdf:type owl:DatatypeProperty ;    rdfs:label "victim geographic origin"@en ;    rdfs:comment "Geographic origin of identified victims (e.g., 'Australia', 'UK', 'US', 'Southeast Asia', 'Philippines')."@en ;    rdfs:domain icac-forensics:VictimIdentificationProcess ;    rdfs:range xsd:string .icac-forensics:victimAgeRange rdf:type owl:DatatypeProperty ;    rdfs:label "victim age range"@en ;    rdfs:comment "Age range of identified victims (e.g., 'toddlers to teenagers')."@en ;    rdfs:domain icac-forensics:VictimIdentificationProcess ;    rdfs:range xsd:string .icac-forensics:investigationDuration rdf:type owl:DatatypeProperty ;    rdfs:label "investigation duration"@en ;    rdfs:comment "Duration of extended investigation (e.g., 'weeks', 'months', 'years')."@en ;    rdfs:domain icac-forensics:ExtendedInvestigationTimeline ;    rdfs:range xsd:string .icac-forensics:referralsReceived rdf:type owl:DatatypeProperty ;    rdfs:label "referrals received"@en ;    rdfs:comment "Number of referrals received from national and international law enforcement (e.g., 677 for SA JACET)."@en ;    rdfs:range xsd:nonNegativeInteger .icac-forensics:arrestsResulting rdf:type owl:DatatypeProperty ;    rdfs:label "arrests resulting"@en ;    rdfs:comment "Number of arrests resulting from forensic investigations (e.g., 654 for SA JACET)."@en ;    rdfs:range xsd:nonNegativeInteger .icac-forensics:recoveryMethod rdf:type owl:DatatypeProperty ;
+# Victim Identification Properties (based on SA JACET statistics)
+icac-forensics:victimsIdentifiedCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "victims identified count"@en ;
+    rdfs:comment "Number of child victims identified and removed from harm (e.g., 370+ for SA JACET over 10 years)."@en ;
+    rdfs:domain icac-forensics:VictimIdentificationProcess ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:victimGeographicOrigin rdf:type owl:DatatypeProperty ;
+    rdfs:label "victim geographic origin"@en ;
+    rdfs:comment "Geographic origin of identified victims (e.g., 'Australia', 'UK', 'US', 'Southeast Asia', 'Philippines')."@en ;
+    rdfs:domain icac-forensics:VictimIdentificationProcess ;
+    rdfs:range xsd:string .
+
+icac-forensics:victimAgeRange rdf:type owl:DatatypeProperty ;
+    rdfs:label "victim age range"@en ;
+    rdfs:comment "Age range of identified victims (e.g., 'toddlers to teenagers')."@en ;
+    rdfs:domain icac-forensics:VictimIdentificationProcess ;
+    rdfs:range xsd:string .
+
+icac-forensics:investigationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "investigation duration"@en ;
+    rdfs:comment "Duration of extended investigation (e.g., 'weeks', 'months', 'years')."@en ;
+    rdfs:domain icac-forensics:ExtendedInvestigationTimeline ;
+    rdfs:range xsd:string .
+
+icac-forensics:referralsReceived rdf:type owl:DatatypeProperty ;
+    rdfs:label "referrals received"@en ;
+    rdfs:comment "Number of referrals received from national and international law enforcement (e.g., 677 for SA JACET)."@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:arrestsResulting rdf:type owl:DatatypeProperty ;
+    rdfs:label "arrests resulting"@en ;
+    rdfs:comment "Number of arrests resulting from forensic investigations (e.g., 654 for SA JACET)."@en ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-forensics:recoveryMethod rdf:type owl:DatatypeProperty ;
     rdfs:label "recovery method"@en ;
     rdfs:comment "The method used to recover deleted or hidden files (e.g., 'unallocated space carving', 'file system journal')."@en ;
     rdfs:domain icac-forensics:RecoveredFile ;

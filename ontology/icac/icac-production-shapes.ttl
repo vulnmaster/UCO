@@ -10,6 +10,244 @@
 @prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-production: <https://ontology.unifiedcyberontology.org/icac/production#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
+
+# =============================================================================
+# gUFO PHASE VALIDATION SHAPES
+# =============================================================================
+
+icac-production:ProductionPhaseShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Phase ;
+    rdfs:label "Production Phase Shape"@en ;
+    rdfs:comment "gUFO-enhanced validation shape for production phases with anti-rigidity constraints."@en ;
+    sh:property [
+        sh:path icac-production:hasProductionPhaseBeginPoint ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Production phase must have exactly one begin point."@en
+    ] ;
+    sh:property [
+        sh:path icac-production:hasProductionPhaseEndPoint ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Production phase may have an end point."@en
+    ] ;
+    sh:sparql [
+        sh:message "Phase begin point must be before end point."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-production" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/production#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this icac-production:hasProductionPhaseBeginPoint ?begin .
+                ?this icac-production:hasProductionPhaseEndPoint ?end .
+                FILTER(?begin >= ?end)
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "Phase instances must be anti-rigid (cannot exist without being instantiated by entities)."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "gufo" ;
+                sh:namespace "http://purl.org/nemo/gufo#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this a gufo:Phase .
+                FILTER NOT EXISTS { 
+                    ?entity ?property ?this .
+                    ?property rdfs:subPropertyOf* gufo:hasPhase .
+                }
+            }
+        """
+    ] .
+
+icac-production:ActiveProductionPhaseShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-production:ActiveProductionPhase ;
+    rdfs:label "Active Production Phase Shape"@en ;
+    rdfs:comment "Validation for active production phase instances."@en ;
+    sh:property [
+        sh:path icac-production:productionActivity ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "recording" "editing" "streaming" "distribution_preparation" ) ;
+        sh:message "Active production phase must specify current production activity."@en
+    ] .
+
+# =============================================================================
+# gUFO ROLE VALIDATION SHAPES
+# =============================================================================
+
+icac-production:ProductionRoleShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Role ;
+    rdfs:label "Production Role Shape"@en ;
+    rdfs:comment "gUFO-enhanced validation shape for production roles with anti-rigidity and temporal constraints."@en ;
+    sh:property [
+        sh:path icac-production:hasRoleBeginPoint ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Production role must have exactly one begin point."@en
+    ] ;
+    sh:property [
+        sh:path icac-production:hasRoleEndPoint ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Production role may have an end point."@en
+    ] ;
+    sh:sparql [
+        sh:message "Role begin point must be before end point."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-production" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/production#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this icac-production:hasRoleBeginPoint ?begin .
+                ?this icac-production:hasRoleEndPoint ?end .
+                FILTER(?begin >= ?end)
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "Role instances must be anti-rigid (cannot exist without being played by entities)."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "gufo" ;
+                sh:namespace "http://purl.org/nemo/gufo#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this a gufo:Role .
+                FILTER NOT EXISTS { 
+                    ?entity ?property ?this .
+                    ?property rdfs:subPropertyOf* gufo:playsRole .
+                }
+            }
+        """
+    ] .
+
+icac-production:ProducerRoleConflictShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-production:Producer ;
+    rdfs:label "Producer Role Conflict Shape"@en ;
+    rdfs:comment "Prevents conflicting roles from being assigned simultaneously."@en ;
+    sh:sparql [
+        sh:message "Individual cannot simultaneously be Producer and VictimRole."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-production" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/production#"^^xsd:anyURI
+            ] ,
+            sh:declare [
+                sh:prefix "icac-gufo" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/gufo#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?entity gufo:playsRole ?this .
+                ?entity gufo:playsRole ?victimRole .
+                ?this a icac-production:Producer .
+                ?victimRole a icac-gufo:VictimRole .
+                ?this icac-production:hasRoleBeginPoint ?producerBegin .
+                ?victimRole icac-production:hasRoleBeginPoint ?victimBegin .
+                FILTER(?producerBegin <= ?victimBegin)
+                OPTIONAL { ?this icac-production:hasRoleEndPoint ?producerEnd }
+                OPTIONAL { ?victimRole icac-production:hasRoleEndPoint ?victimEnd }
+                FILTER(
+                    (!BOUND(?producerEnd) && !BOUND(?victimEnd)) ||
+                    (!BOUND(?producerEnd) && ?victimBegin <= ?victimEnd) ||
+                    (!BOUND(?victimEnd) && ?producerBegin <= ?producerEnd) ||
+                    (BOUND(?producerEnd) && BOUND(?victimEnd) && 
+                     !((?producerEnd < ?victimBegin) || (?victimEnd < ?producerBegin)))
+                )
+            }
+        """
+    ] .
+
+# =============================================================================
+# gUFO EVENT-SITUATION VALIDATION SHAPES  
+# =============================================================================
+
+icac-production:ProductionEventShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Event ;
+    rdfs:label "Production Event Shape"@en ;
+    rdfs:comment "gUFO validation for production events ensuring proper temporal modeling."@en ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Production event must have exactly one begin point."@en
+    ] ;
+    sh:property [
+        sh:path gufo:hasEndPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTimeStamp ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "Production event may have an end point."@en
+    ] ;
+    sh:sparql [
+        sh:message "Event begin point must be before end point."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "gufo" ;
+                sh:namespace "http://purl.org/nemo/gufo#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this gufo:hasBeginPointInXSDDateTimeStamp ?begin .
+                ?this gufo:hasEndPointInXSDDateTimeStamp ?end .
+                FILTER(?begin >= ?end)
+            }
+        """
+    ] .
+
+icac-production:ProductionSituationShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Situation ;
+    rdfs:label "Production Situation Shape"@en ;
+    rdfs:comment "gUFO validation for production situations ensuring proper modeling of ongoing states."@en ;
+    sh:sparql [
+        sh:message "Situations should involve multiple entities or persist over time."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "gufo" ;
+                sh:namespace "http://purl.org/nemo/gufo#"^^xsd:anyURI
+            ]
+        ] ;
+        sh:select """
+            SELECT ?this WHERE {
+                ?this a gufo:Situation .
+                FILTER NOT EXISTS { 
+                    { SELECT ?this WHERE { 
+                        ?this gufo:involves ?entity1 .
+                        ?this gufo:involves ?entity2 .
+                        FILTER(?entity1 != ?entity2)
+                    } }
+                    UNION
+                    { SELECT ?this WHERE {
+                        ?this gufo:hasBeginPointInXSDDateTimeStamp ?begin .
+                        ?this gufo:hasEndPointInXSDDateTimeStamp ?end .
+                        FILTER(?end > ?begin)
+                    } }
+                }
+            }
+        """
+    ] .
 
 # =============================================================================
 # PRODUCTION OFFENSE SHAPES

@@ -13,30 +13,34 @@
 @prefix icac-grooming: <https://ontology.unifiedcyberontology.org/icac/grooming#> .
 @prefix icac-educational: <https://ontology.unifiedcyberontology.org/icac/educational#> .
 @prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/grooming/0.1> rdf:type owl:Ontology ;
     rdfs:label "ICAC Online Grooming & Enticement Ontology"@en ;
-    rdfs:comment "An ontology for representing online grooming behaviors, enticement patterns, and predatory communication tactics in Internet Crimes Against Children cases, extending UCO and CASE."@en ;
+    rdfs:comment "An ontology for representing online grooming behaviors, enticement patterns, and predatory communication tactics in Internet Crimes Against Children cases, extending UCO and CASE with gUFO foundational ontology enhancements."@en ;
     owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/grooming/0.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2024-12-19"^^xsd:date ;
-    dcterms:modified "2024-12-19"^^xsd:date ;
+    dcterms:modified "2025-01-02"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
                 <https://ontology.unifiedcyberontology.org/uco/identity> ,
                 <https://ontology.unifiedcyberontology.org/uco/observable> ,
                 <https://ontology.unifiedcyberontology.org/uco/action> ,
                 <https://ontology.unifiedcyberontology.org/uco/pattern> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# GROOMING BEHAVIOR CLASSES (extending UCO Action)
+# GROOMING BEHAVIOR CLASSES (extending UCO Action with gUFO Event)
 # =============================================================================
 
 icac-grooming:GroomingBehavior rdf:type owl:Class ;
     rdfs:label "Grooming Behavior"@en ;
     rdfs:comment "Predatory behavior designed to prepare a child for abuse by building trust, isolating them, and normalizing inappropriate contact."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
 
 icac-grooming:TrustBuildingBehavior rdf:type owl:Class ;
     rdfs:label "Trust Building Behavior"@en ;
@@ -64,13 +68,47 @@ icac-grooming:SexualExploitation rdf:type owl:Class ;
     rdfs:subClassOf icac-grooming:GroomingBehavior .
 
 # =============================================================================
-# GROOMING COMMUNICATION CLASSES (extending UCO Observable)
+# GROOMING PHASES (gUFO Phase anti-rigid modeling)
+# =============================================================================
+
+icac-grooming:InitialContactPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Initial Contact Phase"@en ;
+    rdfs:comment "First phase of grooming involving initial contact and relationship establishment."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:TrustBuildingPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Trust Building Phase"@en ;
+    rdfs:comment "Phase focused on building emotional connection and trust with victim."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:IsolationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Isolation Phase"@en ;
+    rdfs:comment "Phase aimed at separating victim from support systems and creating dependency."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:SexualizationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Sexualization Phase"@en ;
+    rdfs:comment "Phase involving introduction of sexual content and normalization of inappropriate behavior."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:ExploitationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Exploitation Phase"@en ;
+    rdfs:comment "Final phase involving direct sexual exploitation and abuse."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+icac-grooming:MaintenancePhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Maintenance Phase"@en ;
+    rdfs:comment "Ongoing phase to maintain control and continue exploitation."@en ;
+    rdfs:subClassOf icac-grooming:GroomingBehavior .
+
+# =============================================================================
+# GROOMING COMMUNICATION CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
 icac-grooming:GroomingMessage rdf:type owl:Class ;
     rdfs:label "Grooming Message"@en ;
     rdfs:comment "Communication containing grooming behavior or inappropriate content directed at a child."@en ;
-    rdfs:subClassOf uco-observable:Message .
+    rdfs:subClassOf uco-observable:Message, gufo:Object .
 
 icac-grooming:SexualSolicitation rdf:type owl:Class ;
     rdfs:label "Sexual Solicitation"@en ;
@@ -80,7 +118,7 @@ icac-grooming:SexualSolicitation rdf:type owl:Class ;
 icac-grooming:InappropriateGift rdf:type owl:Class ;
     rdfs:label "Inappropriate Gift"@en ;
     rdfs:comment "Offer or provision of gifts, money, or favors as part of grooming process."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-grooming:SecrecyRequest rdf:type owl:Class ;
     rdfs:label "Secrecy Request"@en ;
@@ -90,16 +128,16 @@ icac-grooming:SecrecyRequest rdf:type owl:Class ;
 icac-grooming:VictimResponse rdf:type owl:Class ;
     rdfs:label "Victim Response"@en ;
     rdfs:comment "Child's response to grooming behavior, indicating compliance, resistance, or confusion."@en ;
-    rdfs:subClassOf uco-observable:Message .
+    rdfs:subClassOf uco-observable:Message, gufo:Object .
 
 # =============================================================================
-# GROOMING PATTERN CLASSES (extending UCO Pattern)
+# GROOMING PATTERN CLASSES (extending UCO Pattern with gUFO Situation)
 # =============================================================================
 
 icac-grooming:GroomingPattern rdf:type owl:Class ;
     rdfs:label "Grooming Pattern"@en ;
     rdfs:comment "Identifiable pattern of behavior across multiple communications or interactions that indicates grooming."@en ;
-    rdfs:subClassOf uco-pattern:Pattern .
+    rdfs:subClassOf uco-pattern:Pattern, gufo:Situation .
 
 icac-grooming:EscalationPattern rdf:type owl:Class ;
     rdfs:label "Escalation Pattern"@en ;
@@ -117,23 +155,82 @@ icac-grooming:PreyBehaviorPattern rdf:type owl:Class ;
     rdfs:subClassOf icac-grooming:GroomingPattern .
 
 # =============================================================================
-# VICTIM AND OFFENDER CLASSES (extending UCO Identity)
+# GROOMING SITUATIONS (gUFO Situation modeling)
 # =============================================================================
 
-icac-grooming:ChildVictim rdf:type owl:Class ;
+icac-grooming:OnlineGroomingSituation rdf:type owl:Class ;
+    rdfs:label "Online Grooming Situation"@en ;
+    rdfs:comment "Overall situation encompassing the grooming relationship and interactions."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+icac-grooming:VictimVulnerabilitySituation rdf:type owl:Class ;
+    rdfs:label "Victim Vulnerability Situation"@en ;
+    rdfs:comment "Circumstances that make a child more susceptible to grooming."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+icac-grooming:OnlinePredationSituation rdf:type owl:Class ;
+    rdfs:label "Online Predation Situation"@en ;
+    rdfs:comment "Active situation where predator is engaging with potential victims."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+# =============================================================================
+# VICTIM AND OFFENDER CLASSES (extending UCO Identity with gUFO Role)
+# =============================================================================
+
+icac-grooming:ChildVictim rdf:type owl:Class, gufo:Role ;
     rdfs:label "Child Victim"@en ;
     rdfs:comment "Minor child who is the target of grooming behavior."@en ;
-    rdfs:subClassOf uco-identity:Person .
+    rdfs:subClassOf uco-identity:Person ;
+    owl:equivalentClass icac-gufo:VictimRole .
 
-icac-grooming:OnlinePredator rdf:type owl:Class ;
+icac-grooming:OnlinePredator rdf:type owl:Class, gufo:Role ;
     rdfs:label "Online Predator"@en ;
     rdfs:comment "Individual who engages in grooming behavior toward children online."@en ;
-    rdfs:subClassOf uco-identity:Person .
+    rdfs:subClassOf uco-identity:Person ;
+    owl:equivalentClass icac-gufo:OffenderRole .
 
 icac-grooming:VictimVulnerability rdf:type owl:Class ;
     rdfs:label "Victim Vulnerability"@en ;
     rdfs:comment "Characteristics or circumstances that make a child more susceptible to grooming."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:subClassOf uco-core:UcoObject, gufo:IntrinsicMoment .
+
+# =============================================================================
+# gUFO TEMPORAL PROPERTIES
+# =============================================================================
+
+icac-grooming:hasGroomingPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has grooming phase begin point"@en ;
+    rdfs:comment "Temporal begin point for grooming phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-grooming:hasGroomingPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has grooming phase end point"@en ;
+    rdfs:comment "Temporal end point for grooming phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-grooming:hasRoleBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role begin point"@en ;
+    rdfs:comment "Temporal begin point for grooming role."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-grooming:hasRoleEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role end point"@en ;
+    rdfs:comment "Temporal end point for grooming role."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-grooming:groomingPhaseDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "grooming phase duration"@en ;
+    rdfs:comment "Duration of grooming phase."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:duration .
 
 # =============================================================================
 # GROOMING BEHAVIOR PROPERTIES
