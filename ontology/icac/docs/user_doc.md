@@ -1,11 +1,14 @@
 # ICAC Ontology Family - User Documentation
+One or more of these ontologies can be used to develop unique software applications for users that are then foundationally interoperable with other applications built on this family of ontologies.
+
+This family of ontologies seeks to implement semantically clear information models that reflect the information, information relationships, workflows, and events that a Crimes Against Children Investigator uses or may use in the future. Each ontology represents a unique application domain within investigators'and prosecutors' discourse. This family of ontologies seeks to be universal and it is heavily informed by public documentation in the form of press releses from law enforcement agencies and prosecutor's offices. Finally, this family of ontologies seeks to use modern language as much as possible to reflect the unifying efforts of the CAC community, but there may be language in these ontologies that are more reflective of a certain country when that language is still professionally used.
 
 ## Quick Start
 
 ### Prerequisites
 - Basic understanding of RDF and ontologies
 - Familiarity with Turtle syntax
-- Understanding of UCO (Unified Cyber Ontology)
+- Understanding of UCO (Unified Cyber Ontology and CASE Ontology)
 - **NEW**: Understanding of gUFO (Unified Foundational Ontology) concepts
 - Python 3.9+ for validation tools
 
@@ -54,7 +57,7 @@ curl -X POST http://localhost:3030/icac/data \
 ## Core Concepts
 
 ### 1. Hotline Reports
-Hotline reports are the foundation of the ontology. They represent reports of potential child exploitation material.
+We use hotline reports as a foundation of the ontology. They represent the initial reports of potential child exploitation material.
 
 ```turtle
 @base <https://example.org/hotline/> .

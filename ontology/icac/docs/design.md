@@ -3,7 +3,9 @@
 ## Architecture Overview
 
 ### 1. Core Components
-The ICAC ontology family consists of 23 interconnected modules organized into six domain areas, now enhanced with comprehensive gUFO (Unified Foundational Ontology) integration for improved semantic precision, temporal modeling, and validation capabilities.
+The ICAC ontology family consists of 23 interconnected modules organized into six domain areas, now enhanced with comprehensive gUFO (Unified Foundational Ontology) integration for improved semantic precision, temporal modeling, and validation capabilities.This family of ontologies extends the Unified Cyber Ontology and the CASE Ontology to make it possible to completely model Crimes Against Children investigations, operations, legal process, reporting, offender tradecraft, and the digital and multimedia forensics activities and findings that are often critical for investigators and prosecutors.
+
+This family of ontologies seeks to implement semantically clear information models that reflect the information, information relationships, workflows, and events that a Crimes Against Children Investigator uses or may use in the future. Each ontology represents a unique application domain within investigators'and prosecutors' discourse. This family of ontologies seeks to be universal and it is heavily informed by public documentation in the form of press releses from law enforcement agencies and prosecutor's offices. Finally, this family of ontologies seeks to use modern language as much as possible to reflect the unifying efforts of the CAC community, but there may be language in these ontologies that are more reflective of a certain country when that language is still professionally used.
 
 #### 1.1 Core Framework (3 modules + gUFO Integration)
 - `icac-core.ttl`: Base ontology for ICAC investigations

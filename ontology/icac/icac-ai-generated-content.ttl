@@ -11,8 +11,6 @@
 @prefix uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool#> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-ai: <https://ontology.unifiedcyberontology.org/icac/ai-generated#> .
-
-# gUFO Integration
 @prefix gufo: <http://purl.org/nemo/gufo#> .
 @prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
