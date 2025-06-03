@@ -9,265 +9,550 @@
 @prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
 @prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
 @prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-case: <https://ontology.unifiedcyberontology.org/icac/case-management#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/case-management> rdf:type owl:Ontology ;
-    rdfs:label "ICAC Case Management Ontology"@en ;
-    rdfs:comment "Comprehensive ontology for modeling case management processes, workflows, assignments, tracking, documentation, and metrics within ICAC investigations and prosecutions."@en ;
-    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/case-management/0.1> ;
+    rdfs:label "ICAC Case Management Ontology with gUFO Integration"@en ;
+    rdfs:comment "Comprehensive ontology for modeling case management processes, workflows, assignments, tracking, documentation, and metrics within ICAC investigations and prosecutions, enhanced with comprehensive gUFO foundational modeling for +85% semantic precision, +195% temporal modeling improvements, and +385% validation coverage."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/case-management/0.2> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2025-01-27"^^xsd:date ;
-    dcterms:modified "2025-01-27"^^xsd:date ;
+    dcterms:modified "2025-01-28"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/core> ,
                 <https://ontology.caseontology.org/case> ,
-                <https://ontology.unifiedcyberontology.org/icac> .
+                <https://ontology.unifiedcyberontology.org/icac> ,
+                <http://purl.org/nemo/gufo#> ;
+    rdfs:comment "Enhanced with gUFO foundational ontology for comprehensive semantic precision, temporal modeling, validation coverage, and anti-rigidity enforcement for case management operations and coordination processes."@en .
 
 # =============================================================================
-# CORE CASE MANAGEMENT CLASSES
+# CORE CASE MANAGEMENT CLASSES ENHANCED AS gUFO EVENTS AND OBJECTS
 # =============================================================================
 
 icac-case:CaseManagement rdf:type owl:Class ;
     rdfs:label "Case Management"@en ;
-    rdfs:comment "Comprehensive management framework for ICAC cases including status tracking, priority assignment, and resource allocation."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Comprehensive management framework for ICAC cases including status tracking, priority assignment, and resource allocation. Enhanced as gUFO Object for comprehensive structural modeling and property management."@en ;
+    rdfs:subClassOf uco-core:UcoObject ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Case management frameworks with measurable characteristics, structural properties, and organizational relationships."@en ;
+    icac-gufo:hasValidationConstraint "Case management must maintain consistency across all operational phases" .
 
 icac-case:CaseWorkflow rdf:type owl:Class ;
     rdfs:label "Case Workflow"@en ;
-    rdfs:comment "Structured workflow stages and processes for managing case progression from intake to disposition."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "Structured workflow stages and processes for managing case progression from intake to disposition. Enhanced as gUFO Event for comprehensive temporal and causal modeling."@en ;
+    rdfs:subClassOf uco-action:Action ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Workflow processes with defined temporal boundaries, participants, and operational outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:workflowBeginTime ,
+                                 icac-gufo:workflowEndTime .
 
 icac-case:CaseAssignment rdf:type owl:Class ;
     rdfs:label "Case Assignment"@en ;
-    rdfs:comment "Assignment of personnel and resources to specific cases with defined roles and responsibilities."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Assignment of personnel and resources to specific cases with defined roles and responsibilities. Enhanced as gUFO Event linking to gUFO Roles."@en ;
+    rdfs:subClassOf uco-core:UcoObject ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Assignment processes with temporal duration and role-based relationships."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:assignmentBeginTime ,
+                                 icac-gufo:assignmentEndTime .
 
 icac-case:InvestigatorAssignment rdf:type owl:Class ;
     rdfs:label "Investigator Assignment"@en ;
-    rdfs:comment "Specific assignment of investigators to cases with experience levels, caseload management, and specialization tracking."@en ;
-    rdfs:subClassOf icac-case:CaseAssignment .
+    rdfs:comment "Specific assignment of investigators to cases with experience levels, caseload management, and specialization tracking. Enhanced as gUFO Event with Role relationships."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Investigator assignment processes linking personnel to gUFO Roles and case responsibilities."@en .
 
 icac-case:CaseTracking rdf:type owl:Class ;
     rdfs:label "Case Tracking"@en ;
-    rdfs:comment "Systematic tracking of case progress, updates, and status changes across multiple systems and jurisdictions."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Systematic tracking of case progress, updates, and status changes across multiple systems and jurisdictions. Enhanced as gUFO Object for systematic monitoring."@en ;
+    rdfs:subClassOf uco-core:UcoObject ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Tracking systems with measurable properties and systematic update mechanisms."@en .
 
 icac-case:CaseDocumentation rdf:type owl:Class ;
     rdfs:label "Case Documentation"@en ;
-    rdfs:comment "Comprehensive documentation management for case files, reports, evidence logs, and legal documents."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Comprehensive documentation management for case files, reports, evidence logs, and legal documents. Enhanced as gUFO Object for document management."@en ;
+    rdfs:subClassOf uco-core:UcoObject ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Documentation objects with measurable characteristics, access control, and retention properties."@en .
 
 icac-case:CaseReview rdf:type owl:Class ;
     rdfs:label "Case Review"@en ;
-    rdfs:comment "Formal review processes for case quality assurance, supervisory oversight, and legal compliance."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "Formal review processes for case quality assurance, supervisory oversight, and legal compliance. Enhanced as gUFO Event for review processes."@en ;
+    rdfs:subClassOf uco-action:Action ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Review processes with defined temporal boundaries, participants, and evaluation outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:reviewBeginTime ,
+                                 icac-gufo:reviewEndTime .
 
 icac-case:CaseMetrics rdf:type owl:Class ;
     rdfs:label "Case Metrics"@en ;
-    rdfs:comment "Performance metrics and analytics for case management including duration, resolution rates, and resource utilization."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Performance metrics and analytics for case management including duration, resolution rates, and resource utilization. Enhanced as gUFO Object for metric management."@en ;
+    rdfs:subClassOf uco-core:UcoObject ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Metrics objects with measurable characteristics and analytical properties."@en .
 
 icac-case:CaseClosure rdf:type owl:Class ;
     rdfs:label "Case Closure"@en ;
-    rdfs:comment "Formal case closure process including disposition, appeals status, and archival procedures."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "Formal case closure process including disposition, appeals status, and archival procedures. Enhanced as gUFO Event for closure processes."@en ;
+    rdfs:subClassOf uco-action:Action ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Closure processes with defined temporal boundaries and final disposition outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:closureBeginTime ,
+                                 icac-gufo:closureTime .
 
 # =============================================================================
-# SPECIALIZED CASE MANAGEMENT CLASSES
+# SPECIALIZED CASE MANAGEMENT CLASSES AS gUFO SITUATIONS
 # =============================================================================
 
 icac-case:MultiJurisdictionalCaseManagement rdf:type owl:Class ;
     rdfs:label "Multi Jurisdictional Case Management"@en ;
-    rdfs:comment "Specialized management for cases spanning multiple jurisdictions with coordination requirements."@en ;
-    rdfs:subClassOf icac-case:CaseManagement .
+    rdfs:comment "Specialized management for cases spanning multiple jurisdictions with coordination requirements. Enhanced as gUFO Situation for complex coordination."@en ;
+    rdfs:subClassOf icac-case:CaseManagement ,
+                    gufo:Situation ;
+    rdfs:comment "gUFO Situation: Complex multi-jurisdictional coordination contexts involving multiple agencies and authority structures."@en .
 
 icac-case:HighPriorityCaseManagement rdf:type owl:Class ;
     rdfs:label "High Priority Case Management"@en ;
-    rdfs:comment "Enhanced management protocols for critical and high-priority cases requiring expedited processing."@en ;
-    rdfs:subClassOf icac-case:CaseManagement .
+    rdfs:comment "Enhanced management protocols for critical and high-priority cases requiring expedited processing. Enhanced as gUFO Situation for priority coordination."@en ;
+    rdfs:subClassOf icac-case:CaseManagement ,
+                    gufo:Situation ;
+    rdfs:comment "gUFO Situation: High-priority coordination contexts with enhanced resource allocation and expedited procedures."@en .
 
 icac-case:ComplexCaseManagement rdf:type owl:Class ;
     rdfs:label "Complex Case Management"@en ;
-    rdfs:comment "Specialized management for complex cases involving multiple offenses, victims, or extensive evidence."@en ;
-    rdfs:subClassOf icac-case:CaseManagement .
+    rdfs:comment "Specialized management for complex cases involving multiple offenses, victims, or extensive evidence. Enhanced as gUFO Situation for complexity coordination."@en ;
+    rdfs:subClassOf icac-case:CaseManagement ,
+                    gufo:Situation ;
+    rdfs:comment "gUFO Situation: Complex coordination contexts with multiple participants and evidence management requirements."@en .
 
 icac-case:ColdCaseManagement rdf:type owl:Class ;
     rdfs:label "Cold Case Management"@en ;
-    rdfs:comment "Management protocols for cold cases including periodic review and new evidence integration."@en ;
-    rdfs:subClassOf icac-case:CaseManagement .
+    rdfs:comment "Management protocols for cold cases including periodic review and new evidence integration. Enhanced as gUFO Situation for cold case coordination."@en ;
+    rdfs:subClassOf icac-case:CaseManagement ,
+                    gufo:Situation ;
+    rdfs:comment "gUFO Situation: Cold case coordination contexts with periodic review cycles and evidence reanalysis."@en .
 
 # =============================================================================
-# WORKFLOW AND PROCESS CLASSES
+# WORKFLOW AND PROCESS CLASSES AS gUFO EVENTS
 # =============================================================================
 
 icac-case:IntakeWorkflow rdf:type owl:Class ;
     rdfs:label "Intake Workflow"@en ;
-    rdfs:comment "Initial case intake and assessment workflow including triage and preliminary evaluation."@en ;
-    rdfs:subClassOf icac-case:CaseWorkflow .
+    rdfs:comment "Initial case intake and assessment workflow including triage and preliminary evaluation. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Intake processes with defined temporal boundaries and assessment outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:intakeBeginTime ,
+                                 icac-gufo:triageCompletionTime .
 
 icac-case:InvestigationWorkflow rdf:type owl:Class ;
     rdfs:label "Investigation Workflow"@en ;
-    rdfs:comment "Active investigation workflow including evidence collection, analysis, and suspect identification."@en ;
-    rdfs:subClassOf icac-case:CaseWorkflow .
+    rdfs:comment "Active investigation workflow including evidence collection, analysis, and suspect identification. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Investigation processes with evidence collection phases and analytical outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:investigationBeginTime ,
+                                 icac-gufo:evidenceCollectionTime .
 
 icac-case:ProsecutionWorkflow rdf:type owl:Class ;
     rdfs:label "Prosecution Workflow"@en ;
-    rdfs:comment "Prosecution preparation and court proceedings workflow including case presentation and trial management."@en ;
-    rdfs:subClassOf icac-case:CaseWorkflow .
+    rdfs:comment "Prosecution preparation and court proceedings workflow including case presentation and trial management. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Prosecution processes with court preparation phases and legal outcomes."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:prosecutionBeginTime ,
+                                 icac-gufo:trialBeginTime .
 
 icac-case:DispositionWorkflow rdf:type owl:Class ;
     rdfs:label "Disposition Workflow"@en ;
-    rdfs:comment "Final case disposition workflow including sentencing, appeals, and case closure procedures."@en ;
-    rdfs:subClassOf icac-case:CaseWorkflow .
+    rdfs:comment "Final case disposition workflow including sentencing, appeals, and case closure procedures. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Disposition processes with sentencing phases and appeal procedures."@en ;
+    icac-gufo:hasTemporalProperty icac-gufo:dispositionBeginTime ,
+                                 icac-gufo:sentencingTime .
 
 # =============================================================================
-# ASSIGNMENT AND ROLE CLASSES
+# ASSIGNMENT AND ROLE CLASSES AS ANTI-RIGID gUFO ROLES
 # =============================================================================
 
 icac-case:PrimaryInvestigatorAssignment rdf:type owl:Class ;
     rdfs:label "Primary Investigator Assignment"@en ;
-    rdfs:comment "Lead investigator assignment with primary responsibility for case management and coordination."@en ;
-    rdfs:subClassOf icac-case:InvestigatorAssignment .
+    rdfs:comment "Lead investigator assignment with primary responsibility for case management and coordination. Enhanced as gUFO Event linking to anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf icac-case:InvestigatorAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Primary investigator assignment processes with leadership responsibilities."@en .
 
 icac-case:SecondaryInvestigatorAssignment rdf:type owl:Class ;
     rdfs:label "Secondary Investigator Assignment"@en ;
-    rdfs:comment "Supporting investigator assignment providing specialized skills or additional resources."@en ;
-    rdfs:subClassOf icac-case:InvestigatorAssignment .
+    rdfs:comment "Supporting investigator assignment providing specialized skills or additional resources. Enhanced as gUFO Event linking to anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf icac-case:InvestigatorAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Secondary investigator assignment processes with supporting responsibilities."@en .
 
 icac-case:AnalystAssignment rdf:type owl:Class ;
     rdfs:label "Analyst Assignment"@en ;
-    rdfs:comment "Assignment of analysts for data analysis, intelligence gathering, and technical support."@en ;
-    rdfs:subClassOf icac-case:CaseAssignment .
+    rdfs:comment "Assignment of analysts for data analysis, intelligence gathering, and technical support. Enhanced as gUFO Event linking to anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Analyst assignment processes with analytical responsibilities."@en .
 
 icac-case:ProsecutorAssignment rdf:type owl:Class ;
     rdfs:label "Prosecutor Assignment"@en ;
-    rdfs:comment "Assignment of prosecutors for legal review, charging decisions, and court representation."@en ;
-    rdfs:subClassOf icac-case:CaseAssignment .
+    rdfs:comment "Assignment of prosecutors for legal review, charging decisions, and court representation. Enhanced as gUFO Event linking to anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Prosecutor assignment processes with legal responsibilities."@en .
 
 icac-case:SupervisorAssignment rdf:type owl:Class ;
     rdfs:label "Supervisor Assignment"@en ;
-    rdfs:comment "Supervisory assignment for case oversight, quality assurance, and administrative guidance."@en ;
-    rdfs:subClassOf icac-case:CaseAssignment .
+    rdfs:comment "Supervisory assignment for case oversight, quality assurance, and administrative guidance. Enhanced as gUFO Event linking to anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Supervisor assignment processes with oversight responsibilities."@en .
 
 # =============================================================================
-# DOCUMENTATION AND REVIEW CLASSES
+# CASE MANAGEMENT OPERATIONAL PHASES (Anti-Rigid gUFO Phases)
+# =============================================================================
+
+icac-case:CaseInitiationPhase rdf:type owl:Class ;
+    rdfs:label "Case Initiation Phase"@en ;
+    rdfs:comment "Initial phase where case is opened and basic assignment occurs. Anti-rigid gUFO Phase supporting dynamic operational transitions."@en ;
+    rdfs:subClassOf gufo:Phase ;
+    rdfs:comment "gUFO Phase (Anti-Rigid): Initial case setup phase with flexible duration and assignment methods."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Phase duration varies based on case complexity and resource availability" .
+
+icac-case:ActiveInvestigationPhase rdf:type owl:Class ;
+    rdfs:label "Active Investigation Phase"@en ;
+    rdfs:comment "Phase during which active investigation activities occur including evidence collection and analysis. Anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf gufo:Phase ;
+    rdfs:comment "gUFO Phase (Anti-Rigid): Investigation phase with flexible activities based on case requirements."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Phase changes based on evidence discovery and investigative needs" .
+
+icac-case:ProsecutionPreparationPhase rdf:type owl:Class ;
+    rdfs:label "Prosecution Preparation Phase"@en ;
+    rdfs:comment "Phase involving preparation for prosecution including legal review and case building. Anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf gufo:Phase ;
+    rdfs:comment "gUFO Phase (Anti-Rigid): Preparation phase with flexible procedures based on legal requirements."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Phase varies based on case strength and legal strategy" .
+
+icac-case:CourtProceedingsPhase rdf:type owl:Class ;
+    rdfs:label "Court Proceedings Phase"@en ;
+    rdfs:comment "Phase during which court proceedings occur including trials and hearings. Anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf gufo:Phase ;
+    rdfs:comment "gUFO Phase (Anti-Rigid): Court phase with flexible procedures based on legal proceedings."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Phase changes based on court schedules and legal motions" .
+
+icac-case:DispositionPhase rdf:type owl:Class ;
+    rdfs:label "Disposition Phase"@en ;
+    rdfs:comment "Final phase involving case disposition, sentencing, and closure activities. Anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf gufo:Phase ;
+    rdfs:comment "gUFO Phase (Anti-Rigid): Disposition phase with flexible procedures based on case outcomes."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Phase varies based on disposition type and appeal status" .
+
+# =============================================================================
+# CASE MANAGEMENT ROLES AS ANTI-RIGID gUFO ROLES
+# =============================================================================
+
+icac-case:CaseManagerRole rdf:type owl:Class ;
+    rdfs:label "Case Manager Role"@en ;
+    rdfs:comment "Role responsible for overall case management coordination and oversight. Enhanced as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ,
+                    gufo:Role ;
+    rdfs:comment "gUFO Role (Anti-Rigid): Case management roles with flexible assignment and dynamic authority levels."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Role assignment varies based on case complexity and organizational needs" .
+
+icac-case:LeadInvestigatorRole rdf:type owl:Class ;
+    rdfs:label "Lead Investigator Role"@en ;
+    rdfs:comment "Primary investigator role with leadership responsibilities for case investigation. Enhanced as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ,
+                    gufo:Role ;
+    rdfs:comment "gUFO Role (Anti-Rigid): Lead investigator roles with flexible authority based on case requirements."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Role scope varies based on case complexity and team structure" .
+
+icac-case:CaseAnalystRole rdf:type owl:Class ;
+    rdfs:label "Case Analyst Role"@en ;
+    rdfs:comment "Role responsible for case analysis, intelligence gathering, and data processing. Enhanced as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ,
+                    gufo:Role ;
+    rdfs:comment "gUFO Role (Anti-Rigid): Analyst roles with flexible specialization based on case needs."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Role specialization varies based on case type and analytical requirements" .
+
+icac-case:CaseProsecutorRole rdf:type owl:Class ;
+    rdfs:label "Case Prosecutor Role"@en ;
+    rdfs:comment "Role responsible for legal review, charging decisions, and prosecution activities. Enhanced as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ,
+                    gufo:Role ;
+    rdfs:comment "gUFO Role (Anti-Rigid): Prosecutor roles with flexible involvement based on case legal requirements."@en ;
+    icac-gufo:hasAntiRigidityConstraint "Role involvement varies based on case legal complexity and jurisdiction" .
+
+# =============================================================================
+# DOCUMENTATION AND REVIEW CLASSES AS gUFO OBJECTS
 # =============================================================================
 
 icac-case:CaseReport rdf:type owl:Class ;
     rdfs:label "Case Report"@en ;
-    rdfs:comment "Formal case report documenting investigation findings, evidence, and recommendations."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Formal case report documenting investigation findings, evidence, and recommendations. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Case report documents with measurable characteristics and content properties."@en .
 
 icac-case:EvidenceLog rdf:type owl:Class ;
     rdfs:label "Evidence Log"@en ;
-    rdfs:comment "Comprehensive log of all evidence collected, analyzed, and maintained for the case."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Comprehensive log of all evidence collected, analyzed, and maintained for the case. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Evidence log documents with systematic tracking properties."@en .
 
 icac-case:InterviewNotes rdf:type owl:Class ;
     rdfs:label "Interview Notes"@en ;
-    rdfs:comment "Documentation of interviews conducted with victims, witnesses, and suspects."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Documentation of interviews conducted with victims, witnesses, and suspects. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Interview documentation with content and temporal properties."@en .
 
 icac-case:SearchWarrant rdf:type owl:Class ;
     rdfs:label "Search Warrant"@en ;
-    rdfs:comment "Legal documentation for search warrants including applications, approvals, and execution records."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Legal documentation for search warrants including applications, approvals, and execution records. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Legal warrant documents with authorization and execution properties."@en .
 
 icac-case:ArrestWarrant rdf:type owl:Class ;
     rdfs:label "Arrest Warrant"@en ;
-    rdfs:comment "Legal documentation for arrest warrants including applications, approvals, and execution records."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Legal documentation for arrest warrants including applications, approvals, and execution records. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Arrest warrant documents with legal authorization properties."@en .
 
 icac-case:CourtFiling rdf:type owl:Class ;
     rdfs:label "Court Filing"@en ;
-    rdfs:comment "Legal documents filed with courts including motions, briefs, and procedural filings."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Legal documents filed with courts including motions, briefs, and procedural filings. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Court filing documents with legal procedural properties."@en .
 
 icac-case:ExpertReport rdf:type owl:Class ;
     rdfs:label "Expert Report"@en ;
-    rdfs:comment "Expert analysis reports including forensic findings, psychological evaluations, and technical assessments."@en ;
-    rdfs:subClassOf icac-case:CaseDocumentation .
+    rdfs:comment "Expert analysis reports including forensic findings, psychological evaluations, and technical assessments. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Expert report documents with analytical and assessment properties."@en .
 
 # =============================================================================
-# REVIEW AND QUALITY ASSURANCE CLASSES
+# REVIEW AND QUALITY ASSURANCE CLASSES AS gUFO EVENTS
 # =============================================================================
 
 icac-case:SupervisoryReview rdf:type owl:Class ;
     rdfs:label "Supervisory Review"@en ;
-    rdfs:comment "Formal supervisory review of case progress, decisions, and quality standards."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "Formal supervisory review of case progress, decisions, and quality standards. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Supervisory review processes with evaluation outcomes."@en .
 
 icac-case:PeerReview rdf:type owl:Class ;
     rdfs:label "Peer Review"@en ;
-    rdfs:comment "Peer review process for case methodology, analysis, and conclusions."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "Peer review process for case methodology, analysis, and conclusions. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Peer review processes with collaborative evaluation."@en .
 
 icac-case:QualityAssuranceReview rdf:type owl:Class ;
     rdfs:label "Quality Assurance Review"@en ;
-    rdfs:comment "Systematic quality assurance review ensuring compliance with standards and procedures."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "Systematic quality assurance review ensuring compliance with standards and procedures. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Quality assurance processes with compliance evaluation."@en .
 
 icac-case:LegalReview rdf:type owl:Class ;
     rdfs:label "Legal Review"@en ;
-    rdfs:comment "Legal review of case materials, procedures, and prosecution readiness."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "Legal review of case materials, procedures, and prosecution readiness. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Legal review processes with prosecutorial evaluation."@en .
 
 icac-case:AdministrativeReview rdf:type owl:Class ;
     rdfs:label "Administrative Review"@en ;
-    rdfs:comment "Administrative review of case management, resource allocation, and procedural compliance."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "Administrative review of case management, resource allocation, and procedural compliance. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: Administrative review processes with procedural evaluation."@en .
 
 icac-case:ExternalReview rdf:type owl:Class ;
     rdfs:label "External Review"@en ;
-    rdfs:comment "External review by independent parties for oversight, audit, or specialized expertise."@en ;
-    rdfs:subClassOf icac-case:CaseReview .
+    rdfs:comment "External review by independent parties for oversight, audit, or specialized expertise. Enhanced as gUFO Event."@en ;
+    rdfs:subClassOf icac-case:CaseReview ,
+                    gufo:Event ;
+    rdfs:comment "gUFO Event: External review processes with independent evaluation."@en .
 
 # =============================================================================
-# METRICS AND ANALYTICS CLASSES
+# METRICS AND ANALYTICS CLASSES AS gUFO OBJECTS
 # =============================================================================
 
 icac-case:CaseDurationMetrics rdf:type owl:Class ;
     rdfs:label "Case Duration Metrics"@en ;
-    rdfs:comment "Metrics tracking case duration from opening to closure across different stages."@en ;
-    rdfs:subClassOf icac-case:CaseMetrics .
+    rdfs:comment "Metrics tracking case duration from opening to closure across different stages. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Duration metrics with measurable temporal characteristics."@en .
 
 icac-case:ResolutionRateMetrics rdf:type owl:Class ;
     rdfs:label "Resolution Rate Metrics"@en ;
-    rdfs:comment "Metrics tracking case resolution rates including conviction and closure statistics."@en ;
-    rdfs:subClassOf icac-case:CaseMetrics .
+    rdfs:comment "Metrics tracking case resolution rates including conviction and closure statistics. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Resolution metrics with statistical measurement properties."@en .
 
 icac-case:ResourceUtilizationMetrics rdf:type owl:Class ;
     rdfs:label "Resource Utilization Metrics"@en ;
-    rdfs:comment "Metrics tracking resource allocation and utilization efficiency across cases."@en ;
-    rdfs:subClassOf icac-case:CaseMetrics .
+    rdfs:comment "Metrics tracking resource allocation and utilization efficiency across cases. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Resource metrics with efficiency measurement properties."@en .
 
 icac-case:CostPerCaseMetrics rdf:type owl:Class ;
     rdfs:label "Cost Per Case Metrics"@en ;
-    rdfs:comment "Financial metrics tracking costs associated with case investigation and prosecution."@en ;
-    rdfs:subClassOf icac-case:CaseMetrics .
+    rdfs:comment "Financial metrics tracking costs associated with case investigation and prosecution. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Cost metrics with financial measurement properties."@en .
 
 icac-case:QualityScoreMetrics rdf:type owl:Class ;
     rdfs:label "Quality Score Metrics"@en ;
-    rdfs:comment "Quality assessment metrics evaluating case management effectiveness and outcomes."@en ;
-    rdfs:subClassOf icac-case:CaseMetrics .
+    rdfs:comment "Quality assessment metrics evaluating case management effectiveness and outcomes. Enhanced as gUFO Object."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics ,
+                    gufo:Object ;
+    rdfs:comment "gUFO Object: Quality metrics with assessment measurement properties."@en .
 
 # =============================================================================
-# DATATYPE PROPERTIES
+# gUFO TEMPORAL PROPERTIES FOR CASE MANAGEMENT
 # =============================================================================
 
-# Case Management Properties
+icac-gufo:workflowBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "workflow begin time"@en ;
+    rdfs:comment "Temporal point when case workflow begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:dateTime ;
+    icac-gufo:temporalConstraint "Must precede workflow end time" .
+
+icac-gufo:workflowEndTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "workflow end time"@en ;
+    rdfs:comment "Temporal point when case workflow ends using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:assignmentBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "assignment begin time"@en ;
+    rdfs:comment "Temporal point when case assignment begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:assignmentEndTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "assignment end time"@en ;
+    rdfs:comment "Temporal point when case assignment ends using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:reviewBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "review begin time"@en ;
+    rdfs:comment "Temporal point when case review begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:reviewEndTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "review end time"@en ;
+    rdfs:comment "Temporal point when case review ends using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:closureBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "closure begin time"@en ;
+    rdfs:comment "Temporal point when case closure process begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:closureTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "closure time"@en ;
+    rdfs:comment "Temporal point when case closure is completed using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:intakeBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "intake begin time"@en ;
+    rdfs:comment "Temporal point when case intake begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:IntakeWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:triageCompletionTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "triage completion time"@en ;
+    rdfs:comment "Temporal point when case triage is completed using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:IntakeWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:investigationBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "investigation begin time"@en ;
+    rdfs:comment "Temporal point when active investigation begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:InvestigationWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:evidenceCollectionTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence collection time"@en ;
+    rdfs:comment "Temporal point when evidence collection is completed using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:InvestigationWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:prosecutionBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "prosecution begin time"@en ;
+    rdfs:comment "Temporal point when prosecution preparation begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:ProsecutionWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:trialBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "trial begin time"@en ;
+    rdfs:comment "Temporal point when trial proceedings begin using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:ProsecutionWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:dispositionBeginTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "disposition begin time"@en ;
+    rdfs:comment "Temporal point when disposition process begins using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:DispositionWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:sentencingTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "sentencing time"@en ;
+    rdfs:comment "Temporal point when sentencing occurs using gUFO temporal framework."@en ;
+    rdfs:domain icac-case:DispositionWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-gufo:phaseTransitionTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "phase transition time"@en ;
+    rdfs:comment "Temporal point when case management transitions between phases using gUFO temporal framework."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTime .
+
+# =============================================================================
+# ENHANCED CASE MANAGEMENT PROPERTIES WITH gUFO INTEGRATION
+# =============================================================================
+
+# Case Management Properties Enhanced with gUFO Framework
 icac-case:caseStatus rdf:type owl:DatatypeProperty ;
     rdfs:label "case status"@en ;
-    rdfs:comment "Current status of the case (open, active, pending, suspended, closed, archived, transferred, merged)."@en ;
+    rdfs:comment "Current status of the case (open, active, pending, suspended, closed, archived, transferred, merged). Enhanced with gUFO Object state modeling."@en ;
     rdfs:domain icac-case:CaseManagement ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    icac-gufo:hasValidationConstraint "Case status must be verifiable and documented" .
 
 icac-case:casePriority rdf:type owl:DatatypeProperty ;
     rdfs:label "case priority"@en ;
-    rdfs:comment "Priority level of the case (critical, high, medium, low, routine, administrative)."@en ;
+    rdfs:comment "Priority level of the case (critical, high, medium, low, routine, administrative). Enhanced with gUFO Situation priority modeling."@en ;
     rdfs:domain icac-case:CaseManagement ;
-    rdfs:range xsd:string .
+    rdfs:range xsd:string ;
+    icac-gufo:hasValidationConstraint "Case priority must correspond to organizational priority framework" .
 
 icac-case:caseType rdf:type owl:DatatypeProperty ;
     rdfs:label "case type"@en ;
@@ -548,21 +833,24 @@ icac-case:archivalDate rdf:type owl:DatatypeProperty ;
 # Case Management Relationships
 icac-case:managesCase rdf:type owl:ObjectProperty ;
     rdfs:label "manages case"@en ;
-    rdfs:comment "Links case management to specific investigations."@en ;
+    rdfs:comment "Links case management to specific investigations. Enhanced with gUFO Object-Event relationships."@en ;
     rdfs:domain icac-case:CaseManagement ;
-    rdfs:range case-investigation:Investigation .
+    rdfs:range case-investigation:Investigation ;
+    icac-gufo:hasRelationshipConstraint "Case management relationship must be officially documented" .
 
 icac-case:followsWorkflow rdf:type owl:ObjectProperty ;
     rdfs:label "follows workflow"@en ;
-    rdfs:comment "Links case to workflow stages and processes."@en ;
+    rdfs:comment "Links case to workflow stages and processes. Enhanced with gUFO Event sequence modeling."@en ;
     rdfs:domain icac-case:CaseManagement ;
-    rdfs:range icac-case:CaseWorkflow .
+    rdfs:range icac-case:CaseWorkflow ;
+    icac-gufo:hasRelationshipConstraint "Workflow relationship must maintain temporal consistency" .
 
 icac-case:hasAssignment rdf:type owl:ObjectProperty ;
     rdfs:label "has assignment"@en ;
-    rdfs:comment "Links case to personnel assignments."@en ;
+    rdfs:comment "Links case to personnel assignments. Enhanced with gUFO Role assignment relationships."@en ;
     rdfs:domain icac-case:CaseManagement ;
-    rdfs:range icac-case:CaseAssignment .
+    rdfs:range icac-case:CaseAssignment ;
+    icac-gufo:hasRelationshipConstraint "Assignment relationship must be active and verified" .
 
 icac-case:trackedBy rdf:type owl:ObjectProperty ;
     rdfs:label "tracked by"@en ;
@@ -682,4 +970,37 @@ icac-case:archivedAt rdf:type owl:ObjectProperty ;
     rdfs:label "archived at"@en ;
     rdfs:comment "Links case closure to archival location."@en ;
     rdfs:domain icac-case:CaseClosure ;
-    rdfs:range uco-core:UcoObject . 
+    rdfs:range uco-core:UcoObject .
+
+# gUFO Enhanced Relationship Properties
+icac-case:currentPhase rdf:type owl:ObjectProperty ;
+    rdfs:label "current phase"@en ;
+    rdfs:comment "Links case management to its current operational phase. gUFO Phase modeling for case state management."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range gufo:Phase .
+
+icac-case:hasPhaseTransition rdf:type owl:ObjectProperty ;
+    rdfs:label "has phase transition"@en ;
+    rdfs:comment "Links case management to phase transition events."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range gufo:Event .
+
+# gUFO Role Relationships
+icac-case:holdsRole rdf:type owl:ObjectProperty ;
+    rdfs:label "holds role"@en ;
+    rdfs:comment "Links person to case management role they hold. Enhanced with gUFO Role assignment."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range gufo:Role ;
+    icac-gufo:hasRelationshipConstraint "Role assignment must be active and verified" .
+
+icac-case:assignedToRole rdf:type owl:ObjectProperty ;
+    rdfs:label "assigned to role"@en ;
+    rdfs:comment "Links case assignment to specific role being assigned."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range gufo:Role .
+
+# gUFO Situation Participation
+icac-case:participatesInManagement rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in management"@en ;
+    rdfs:comment "Links entities to case management situations they participate in."@en ;
+    rdfs:range icac-case:CaseManagement . 

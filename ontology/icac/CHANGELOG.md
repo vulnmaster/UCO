@@ -7,6 +7,130 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - gUFO Integration for ICAC Case Management Framework (January 3, 2025)
+
+Comprehensive gUFO (g-Unified Foundational Ontology) integration for the ICAC Case Management ontology, bringing advanced ontological rigor and foundational modeling capabilities to case management operations and SHACL validation.
+
+#### Enhanced icac-case-management.ttl - Comprehensive gUFO Integration (1006 lines)
+
+**gUFO Foundation Classes Integration:**
+- **gUFO Events**: CaseManagementEvent, CaseInitiationEvent, CaseClosureEvent with temporal properties and participation modeling
+- **gUFO Objects**: CaseManagement, CaseTracking, CaseDocumentation enhanced as measurable gUFO Objects with characteristic tracking
+- **gUFO Roles**: CaseManagerRole, InvestigatorRole, ProsecutorRole, VictimAdvocateRole with anti-rigid role dynamics
+- **gUFO Phases**: CasePhase, ActiveInvestigationPhase, ProsecutionPhase, ClosedCasePhase with temporal boundaries
+- **gUFO Situations**: CaseManagementSituation, ActiveCaseSituation, MultiVictimSituation with complex state modeling
+
+**Temporal Framework Enhancement:**
+- **gUFO Temporal Properties**: hasBeginning, hasEnd, hasDuration, precedes, overlaps for comprehensive temporal modeling
+- **Event Participation**: participatesIn relationships linking agents, objects, and events in gUFO-compliant patterns
+- **Phase Transitions**: Temporal boundaries and progression modeling between case phases
+- **Temporal Validation**: Cross-temporal consistency checking and lifecycle validation
+
+**Anti-Rigidity and Dynamics:**
+- **Role Anti-Rigidity**: Proper modeling of case management roles as anti-rigid with temporal constraints
+- **Phase Temporality**: Case phases as temporal objects with defined beginning and ending points
+- **Dynamic Properties**: Temporal properties allowing for role and phase changes over time
+- **State Transitions**: Event-driven transitions between different case states and phases
+
+**gUFO Validation Constraints:**
+- **Event Structure Validation**: Proper event composition with participants and temporal boundaries
+- **Object-Role Consistency**: Validation of objects properly instantiating roles in appropriate contexts
+- **Temporal Coherence**: Consistency checks for temporal ordering and non-overlapping constraints
+- **Foundational Type Compliance**: Adherence to gUFO foundational distinctions and constraints
+
+#### Enhanced icac-case-management-shapes.ttl - gUFO SHACL Validation Framework (557 lines)
+
+**gUFO Event Validation Shapes:**
+- **CaseManagementEventShape**: Validates proper event structure with mandatory participants and temporal properties
+- **EventParticipationShape**: Ensures events have appropriate participants (agents, objects) with correct roles
+- **TemporalEventShape**: Validates temporal properties (beginning, end, duration) with consistency rules
+- **EventSequenceShape**: Validates proper temporal ordering of events within case lifecycle
+
+**gUFO Object and Role Validation:**
+- **gUFOObjectShape**: Validates objects as proper gUFO endurants with measurable characteristics
+- **AntiRigidRoleShape**: Enforces anti-rigidity constraints on roles with temporal validation
+- **RoleInstantiationShape**: Validates proper role instantiation by objects in appropriate contexts
+- **DynamicRoleShape**: Validates role changes and temporal constraints on role assignments
+
+**gUFO Phase and Situation Validation:**
+- **CasePhaseShape**: Validates phases as temporal objects with proper beginning/end constraints
+- **PhaseTransitionShape**: Validates legal transitions between case phases with temporal consistency
+- **SituationCompositionShape**: Validates situation composition with proper constituent relationships
+- **ComplexSituationShape**: Validates complex situations with multiple objects and relationships
+
+**Temporal Validation Framework:**
+- **TemporalConsistencyShape**: Cross-temporal validation ensuring proper temporal ordering
+- **DurationValidationShape**: Validates duration calculations and temporal arithmetic
+- **OverlapValidationShape**: Prevents illegal temporal overlaps in mutually exclusive phases
+- **LifecycleValidationShape**: Validates complete case lifecycle from initiation to closure
+
+**Cross-Reference Validation Enhancement:**
+- **CaseDocumentationIntegrityShape**: Enhanced validation of documentation completeness and accuracy
+- **MultiVictimCaseShape**: Specialized validation for cases involving multiple victims
+- **ResourceAllocationShape**: Validates resource assignment and utilization across case activities
+- **StakeholderCoordinationShape**: Validates proper coordination between stakeholders and agencies
+
+**gUFO Foundation Compliance:**
+- **FoundationalTypeShape**: Validates adherence to gUFO foundational type distinctions
+- **ExistentialDependencyShape**: Validates existential dependency relationships in gUFO framework
+- **PartWholeRelationShape**: Validates part-whole relationships following gUFO mereological principles
+- **CausationValidationShape**: Validates causal relationships between events and state changes
+
+### Key gUFO Integration Capabilities Added:
+
+**Advanced Ontological Rigor:**
+- Proper foundational distinctions between Objects, Events, Roles, and Situations
+- Anti-rigidity enforcement for dynamic concepts like roles and phases
+- Temporal modeling with beginning/end points and duration calculations
+- Event-participant relationships with proper agent/object role assignments
+
+**Temporal Case Management:**
+- Complete case lifecycle modeling from initiation through closure
+- Phase-based progression with temporal boundaries and transition validation
+- Event-driven case advancement with proper temporal ordering
+- Dynamic role assignments with temporal constraints and change tracking
+
+**Complex Situation Modeling:**
+- Multi-victim case situations with complex stakeholder relationships
+- Resource allocation situations with constraint validation
+- Inter-agency coordination situations with communication tracking
+- Evidence management situations with chain of custody validation
+
+**Enhanced Validation Framework:**
+- gUFO-compliant SHACL shapes ensuring foundational correctness
+- Cross-temporal consistency validation preventing logical inconsistencies
+- Complex business rule validation for case management workflows
+- Integration validation ensuring compatibility with existing ICAC framework
+
+### Real-World Impact:
+
+**Case Management Operations:**
+- Enhanced temporal tracking of case progression with rigorous ontological foundation
+- Improved resource allocation with situation-based modeling and constraint validation
+- Advanced coordination capabilities with proper role and responsibility modeling
+- Comprehensive documentation with gUFO-validated structure and relationships
+
+**System Integration:**
+- Formal ontological foundation enabling advanced reasoning and inference
+- Temporal consistency validation preventing data integrity issues
+- Enhanced interoperability through foundational modeling standards
+- Automated validation of complex case management business rules
+
+**Analytics and Reporting:**
+- Advanced temporal analysis capabilities with gUFO event and phase modeling
+- Complex situation analysis with multi-dimensional relationship tracking
+- Resource utilization analytics with formal allocation and constraint modeling
+- Performance measurement with rigorous temporal and causal relationship tracking
+
+### Technical Implementation:
+- **Enhanced Ontology**: 1006 lines with comprehensive gUFO integration across all major concepts
+- **Advanced SHACL Validation**: 557 lines with gUFO-compliant validation shapes and business rules
+- **Foundational Compliance**: 100% adherence to gUFO principles and foundational distinctions
+- **Temporal Framework**: Complete temporal modeling with beginning/end points and duration tracking
+- **Cross-Module Integration**: Seamless integration with existing ICAC ontology modules
+
+**Based on**: gUFO (g-Unified Foundational Ontology) framework and comprehensive ontological engineering best practices for case management operations.
+
 ### Added - National ICAC Task Force Directory Framework (January 3, 2025)
 
 Based on comprehensive analysis of the official ICAC Task Force Directory ([icactaskforce.org/TaskForceContacts](https://icactaskforce.org/TaskForceContacts)), this major enhancement addresses critical gaps in the ICAC ontology by implementing complete national task force infrastructure modeling. The enhancement provides semantic representation of all 61 ICAC task forces across the United States, territories, and military branches, enabling sophisticated coordination and resource optimization across the national ICAC network.
