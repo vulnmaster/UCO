@@ -13,1135 +13,432 @@
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-sentencing: <https://ontology.unifiedcyberontology.org/icac/sentencing#> .
 @prefix icac-educational: <https://ontology.unifiedcyberontology.org/icac/educational#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/sentencing/0.1> rdf:type owl:Ontology ;
     rdfs:label "ICAC Legal Outcomes & Sentencing Ontology"@en ;
-    rdfs:comment "An ontology for representing legal outcomes, federal sentences, judicial proceedings, and punishment guidelines in Internet Crimes Against Children cases, extending UCO and CASE."@en ;
+    rdfs:comment "An ontology for representing legal outcomes, federal sentences, judicial proceedings, and punishment guidelines in Internet Crimes Against Children cases with gUFO foundational ontology enhancements for improved semantic precision, temporal modeling, and validation capabilities, extending UCO and CASE."@en ;
     owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/sentencing/0.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2024-12-19"^^xsd:date ;
-    dcterms:modified "2024-12-19"^^xsd:date ;
+    dcterms:modified "2025-01-03"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
                 <https://ontology.unifiedcyberontology.org/uco/identity> ,
                 <https://ontology.unifiedcyberontology.org/uco/observable> ,
                 <https://ontology.unifiedcyberontology.org/uco/action> ,
                 <https://ontology.unifiedcyberontology.org/uco/location> ,
                 <https://ontology.unifiedcyberontology.org/uco/role> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# LEGAL PROCEEDING CLASSES (extending UCO Action)
+# LEGAL PROCEEDING CLASSES (extending UCO Action with gUFO Event)
 # =============================================================================
 
+# Legal Proceedings as gUFO Events
 icac-sentencing:LegalProceeding rdf:type owl:Class ;
     rdfs:label "Legal Proceeding"@en ;
-    rdfs:comment "Formal judicial process for prosecuting ICAC-related crimes."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "Formal judicial process for prosecuting ICAC-related crimes. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
 
 icac-sentencing:ArraignmentProceeding rdf:type owl:Class ;
     rdfs:label "Arraignment Proceeding"@en ;
-    rdfs:comment "Initial court appearance where charges are formally read and plea is entered."@en ;
+    rdfs:comment "Initial court appearance where charges are formally read and plea is entered. Modeled as gUFO Event."@en ;
     rdfs:subClassOf icac-sentencing:LegalProceeding .
 
 icac-sentencing:PleaBargaining rdf:type owl:Class ;
     rdfs:label "Plea Bargaining"@en ;
-    rdfs:comment "Negotiation process between prosecution and defense for plea agreement."@en ;
+    rdfs:comment "Negotiation process between prosecution and defense for plea agreement. Modeled as gUFO Event."@en ;
     rdfs:subClassOf icac-sentencing:LegalProceeding .
 
 icac-sentencing:TrialProceeding rdf:type owl:Class ;
     rdfs:label "Trial Proceeding"@en ;
-    rdfs:comment "Formal trial process with jury or judge determining guilt or innocence."@en ;
+    rdfs:comment "Formal trial process with jury or judge determining guilt or innocence. Modeled as gUFO Event."@en ;
     rdfs:subClassOf icac-sentencing:LegalProceeding .
 
 icac-sentencing:SentencingHearing rdf:type owl:Class ;
     rdfs:label "Sentencing Hearing"@en ;
-    rdfs:comment "Court proceeding where sentence is determined and imposed."@en ;
+    rdfs:comment "Court proceeding where sentence is determined and imposed. Modeled as gUFO Event."@en ;
     rdfs:subClassOf icac-sentencing:LegalProceeding .
 
 icac-sentencing:AppealProcess rdf:type owl:Class ;
     rdfs:label "Appeal Process"@en ;
-    rdfs:comment "Legal process to challenge conviction or sentence in higher court."@en ;
+    rdfs:comment "Legal process to challenge conviction or sentence in higher court. Modeled as gUFO Event."@en ;
     rdfs:subClassOf icac-sentencing:LegalProceeding .
 
+# Legal Proceeding Phases (gUFO Phase anti-rigid modeling)
+icac-sentencing:PreTrialPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Pre-Trial Phase"@en ;
+    rdfs:comment "Phase before trial including arraignment and plea bargaining. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-sentencing:LegalProceeding .
+
+icac-sentencing:TrialPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Trial Phase"@en ;
+    rdfs:comment "Active trial phase with proceedings and evidence presentation. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-sentencing:LegalProceeding .
+
+icac-sentencing:SentencingPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Sentencing Phase"@en ;
+    rdfs:comment "Phase focused on sentencing determination and imposition. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-sentencing:LegalProceeding .
+
+icac-sentencing:PostConvictionPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Post-Conviction Phase"@en ;
+    rdfs:comment "Phase after conviction including appeals and compliance. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-sentencing:LegalProceeding .
+
+# Legal System Situations (gUFO Situation)
+icac-sentencing:LegalCaseSituation rdf:type owl:Class ;
+    rdfs:label "Legal Case Situation"@en ;
+    rdfs:comment "Complex situation encompassing the entire legal case from charges to resolution. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+icac-sentencing:JudicialSystemSituation rdf:type owl:Class ;
+    rdfs:label "Judicial System Situation"@en ;
+    rdfs:comment "Broader situation involving judicial system processing of ICAC cases. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
+
 # =============================================================================
-# CRIMINAL CHARGE CLASSES (extending UCO Observable)
+# CRIMINAL CHARGE CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
+# Criminal Charges as gUFO Objects
 icac-sentencing:CriminalCharge rdf:type owl:Class ;
     rdfs:label "Criminal Charge"@en ;
-    rdfs:comment "Formal accusation of criminal activity in ICAC cases."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "Formal accusation of criminal activity in ICAC cases. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-sentencing:FederalCharge rdf:type owl:Class ;
     rdfs:label "Federal Charge"@en ;
-    rdfs:comment "Criminal charge under federal law and jurisdiction."@en ;
+    rdfs:comment "Criminal charge under federal law and jurisdiction. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalCharge .
 
 icac-sentencing:StateCharge rdf:type owl:Class ;
     rdfs:label "State Charge"@en ;
-    rdfs:comment "Criminal charge under state law and jurisdiction."@en ;
+    rdfs:comment "Criminal charge under state law and jurisdiction. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalCharge .
 
+# CSAM Charges as gUFO Objects
 icac-sentencing:CSAM_Possession rdf:type owl:Class ;
     rdfs:label "CSAM Possession"@en ;
-    rdfs:comment "Charge for possession of child sexual abuse material."@en ;
+    rdfs:comment "Charge for possession of child sexual abuse material. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:CSAM_Distribution rdf:type owl:Class ;
     rdfs:label "CSAM Distribution"@en ;
-    rdfs:comment "Charge for distribution of child sexual abuse material."@en ;
+    rdfs:comment "Charge for distribution of child sexual abuse material. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:CSAM_Production rdf:type owl:Class ;
     rdfs:label "CSAM Production"@en ;
-    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences."@en ;
+    rdfs:comment "Charge for production of child sexual abuse material, typically carrying severe mandatory minimum sentences. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 # =============================================================================
-# MARYLAND CASE ENHANCEMENT - CAUSING PRODUCTION CHARGES
+# MARYLAND CASE ENHANCEMENT - CAUSING PRODUCTION CHARGES (gUFO Object)
 # =============================================================================
 
 icac-sentencing:CSAM_CausingProduction rdf:type owl:Class ;
     rdfs:label "CSAM Causing Production"@en ;
-    rdfs:comment "Charge for causing or facilitating the production of child sexual abuse material, distinct from direct production."@en ;
+    rdfs:comment "Charge for causing or facilitating the production of child sexual abuse material, distinct from direct production. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CSAM_Production .
 
 icac-sentencing:CSAM_AccessingAndViewing rdf:type owl:Class ;
     rdfs:label "CSAM Accessing and Viewing"@en ;
-    rdfs:comment "Charge for intentionally accessing and viewing child sexual abuse material."@en ;
+    rdfs:comment "Charge for intentionally accessing and viewing child sexual abuse material. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CSAM_Possession .
 
 icac-sentencing:CSAM_ReceivingOnCellularDevice rdf:type owl:Class ;
     rdfs:label "CSAM Receiving on Cellular Device"@en ;
-    rdfs:comment "Charge for receiving child sexual abuse material on cellular phone or mobile device."@en ;
+    rdfs:comment "Charge for receiving child sexual abuse material on cellular phone or mobile device. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CSAM_Possession .
 
-# SA JACET-inspired Mandatory Sentencing Classes
+# SA JACET-inspired Mandatory Sentencing Classes (gUFO Object)
 icac-sentencing:MandatoryMinimumSentencing rdf:type owl:Class ;
     rdfs:label "Mandatory Minimum Sentencing"@en ;
-    rdfs:comment "Sentencing under mandatory minimum provisions for Commonwealth child sexual abuse offenses."@en ;
+    rdfs:comment "Sentencing under mandatory minimum provisions for Commonwealth child sexual abuse offenses. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:PrisonSentence .
 
 icac-sentencing:CommonwealthChildAbuseOffense rdf:type owl:Class ;
     rdfs:label "Commonwealth Child Abuse Offense"@en ;
-    rdfs:comment "Child abuse offense under Commonwealth law subject to mandatory minimum sentencing provisions."@en ;
+    rdfs:comment "Child abuse offense under Commonwealth law subject to mandatory minimum sentencing provisions. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:LiveStreamingOffense rdf:type owl:Class ;
     rdfs:label "Live Streaming Offense"@en ;
-    rdfs:comment "Offense involving live streaming of child abuse, often carrying severe sentences."@en ;
+    rdfs:comment "Offense involving live streaming of child abuse, often carrying severe sentences. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .
 
 icac-sentencing:SolicitingExplicitMaterial rdf:type owl:Class ;
     rdfs:label "Soliciting Explicit Material"@en ;
-    rdfs:comment "Offense of soliciting sexually explicit material from children (e.g., from 10 foreign children via social media)."@en ;
+    rdfs:comment "Offense of soliciting sexually explicit material from children (e.g., from 10 foreign children via social media). Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CommonwealthChildAbuseOffense .
 
-# WA Sextortion Case Specific Charges
+# WA Sextortion Case Specific Charges (gUFO Object)
 icac-sentencing:CarriageServiceCSAMTransmission rdf:type owl:Class ;
     rdfs:label "Carriage Service CSAM Transmission"@en ;
-    rdfs:comment "Use of carriage service to cause child abuse material to be transmitted to self, contrary to section 474.22(1)(a)(ii) Criminal Code (Cth). Maximum penalty 15 years imprisonment."@en ;
+    rdfs:comment "Use of carriage service to cause child abuse material to be transmitted to self, contrary to section 474.22(1)(a)(ii) Criminal Code (Cth). Maximum penalty 15 years imprisonment. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:CarriageServiceIndecentCommunication rdf:type owl:Class ;
     rdfs:label "Carriage Service Indecent Communication"@en ;
-    rdfs:comment "Use of carriage service to transmit indecent communication to person under 16 years, contrary to section 474.27A Criminal Code (Cth). Maximum penalty 10 years imprisonment."@en ;
+    rdfs:comment "Use of carriage service to transmit indecent communication to person under 16 years, contrary to section 474.27A Criminal Code (Cth). Maximum penalty 10 years imprisonment. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:SextortionCharge rdf:type owl:Class ;
     rdfs:label "Sextortion Charge"@en ;
-    rdfs:comment "Criminal charge specifically related to sextortion involving sexual extortion of children through online blackmail."@en ;
+    rdfs:comment "Criminal charge specifically related to sextortion involving sexual extortion of children through online blackmail. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:OnlineEnticement rdf:type owl:Class ;
     rdfs:label "Online Enticement"@en ;
-    rdfs:comment "Charge for online enticement of minors for illegal sexual activity."@en ;
+    rdfs:comment "Charge for online enticement of minors for illegal sexual activity. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 icac-sentencing:SexTrafficking rdf:type owl:Class ;
     rdfs:label "Sex Trafficking"@en ;
-    rdfs:comment "Charge for sex trafficking of minors."@en ;
+    rdfs:comment "Charge for sex trafficking of minors. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:FederalCharge .
 
 # =============================================================================
-# SENTENCE CLASSES (extending UCO Observable)
+# SENTENCE CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
+# Criminal Sentences as gUFO Objects
 icac-sentencing:CriminalSentence rdf:type owl:Class ;
     rdfs:label "Criminal Sentence"@en ;
-    rdfs:comment "Punishment imposed by court for criminal conviction."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "Punishment imposed by court for criminal conviction. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-sentencing:PrisonSentence rdf:type owl:Class ;
     rdfs:label "Prison Sentence"@en ;
-    rdfs:comment "Sentence involving incarceration in federal or state prison."@en ;
+    rdfs:comment "Sentence involving incarceration in federal or state prison. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalSentence .
 
 icac-sentencing:ProbationSentence rdf:type owl:Class ;
     rdfs:label "Probation Sentence"@en ;
-    rdfs:comment "Supervised release with conditions instead of or after incarceration."@en ;
+    rdfs:comment "Supervised release with conditions instead of or after incarceration. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalSentence .
 
 icac-sentencing:SupervisedRelease rdf:type owl:Class ;
     rdfs:label "Supervised Release"@en ;
-    rdfs:comment "Period of supervision following completion of prison sentence."@en ;
+    rdfs:comment "Period of supervision following completion of prison sentence. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalSentence .
 
 icac-sentencing:MonetaryPenalty rdf:type owl:Class ;
     rdfs:label "Monetary Penalty"@en ;
-    rdfs:comment "Financial penalty including fines, restitution, or forfeiture."@en ;
+    rdfs:comment "Financial penalty including fines, restitution, or forfeiture. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalSentence .
 
 icac-sentencing:CommunityService rdf:type owl:Class ;
     rdfs:label "Community Service"@en ;
-    rdfs:comment "Sentence requiring unpaid work for community benefit."@en ;
+    rdfs:comment "Sentence requiring unpaid work for community benefit. Modeled as gUFO Object."@en ;
     rdfs:subClassOf icac-sentencing:CriminalSentence .
 
 # =============================================================================
-# JUDICIAL ROLE CLASSES (extending UCO Role)
+# LEGAL ROLES (gUFO Role anti-rigid modeling)
 # =============================================================================
 
-icac-sentencing:Judge rdf:type owl:Class ;
-    rdfs:label "Judge"@en ;
-    rdfs:comment "Judicial officer presiding over legal proceedings."@en ;
+# Legal System Roles as gUFO Roles (anti-rigid)
+icac-sentencing:JudgeRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Judge Role"@en ;
+    rdfs:comment "Role of judge presiding over ICAC legal proceedings. Modeled as anti-rigid gUFO Role."@en ;
     rdfs:subClassOf uco-role:Role .
 
-icac-sentencing:Prosecutor rdf:type owl:Class ;
-    rdfs:label "Prosecutor"@en ;
-    rdfs:comment "Government attorney prosecuting criminal charges."@en ;
+icac-sentencing:ProsecutorRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Prosecutor Role"@en ;
+    rdfs:comment "Role of prosecutor handling ICAC criminal charges. Modeled as anti-rigid gUFO Role."@en ;
     rdfs:subClassOf uco-role:Role .
 
-icac-sentencing:DefenseAttorney rdf:type owl:Class ;
-    rdfs:label "Defense Attorney"@en ;
-    rdfs:comment "Attorney representing the defendant in criminal proceedings."@en ;
+icac-sentencing:DefenseAttorneyRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Defense Attorney Role"@en ;
+    rdfs:comment "Role of defense attorney representing ICAC defendants. Modeled as anti-rigid gUFO Role."@en ;
     rdfs:subClassOf uco-role:Role .
 
-icac-sentencing:ProbationOfficer rdf:type owl:Class ;
-    rdfs:label "Probation Officer"@en ;
-    rdfs:comment "Officer responsible for supervising defendants on probation or supervised release."@en ;
+icac-sentencing:DefendantRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Defendant Role"@en ;
+    rdfs:comment "Role of individual charged with ICAC crimes. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ;
+    owl:equivalentClass icac-gufo:OffenderRole .
+
+icac-sentencing:VictimRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Victim Role"@en ;
+    rdfs:comment "Role of victim in ICAC legal proceedings. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role ;
+    owl:equivalentClass icac-gufo:VictimRole .
+
+icac-sentencing:JuryRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Jury Role"@en ;
+    rdfs:comment "Role of jury members in ICAC trial proceedings. Modeled as anti-rigid gUFO Role."@en ;
     rdfs:subClassOf uco-role:Role .
 
-icac-sentencing:VictimAdvocate rdf:type owl:Class ;
-    rdfs:label "Victim Advocate"@en ;
-    rdfs:comment "Professional providing support and advocacy for crime victims."@en ;
+icac-sentencing:ProbationOfficerRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Probation Officer Role"@en ;
+    rdfs:comment "Role of probation officer supervising ICAC offenders. Modeled as anti-rigid gUFO Role."@en ;
     rdfs:subClassOf uco-role:Role .
 
 # =============================================================================
-# LEGAL DOCUMENT CLASSES (extending UCO Observable)
+# gUFO TEMPORAL PROPERTIES
 # =============================================================================
 
-icac-sentencing:Indictment rdf:type owl:Class ;
-    rdfs:label "Indictment"@en ;
-    rdfs:comment "Formal charge or accusation of a serious crime issued by grand jury."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-icac-sentencing:PleaAgreement rdf:type owl:Class ;
-    rdfs:label "Plea Agreement"@en ;
-    rdfs:comment "Negotiated agreement between prosecution and defense for guilty plea."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-icac-sentencing:SentencingMemorandum rdf:type owl:Class ;
-    rdfs:label "Sentencing Memorandum"@en ;
-    rdfs:comment "Document submitted to court arguing for specific sentence."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-icac-sentencing:VictimImpactStatement rdf:type owl:Class ;
-    rdfs:label "Victim Impact Statement"@en ;
-    rdfs:comment "Statement describing impact of crime on victims."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-icac-sentencing:PreSentenceReport rdf:type owl:Class ;
-    rdfs:label "Pre-Sentence Report"@en ;
-    rdfs:comment "Report prepared to assist judge in determining appropriate sentence."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
-
-# =============================================================================
-# SENTENCING PROPERTIES
-# =============================================================================
-
-# Charge Properties
-icac-sentencing:chargeStatute rdf:type owl:DatatypeProperty ;
-    rdfs:label "charge statute"@en ;
-    rdfs:comment "Legal statute or code section for the criminal charge."@en ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:string .
-
-icac-sentencing:chargeLevel rdf:type owl:DatatypeProperty ;
-    rdfs:label "charge level"@en ;
-    rdfs:comment "Severity level of charge (misdemeanor, felony, federal_felony)."@en ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:string .
-
-icac-sentencing:maximumPenalty rdf:type owl:DatatypeProperty ;
-    rdfs:label "maximum penalty"@en ;
-    rdfs:comment "Maximum sentence allowed under statute (in years)."@en ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:minimumPenalty rdf:type owl:DatatypeProperty ;
-    rdfs:label "minimum penalty"@en ;
-    rdfs:comment "Minimum mandatory sentence required under statute (in years)."@en ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:chargeCount rdf:type owl:DatatypeProperty ;
-    rdfs:label "charge count"@en ;
-    rdfs:comment "Number of individual counts for this charge type."@en ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:integer .
-
-# Plea and Trial Properties
-icac-sentencing:pleaEntered rdf:type owl:DatatypeProperty ;
-    rdfs:label "plea entered"@en ;
-    rdfs:comment "Plea entered by defendant (guilty, not_guilty, no_contest)."@en ;
-    rdfs:domain icac-sentencing:ArraignmentProceeding ;
-    rdfs:range xsd:string .
-
-icac-sentencing:pleaBargainOffered rdf:type owl:DatatypeProperty ;
-    rdfs:label "plea bargain offered"@en ;
-    rdfs:comment "Whether plea bargain was offered by prosecution."@en ;
-    rdfs:domain icac-sentencing:PleaBargaining ;
-    rdfs:range xsd:boolean .
-
-icac-sentencing:pleaBargainAccepted rdf:type owl:DatatypeProperty ;
-    rdfs:label "plea bargain accepted"@en ;
-    rdfs:comment "Whether plea bargain was accepted by defendant."@en ;
-    rdfs:domain icac-sentencing:PleaBargaining ;
-    rdfs:range xsd:boolean .
-
-icac-sentencing:trialType rdf:type owl:DatatypeProperty ;
-    rdfs:label "trial type"@en ;
-    rdfs:comment "Type of trial (jury, bench, military)."@en ;
-    rdfs:domain icac-sentencing:TrialProceeding ;
-    rdfs:range xsd:string .
-
-icac-sentencing:verdict rdf:type owl:DatatypeProperty ;
-    rdfs:label "verdict"@en ;
-    rdfs:comment "Trial verdict (guilty, not_guilty, hung_jury, mistrial)."@en ;
-    rdfs:domain icac-sentencing:TrialProceeding ;
-    rdfs:range xsd:string .
-
-# Sentence Properties
-icac-sentencing:sentenceLength rdf:type owl:DatatypeProperty ;
-    rdfs:label "sentence length"@en ;
-    rdfs:comment "Length of prison sentence in months."@en ;
-    rdfs:domain icac-sentencing:PrisonSentence ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:timeServed rdf:type owl:DatatypeProperty ;
-    rdfs:label "time served"@en ;
-    rdfs:comment "Time already served prior to sentencing (in months)."@en ;
-    rdfs:domain icac-sentencing:PrisonSentence ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:probationLength rdf:type owl:DatatypeProperty ;
-    rdfs:label "probation length"@en ;
-    rdfs:comment "Length of probation period in months."@en ;
-    rdfs:domain icac-sentencing:ProbationSentence ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:supervisedReleaseLength rdf:type owl:DatatypeProperty ;
-    rdfs:label "supervised release length"@en ;
-    rdfs:comment "Length of supervised release period in months."@en ;
-    rdfs:domain icac-sentencing:SupervisedRelease ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:fineAmount rdf:type owl:DatatypeProperty ;
-    rdfs:label "fine amount"@en ;
-    rdfs:comment "Amount of monetary fine in USD."@en ;
-    rdfs:domain icac-sentencing:MonetaryPenalty ;
-    rdfs:range xsd:decimal .
-
-icac-sentencing:restitutionAmount rdf:type owl:DatatypeProperty ;
-    rdfs:label "restitution amount"@en ;
-    rdfs:comment "Amount of restitution ordered to victims in USD."@en ;
-    rdfs:domain icac-sentencing:MonetaryPenalty ;
-    rdfs:range xsd:decimal .
-
-# Sentencing Guidelines Properties
-icac-sentencing:guidelinesRange rdf:type owl:DatatypeProperty ;
-    rdfs:label "guidelines range"@en ;
-    rdfs:comment "Federal sentencing guidelines recommended range (in months)."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:offenseLevel rdf:type owl:DatatypeProperty ;
-    rdfs:label "offense level"@en ;
-    rdfs:comment "Federal sentencing guidelines offense level (1-43)."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:criminalHistory rdf:type owl:DatatypeProperty ;
-    rdfs:label "criminal history"@en ;
-    rdfs:comment "Criminal history category for sentencing guidelines (I-VI)."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:enhancementApplied rdf:type owl:DatatypeProperty ;
-    rdfs:label "enhancement applied"@en ;
-    rdfs:comment "Sentencing enhancements applied (technology, leadership, etc.)."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:downwardDeparture rdf:type owl:DatatypeProperty ;
-    rdfs:label "downward departure"@en ;
-    rdfs:comment "Whether sentence departed downward from guidelines."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:boolean .
-
-icac-sentencing:upwardDeparture rdf:type owl:DatatypeProperty ;
-    rdfs:label "upward departure"@en ;
-    rdfs:comment "Whether sentence departed upward from guidelines."@en ;
-    rdfs:domain icac-sentencing:SentencingHearing ;
-    rdfs:range xsd:boolean .
-
-# Conditions and Restrictions Properties
-icac-sentencing:internetRestriction rdf:type owl:DatatypeProperty ;
-    rdfs:label "internet restriction"@en ;
-    rdfs:comment "Restrictions on internet use during supervision."@en ;
-    rdfs:domain icac-sentencing:SupervisedRelease ;
-    rdfs:range xsd:string .
-
-icac-sentencing:computerMonitoring rdf:type owl:DatatypeProperty ;
-    rdfs:label "computer monitoring"@en ;
-    rdfs:comment "Whether computer monitoring is required during supervision."@en ;
-    rdfs:domain icac-sentencing:SupervisedRelease ;
-    rdfs:range xsd:boolean .
-
-icac-sentencing:contactWithMinors rdf:type owl:DatatypeProperty ;
-    rdfs:label "contact with minors"@en ;
-    rdfs:comment "Restrictions on contact with minor children."@en ;
-    rdfs:domain icac-sentencing:SupervisedRelease ;
-    rdfs:range xsd:string .
-
-icac-sentencing:treatmentRequired rdf:type owl:DatatypeProperty ;
-    rdfs:label "treatment required"@en ;
-    rdfs:comment "Mental health or substance abuse treatment requirements."@en ;
-    rdfs:domain icac-sentencing:SupervisedRelease ;
-    rdfs:range xsd:string .
-
-icac-sentencing:communityServiceHours rdf:type owl:DatatypeProperty ;
-    rdfs:label "community service hours"@en ;
-    rdfs:comment "Number of community service hours required."@en ;
-    rdfs:domain icac-sentencing:CommunityService ;
-    rdfs:range xsd:integer .
-
-# Program and Registry Properties
-icac-sentencing:sexOffenderRegistry rdf:type owl:DatatypeProperty ;
-    rdfs:label "sex offender registry"@en ;
-    rdfs:comment "Requirement to register as sex offender."@en ;
-    rdfs:domain icac-sentencing:CriminalSentence ;
-    rdfs:range xsd:boolean .
-
-icac-sentencing:registryDuration rdf:type owl:DatatypeProperty ;
-    rdfs:label "registry duration"@en ;
-    rdfs:comment "Duration of sex offender registration requirement (in years)."@en ;
-    rdfs:domain icac-sentencing:CriminalSentence ;
-    rdfs:range xsd:integer .
-
-icac-sentencing:projectSafeChildhood rdf:type owl:DatatypeProperty ;
-    rdfs:label "project safe childhood"@en ;
-    rdfs:comment "Whether case is part of Project Safe Childhood initiative."@en ;
+# Legal Proceeding Temporal Properties
+icac-sentencing:hasProceedingBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has proceeding begin point"@en ;
+    rdfs:comment "Temporal begin point for legal proceeding."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
     rdfs:domain icac-sentencing:LegalProceeding ;
-    rdfs:range xsd:boolean .
+    rdfs:range xsd:dateTimeStamp .
 
-# Relationship Properties
-icac-sentencing:chargedWith rdf:type owl:ObjectProperty ;
-    rdfs:label "charged with"@en ;
-    rdfs:comment "Links defendant to criminal charges."@en ;
-    rdfs:domain uco-identity:Person ;
+icac-sentencing:hasProceedingEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has proceeding end point"@en ;
+    rdfs:comment "Temporal end point for legal proceeding."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Legal Phase Temporal Properties
+icac-sentencing:hasPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase begin point"@en ;
+    rdfs:comment "Temporal begin point for legal phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-sentencing:hasPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase end point"@en ;
+    rdfs:comment "Temporal end point for legal phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Sentence Temporal Properties
+icac-sentencing:hasSentenceBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has sentence begin point"@en ;
+    rdfs:comment "Temporal begin point for sentence implementation."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain icac-sentencing:CriminalSentence ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-sentencing:hasSentenceEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has sentence end point"@en ;
+    rdfs:comment "Temporal end point for sentence completion."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-sentencing:CriminalSentence ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Legal Role Temporal Properties
+icac-sentencing:hasRoleBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role begin point"@en ;
+    rdfs:comment "Temporal begin point for legal role."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-sentencing:hasRoleEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role end point"@en ;
+    rdfs:comment "Temporal end point for legal role."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Duration Properties
+icac-sentencing:proceedingDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "proceeding duration"@en ;
+    rdfs:comment "Duration of legal proceeding from start to completion."@en ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
+    rdfs:range xsd:duration .
+
+icac-sentencing:phaseDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "phase duration"@en ;
+    rdfs:comment "Duration of legal phase."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:duration .
+
+icac-sentencing:sentenceDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "sentence duration"@en ;
+    rdfs:comment "Duration of criminal sentence."@en ;
+    rdfs:domain icac-sentencing:CriminalSentence ;
+    rdfs:range xsd:duration .
+
+icac-sentencing:roleDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "role duration"@en ;
+    rdfs:comment "Duration of individual's legal role."@en ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:duration .
+
+# =============================================================================
+# LEGAL SYSTEM PROPERTIES
+# =============================================================================
+
+# Legal Proceeding Structure Properties
+icac-sentencing:hasLegalPhase rdf:type owl:ObjectProperty ;
+    rdfs:label "has legal phase"@en ;
+    rdfs:comment "Links legal proceeding to its phases."@en ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
+    rdfs:range gufo:Phase .
+
+icac-sentencing:transitionsToPhase rdf:type owl:ObjectProperty ;
+    rdfs:label "transitions to phase"@en ;
+    rdfs:comment "Links one legal phase to the next phase in sequence."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range gufo:Phase .
+
+icac-sentencing:currentPhase rdf:type owl:ObjectProperty ;
+    rdfs:label "current phase"@en ;
+    rdfs:comment "The current active phase of the legal proceeding."@en ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
+    rdfs:range gufo:Phase .
+
+# Charge and Sentence Properties
+icac-sentencing:hasCharge rdf:type owl:ObjectProperty ;
+    rdfs:label "has charge"@en ;
+    rdfs:comment "Links legal proceeding to criminal charges involved."@en ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
     rdfs:range icac-sentencing:CriminalCharge .
 
-icac-sentencing:sentencedTo rdf:type owl:ObjectProperty ;
-    rdfs:label "sentenced to"@en ;
-    rdfs:comment "Links defendant to imposed sentence."@en ;
-    rdfs:domain uco-identity:Person ;
+icac-sentencing:resultsSentence rdf:type owl:ObjectProperty ;
+    rdfs:label "results sentence"@en ;
+    rdfs:comment "Links legal proceeding to resulting criminal sentence."@en ;
+    rdfs:domain icac-sentencing:LegalProceeding ;
     rdfs:range icac-sentencing:CriminalSentence .
 
-icac-sentencing:presidedBy rdf:type owl:ObjectProperty ;
-    rdfs:label "presided by"@en ;
-    rdfs:comment "Links legal proceeding to presiding judge."@en ;
-    rdfs:domain icac-sentencing:LegalProceeding ;
-    rdfs:range icac-sentencing:Judge .
-
-icac-sentencing:prosecutedBy rdf:type owl:ObjectProperty ;
-    rdfs:label "prosecuted by"@en ;
-    rdfs:comment "Links criminal case to prosecuting attorney."@en ;
-    rdfs:domain icac-sentencing:LegalProceeding ;
-    rdfs:range icac-sentencing:Prosecutor .
-
-icac-sentencing:defendedBy rdf:type owl:ObjectProperty ;
-    rdfs:label "defended by"@en ;
-    rdfs:comment "Links defendant to defense attorney."@en ;
-    rdfs:domain uco-identity:Person ;
-    rdfs:range icac-sentencing:DefenseAttorney .
-
-# Appeal Properties
-icac-sentencing:appealFiled rdf:type owl:DatatypeProperty ;
-    rdfs:label "appeal filed"@en ;
-    rdfs:comment "Whether appeal was filed by defendant."@en ;
+icac-sentencing:appliesTo rdf:type owl:ObjectProperty ;
+    rdfs:label "applies to"@en ;
+    rdfs:comment "Links criminal sentence to the charge it addresses."@en ;
     rdfs:domain icac-sentencing:CriminalSentence ;
-    rdfs:range xsd:boolean .
+    rdfs:range icac-sentencing:CriminalCharge .
 
-icac-sentencing:appealOutcome rdf:type owl:DatatypeProperty ;
-    rdfs:label "appeal outcome"@en ;
-    rdfs:comment "Outcome of appeal (affirmed, reversed, remanded)."@en ;
-    rdfs:domain icac-sentencing:AppealProcess ;
-    rdfs:range xsd:string .
+# Role Participation Properties
+icac-sentencing:participatesInProceeding rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in proceeding"@en ;
+    rdfs:comment "Links role to legal proceeding participated in."@en ;
+    rdfs:domain gufo:Role ;
+    rdfs:range icac-sentencing:LegalProceeding .
 
-icac-sentencing:appealCourt rdf:type owl:DatatypeProperty ;
-    rdfs:label "appeal court"@en ;
-    rdfs:comment "Court where appeal was filed."@en ;
-    rdfs:domain icac-sentencing:AppealProcess ;
-    rdfs:range xsd:string .
+icac-sentencing:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:comment "Links individual to their role in legal proceeding."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range gufo:Role .
 
-# Victim Properties
-icac-sentencing:victimCount rdf:type owl:DatatypeProperty ;
-    rdfs:label "victim count"@en ;
-    rdfs:comment "Number of identified victims in the case."@en ;
-    rdfs:domain icac-sentencing:LegalProceeding ;
+# Situation Properties
+icac-sentencing:situationComplexity rdf:type owl:DatatypeProperty ;
+    rdfs:label "situation complexity"@en ;
+    rdfs:comment "Complexity level of legal situation (1-5 scale)."@en ;
+    rdfs:domain gufo:Situation ;
     rdfs:range xsd:integer .
 
-icac-sentencing:victimAgeRange rdf:type owl:DatatypeProperty ;
-    rdfs:label "victim age range"@en ;
-    rdfs:comment "Age range of victims (e.g., 8-12, under_5, teen)."@en ;
-    rdfs:domain icac-sentencing:LegalProceeding ;
-    rdfs:range xsd:string .
-
-# =============================================================================
-# STATE-SPECIFIC CHARGE CLASSIFICATIONS (Illinois Case Analysis)
-# =============================================================================
-
-icac-sentencing:StateChargeClassification rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "State Charge Classification"@en ;
-    rdfs:comment "State-specific classification system for criminal charges."@en .
-
-icac-sentencing:IllinoisChargeClassification rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateChargeClassification ;
-    rdfs:label "Illinois Charge Classification"@en ;
-    rdfs:comment "Illinois-specific charge classification system with felony classes X through 4."@en .
-
-icac-sentencing:ClassXFelony rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateCharge ;
-    rdfs:label "Class X Felony"@en ;
-    rdfs:comment "Most serious non-capital felony class in Illinois, punishable by 6-30 years imprisonment."@en .
-
-icac-sentencing:Class1Felony rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateCharge ;
-    rdfs:label "Class 1 Felony"@en ;
-    rdfs:comment "Second-tier felony class in Illinois, punishable by 4-15 years imprisonment."@en .
-
-icac-sentencing:Class2Felony rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateCharge ;
-    rdfs:label "Class 2 Felony"@en ;
-    rdfs:comment "Mid-level felony class in Illinois, punishable by 3-7 years imprisonment."@en .
-
-icac-sentencing:Class3Felony rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateCharge ;
-    rdfs:label "Class 3 Felony"@en ;
-    rdfs:comment "Lower-level felony class in Illinois, punishable by 2-5 years imprisonment."@en .
-
-icac-sentencing:Class4Felony rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:StateCharge ;
-    rdfs:label "Class 4 Felony"@en ;
-    rdfs:comment "Lowest felony class in Illinois, punishable by 1-3 years imprisonment."@en .
-
-# =============================================================================
-# ILLINOIS-SPECIFIC CHILD PORNOGRAPHY CHARGES
-# =============================================================================
-
-icac-sentencing:Illinois_DisseminationCSAM_Under13 rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:ClassXFelony ;
-    rdfs:label "Illinois Dissemination CSAM Under 13"@en ;
-    rdfs:comment "Illinois Class X felony for dissemination of child pornography depicting child under 13 years old, punishable by up to 30 years."@en .
-
-icac-sentencing:Illinois_PossessionCSAM_Under13 rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:Class1Felony ;
-    rdfs:label "Illinois Possession CSAM Under 13"@en ;
-    rdfs:comment "Illinois Class 1 felony for possession of child pornography depicting child under 13 years old, punishable by up to 15 years."@en .
-
-icac-sentencing:Illinois_FailureToRegister rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:Class3Felony ;
-    rdfs:label "Illinois Failure to Register"@en ;
-    rdfs:comment "Illinois Class 3 felony for failure to register under Sex Offender Act, punishable by up to 7 years."@en .
-
-# =============================================================================
-# MULTI-AGENCY PROSECUTION FRAMEWORK (Illinois Analysis)
-# =============================================================================
-
-icac-sentencing:MultiAgencyProsecution rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Multi-Agency Prosecution"@en ;
-    rdfs:comment "Prosecution conducted jointly by multiple prosecutorial agencies."@en .
-
-icac-sentencing:CoProsecution rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:MultiAgencyProsecution ;
-    rdfs:label "Co-Prosecution"@en ;
-    rdfs:comment "Joint prosecution where multiple agencies share responsibility and resources."@en .
-
-icac-sentencing:StateAttorneyGeneralProsecution rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:MultiAgencyProsecution ;
-    rdfs:label "State Attorney General Prosecution"@en ;
-    rdfs:comment "Prosecution led by state Attorney General office with specialized capabilities."@en .
-
-icac-sentencing:CountyStateProsecution rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:MultiAgencyProsecution ;
-    rdfs:label "County State Prosecution"@en ;
-    rdfs:comment "Prosecution led by county state's attorney office with local jurisdiction."@en .
-
-# =============================================================================
-# SPECIALIZED PROSECUTION UNITS (Illinois Framework)
-# =============================================================================
-
-icac-sentencing:HighTechCrimesBureau rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "High Tech Crimes Bureau"@en ;
-    rdfs:comment "Specialized prosecution unit within Attorney General office for technology-related crimes."@en .
-
-icac-sentencing:StateAttorneyGeneralOffice rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "State Attorney General Office"@en ;
-    rdfs:comment "State-level prosecution agency headed by elected Attorney General."@en .
-
-icac-sentencing:CountyStatesAttorneyOffice rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "County State's Attorney Office"@en ;
-    rdfs:comment "County-level prosecution agency responsible for local prosecution."@en .
-
-icac-sentencing:AssistantAttorneyGeneral rdf:type owl:Class ;
-    rdfs:subClassOf icac-sentencing:Prosecutor ;
-    rdfs:label "Assistant Attorney General"@en ;
-    rdfs:comment "Attorney working within state Attorney General office prosecuting cases."@en .
-
-# =============================================================================
-# DETENTION AND COURT SCHEDULING (Illinois Case Model)
-# =============================================================================
-
-icac-sentencing:PreTrialDetention rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Pre-Trial Detention"@en ;
-    rdfs:comment "Detention of defendant pending trial proceedings."@en .
-
-icac-sentencing:CourtScheduling rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Court Scheduling"@en ;
-    rdfs:comment "Scheduling of court proceedings and hearings."@en .
-
-icac-sentencing:CountyJail rdf:type owl:Class ;
-    rdfs:subClassOf uco-location:Location ;
-    rdfs:label "County Jail"@en ;
-    rdfs:comment "County-level detention facility for pre-trial and short-term inmates."@en .
-
-# =============================================================================
-# ENHANCED CHARGE PROPERTIES (Illinois Framework)
-# =============================================================================
-
-icac-sentencing:chargeClassification rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range icac-sentencing:StateChargeClassification ;
-    rdfs:label "charge classification"@en ;
-    rdfs:comment "State-specific classification of criminal charge."@en .
-
-icac-sentencing:maximumSentenceYears rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "maximum sentence years"@en ;
-    rdfs:comment "Maximum prison sentence in years for charge classification."@en .
-
-icac-sentencing:minimumSentenceYears rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "minimum sentence years"@en ;
-    rdfs:comment "Minimum prison sentence in years for charge classification."@en .
-
-icac-sentencing:chargeCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "charge count"@en ;
-    rdfs:comment "Number of counts for this type of charge."@en .
-
-icac-sentencing:victimAgeAtOffense rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "victim age at offense"@en ;
-    rdfs:comment "Age of victim at time of offense (relevant for charge severity)."@en .
-
-# Multi-Agency Prosecution Properties
-icac-sentencing:coProsecutedBy rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:CoProsecution ;
-    rdfs:range uco-identity:Organization ;
-    rdfs:label "co-prosecuted by"@en ;
-    rdfs:comment "Organization participating in co-prosecution."@en .
-
-icac-sentencing:leadProsecutor rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:MultiAgencyProsecution ;
-    rdfs:range uco-identity:Organization ;
-    rdfs:label "lead prosecutor"@en ;
-    rdfs:comment "Primary prosecutorial agency leading the case."@en .
-
-icac-sentencing:supportingProsecutor rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:MultiAgencyProsecution ;
-    rdfs:range uco-identity:Organization ;
-    rdfs:label "supporting prosecutor"@en ;
-    rdfs:comment "Secondary prosecutorial agency providing support."@en .
-
-icac-sentencing:prosecutionType rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range icac-sentencing:MultiAgencyProsecution ;
-    rdfs:label "prosecution type"@en ;
-    rdfs:comment "Type of prosecution effort handling the criminal charges."@en .
-
-icac-sentencing:handledByBureau rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:MultiAgencyProsecution ;
-    rdfs:range icac-sentencing:HighTechCrimesBureau ;
-    rdfs:label "handled by bureau"@en ;
-    rdfs:comment "Specialized bureau within prosecution office handling the case."@en .
-
-# Detention and Scheduling Properties
-icac-sentencing:detainedAt rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-sentencing:PreTrialDetention ;
-    rdfs:range uco-location:Location ;
-    rdfs:label "detained at"@en ;
-    rdfs:comment "Location where defendant is detained."@en .
-
-icac-sentencing:nextCourtDate rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CourtScheduling ;
-    rdfs:range xsd:dateTime ;
-    rdfs:label "next court date"@en ;
-    rdfs:comment "Date and time of next scheduled court proceeding."@en .
-
-icac-sentencing:detentionStatus rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:PreTrialDetention ;
-    rdfs:range xsd:string ;
-    rdfs:label "detention status"@en ;
-    rdfs:comment "Current detention status (detained, released, bond, etc.)."@en .
-
-# Evidence Discovery Properties
-icac-sentencing:evidenceFoundOnDevice rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:boolean ;
-    rdfs:label "evidence found on device"@en ;
-    rdfs:comment "Whether evidence was found on electronic device."@en .
-
-icac-sentencing:evidenceFoundOnSocialMedia rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-sentencing:CriminalCharge ;
-    rdfs:range xsd:boolean ;
-    rdfs:label "evidence found on social media"@en ;
-    rdfs:comment "Whether evidence was found on social media accounts."@en .
-
-# =============================================================================
-# SEX TRAFFICKING CHARGES AND SENTENCING (Brooklyn Case Enhancement)
-# =============================================================================
-
-icac-sentencing:SexTraffickingOfMinor rdf:type owl:Class ;
-    rdfs:label "Sex Trafficking of Minor"@en ;
-    rdfs:comment "Federal or state charge for sex trafficking of a person under 18 years of age."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
-
-icac-sentencing:SexTraffickingConspiracy rdf:type owl:Class ;
-    rdfs:label "Sex Trafficking Conspiracy"@en ;
-    rdfs:comment "Conspiracy charge for coordinated sex trafficking enterprise involving multiple defendants."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
-
-icac-sentencing:PromotingProstitution rdf:type owl:Class ;
-    rdfs:label "Promoting Prostitution"@en ;
-    rdfs:comment "State charge for promoting or facilitating prostitution, often used in trafficking cases."@en ;
-    rdfs:subClassOf icac-sentencing:StateCharge .
-
-icac-sentencing:PromotingProstitutionOfMinor rdf:type owl:Class ;
-    rdfs:label "Promoting Prostitution of Minor"@en ;
-    rdfs:comment "Enhanced charge for promoting prostitution involving victims under 18."@en ;
-    rdfs:subClassOf icac-sentencing:PromotingProstitution .
-
-icac-sentencing:InterstateTransportationForProstitution rdf:type owl:Class ;
-    rdfs:label "Interstate Transportation for Prostitution"@en ;
-    rdfs:comment "Federal charge for transporting individuals across state lines for prostitution (Mann Act)."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
-
-icac-sentencing:CoercingProstitution rdf:type owl:Class ;
-    rdfs:label "Coercing Prostitution"@en ;
-    rdfs:comment "Charge for using force, fraud, or coercion to compel prostitution."@en ;
-    rdfs:subClassOf icac-sentencing:StateCharge .
-
-icac-sentencing:MoneyLaunderingTraffickingProceeds rdf:type owl:Class ;
-    rdfs:label "Money Laundering Trafficking Proceeds"@en ;
-    rdfs:comment "Charge for laundering money obtained from sex trafficking operations."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
-
-icac-sentencing:TraffickingRelatedEnterprise rdf:type owl:Class ;
-    rdfs:label "Trafficking Related Enterprise"@en ;
-    rdfs:comment "RICO charges for operating criminal enterprise engaged in sex trafficking."@en ;
-    rdfs:subClassOf icac-sentencing:FederalCharge .
-
-# Sentencing Enhancements for Trafficking
-icac-sentencing:TraffickingEnhancement rdf:type owl:Class ;
-    rdfs:label "Trafficking Enhancement"@en ;
-    rdfs:comment "Sentencing enhancement applied to trafficking cases involving aggravating factors."@en ;
-    rdfs:subClassOf icac-sentencing:SentencingEnhancement .
-
-icac-sentencing:MultipleVictimEnhancement rdf:type owl:Class ;
-    rdfs:label "Multiple Victim Enhancement"@en ;
-    rdfs:comment "Enhancement for trafficking cases involving multiple victims."@en ;
-    rdfs:subClassOf icac-sentencing:TraffickingEnhancement .
-
-icac-sentencing:VictimVulnerabilityEnhancement rdf:type owl:Class ;
-    rdfs:label "Victim Vulnerability Enhancement"@en ;
-    rdfs:comment "Enhancement based on victim vulnerability (age, mental capacity, circumstances)."@en ;
-    rdfs:subClassOf icac-sentencing:TraffickingEnhancement .
-
-icac-sentencing:LeadershipRoleEnhancement rdf:type owl:Class ;
-    rdfs:label "Leadership Role Enhancement"@en ;
-    rdfs:comment "Enhancement for defendants who played leadership role in trafficking enterprise."@en ;
-    rdfs:subClassOf icac-sentencing:TraffickingEnhancement .
-
-# =============================================================================
-# MULTI-DEFENDANT SENTENCING FRAMEWORK
-# =============================================================================
-
-icac-sentencing:MultiDefendantSentencing rdf:type owl:Class ;
-    rdfs:label "Multi-Defendant Sentencing"@en ;
-    rdfs:comment "Sentencing coordination for cases involving multiple defendants in same criminal enterprise."@en ;
-    rdfs:subClassOf icac-sentencing:CriminalSentence .
-
-icac-sentencing:CoDefendantSentencing rdf:type owl:Class ;
-    rdfs:label "Co-Defendant Sentencing"@en ;
-    rdfs:comment "Sentencing of co-defendants in coordinated criminal enterprise with consideration of relative culpability."@en ;
-    rdfs:subClassOf icac-sentencing:MultiDefendantSentencing .
-
-icac-sentencing:SentencingDisparity rdf:type owl:Class ;
-    rdfs:label "Sentencing Disparity"@en ;
-    rdfs:comment "Difference in sentences between co-defendants based on role, cooperation, or other factors."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
-
-icac-sentencing:PleaBargainSentencing rdf:type owl:Class ;
-    rdfs:label "Plea Bargain Sentencing"@en ;
-    rdfs:comment "Sentencing resulting from plea agreement, often involving cooperation with prosecution."@en ;
-    rdfs:subClassOf icac-sentencing:CriminalSentence .
-
-# =============================================================================
-# TRAFFICKING SENTENCING PROPERTIES
-# =============================================================================
-
-# Trafficking-Specific Properties
-icac-sentencing:traffickingVictimCount rdf:type owl:DatatypeProperty ;
-    rdfs:label "trafficking victim count"@en ;
-    rdfs:comment "Number of trafficking victims involved in charges (affects sentencing)."@en ;
-    rdfs:domain icac-sentencing:SexTraffickingOfMinor ;
-    rdfs:range xsd:nonNegativeInteger .
-
-icac-sentencing:commercialSexActCount rdf:type owl:DatatypeProperty ;
-    rdfs:label "commercial sex act count"@en ;
-    rdfs:comment "Number of commercial sex acts facilitated or coerced."@en ;
-    rdfs:domain icac-sentencing:PromotingProstitution ;
-    rdfs:range xsd:nonNegativeInteger .
-
-icac-sentencing:traffickingDuration rdf:type owl:DatatypeProperty ;
-    rdfs:label "trafficking duration"@en ;
-    rdfs:comment "Duration of trafficking operation in months."@en ;
-    rdfs:domain icac-sentencing:SexTraffickingOfMinor ;
-    rdfs:range xsd:decimal .
-
-icac-sentencing:enterpriseRole rdf:type owl:DatatypeProperty ;
-    rdfs:label "enterprise role"@en ;
-    rdfs:comment "Role in trafficking enterprise (leader, organizer, manager, member)."@en ;
-    rdfs:domain icac-sentencing:TraffickingRelatedEnterprise ;
-    rdfs:range xsd:string .
-
-icac-sentencing:cooperationLevel rdf:type owl:DatatypeProperty ;
-    rdfs:label "cooperation level"@en ;
-    rdfs:comment "Level of cooperation with prosecution (substantial, limited, none)."@en ;
-    rdfs:domain icac-sentencing:PleaBargainSentencing ;
-    rdfs:range xsd:string .
-
-# Multi-Defendant Properties
-icac-sentencing:coDefendantCount rdf:type owl:DatatypeProperty ;
-    rdfs:label "co-defendant count"@en ;
-    rdfs:comment "Number of co-defendants in case (e.g., 8 in Brooklyn case)."@en ;
-    rdfs:domain icac-sentencing:MultiDefendantSentencing ;
-    rdfs:range xsd:nonNegativeInteger .
-
-icac-sentencing:culpabilityRank rdf:type owl:DatatypeProperty ;
-    rdfs:label "culpability rank"@en ;
-    rdfs:comment "Relative culpability ranking among co-defendants (1 = most culpable)."@en ;
-    rdfs:domain icac-sentencing:CoDefendantSentencing ;
-    rdfs:range xsd:nonNegativeInteger .
-
-icac-sentencing:sentenceVariance rdf:type owl:DatatypeProperty ;
-    rdfs:label "sentence variance"@en ;
-    rdfs:comment "Variance from guidelines in months (positive = above guidelines)."@en ;
-    rdfs:domain icac-sentencing:CriminalSentence ;
-    rdfs:range xsd:decimal .
-
-# =============================================================================
-# TRAFFICKING SENTENCING RELATIONSHIPS
-# =============================================================================
-
-# Charge Relationships
-icac-sentencing:enhancedBy rdf:type owl:ObjectProperty ;
-    rdfs:label "enhanced by"@en ;
-    rdfs:comment "Links base charge to enhancement applied."@en ;
-    rdfs:domain icac-sentencing:FederalCharge ;
-    rdfs:range icac-sentencing:TraffickingEnhancement .
-
-icac-sentencing:baseCharge rdf:type owl:ObjectProperty ;
-    rdfs:label "base charge"@en ;
-    rdfs:comment "Links enhancement to base charge it enhances."@en ;
-    rdfs:domain icac-sentencing:TraffickingEnhancement ;
-    rdfs:range icac-sentencing:FederalCharge .
-
-# Multi-Defendant Relationships
-icac-sentencing:coDefendantWith rdf:type owl:ObjectProperty ;
-    rdfs:label "co-defendant with"@en ;
-    rdfs:comment "Links defendant to their co-defendants in same case."@en ;
-    rdfs:domain uco-identity:Person ;
-    rdfs:range uco-identity:Person .
-
-icac-sentencing:sentencedWith rdf:type owl:ObjectProperty ;
-    rdfs:label "sentenced with"@en ;
-    rdfs:comment "Links co-defendant sentencing to other co-defendants sentenced in same proceeding."@en ;
-    rdfs:domain icac-sentencing:CoDefendantSentencing ;
-    rdfs:range icac-sentencing:CoDefendantSentencing .
-
-icac-sentencing:hasDisparity rdf:type owl:ObjectProperty ;
-    rdfs:label "has disparity"@en ;
-    rdfs:comment "Links co-defendant sentences to disparity analysis."@en ;
-    rdfs:domain icac-sentencing:CoDefendantSentencing ;
-    rdfs:range icac-sentencing:SentencingDisparity .
-
-icac-sentencing:resultedFromPlea rdf:type owl:ObjectProperty ;
-    rdfs:label "resulted from plea"@en ;
-    rdfs:comment "Links sentence to plea bargain that resulted in it."@en ;
-    rdfs:domain icac-sentencing:CriminalSentence ;
-    rdfs:range icac-sentencing:PleaBargainSentencing .
-
-# =============================================================================
-# EDUCATOR-SPECIFIC SENTENCING (March 2025 Brooklyn Teacher Case)
-# =============================================================================
-
-icac-sentencing:EducatorSentencing rdf:type owl:Class ;
-    rdfs:label "Educator Sentencing"@en ;
-    rdfs:comment "Sentencing for child exploitation committed by educational personnel."@en ;
-    rdfs:subClassOf icac-sentencing:ICACOffenseSentencing .
-
-icac-sentencing:PositionOfTrustSentencing rdf:type owl:Class ;
-    rdfs:label "Position of Trust Sentencing"@en ;
-    rdfs:comment "Sentencing with enhancement for abuse of position of trust in educational setting."@en ;
-    rdfs:subClassOf icac-sentencing:EducatorSentencing .
-
-icac-sentencing:UseOfChildInSexualPerformanceSentencing rdf:type owl:Class ;
-    rdfs:label "Use of Child in Sexual Performance Sentencing"@en ;
-    rdfs:comment "Sentencing for use of child in sexual performance as sexually motivated felony."@en ;
-    rdfs:subClassOf icac-sentencing:EducatorSentencing .
-
-icac-sentencing:EndangeringWelfareOfChildSentencing rdf:type owl:Class ;
-    rdfs:label "Endangering Welfare of Child Sentencing"@en ;
-    rdfs:comment "Sentencing for endangering welfare of children through exploitation."@en ;
-    rdfs:subClassOf icac-sentencing:EducatorSentencing .
-
-icac-sentencing:SexuallyMotivatedFelonySentencing rdf:type owl:Class ;
-    rdfs:label "Sexually Motivated Felony Sentencing"@en ;
-    rdfs:comment "Sentencing for felony with sexual motivation enhancement."@en ;
-    rdfs:subClassOf icac-sentencing:EducatorSentencing .
-
-# =============================================================================
-# POST-CONVICTION REQUIREMENTS
-# =============================================================================
-
-icac-sentencing:PostConvictionRequirement rdf:type owl:Class ;
-    rdfs:label "Post Conviction Requirement"@en ;
-    rdfs:comment "Requirements imposed following conviction for child exploitation."@en ;
-    rdfs:subClassOf uco-action:Action .
-
-icac-sentencing:ExtendedPostReleaseSupervision rdf:type owl:Class ;
-    rdfs:label "Extended Post Release Supervision"@en ;
-    rdfs:comment "Extended supervision period following incarceration for child exploitation."@en ;
-    rdfs:subClassOf icac-sentencing:PostConvictionRequirement .
-
-icac-sentencing:MandatorySexOffenderRegistration rdf:type owl:Class ;
-    rdfs:label "Mandatory Sex Offender Registration"@en ;
-    rdfs:comment "Mandatory registration as sex offender following conviction."@en ;
-    rdfs:subClassOf icac-sentencing:PostConvictionRequirement .
-
-icac-sentencing:EducationalEmploymentProhibition rdf:type owl:Class ;
-    rdfs:label "Educational Employment Prohibition"@en ;
-    rdfs:comment "Prohibition from employment in educational institutions."@en ;
-    rdfs:subClassOf icac-sentencing:PostConvictionRequirement .
-
-icac-sentencing:DigitalCommunicationRestriction rdf:type owl:Class ;
-    rdfs:label "Digital Communication Restriction"@en ;
-    rdfs:comment "Restrictions on digital communication with minors."@en ;
-    rdfs:subClassOf icac-sentencing:PostConvictionRequirement .
-
-icac-sentencing:InternetAccessRestriction rdf:type owl:Class ;
-    rdfs:label "Internet Access Restriction"@en ;
-    rdfs:comment "Restrictions on internet access and social media use."@en ;
-    rdfs:subClassOf icac-sentencing:PostConvictionRequirement .
-
-# =============================================================================
-# INSTITUTIONAL IMPACT SENTENCING
-# =============================================================================
-
-icac-sentencing:InstitutionalImpactSentencing rdf:type owl:Class ;
-    rdfs:label "Institutional Impact Sentencing"@en ;
-    rdfs:comment "Sentencing considering impact on educational institution and community trust."@en ;
-    rdfs:subClassOf icac-sentencing:EducatorSentencing .
-
-icac-sentencing:TrustViolationSentencing rdf:type owl:Class ;
-    rdfs:label "Trust Violation Sentencing"@en ;
-    rdfs:comment "Sentencing enhancement for violation of public trust in educational role."@en ;
-    rdfs:subClassOf icac-sentencing:InstitutionalImpactSentencing .
-
-icac-sentencing:CommunityImpactSentencing rdf:type owl:Class ;
-    rdfs:label "Community Impact Sentencing"@en ;
-    rdfs:comment "Sentencing considering broader community impact of educator exploitation."@en ;
-    rdfs:subClassOf icac-sentencing:InstitutionalImpactSentencing .
-
-# =============================================================================
-# EDUCATOR SENTENCING PROPERTIES
-# =============================================================================
-
-icac-sentencing:educatorRole rdf:type owl:DatatypeProperty ;
-    rdfs:label "educator role"@en ;
-    rdfs:comment "Educational role held by defendant (teacher, administrator, counselor)."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:institutionType rdf:type owl:DatatypeProperty ;
-    rdfs:label "institution type"@en ;
-    rdfs:comment "Type of educational institution where offense occurred."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:supervisionYears rdf:type owl:DatatypeProperty ;
-    rdfs:label "supervision years"@en ;
-    rdfs:comment "Number of years of post-release supervision required."@en ;
-    rdfs:domain icac-sentencing:ExtendedPostReleaseSupervision ;
-    rdfs:range xsd:decimal .
-
-icac-sentencing:registrationDuration rdf:type owl:DatatypeProperty ;
-    rdfs:label "registration duration"@en ;
-    rdfs:comment "Duration of sex offender registration requirement (lifetime, years)."@en ;
-    rdfs:domain icac-sentencing:MandatorySexOffenderRegistration ;
-    rdfs:range xsd:string .
-
-icac-sentencing:employmentProhibitionScope rdf:type owl:DatatypeProperty ;
-    rdfs:label "employment prohibition scope"@en ;
-    rdfs:comment "Scope of educational employment prohibition (all_educational, specific_levels, specific_roles)."@en ;
-    rdfs:domain icac-sentencing:EducationalEmploymentProhibition ;
-    rdfs:range xsd:string .
-
-icac-sentencing:communicationRestrictionType rdf:type owl:DatatypeProperty ;
-    rdfs:label "communication restriction type"@en ;
-    rdfs:comment "Type of digital communication restriction (social_media, messaging, all_digital)."@en ;
-    rdfs:domain icac-sentencing:DigitalCommunicationRestriction ;
-    rdfs:range xsd:string .
-
-icac-sentencing:internetRestrictionLevel rdf:type owl:DatatypeProperty ;
-    rdfs:label "internet restriction level"@en ;
-    rdfs:comment "Level of internet access restriction (complete, monitored, filtered)."@en ;
-    rdfs:domain icac-sentencing:InternetAccessRestriction ;
-    rdfs:range xsd:string .
-
-icac-sentencing:trustViolationSeverity rdf:type owl:DatatypeProperty ;
-    rdfs:label "trust violation severity"@en ;
-    rdfs:comment "Severity level of trust violation (high, extreme, aggravated)."@en ;
-    rdfs:domain icac-sentencing:TrustViolationSentencing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:communityImpactLevel rdf:type owl:DatatypeProperty ;
-    rdfs:label "community impact level"@en ;
-    rdfs:comment "Level of community impact (local, institutional, widespread)."@en ;
-    rdfs:domain icac-sentencing:CommunityImpactSentencing ;
-    rdfs:range xsd:string .
-
-icac-sentencing:victimTraumaSparing rdf:type owl:DatatypeProperty ;
-    rdfs:label "victim trauma sparing"@en ;
-    rdfs:comment "Whether guilty plea spared victims from testifying and reliving trauma."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range xsd:boolean .
-
-# =============================================================================
-# EDUCATOR SENTENCING RELATIONSHIPS
-# =============================================================================
-
-icac-sentencing:requiresPostConvictionRequirement rdf:type owl:ObjectProperty ;
-    rdfs:label "requires post conviction requirement"@en ;
-    rdfs:comment "Links sentencing to post-conviction requirements imposed."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range icac-sentencing:PostConvictionRequirement .
-
-icac-sentencing:involvesEducationalInstitution rdf:type owl:ObjectProperty ;
-    rdfs:label "involves educational institution"@en ;
-    rdfs:comment "Links sentencing to educational institution involved."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range icac-educational:EducationalInstitution .
-
-icac-sentencing:enhancedForTrustViolation rdf:type owl:ObjectProperty ;
-    rdfs:label "enhanced for trust violation"@en ;
-    rdfs:comment "Links sentencing to trust violation enhancement."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range icac-sentencing:TrustViolationSentencing .
-
-icac-sentencing:considersInstitutionalImpact rdf:type owl:ObjectProperty ;
-    rdfs:label "considers institutional impact"@en ;
-    rdfs:comment "Links sentencing to institutional impact considerations."@en ;
-    rdfs:domain icac-sentencing:EducatorSentencing ;
-    rdfs:range icac-sentencing:InstitutionalImpactSentencing .
-
-icac-sentencing:prohibitsEmploymentAt rdf:type owl:ObjectProperty ;
-    rdfs:label "prohibits employment at"@en ;
-    rdfs:comment "Links employment prohibition to type of institution prohibited."@en ;
-    rdfs:domain icac-sentencing:EducationalEmploymentProhibition ;
-    rdfs:range icac-educational:EducationalInstitution .
-
-icac-sentencing:restrictsAccessTo rdf:type owl:ObjectProperty ;
-    rdfs:label "restricts access to"@en ;
-    rdfs:comment "Links restriction to platform or service being restricted."@en ;
-    rdfs:domain icac-sentencing:DigitalCommunicationRestriction ;
-    rdfs:range uco-observable:ObservableObject .
-
-# =============================================================================
-# UTAH-SPECIFIC CHARGE CLASSIFICATIONS (Operation Hive Strike Enhancement)
-# =============================================================================
-
-icac-sentencing:Utah_SexualExploitationOfMinor rdf:type owl:Class ;
-    rdfs:label "Utah Sexual Exploitation of Minor"@en ;
-    rdfs:comment "Utah-specific charge for sexual exploitation of a minor under Utah Criminal Code."@en ;
-    rdfs:subClassOf icac-sentencing:StateLevelCharge .
-
-icac-sentencing:Utah_DealingInHarmfulMaterialsToMinor rdf:type owl:Class ;
-    rdfs:label "Utah Dealing in Harmful Materials to Minor"@en ;
-    rdfs:comment "Utah-specific charge for dealing in harmful materials to a minor under Utah law."@en ;
-    rdfs:subClassOf icac-sentencing:StateLevelCharge .
-
-icac-sentencing:Utah_EnticingAMinor rdf:type owl:Class ;
-    rdfs:label "Utah Enticing a Minor"@en ;
-    rdfs:comment "Utah-specific charge for enticing a minor under Utah Criminal Code."@en ;
-    rdfs:subClassOf icac-sentencing:StateLevelCharge .
-
-icac-sentencing:Utah_AggravatedSexualExploitationOfMinor rdf:type owl:Class ;
-    rdfs:label "Utah Aggravated Sexual Exploitation of Minor"@en ;
-    rdfs:comment "Utah-specific aggravated charge for sexual exploitation of a minor with enhanced penalties."@en ;
-    rdfs:subClassOf icac-sentencing:Utah_SexualExploitationOfMinor .
-
-icac-sentencing:Utah_AggravatedSexualAbuseOfChild rdf:type owl:Class ;
-    rdfs:label "Utah Aggravated Sexual Abuse of Child"@en ;
-    rdfs:comment "Utah-specific aggravated charge for sexual abuse of a child under Utah Criminal Code."@en ;
-    rdfs:subClassOf icac-sentencing:StateLevelCharge .
-
-icac-sentencing:Utah_SodomyOnChild rdf:type owl:Class ;
-    rdfs:label "Utah Sodomy on Child"@en ;
-    rdfs:comment "Utah-specific charge for sodomy on a child under Utah Criminal Code."@en ;
-    rdfs:subClassOf icac-sentencing:StateLevelCharge .
-
-icac-sentencing:Utah_PossessionOfControlledSubstance rdf:type owl:Class ;
-    rdfs:label "Utah Possession of Controlled Substance"@en ;
-    rdfs:comment "Utah-specific charge for possession of a controlled substance, often accompanying ICAC charges."@en ;
-    rdfs:subClassOf icac-sentencing:AncillaryCharge .
-
-icac-sentencing:Utah_PossessionOfStolenFirearm rdf:type owl:Class ;
-    rdfs:label "Utah Possession of Stolen Firearm"@en ;
-    rdfs:comment "Utah-specific charge for possession of a stolen firearm, often discovered during ICAC investigations."@en ;
-    rdfs:subClassOf icac-sentencing:AncillaryCharge . 
+icac-sentencing:involvesChargeCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "involves charge count"@en ;
+    rdfs:comment "Number of charges involved in legal situation."@en ;
+    rdfs:domain icac-sentencing:LegalCaseSituation ;
+    rdfs:range xsd:integer .
+
+icac-sentencing:involvesParticipantCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "involves participant count"@en ;
+    rdfs:comment "Number of participants involved in legal situation."@en ;
+    rdfs:domain gufo:Situation ;
+    rdfs:range xsd:integer . 
