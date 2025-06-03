@@ -10,800 +10,379 @@
 
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-specialized: <https://ontology.unifiedcyberontology.org/icac/specialized-units#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 <https://ontology.unifiedcyberontology.org/icac/specialized-units> rdf:type owl:Ontology ;
     rdfs:label "ICAC Specialized Units Ontology"@en ;
-    rdfs:comment "An ontology for modeling specialized units including K9 detection programs, officer wellness support, advanced investigative capabilities, seasonal operations, and affiliate management in ICAC operations."@en ;
-    owl:versionInfo "0.1.0" .
+    rdfs:comment "An ontology for modeling specialized units including K9 detection programs, officer wellness support, advanced investigative capabilities, seasonal operations, and affiliate management in ICAC operations with gUFO foundational ontology enhancements for improved semantic precision, temporal modeling, and validation capabilities."@en ;
+    owl:versionInfo "0.1.0" ;
+    owl:imports <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# K9 DETECTION PROGRAMS
+# K9 DETECTION PROGRAMS (gUFO Organization and Event modeling)
 # =============================================================================
 
+# K9 Programs as gUFO Organizations
 icac-specialized:K9DetectionProgram rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Organization ;
     rdfs:label "K9 Detection Program"@en ;
-    rdfs:comment "Program utilizing trained detection dogs for ICAC investigations."@en .
+    rdfs:comment "Program utilizing trained detection dogs for ICAC investigations. Modeled as gUFO Organization."@en .
 
 icac-specialized:ElectronicStorageDeviceK9 rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:K9DetectionProgram ;
     rdfs:label "Electronic Storage Device K9"@en ;
-    rdfs:comment "K9 trained to detect electronic storage devices during search operations."@en .
+    rdfs:comment "K9 trained to detect electronic storage devices during search operations. Modeled as gUFO Organization."@en .
 
-icac-specialized:K9Officer rdf:type owl:Class ;
+# K9 Roles as gUFO Roles (anti-rigid)
+icac-specialized:K9Officer rdf:type owl:Class, gufo:Role ;
     rdfs:subClassOf uco-role:Role ;
     rdfs:label "K9 Officer"@en ;
-    rdfs:comment "Law enforcement officer handling and working with detection dogs."@en .
+    rdfs:comment "Law enforcement officer handling and working with detection dogs. Modeled as anti-rigid gUFO Role."@en .
 
+# Detection Dogs as gUFO Objects
 icac-specialized:DetectionDog rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Identity ;
+    rdfs:subClassOf uco-identity:Identity, gufo:Object ;
     rdfs:label "Detection Dog"@en ;
-    rdfs:comment "Trained dog used for detection operations in ICAC investigations."@en .
+    rdfs:comment "Trained dog used for detection operations in ICAC investigations. Modeled as gUFO Object."@en .
 
+# K9 Operations as gUFO Events
 icac-specialized:K9SearchOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "K9 Search Operation"@en ;
-    rdfs:comment "Search operation utilizing K9 detection capabilities."@en .
+    rdfs:comment "Search operation utilizing K9 detection capabilities. Modeled as gUFO Event."@en ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
 
 icac-specialized:DeviceDetection rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Device Detection"@en ;
-    rdfs:comment "Detection of electronic storage devices during search operations."@en .
+    rdfs:comment "Detection of electronic storage devices during search operations. Modeled as gUFO Event."@en .
 
+# K9 Training as gUFO Organizations
 icac-specialized:K9TrainingProgram rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Organization ;
     rdfs:label "K9 Training Program"@en ;
-    rdfs:comment "Training program for K9 units and handlers."@en .
+    rdfs:comment "Training program for K9 units and handlers. Modeled as gUFO Organization."@en .
 
 icac-specialized:CommunityEngagementK9 rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:K9DetectionProgram ;
     rdfs:label "Community Engagement K9"@en ;
-    rdfs:comment "K9 utilized for community outreach and educational programs."@en .
+    rdfs:comment "K9 utilized for community outreach and educational programs. Modeled as gUFO Organization."@en .
 
 # =============================================================================
-# OFFICER WELLNESS AND SUPPORT
+# OFFICER WELLNESS AND SUPPORT (gUFO Organization and Event modeling)
 # =============================================================================
 
+# Wellness Programs as gUFO Organizations
 icac-specialized:OfficerWellnessProgram rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Organization ;
     rdfs:label "Officer Wellness Program"@en ;
-    rdfs:comment "Program providing mental health and wellness support to ICAC officers."@en .
+    rdfs:comment "Program providing mental health and wellness support to ICAC officers. Modeled as gUFO Organization."@en .
 
 icac-specialized:MentalHealthSupport rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:OfficerWellnessProgram ;
     rdfs:label "Mental Health Support"@en ;
-    rdfs:comment "Mental health services and support for officers dealing with traumatic content."@en .
+    rdfs:comment "Mental health services and support for officers dealing with traumatic content. Modeled as gUFO Organization."@en .
 
+# Therapy Dogs as gUFO Objects
 icac-specialized:TherapyDog rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Identity ;
+    rdfs:subClassOf uco-identity:Identity, gufo:Object ;
     rdfs:label "Therapy Dog"@en ;
-    rdfs:comment "Trained therapy dog providing emotional support to officers."@en .
+    rdfs:comment "Trained therapy dog providing emotional support to officers. Modeled as gUFO Object."@en .
 
 icac-specialized:StressManagement rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:OfficerWellnessProgram ;
     rdfs:label "Stress Management"@en ;
-    rdfs:comment "Programs and techniques for managing work-related stress."@en .
+    rdfs:comment "Programs and techniques for managing work-related stress. Modeled as gUFO Organization."@en .
 
 icac-specialized:PeerSupport rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:OfficerWellnessProgram ;
     rdfs:label "Peer Support"@en ;
-    rdfs:comment "Peer-to-peer support programs for ICAC personnel."@en .
+    rdfs:comment "Peer-to-peer support programs for ICAC personnel. Modeled as gUFO Organization."@en .
 
+# Wellness Activities as gUFO Events
 icac-specialized:CriticalIncidentDebriefing rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Critical Incident Debriefing"@en ;
-    rdfs:comment "Structured debriefing process following traumatic incidents."@en .
+    rdfs:comment "Structured debriefing process following traumatic incidents. Modeled as gUFO Event."@en .
 
 icac-specialized:WellnessCheck rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Wellness Check"@en ;
-    rdfs:comment "Regular check on officer mental health and wellbeing."@en .
+    rdfs:comment "Regular check on officer mental health and wellbeing. Modeled as gUFO Event."@en .
 
 # =============================================================================
-# SPECIALIZED INVESTIGATIVE UNITS
+# SPECIALIZED INVESTIGATIVE UNITS (gUFO Organization modeling)
 # =============================================================================
 
+# Specialized Units as gUFO Organizations
 icac-specialized:SpecializedInvestigativeUnit rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:subClassOf uco-identity:Organization, gufo:Organization ;
     rdfs:label "Specialized Investigative Unit"@en ;
-    rdfs:comment "Specialized unit with unique capabilities for ICAC investigations."@en .
+    rdfs:comment "Specialized unit with unique capabilities for ICAC investigations. Modeled as gUFO Organization."@en .
 
 icac-specialized:CyberCrimeUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Cyber Crime Unit"@en ;
-    rdfs:comment "Unit specialized in cyber crime investigations."@en .
+    rdfs:comment "Unit specialized in cyber crime investigations. Modeled as gUFO Organization."@en .
 
 # =============================================================================
-# STATE POLICE COMPUTER CRIMES UNITS (Maryland Case Enhancement)
+# STATE POLICE COMPUTER CRIMES UNITS (Maryland Case Enhancement - gUFO Organization)
 # =============================================================================
 
 icac-specialized:StatePoliceComputerCrimesUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:CyberCrimeUnit ;
     rdfs:label "State Police Computer Crimes Unit"@en ;
-    rdfs:comment "State police unit specialized in computer crimes and digital investigations involving child exploitation."@en .
+    rdfs:comment "State police unit specialized in computer crimes and digital investigations involving child exploitation. Modeled as gUFO Organization."@en .
 
 icac-specialized:MarylandStatePoliceComputerCrimesUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:StatePoliceComputerCrimesUnit ;
     rdfs:label "Maryland State Police Computer Crimes Unit"@en ;
-    rdfs:comment "Maryland State Police unit coordinating the Maryland Internet Crimes Against Children Task Force."@en .
+    rdfs:comment "Maryland State Police unit coordinating the Maryland Internet Crimes Against Children Task Force. Modeled as gUFO Organization."@en .
 
 icac-specialized:StatePoliceBarrack rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:subClassOf uco-identity:Organization, gufo:Organization ;
     rdfs:label "State Police Barrack"@en ;
-    rdfs:comment "Regional state police barrack providing local law enforcement support and coordination."@en .
+    rdfs:comment "Regional state police barrack providing local law enforcement support and coordination. Modeled as gUFO Organization."@en .
 
 icac-specialized:CollegeParkBarrack rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:StatePoliceBarrack ;
     rdfs:label "College Park Barrack"@en ;
-    rdfs:comment "Maryland State Police College Park Barrack supporting computer crimes investigations."@en .
+    rdfs:comment "Maryland State Police College Park Barrack supporting computer crimes investigations. Modeled as gUFO Organization."@en .
 
 icac-specialized:CountyPoliceSupport rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
+    rdfs:subClassOf uco-identity:Organization, gufo:Organization ;
     rdfs:label "County Police Support"@en ;
-    rdfs:comment "County-level police department providing support to state computer crimes investigations."@en .
+    rdfs:comment "County-level police department providing support to state computer crimes investigations. Modeled as gUFO Organization."@en .
 
 icac-specialized:PrinceGeorgesCountyPolice rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:CountyPoliceSupport ;
     rdfs:label "Prince George's County Police"@en ;
-    rdfs:comment "Prince George's County Police Department supporting Maryland State Police computer crimes investigations."@en .
+    rdfs:comment "Prince George's County Police Department supporting Maryland State Police computer crimes investigations. Modeled as gUFO Organization."@en .
 
 icac-specialized:DigitalForensicsUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Digital Forensics Unit"@en ;
-    rdfs:comment "Unit specialized in digital forensics analysis."@en .
+    rdfs:comment "Unit specialized in digital forensics analysis. Modeled as gUFO Organization."@en .
 
 icac-specialized:UndercoverUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Undercover Unit"@en ;
-    rdfs:comment "Unit conducting undercover operations."@en .
+    rdfs:comment "Unit conducting undercover operations. Modeled as gUFO Organization."@en .
 
 icac-specialized:TacticalUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Tactical Unit"@en ;
-    rdfs:comment "Unit handling high-risk tactical operations."@en .
+    rdfs:comment "Unit handling high-risk tactical operations. Modeled as gUFO Organization."@en .
 
 icac-specialized:VictimServicesUnit rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
     rdfs:label "Victim Services Unit"@en ;
-    rdfs:comment "Unit providing specialized victim services and support."@en .
+    rdfs:comment "Unit providing specialized victim services and support. Modeled as gUFO Organization."@en .
 
 # =============================================================================
-# ENHANCED OPERATION COORDINATION
+# ENHANCED OPERATION COORDINATION (gUFO Event modeling)
 # =============================================================================
 
+# Named Operations as gUFO Events
 icac-specialized:NamedOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Named Operation"@en ;
-    rdfs:comment "Formally named multi-phase operation with specific objectives."@en .
+    rdfs:comment "Formally named multi-phase operation with specific objectives. Modeled as gUFO Event."@en ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
 
 icac-specialized:OperationUnhinged rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:NamedOperation ;
     rdfs:label "Operation Unhinged"@en ;
-    rdfs:comment "Specific operation conducted by Idaho ICAC resulting in 12 arrests."@en .
+    rdfs:comment "Specific operation conducted by Idaho ICAC resulting in 12 arrests. Modeled as gUFO Event."@en .
 
 icac-specialized:OperationSafeOnlineSummer rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:NamedOperation ;
     rdfs:label "Operation Safe Online Summer"@en ;
-    rdfs:comment "National operation across 61 ICAC Task Forces during summer months."@en .
+    rdfs:comment "National operation across 61 ICAC Task Forces during summer months. Modeled as gUFO Event."@en .
 
 icac-specialized:MultiJurisdictionalOperation rdf:type owl:Class ;
     rdfs:subClassOf icac-specialized:NamedOperation ;
     rdfs:label "Multi-Jurisdictional Operation"@en ;
-    rdfs:comment "Operation involving multiple jurisdictions and agencies."@en .
+    rdfs:comment "Operation involving multiple jurisdictions and agencies. Modeled as gUFO Event."@en .
 
 icac-specialized:CoordinatedArrest rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Coordinated Arrest"@en ;
-    rdfs:comment "Arrest coordinated as part of larger operation."@en .
+    rdfs:comment "Arrest coordinated as part of larger operation. Modeled as gUFO Event."@en .
 
+# Operation Metrics as gUFO Objects
 icac-specialized:OperationMetrics rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object ;
     rdfs:label "Operation Metrics"@en ;
-    rdfs:comment "Metrics tracking operation effectiveness and outcomes."@en .
+    rdfs:comment "Metrics and performance data for specialized operations. Modeled as gUFO Object."@en .
 
 # =============================================================================
-# COMMUNITY ENGAGEMENT AND OUTREACH
+# SPECIALIZED UNIT PHASES (gUFO Phase anti-rigid modeling)
 # =============================================================================
 
-icac-specialized:CommunityOutreachProgram rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Community Outreach Program"@en ;
-    rdfs:comment "Program for engaging with community members on child safety."@en .
+# Unit Operational Phases (gUFO Phase anti-rigid modeling)
+icac-specialized:UnitDeploymentPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Unit Deployment Phase"@en ;
+    rdfs:comment "Phase when specialized unit is deployed for operations. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit .
 
-icac-specialized:PublicPresentation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Public Presentation"@en ;
-    rdfs:comment "Educational presentation to community groups."@en .
+icac-specialized:UnitTrainingPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Unit Training Phase"@en ;
+    rdfs:comment "Phase focused on specialized unit training and preparation. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit .
 
-icac-specialized:SafetyEducationEvent rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Safety Education Event"@en ;
-    rdfs:comment "Event focused on educating public about online safety."@en .
+icac-specialized:UnitMaintenancePhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Unit Maintenance Phase"@en ;
+    rdfs:comment "Phase for equipment maintenance and unit readiness. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit .
 
-icac-specialized:ProfessionalTrainingEvent rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Professional Training Event"@en ;
-    rdfs:comment "Training event for professionals in child protection field."@en .
+# Operation Phases (gUFO Phase anti-rigid modeling)
+icac-specialized:OperationPlanningPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Operation Planning Phase"@en ;
+    rdfs:comment "Phase of operation planning and preparation. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:NamedOperation .
 
-icac-specialized:CommunityPartnership rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Community Partnership"@en ;
-    rdfs:comment "Partnership with community organizations for child protection."@en .
+icac-specialized:OperationExecutionPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Operation Execution Phase"@en ;
+    rdfs:comment "Phase of active operation execution. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:NamedOperation .
 
-# =============================================================================
-# SEASONAL OPERATIONS FRAMEWORK (Arkansas Case Analysis)
-# =============================================================================
-
-icac-specialized:SeasonalOperationsUnit rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:label "Seasonal Operations Unit"@en ;
-    rdfs:comment "Specialized unit for coordinating operations based on seasonal cyber tip patterns."@en .
-
-icac-specialized:SpringBreakOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Spring Break Operation"@en ;
-    rdfs:comment "Operation timed to coincide with spring break periods when online activity increases."@en .
-
-icac-specialized:SchoolYearEndOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "School Year End Operation"@en ;
-    rdfs:comment "Operation timed for end of school year when children have increased online presence."@en .
-
-icac-specialized:SeasonalCyberTipPattern rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Seasonal Cyber Tip Pattern"@en ;
-    rdfs:comment "Pattern of cyber tips that correlates with seasonal activities and school schedules."@en .
-
-icac-specialized:HighwayCheckpointOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Highway Checkpoint Operation"@en ;
-    rdfs:comment "Operation using highway checkpoints for sex offender compliance and public education."@en .
-
-icac-specialized:TimingCoordinator rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Timing Coordinator"@en ;
-    rdfs:comment "Specialist responsible for optimizing operation timing based on seasonal patterns."@en .
+icac-specialized:OperationEvaluationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Operation Evaluation Phase"@en ;
+    rdfs:comment "Phase of post-operation analysis and evaluation. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-specialized:NamedOperation .
 
 # =============================================================================
-# CHILD RESCUE OPERATIONS (Arkansas Analysis)
+# SPECIALIZED UNIT SITUATIONS (gUFO Situation modeling)
 # =============================================================================
 
-icac-specialized:ChildRescueUnit rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:label "Child Rescue Unit"@en ;
-    rdfs:comment "Specialized unit focused on child rescue from ongoing abuse situations."@en .
+# Multi-Unit Coordination Situations (gUFO Situation)
+icac-specialized:MultiUnitCoordinationSituation rdf:type owl:Class ;
+    rdfs:label "Multi-Unit Coordination Situation"@en ;
+    rdfs:comment "Complex situation involving coordination between multiple specialized units. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
 
-icac-specialized:ActiveRescueOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Active Rescue Operation"@en ;
-    rdfs:comment "Operation to rescue children from ongoing abuse or exploitation."@en .
+icac-specialized:InteragencyOperationSituation rdf:type owl:Class ;
+    rdfs:label "Interagency Operation Situation"@en ;
+    rdfs:comment "Situation involving operations across multiple agencies and jurisdictions. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
 
-icac-specialized:VictimRecoverySpecialist rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Victim Recovery Specialist"@en ;
-    rdfs:comment "Specialist trained in recovering child victims from dangerous situations."@en .
-
-icac-specialized:EmergencyResponseCoordination rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Emergency Response Coordination"@en ;
-    rdfs:comment "Coordination of emergency response for immediate child rescue."@en .
-
-icac-specialized:OngoingAbuseInvestigation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Ongoing Abuse Investigation"@en ;
-    rdfs:comment "Investigation identifying children in ongoing abuse situations."@en .
-
-icac-specialized:RescuePreparationTask rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Rescue Preparation Task"@en ;
-    rdfs:comment "Task involved in preparing for child rescue operation."@en .
+icac-specialized:SpecializedCapabilitySituation rdf:type owl:Class ;
+    rdfs:label "Specialized Capability Situation"@en ;
+    rdfs:comment "Situation requiring deployment of specialized unit capabilities. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
 
 # =============================================================================
-# ENHANCED OPERATIONAL COORDINATION (Arkansas Scale)
+# SPECIALIZED UNIT ROLES (gUFO Role anti-rigid modeling)
 # =============================================================================
 
-icac-specialized:HighVolumeOperationsUnit rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:label "High Volume Operations Unit"@en ;
-    rdfs:comment "Unit specialized in managing high-volume operations with 100+ actions."@en .
+# Specialized Unit Roles as gUFO Roles (anti-rigid)
+icac-specialized:UnitCommanderRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Unit Commander Role"@en ;
+    rdfs:comment "Role of commanding officer for specialized unit. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role .
 
-icac-specialized:RapidResponseTeam rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:label "Rapid Response Team"@en ;
-    rdfs:comment "Team specialized in rapid response to time-sensitive situations."@en .
+icac-specialized:SpecializedOperatorRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Specialized Operator Role"@en ;
+    rdfs:comment "Role of specialized operator within unit. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role .
 
-icac-specialized:MultiTaskForceCoordination rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Multi-Task Force Coordination"@en ;
-    rdfs:comment "Coordination activities across multiple task forces for large operations."@en .
+icac-specialized:TechnicalSpecialistRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Technical Specialist Role"@en ;
+    rdfs:comment "Role of technical specialist providing specialized capabilities. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role .
 
-icac-specialized:OperationalScaleManagement rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Operational Scale Management"@en ;
-    rdfs:comment "Management of operational scale involving hundreds of actions."@en .
-
-icac-specialized:ProactiveSearchSpecialist rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Proactive Search Specialist"@en ;
-    rdfs:comment "Specialist focused on proactive search operations rather than reactive response."@en .
+icac-specialized:AnalystRole rdf:type owl:Class, gufo:Role ;
+    rdfs:label "Analyst Role"@en ;
+    rdfs:comment "Role of analyst supporting specialized unit operations. Modeled as anti-rigid gUFO Role."@en ;
+    rdfs:subClassOf uco-role:Role .
 
 # =============================================================================
-# AFFILIATE ORGANIZATION MANAGEMENT (Wisconsin ICAC Inspired)
+# gUFO TEMPORAL PROPERTIES
 # =============================================================================
 
-icac-specialized:ICACAffiliateOrganization rdf:type owl:Class ;
-    rdfs:subClassOf uco-identity:Organization ;
-    rdfs:label "ICAC Affiliate Organization"@en ;
-    rdfs:comment "Formally affiliated organization within the ICAC network for coordinated child protection efforts."@en .
-
-icac-specialized:AffiliateManagementUnit rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:label "Affiliate Management Unit"@en ;
-    rdfs:comment "Specialized unit responsible for managing and coordinating ICAC affiliate relationships."@en .
-
-icac-specialized:AffiliateCoordinationCenter rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Affiliate Coordination Center"@en ;
-    rdfs:comment "Central coordination center for managing affiliate organization activities and resource sharing."@en .
-
-icac-specialized:AffiliateResourceLibrary rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Affiliate Resource Library"@en ;
-    rdfs:comment "Centralized library of resources available for sharing among ICAC affiliate organizations."@en .
-
-icac-specialized:AffiliateNetworkCoordination rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Affiliate Network Coordination"@en ;
-    rdfs:comment "Coordination activities across the network of ICAC affiliate organizations."@en .
-
-icac-specialized:InterAffiliateResourceSharing rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Inter-Affiliate Resource Sharing"@en ;
-    rdfs:comment "Resource sharing activities between different ICAC affiliate organizations."@en .
-
-icac-specialized:AffiliateJointOperation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Affiliate Joint Operation"@en ;
-    rdfs:comment "Joint operations conducted by multiple ICAC affiliate organizations."@en .
-
-icac-specialized:AffiliateSupport rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Affiliate Support"@en ;
-    rdfs:comment "Support services provided to ICAC affiliate organizations."@en .
-
-icac-specialized:AffiliateTechnicalAssistance rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:AffiliateSupport ;
-    rdfs:label "Affiliate Technical Assistance"@en ;
-    rdfs:comment "Technical assistance and support provided to affiliate organizations."@en .
-
-icac-specialized:AffiliateResourceRequest rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Affiliate Resource Request"@en ;
-    rdfs:comment "Request for resources made by an affiliate organization to the network."@en .
-
-icac-specialized:AffiliateResourceAllocation rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
-    rdfs:label "Affiliate Resource Allocation"@en ;
-    rdfs:comment "Allocation of resources to affiliate organizations based on needs and availability."@en .
-
-icac-specialized:AffiliatePerformanceAssessment rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Affiliate Performance Assessment"@en ;
-    rdfs:comment "Assessment of affiliate organization performance and contribution to network goals."@en .
-
-# =============================================================================
-# SPECIALIZED CAPABILITIES
-# =============================================================================
-
-icac-specialized:TripleThreatCapability rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Triple Threat Capability"@en ;
-    rdfs:comment "K9 capability combining detection, community engagement, and officer wellness support."@en .
-
-icac-specialized:DetectionCapability rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Detection Capability"@en ;
-    rdfs:comment "Capability to detect specific items or substances."@en .
-
-icac-specialized:CommunityEngagementCapability rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Community Engagement Capability"@en ;
-    rdfs:comment "Capability to engage effectively with community members."@en .
-
-icac-specialized:WellnessSupportCapability rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Wellness Support Capability"@en ;
-    rdfs:comment "Capability to provide wellness and emotional support."@en .
-
-# =============================================================================
-# SPECIALIZED ROLES
-# =============================================================================
-
-icac-specialized:K9Handler rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "K9 Handler"@en ;
-    rdfs:comment "Officer responsible for handling and working with K9 units."@en .
-
-icac-specialized:WellnessCoordinator rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Wellness Coordinator"@en ;
-    rdfs:comment "Person responsible for coordinating officer wellness programs."@en .
-
-icac-specialized:CommunityLiaison rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Community Liaison"@en ;
-    rdfs:comment "Person responsible for community engagement and outreach."@en .
-
-icac-specialized:OperationCommander rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Operation Commander"@en ;
-    rdfs:comment "Person commanding a named operation."@en .
-
-icac-specialized:SpecializedInvestigator rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Specialized Investigator"@en ;
-    rdfs:comment "Investigator with specialized training and capabilities."@en .
-
-icac-specialized:AffiliateCoordinator rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Affiliate Coordinator"@en ;
-    rdfs:comment "Coordinator responsible for managing relationships with affiliate organizations."@en .
-
-icac-specialized:AffiliateNetworkManager rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Affiliate Network Manager"@en ;
-    rdfs:comment "Manager overseeing the entire network of ICAC affiliate organizations."@en .
-
-icac-specialized:AffiliateResourceManager rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Affiliate Resource Manager"@en ;
-    rdfs:comment "Manager responsible for affiliate resource library and sharing systems."@en .
-
-icac-specialized:AffiliateLiaison rdf:type owl:Class ;
-    rdfs:subClassOf uco-role:Role ;
-    rdfs:label "Affiliate Liaison"@en ;
-    rdfs:comment "Liaison responsible for communication between affiliate organizations and central ICAC."@en .
-
-# =============================================================================
-# METRICS AND PERFORMANCE
-# =============================================================================
-
-icac-specialized:AffiliateNetworkMetrics rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
-    rdfs:label "Affiliate Network Metrics"@en ;
-    rdfs:comment "Metrics measuring the performance and effectiveness of the affiliate network."@en .
-
-icac-specialized:AffiliateEngagementMetrics rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:AffiliateNetworkMetrics ;
-    rdfs:label "Affiliate Engagement Metrics"@en ;
-    rdfs:comment "Metrics measuring affiliate organization engagement and participation levels."@en .
-
-icac-specialized:ResourceSharingMetrics rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:AffiliateNetworkMetrics ;
-    rdfs:label "Resource Sharing Metrics"@en ;
-    rdfs:comment "Metrics tracking resource sharing effectiveness among affiliate organizations."@en .
-
-icac-specialized:AffiliateCapacityMetrics rdf:type owl:Class ;
-    rdfs:subClassOf icac-specialized:AffiliateNetworkMetrics ;
-    rdfs:label "Affiliate Capacity Metrics"@en ;
-    rdfs:comment "Metrics measuring the collective capacity of affiliate organizations."@en .
-
-# =============================================================================
-# OBJECT PROPERTIES
-# =============================================================================
-
-icac-specialized:operatesK9 rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:K9Officer ;
-    rdfs:range icac-specialized:DetectionDog ;
-    rdfs:label "operates K9"@en ;
-    rdfs:comment "Relationship between K9 officer and their detection dog."@en .
-
-icac-specialized:assistsInSearch rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:DetectionDog ;
-    rdfs:range icac-specialized:K9SearchOperation ;
-    rdfs:label "assists in search"@en ;
-    rdfs:comment "Dog assists in a specific search operation."@en .
-
-icac-specialized:providesWellnessSupport rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:TherapyDog ;
-    rdfs:range uco-identity:Person ;
-    rdfs:label "provides wellness support"@en ;
-    rdfs:comment "Therapy dog provides wellness support to person."@en .
-
-icac-specialized:participatesInOperation rdf:type owl:ObjectProperty ;
+# Specialized Unit Temporal Properties
+icac-specialized:hasUnitBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has unit begin point"@en ;
+    rdfs:comment "Temporal begin point for specialized unit operation."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
     rdfs:domain icac-specialized:SpecializedInvestigativeUnit ;
-    rdfs:range icac-specialized:NamedOperation ;
-    rdfs:label "participates in operation"@en ;
-    rdfs:comment "Unit participates in named operation."@en .
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:hasOutreachMetrics rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:CommunityOutreachProgram ;
-    rdfs:range icac-specialized:OperationMetrics ;
-    rdfs:label "has outreach metrics"@en ;
-    rdfs:comment "Program has associated metrics tracking its effectiveness."@en .
+icac-specialized:hasUnitEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has unit end point"@en ;
+    rdfs:comment "Temporal end point for specialized unit operation."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-specialized:SpecializedInvestigativeUnit ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:hasCapability rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:DetectionDog ;
-    rdfs:range icac-specialized:TripleThreatCapability ;
-    rdfs:label "has capability"@en ;
-    rdfs:comment "Detection dog has specific specialized capability."@en .
-
-icac-specialized:coordinatesSeasonalTiming rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:TimingCoordinator ;
-    rdfs:range icac-specialized:SeasonalOperationsUnit ;
-    rdfs:label "coordinates seasonal timing"@en ;
-    rdfs:comment "Coordinator manages seasonal timing for operations unit."@en .
-
-icac-specialized:identifiesSeasonalPattern rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:SeasonalOperationsUnit ;
-    rdfs:range icac-specialized:SeasonalCyberTipPattern ;
-    rdfs:label "identifies seasonal pattern"@en ;
-    rdfs:comment "Unit identifies and responds to seasonal cyber tip patterns."@en .
-
-icac-specialized:conductsRescueOperation rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ChildRescueUnit ;
-    rdfs:range icac-specialized:ActiveRescueOperation ;
-    rdfs:label "conducts rescue operation"@en ;
-    rdfs:comment "Unit conducts active child rescue operations."@en .
-
-icac-specialized:respondsToEmergency rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:RapidResponseTeam ;
-    rdfs:range icac-specialized:EmergencyResponseCoordination ;
-    rdfs:label "responds to emergency"@en ;
-    rdfs:comment "Team responds to emergency child rescue situations."@en .
-
-icac-specialized:managesHighVolume rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:HighVolumeOperationsUnit ;
-    rdfs:range icac-specialized:OperationalScaleManagement ;
-    rdfs:label "manages high volume"@en ;
-    rdfs:comment "Unit manages high-volume operational activities."@en .
-
-icac-specialized:utilizesCheckpoint rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:SeasonalOperationsUnit ;
-    rdfs:range icac-specialized:HighwayCheckpointOperation ;
-    rdfs:label "utilizes checkpoint"@en ;
-    rdfs:comment "Unit utilizes highway checkpoint operations."@en .
-
-icac-specialized:managesAffiliate rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliateManagementUnit ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "manages affiliate"@en ;
-    rdfs:comment "Management unit oversees specific affiliate organization."@en .
-
-icac-specialized:coordinatesWithAffiliate rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliateNetworkCoordination ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "coordinates with affiliate"@en ;
-    rdfs:comment "Network coordination involves specific affiliate organization."@en .
-
-icac-specialized:providesResourceTo rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:InterAffiliateResourceSharing ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "provides resource to"@en ;
-    rdfs:comment "Resource sharing provides resources to specific affiliate organization."@en .
-
-icac-specialized:receivesResourceFrom rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range icac-specialized:InterAffiliateResourceSharing ;
-    rdfs:label "receives resource from"@en ;
-    rdfs:comment "Affiliate organization receives resources through sharing mechanism."@en .
-
-icac-specialized:receivesSupportFrom rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range icac-specialized:AffiliateSupport ;
-    rdfs:label "receives support from"@en ;
-    rdfs:comment "Affiliate organization receives support through support mechanism."@en .
-
-icac-specialized:requestsAssistanceFrom rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range icac-specialized:AffiliateTechnicalAssistance ;
-    rdfs:label "requests assistance from"@en ;
-    rdfs:comment "Affiliate organization requests technical assistance."@en .
-
-icac-specialized:coordinatedBy rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliateNetworkCoordination ;
-    rdfs:range icac-specialized:AffiliateCoordinator ;
-    rdfs:label "coordinated by"@en ;
-    rdfs:comment "Network coordination is managed by specific affiliate coordinator."@en .
-
-icac-specialized:liaisesWith rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliateLiaison ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "liaises with"@en ;
-    rdfs:comment "Liaison maintains communication with specific affiliate organization."@en .
-
-icac-specialized:participatesInJointOperation rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range icac-specialized:AffiliateJointOperation ;
-    rdfs:label "participates in joint operation"@en ;
-    rdfs:comment "Affiliate organization participates in joint operational activities."@en .
-
-icac-specialized:assessesPerformanceOf rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliatePerformanceAssessment ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "assesses performance of"@en ;
-    rdfs:comment "Performance assessment evaluates specific affiliate organization."@en .
-
-icac-specialized:measuresEngagementOf rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:AffiliateEngagementMetrics ;
-    rdfs:range icac-specialized:ICACAffiliateOrganization ;
-    rdfs:label "measures engagement of"@en ;
-    rdfs:comment "Engagement metrics measure participation of specific affiliate organization."@en .
-
-icac-specialized:utilizesCentralLibrary rdf:type owl:ObjectProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range icac-specialized:AffiliateResourceLibrary ;
-    rdfs:label "utilizes central library"@en ;
-    rdfs:comment "Affiliate organization accesses central resource library."@en .
-
-# =============================================================================
-# DATATYPE PROPERTIES
-# =============================================================================
-
-icac-specialized:attendeeCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:SafetyEducationEvent ;
-    rdfs:range xsd:integer ;
-    rdfs:label "attendee count"@en ;
-    rdfs:comment "Number of attendees at safety education event."@en .
-
-icac-specialized:professionalsTrained rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ProfessionalTrainingEvent ;
-    rdfs:range xsd:integer ;
-    rdfs:label "professionals trained"@en ;
-    rdfs:comment "Number of professionals trained at event."@en .
-
-icac-specialized:arrestCount rdf:type owl:DatatypeProperty ;
+# Operation Temporal Properties
+icac-specialized:hasOperationBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has operation begin point"@en ;
+    rdfs:comment "Temporal begin point for named operation."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
     rdfs:domain icac-specialized:NamedOperation ;
-    rdfs:range xsd:integer ;
-    rdfs:label "arrest count"@en ;
-    rdfs:comment "Number of arrests made during operation."@en .
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:searchWarrantsExecuted rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:K9SearchOperation ;
-    rdfs:range xsd:integer ;
-    rdfs:label "search warrants executed"@en ;
-    rdfs:comment "Number of search warrants executed with K9 assistance."@en .
+icac-specialized:hasOperationEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has operation end point"@en ;
+    rdfs:comment "Temporal end point for named operation."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-specialized:NamedOperation ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:eventCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:CommunityOutreachProgram ;
-    rdfs:range xsd:integer ;
-    rdfs:label "event count"@en ;
-    rdfs:comment "Number of outreach events conducted."@en .
+# Phase Temporal Properties
+icac-specialized:hasPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase begin point"@en ;
+    rdfs:comment "Temporal begin point for operational phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:operationSeason rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:SeasonalOperationsUnit ;
-    rdfs:range xsd:string ;
-    rdfs:label "operation season"@en ;
-    rdfs:comment "Season when operation is conducted (spring_break, summer, school_year_end)."@en .
+icac-specialized:hasPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase end point"@en ;
+    rdfs:comment "Temporal end point for operational phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:operationMonths rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:SeasonalOperationsUnit ;
-    rdfs:range xsd:string ;
-    rdfs:label "operation months"@en ;
-    rdfs:comment "Months when operation is conducted (e.g., 'March-May')."@en .
+# Role Temporal Properties
+icac-specialized:hasRoleBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role begin point"@en ;
+    rdfs:comment "Temporal begin point for specialized role."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:cyberTipPatternType rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:SeasonalCyberTipPattern ;
-    rdfs:range xsd:string ;
-    rdfs:label "cyber tip pattern type"@en ;
-    rdfs:comment "Type of seasonal pattern (increased_activity, school_break, vacation_period)."@en .
+icac-specialized:hasRoleEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has role end point"@en ;
+    rdfs:comment "Temporal end point for specialized role."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:dateTimeStamp .
 
-icac-specialized:rescueOperationsCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ChildRescueUnit ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "rescue operations count"@en ;
-    rdfs:comment "Number of rescue operations conducted by unit."@en .
+# Duration Properties
+icac-specialized:unitDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "unit duration"@en ;
+    rdfs:comment "Duration of specialized unit operation."@en ;
+    rdfs:domain icac-specialized:SpecializedInvestigativeUnit ;
+    rdfs:range xsd:duration .
 
-icac-specialized:childrenInOngoingAbuse rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:OngoingAbuseInvestigation ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "children in ongoing abuse"@en ;
-    rdfs:comment "Number of children identified in ongoing abuse situations."@en .
+icac-specialized:operationDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "operation duration"@en ;
+    rdfs:comment "Duration of named operation."@en ;
+    rdfs:domain icac-specialized:NamedOperation ;
+    rdfs:range xsd:duration .
 
-icac-specialized:emergencyResponseTime rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:EmergencyResponseCoordination ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "emergency response time"@en ;
-    rdfs:comment "Response time for emergency child rescue in minutes."@en .
+icac-specialized:phaseDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "phase duration"@en ;
+    rdfs:comment "Duration of operational phase."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:duration .
 
-icac-specialized:operationalCapacity rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:HighVolumeOperationsUnit ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "operational capacity"@en ;
-    rdfs:comment "Maximum number of simultaneous operations unit can handle."@en .
-
-icac-specialized:rapidResponseTime rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:RapidResponseTeam ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "rapid response time"@en ;
-    rdfs:comment "Average response time for rapid response team in hours."@en .
-
-icac-specialized:seasonalEffectiveness rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:SeasonalOperationsUnit ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "seasonal effectiveness"@en ;
-    rdfs:comment "Effectiveness rating based on seasonal timing (0.0-1.0)."@en .
-
-icac-specialized:checkpointLocations rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:HighwayCheckpointOperation ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "checkpoint locations"@en ;
-    rdfs:comment "Number of highway checkpoint locations utilized."@en .
-
-icac-specialized:proactiveSearchCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ProactiveSearchSpecialist ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "proactive search count"@en ;
-    rdfs:comment "Number of proactive searches initiated."@en .
-
-icac-specialized:affiliateOrganizationCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateNetworkMetrics ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "affiliate organization count"@en ;
-    rdfs:comment "Total number of organizations in the ICAC affiliate network."@en .
-
-icac-specialized:affiliationLevel rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range xsd:string ;
-    rdfs:label "affiliation level"@en ;
-    rdfs:comment "Level of affiliation (primary, secondary, associate, partner)."@en .
-
-icac-specialized:affiliationStatus rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range xsd:string ;
-    rdfs:label "affiliation status"@en ;
-    rdfs:comment "Current status of affiliate organization (active, inactive, pending, suspended)."@en .
-
-icac-specialized:resourceContributionLevel rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:ICACAffiliateOrganization ;
-    rdfs:range xsd:string ;
-    rdfs:label "resource contribution level"@en ;
-    rdfs:comment "Level of resource contribution (high, medium, low, recipient-only)."@en .
-
-icac-specialized:resourceSharingFrequency rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:InterAffiliateResourceSharing ;
-    rdfs:range xsd:string ;
-    rdfs:label "resource sharing frequency"@en ;
-    rdfs:comment "Frequency of resource sharing (daily, weekly, monthly, quarterly, annual)."@en .
-
-icac-specialized:resourceLibrarySize rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateResourceLibrary ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "resource library size"@en ;
-    rdfs:comment "Number of resources available in the affiliate resource library."@en .
-
-icac-specialized:resourceRequestCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateResourceRequest ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "resource request count"@en ;
-    rdfs:comment "Number of resource requests made by affiliate organization."@en .
-
-icac-specialized:resourceAllocationResponseTime rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateResourceAllocation ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "resource allocation response time"@en ;
-    rdfs:comment "Average response time for resource allocation requests in hours."@en .
-
-icac-specialized:coordinationMeetingFrequency rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateNetworkCoordination ;
-    rdfs:range xsd:string ;
-    rdfs:label "coordination meeting frequency"@en ;
-    rdfs:comment "Frequency of network coordination meetings (weekly, monthly, quarterly)."@en .
-
-icac-specialized:affiliateEngagementScore rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateEngagementMetrics ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "affiliate engagement score"@en ;
-    rdfs:comment "Engagement score for affiliate organization (0.0-1.0)."@en .
-
-icac-specialized:jointOperationCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliateJointOperation ;
-    rdfs:range xsd:nonNegativeInteger ;
-    rdfs:label "joint operation count"@en ;
-    rdfs:comment "Number of joint operations conducted with affiliate organizations."@en .
-
-icac-specialized:performanceScore rdf:type owl:DatatypeProperty ;
-    rdfs:domain icac-specialized:AffiliatePerformanceAssessment ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "performance score"@en ;
-    rdfs:comment "Performance assessment score for affiliate organization (0.0-1.0)."@en . 
+icac-specialized:roleDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "role duration"@en ;
+    rdfs:comment "Duration of specialized role."@en ;
+    rdfs:domain gufo:Role ;
+    rdfs:range xsd:duration . 

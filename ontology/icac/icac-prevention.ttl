@@ -10,45 +10,52 @@
 
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-prevention: <https://ontology.unifiedcyberontology.org/icac/prevention#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 <https://ontology.unifiedcyberontology.org/icac/prevention> rdf:type owl:Ontology ;
     rdfs:label "ICAC Prevention and Education Ontology"@en ;
-    rdfs:comment "An ontology for modeling prevention programs, education initiatives, safety protocols, and community outreach efforts for child protection."@en ;
-    owl:versionInfo "0.1.0" .
+    rdfs:comment "An ontology for modeling prevention programs, education initiatives, safety protocols, and community outreach efforts for child protection with gUFO foundational ontology enhancements for improved semantic precision, temporal modeling, and validation capabilities."@en ;
+    owl:versionInfo "0.1.0" ;
+    owl:imports <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# PREVENTION PROGRAM FRAMEWORK
+# PREVENTION PROGRAM FRAMEWORK (gUFO Event and Organization modeling)
 # =============================================================================
 
+# Prevention Programs as gUFO Events
 icac-prevention:PreventionProgram rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Prevention Program"@en ;
-    rdfs:comment "Structured program designed to prevent child abuse and exploitation."@en .
+    rdfs:comment "Structured program designed to prevent child abuse and exploitation. Modeled as gUFO Event."@en .
 
+# Education Portals as gUFO Objects
 icac-prevention:EducationPortal rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object ;
     rdfs:label "Education Portal"@en ;
-    rdfs:comment "Online portal providing educational resources for child protection."@en .
+    rdfs:comment "Online portal providing educational resources for child protection. Modeled as gUFO Object."@en .
 
+# School Protocols as gUFO Objects
 icac-prevention:SchoolAllegationProtocol rdf:type owl:Class ;
-    rdfs:subClassOf uco-core:UcoObject ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object ;
     rdfs:label "School Allegation Protocol"@en ;
-    rdfs:comment "Protocol for managing allegations of abuse in school settings."@en .
+    rdfs:comment "Protocol for managing allegations of abuse in school settings. Modeled as gUFO Object."@en .
 
+# Community Outreach as gUFO Events
 icac-prevention:CommunityOutreach rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Community Outreach"@en ;
-    rdfs:comment "Outreach programs to engage communities in child protection."@en .
+    rdfs:comment "Outreach programs to engage communities in child protection. Modeled as gUFO Event."@en .
 
 icac-prevention:PublicAwareness rdf:type owl:Class ;
-    rdfs:subClassOf uco-action:Action ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
     rdfs:label "Public Awareness"@en ;
-    rdfs:comment "Campaigns to raise public awareness about child protection."@en .
+    rdfs:comment "Campaigns to raise public awareness about child protection. Modeled as gUFO Event."@en .
 
 icac-prevention:RiskPrevention rdf:type owl:Class ;
     rdfs:subClassOf icac-prevention:PreventionProgram ;
     rdfs:label "Risk Prevention"@en ;
-    rdfs:comment "Programs focused on preventing risk factors for child abuse."@en .
+    rdfs:comment "Programs focused on preventing risk factors for child abuse. Modeled as gUFO Event."@en .
 
 # =============================================================================
 # EDUCATIONAL RESOURCES AND MATERIALS

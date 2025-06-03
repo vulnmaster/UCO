@@ -10,124 +10,294 @@
 @prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-platforms: <https://ontology.unifiedcyberontology.org/icac/platforms#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/platforms/0.1> rdf:type owl:Ontology ;
     rdfs:label "ICAC Technology Platforms & Service Providers Ontology"@en ;
-    rdfs:comment "An ontology for representing technology platforms, digital services, and Electronic Service Provider (ESP) capabilities in the context of child protection, extending UCO and CASE. This ontology covers social media platforms, messaging services, content hosting, and service provider policies and capabilities."@en ;
+    rdfs:comment "An ontology for representing technology platforms, digital services, and Electronic Service Provider (ESP) capabilities in the context of child protection with gUFO foundational ontology enhancements for improved semantic precision, temporal modeling, and validation capabilities, extending UCO and CASE. This ontology covers social media platforms, messaging services, content hosting, and service provider policies and capabilities."@en ;
     owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/platforms/0.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2024-12-19"^^xsd:date ;
-    dcterms:modified "2024-12-19"^^xsd:date ;
+    dcterms:modified "2025-01-03"^^xsd:date ;
     owl:imports <https://ontology.unifiedcyberontology.org/uco/core> ,
                 <https://ontology.unifiedcyberontology.org/uco/observable> ,
                 <https://ontology.unifiedcyberontology.org/uco/identity> ,
                 <https://ontology.unifiedcyberontology.org/uco/action> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <http://purl.org/nemo/gufo> .
 
 # =============================================================================
-# PLATFORM SERVICE CLASSES (extending UCO Observable)
+# PLATFORM SERVICE CLASSES (extending UCO Observable with gUFO Object)
 # =============================================================================
 
+# Platform Services as gUFO Objects
 icac-platforms:SocialMediaPlatform rdf:type owl:Class ;
     rdfs:label "Social Media Platform"@en ;
-    rdfs:comment "A digital platform for social networking and content sharing (e.g., Facebook, Instagram, TikTok, Twitter, LinkedIn)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A digital platform for social networking and content sharing (e.g., Facebook, Instagram, TikTok, Twitter, LinkedIn). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:MessagingService rdf:type owl:Class ;
     rdfs:label "Messaging Service"@en ;
-    rdfs:comment "A digital service for real-time communication and messaging (e.g., WhatsApp, Telegram, Signal, Discord, Kik)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A digital service for real-time communication and messaging (e.g., WhatsApp, Telegram, Signal, Discord, Kik). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:VideoStreamingPlatform rdf:type owl:Class ;
     rdfs:label "Video Streaming Platform"@en ;
-    rdfs:comment "A platform for video content streaming and sharing (e.g., YouTube, Twitch, OnlyFans, Periscope)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A platform for video content streaming and sharing (e.g., YouTube, Twitch, OnlyFans, Periscope). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:FileHostingService rdf:type owl:Class ;
     rdfs:label "File Hosting Service"@en ;
-    rdfs:comment "A service for storing and sharing files online (e.g., Google Drive, Dropbox, OneDrive, MEGA)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A service for storing and sharing files online (e.g., Google Drive, Dropbox, OneDrive, MEGA). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:GamePlatform rdf:type owl:Class ;
     rdfs:label "Game Platform"@en ;
-    rdfs:comment "A digital platform for gaming with communication features (e.g., Xbox Live, PlayStation Network, Steam, Roblox, Minecraft)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A digital platform for gaming with communication features (e.g., Xbox Live, PlayStation Network, Steam, Roblox, Minecraft). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:DarkWebService rdf:type owl:Class ;
     rdfs:label "Dark Web Service"@en ;
-    rdfs:comment "A service accessible through anonymizing networks like Tor, often used for illegal activities."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A service accessible through anonymizing networks like Tor, often used for illegal activities. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:OnlineDatingPlatform rdf:type owl:Class ;
     rdfs:label "Online Dating Platform"@en ;
-    rdfs:comment "A platform for meeting and dating online (e.g., Tinder, Bumble, Grindr, dating websites)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A platform for meeting and dating online (e.g., Tinder, Bumble, Grindr, dating websites). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 icac-platforms:CryptocurrencyService rdf:type owl:Class ;
     rdfs:label "Cryptocurrency Service"@en ;
-    rdfs:comment "A service for cryptocurrency transactions and exchanges (e.g., Bitcoin, Coinbase, Binance)."@en ;
-    rdfs:subClassOf uco-observable:ObservableObject .
+    rdfs:comment "A service for cryptocurrency transactions and exchanges (e.g., Bitcoin, Coinbase, Binance). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
 
 # =============================================================================
-# SERVICE PROVIDER ORGANIZATION CLASSES (extending UCO Identity)
+# SERVICE PROVIDER ORGANIZATION CLASSES (extending UCO Identity with gUFO Organization)
 # =============================================================================
 
+# Service Provider Organizations as gUFO Organizations
 icac-platforms:ElectronicServiceProvider rdf:type owl:Class ;
     rdfs:label "Electronic Service Provider (ESP)"@en ;
-    rdfs:comment "An organization that provides digital services and platforms, with responsibilities for content moderation and law enforcement cooperation."@en ;
-    rdfs:subClassOf uco-identity:Organization .
+    rdfs:comment "An organization that provides digital services and platforms, with responsibilities for content moderation and law enforcement cooperation. Modeled as gUFO Organization."@en ;
+    rdfs:subClassOf uco-identity:Organization, gufo:Organization .
 
 icac-platforms:TechnicalServiceProvider rdf:type owl:Class ;
     rdfs:label "Technical Service Provider"@en ;
-    rdfs:comment "Organizations providing technical infrastructure (hosting, CDN, DNS, etc.) that may be involved in content distribution."@en ;
-    rdfs:subClassOf uco-identity:Organization .
+    rdfs:comment "Organizations providing technical infrastructure (hosting, CDN, DNS, etc.) that may be involved in content distribution. Modeled as gUFO Organization."@en ;
+    rdfs:subClassOf uco-identity:Organization, gufo:Organization .
 
 # =============================================================================
-# PLATFORM CAPABILITY CLASSES
+# PLATFORM CAPABILITY CLASSES (gUFO Object modeling)
 # =============================================================================
 
+# Platform Capabilities as gUFO Objects
 icac-platforms:ContentModerationCapability rdf:type owl:Class ;
     rdfs:label "Content Moderation Capability"@en ;
-    rdfs:comment "The ability and methods a platform uses to detect, review, and remove inappropriate content."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "The ability and methods a platform uses to detect, review, and remove inappropriate content. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
 
 icac-platforms:DataRetentionPolicy rdf:type owl:Class ;
     rdfs:label "Data Retention Policy"@en ;
-    rdfs:comment "A platform's policy for how long they retain user data and content."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "A platform's policy for how long they retain user data and content. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
 
 icac-platforms:LegalComplianceCapability rdf:type owl:Class ;
     rdfs:label "Legal Compliance Capability"@en ;
-    rdfs:comment "A platform's ability to respond to legal requests and cooperate with law enforcement."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "A platform's ability to respond to legal requests and cooperate with law enforcement. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
 
 icac-platforms:UserVerificationSystem rdf:type owl:Class ;
     rdfs:label "User Verification System"@en ;
-    rdfs:comment "Systems used by platforms to verify user identity and age."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:comment "Systems used by platforms to verify user identity and age. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
 
-# =============================================================================# PLATFORM-SPECIFIC ACTION CLASSES (extending UCO Action)# =============================================================================icac-platforms:ContentModerationAction rdf:type owl:Class ;    rdfs:label "Content Moderation Action"@en ;    rdfs:comment "An action taken by a platform to moderate content (review, remove, restrict, etc.)."@en ;    rdfs:subClassOf uco-action:Action .# =============================================================================# LARGE-SCALE PLATFORM OPERATIONS (Kidflix/Europol Framework)# =============================================================================icac-platforms:LargeScalePlatformTakedown rdf:type owl:Class ;    rdfs:label "Large Scale Platform Takedown"@en ;    rdfs:comment "Coordinated takedown of major exploitation platforms with user bases exceeding 1 million accounts, requiring specialized international coordination and mass forensic processing."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:PlatformOperation rdf:type owl:Class ;    rdfs:label "Platform Operation"@en ;    rdfs:comment "Coordinated law enforcement operation targeting specific platforms or services."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:MassUserDatabase rdf:type owl:Class ;    rdfs:label "Mass User Database"@en ;    rdfs:comment "User database analysis for platforms with massive user bases requiring specialized processing techniques and automated analysis tools."@en ;    rdfs:subClassOf uco-observable:ObservableObject .icac-platforms:UserScaleClassification rdf:type owl:Class ;    rdfs:label "User Scale Classification"@en ;    rdfs:comment "Classification system for platform size based on user base: small (<1K), medium (1K-100K), large (100K-1M), massive (1M+)."@en ;    rdfs:subClassOf uco-core:UcoObject .icac-platforms:MassUserBehaviorAnalysis rdf:type owl:Class ;    rdfs:label "Mass User Behavior Analysis"@en ;    rdfs:comment "Analysis of user behavior patterns across massive user bases for investigation prioritization and automated threat assessment."@en ;    rdfs:subClassOf uco-action:Action .icac-platforms:UserRiskClassification rdf:type owl:Class ;    rdfs:label "User Risk Classification"@en ;    rdfs:comment "Automated classification of user risk levels based on platform activity patterns, content sharing, and behavioral indicators."@en ;    rdfs:subClassOf uco-core:UcoObject .
+# =============================================================================
+# PLATFORM-SPECIFIC ACTION CLASSES (extending UCO Action with gUFO Event)
+# =============================================================================
+
+# Platform Actions as gUFO Events
+icac-platforms:ContentModerationAction rdf:type owl:Class ;
+    rdfs:label "Content Moderation Action"@en ;
+    rdfs:comment "An action taken by a platform to moderate content (review, remove, restrict, etc.). Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-platforms:AccountSuspensionAction rdf:type owl:Class ;
     rdfs:label "Account Suspension Action"@en ;
-    rdfs:comment "An action to suspend or terminate a user account due to policy violations."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "An action to suspend or terminate a user account due to policy violations. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-platforms:DataPreservationAction rdf:type owl:Class ;
     rdfs:label "Data Preservation Action"@en ;
-    rdfs:comment "An action to preserve user data in response to legal requests."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "An action to preserve user data in response to legal requests. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-platforms:LegalDataDisclosureAction rdf:type owl:Class ;
     rdfs:label "Legal Data Disclosure Action"@en ;
-    rdfs:comment "An action to disclose user data to law enforcement in response to legal process."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "An action to disclose user data to law enforcement in response to legal process. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
 
 icac-platforms:ContentHashingAction rdf:type owl:Class ;
     rdfs:label "Content Hashing Action"@en ;
-    rdfs:comment "An action by a platform to generate hashes of content for detection and matching."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:comment "An action by a platform to generate hashes of content for detection and matching. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+# =============================================================================
+# LARGE-SCALE PLATFORM OPERATIONS (Kidflix/Europol Framework - gUFO Event modeling)
+# =============================================================================
+
+# Large-Scale Operations as gUFO Events
+icac-platforms:LargeScalePlatformTakedown rdf:type owl:Class ;
+    rdfs:label "Large Scale Platform Takedown"@en ;
+    rdfs:comment "Coordinated takedown of major exploitation platforms with user bases exceeding 1 million accounts, requiring specialized international coordination and mass forensic processing. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
+
+icac-platforms:PlatformOperation rdf:type owl:Class ;
+    rdfs:label "Platform Operation"@en ;
+    rdfs:comment "Coordinated law enforcement operation targeting specific platforms or services. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    owl:equivalentClass icac-gufo:CriminalEvent .
+
+icac-platforms:MassUserBehaviorAnalysis rdf:type owl:Class ;
+    rdfs:label "Mass User Behavior Analysis"@en ;
+    rdfs:comment "Analysis of user behavior patterns across massive user bases for investigation prioritization and automated threat assessment. Modeled as gUFO Event."@en ;
+    rdfs:subClassOf uco-action:Action, gufo:Event .
+
+# Mass User Database as gUFO Objects
+icac-platforms:MassUserDatabase rdf:type owl:Class ;
+    rdfs:label "Mass User Database"@en ;
+    rdfs:comment "User database analysis for platforms with massive user bases requiring specialized processing techniques and automated analysis tools. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-observable:ObservableObject, gufo:Object .
+
+icac-platforms:UserScaleClassification rdf:type owl:Class ;
+    rdfs:label "User Scale Classification"@en ;
+    rdfs:comment "Classification system for platform size based on user base: small (<1K), medium (1K-100K), large (100K-1M), massive (1M+). Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
+
+icac-platforms:UserRiskClassification rdf:type owl:Class ;
+    rdfs:label "User Risk Classification"@en ;
+    rdfs:comment "Automated classification of user risk levels based on platform activity patterns, content sharing, and behavioral indicators. Modeled as gUFO Object."@en ;
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object .
+
+# =============================================================================
+# PLATFORM OPERATIONAL PHASES (gUFO Phase anti-rigid modeling)
+# =============================================================================
+
+# Platform Phases (gUFO Phase anti-rigid modeling)
+icac-platforms:PlatformDeploymentPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Platform Deployment Phase"@en ;
+    rdfs:comment "Phase when platform is deployed and becomes operational. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-platforms:ElectronicServiceProvider .
+
+icac-platforms:PlatformGrowthPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Platform Growth Phase"@en ;
+    rdfs:comment "Phase of platform expansion and user base growth. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-platforms:ElectronicServiceProvider .
+
+icac-platforms:PlatformModerationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Platform Moderation Phase"@en ;
+    rdfs:comment "Phase of active content moderation and policy enforcement. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-platforms:ElectronicServiceProvider .
+
+icac-platforms:PlatformInvestigationPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Platform Investigation Phase"@en ;
+    rdfs:comment "Phase when platform is under law enforcement investigation. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-platforms:ElectronicServiceProvider .
+
+icac-platforms:PlatformTakedownPhase rdf:type owl:Class, gufo:Phase ;
+    rdfs:label "Platform Takedown Phase"@en ;
+    rdfs:comment "Phase of platform takedown and shutdown operations. Modeled as anti-rigid gUFO Phase."@en ;
+    rdfs:subClassOf icac-platforms:ElectronicServiceProvider .
+
+# =============================================================================
+# PLATFORM SITUATIONS (gUFO Situation modeling)
+# =============================================================================
+
+# Platform Situations (gUFO Situation)
+icac-platforms:MassivePlatformSituation rdf:type owl:Class ;
+    rdfs:label "Massive Platform Situation"@en ;
+    rdfs:comment "Situation involving platforms with massive user bases requiring specialized investigation approaches. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+icac-platforms:MultiPlatformSituation rdf:type owl:Class ;
+    rdfs:label "Multi-Platform Situation"@en ;
+    rdfs:comment "Situation involving coordination across multiple platforms and service providers. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+icac-platforms:PlatformCooperationSituation rdf:type owl:Class ;
+    rdfs:label "Platform Cooperation Situation"@en ;
+    rdfs:comment "Situation involving cooperative efforts between platforms and law enforcement. Modeled as gUFO Situation."@en ;
+    rdfs:subClassOf gufo:Situation .
+
+# =============================================================================
+# gUFO TEMPORAL PROPERTIES
+# =============================================================================
+
+# Platform Temporal Properties
+icac-platforms:hasPlatformBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has platform begin point"@en ;
+    rdfs:comment "Temporal begin point for platform operation."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain icac-platforms:ElectronicServiceProvider ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-platforms:hasPlatformEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has platform end point"@en ;
+    rdfs:comment "Temporal end point for platform operation."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-platforms:ElectronicServiceProvider ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Platform Phase Temporal Properties
+icac-platforms:hasPhaseBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase begin point"@en ;
+    rdfs:comment "Temporal begin point for platform phase."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-platforms:hasPhaseEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has phase end point"@en ;
+    rdfs:comment "Temporal end point for platform phase."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Platform Action Temporal Properties
+icac-platforms:hasActionBeginPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has action begin point"@en ;
+    rdfs:comment "Temporal begin point for platform action."@en ;
+    rdfs:subPropertyOf gufo:hasBeginPointInXSDDateTimeStamp ;
+    rdfs:domain icac-platforms:ContentModerationAction ;
+    rdfs:range xsd:dateTimeStamp .
+
+icac-platforms:hasActionEndPoint rdf:type owl:DatatypeProperty ;
+    rdfs:label "has action end point"@en ;
+    rdfs:comment "Temporal end point for platform action."@en ;
+    rdfs:subPropertyOf gufo:hasEndPointInXSDDateTimeStamp ;
+    rdfs:domain icac-platforms:ContentModerationAction ;
+    rdfs:range xsd:dateTimeStamp .
+
+# Duration Properties
+icac-platforms:platformDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "platform duration"@en ;
+    rdfs:comment "Duration of platform operation from launch to shutdown."@en ;
+    rdfs:domain icac-platforms:ElectronicServiceProvider ;
+    rdfs:range xsd:duration .
+
+icac-platforms:phaseDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "phase duration"@en ;
+    rdfs:comment "Duration of platform phase."@en ;
+    rdfs:domain gufo:Phase ;
+    rdfs:range xsd:duration .
+
+icac-platforms:actionDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "action duration"@en ;
+    rdfs:comment "Duration of platform action."@en ;
+    rdfs:domain icac-platforms:ContentModerationAction ;
+    rdfs:range xsd:duration .
 
 # =============================================================================
 # PLATFORM PROPERTIES
@@ -504,7 +674,7 @@ icac-platforms:platformsInvestigated rdf:type owl:DatatypeProperty ;
     rdfs:label "platforms investigated"@en ;
     rdfs:comment "Number of platforms investigated in coordinated effort."@en .
 
-icac-platforms:devicesSearched rdf:type owl:DatatypeProperty ;    rdfs:domain icac-platforms:SimultaneousSearchWarrant ;    rdfs:range xsd:nonNegativeInteger ;    rdfs:label "devices searched"@en ;    rdfs:comment "Number of devices searched in simultaneous operation."@en .# =============================================================================# LARGE-SCALE PLATFORM OPERATION PROPERTIES (Kidflix/Europol Framework)# =============================================================================# Scale and User Propertiesicac-platforms:userCount rdf:type owl:DatatypeProperty ;    rdfs:label "user count"@en ;    rdfs:comment "Total number of registered users on platform (nearly 2 million for Kidflix operation)."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:operationScale rdf:type owl:DatatypeProperty ;    rdfs:label "operation scale"@en ;    rdfs:comment "Scale classification for takedown operation (local, national, international, global)."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:string .icac-platforms:millionPlusUsers rdf:type owl:DatatypeProperty ;    rdfs:label "million plus users"@en ;    rdfs:comment "Whether platform has user base exceeding one million accounts."@en ;    rdfs:domain icac-platforms:UserScaleClassification ;    rdfs:range xsd:boolean .icac-platforms:countriesInvolved rdf:type owl:DatatypeProperty ;    rdfs:label "countries involved"@en ;    rdfs:comment "Number of countries participating in coordinated platform takedown."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:evidenceVolumeTerabytes rdf:type owl:DatatypeProperty ;    rdfs:label "evidence volume terabytes"@en ;    rdfs:comment "Total volume of evidence seized in terabytes for massive platform operations."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range xsd:decimal .# Processing and Analysis Propertiesicac-platforms:automatedProcessingPercentage rdf:type owl:DatatypeProperty ;    rdfs:label "automated processing percentage"@en ;    rdfs:comment "Percentage of evidence processed through automated analysis systems."@en ;    rdfs:domain icac-platforms:MassUserBehaviorAnalysis ;    rdfs:range xsd:decimal .icac-platforms:processingTimeframeDays rdf:type owl:DatatypeProperty ;    rdfs:label "processing timeframe days"@en ;    rdfs:comment "Timeframe for processing massive user databases in days."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range xsd:nonNegativeInteger .icac-platforms:userRiskLevel rdf:type owl:DatatypeProperty ;    rdfs:label "user risk level"@en ;    rdfs:comment "Automated risk classification level (low, medium, high, critical)."@en ;    rdfs:domain icac-platforms:UserRiskClassification ;    rdfs:range xsd:string .icac-platforms:platformScale rdf:type owl:DatatypeProperty ;    rdfs:label "platform scale"@en ;    rdfs:comment "Platform size classification (small, medium, large, massive)."@en ;    rdfs:domain icac-platforms:UserScaleClassification ;    rdfs:range xsd:string .# Relationship Properties for Large-Scale Operationsicac-platforms:involvesDatabase rdf:type owl:ObjectProperty ;    rdfs:label "involves database"@en ;    rdfs:comment "Links large-scale operation to user databases analyzed."@en ;    rdfs:domain icac-platforms:LargeScalePlatformTakedown ;    rdfs:range icac-platforms:MassUserDatabase .icac-platforms:requiresAnalysis rdf:type owl:ObjectProperty ;    rdfs:label "requires analysis"@en ;    rdfs:comment "Links mass user database to behavior analysis required."@en ;    rdfs:domain icac-platforms:MassUserDatabase ;    rdfs:range icac-platforms:MassUserBehaviorAnalysis .icac-platforms:generatesClassification rdf:type owl:ObjectProperty ;    rdfs:label "generates classification"@en ;    rdfs:comment "Links behavior analysis to user risk classifications generated."@en ;    rdfs:domain icac-platforms:MassUserBehaviorAnalysis ;    rdfs:range icac-platforms:UserRiskClassification . 
+icac-platforms:devicesSearched rdf:type owl:DatatypeProperty ;    rdfs:domain icac-platforms:SimultaneousSearchWarrant ;    rdfs:range xsd:nonNegativeInteger ;    rdfs:label "devices searched"@en ;    rdfs:comment "Number of devices searched in simultaneous operation."@en .
 
 # =============================================================================
 # ANONYMOUS CHAT PLATFORM FRAMEWORK (Buffalo/Vermont Case Enhancement)

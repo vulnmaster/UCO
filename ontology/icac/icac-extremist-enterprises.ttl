@@ -13,6 +13,7 @@
 @prefix case-investigation: <https://ontology.caseontology.org/case/investigation/> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-enterprises: <https://ontology.unifiedcyberontology.org/icac/extremist-enterprises#> .
+@prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
 
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/extremist-enterprises/0.1> rdf:type owl:Ontology ;
@@ -27,7 +28,8 @@
                 <https://ontology.unifiedcyberontology.org/uco/action/> ,
                 <https://ontology.unifiedcyberontology.org/uco/role/> ,
                 <https://ontology.caseontology.org/case/> ,
-                <https://ontology.unifiedcyberontology.org/icac/0.3> .
+                <https://ontology.unifiedcyberontology.org/icac/0.3> ,
+                <https://ontology.unifiedcyberontology.org/icac/international> .
 
 # =============================================================================
 # NIHILISTIC VIOLENT EXTREMISM (NVE) FRAMEWORK CLASSES
@@ -306,35 +308,6 @@ icac-enterprises:NetworkMappingInvestigation rdf:type owl:Class ;
     rdfs:subClassOf uco-action:Action .
 
 # =============================================================================
-# INTERNATIONAL COORDINATION CLASSES
-# =============================================================================
-
-icac-enterprises:MutualLegalAssistanceTreatyProcess rdf:type owl:Class ;
-    rdfs:label "Mutual Legal Assistance Treaty Process"@en ;
-    rdfs:comment "Legal process using Mutual Legal Assistance Treaty (MLAT) for international evidence sharing and cooperation."@en ;
-    rdfs:subClassOf uco-action:Action .
-
-icac-enterprises:CrossBorderDeviceSeizure rdf:type owl:Class ;
-    rdfs:label "Cross Border Device Seizure"@en ;
-    rdfs:comment "Seizure of electronic devices across international borders with subsequent evidence sharing."@en ;
-    rdfs:subClassOf icac-enterprises:MutualLegalAssistanceTreatyProcess .
-
-icac-enterprises:InternationalEvidenceSharing rdf:type owl:Class ;
-    rdfs:label "International Evidence Sharing"@en ;
-    rdfs:comment "Sharing of evidence between countries through formal legal assistance mechanisms."@en ;
-    rdfs:subClassOf icac-enterprises:MutualLegalAssistanceTreatyProcess .
-
-icac-enterprises:CrossJurisdictionalInvestigation rdf:type owl:Class ;
-    rdfs:label "Cross Jurisdictional Investigation"@en ;
-    rdfs:comment "Investigation spanning multiple jurisdictions and countries targeting international networks."@en ;
-    rdfs:subClassOf uco-action:Action .
-
-icac-enterprises:InternationalNetworkDisruption rdf:type owl:Class ;
-    rdfs:label "International Network Disruption"@en ;
-    rdfs:comment "Coordinated international effort to disrupt extremist child exploitation networks."@en ;
-    rdfs:subClassOf icac-enterprises:CrossJurisdictionalInvestigation .
-
-# =============================================================================
 # ENTERPRISE PROPERTIES
 # =============================================================================
 
@@ -538,31 +511,6 @@ icac-enterprises:networkMappingCompleteness rdf:type owl:DatatypeProperty ;
     rdfs:domain icac-enterprises:NetworkMappingInvestigation ;
     rdfs:range xsd:decimal .
 
-# International Cooperation Properties
-icac-enterprises:treatyMechanism rdf:type owl:DatatypeProperty ;
-    rdfs:label "treaty mechanism"@en ;
-    rdfs:comment "Specific treaty mechanism used for international cooperation (MLAT, extradition, informal_cooperation)."@en ;
-    rdfs:domain icac-enterprises:MutualLegalAssistanceTreatyProcess ;
-    rdfs:range xsd:string .
-
-icac-enterprises:cooperationResponseTime rdf:type owl:DatatypeProperty ;
-    rdfs:label "cooperation response time"@en ;
-    rdfs:comment "Response time for international cooperation requests in days."@en ;
-    rdfs:domain icac-enterprises:InternationalEvidenceSharing ;
-    rdfs:range xsd:decimal .
-
-icac-enterprises:evidenceSharingVolume rdf:type owl:DatatypeProperty ;
-    rdfs:label "evidence sharing volume"@en ;
-    rdfs:comment "Volume of evidence shared internationally in gigabytes."@en ;
-    rdfs:domain icac-enterprises:InternationalEvidenceSharing ;
-    rdfs:range xsd:decimal .
-
-icac-enterprises:disruptionEffectiveness rdf:type owl:DatatypeProperty ;
-    rdfs:label "disruption effectiveness"@en ;
-    rdfs:comment "Effectiveness of network disruption efforts (low, moderate, high, complete)."@en ;
-    rdfs:domain icac-enterprises:InternationalNetworkDisruption ;
-    rdfs:range xsd:string .
-
 # =============================================================================
 # ENTERPRISE RELATIONSHIPS
 # =============================================================================
@@ -715,29 +663,4 @@ icac-enterprises:identifiesNetworkMember rdf:type owl:ObjectProperty ;
     rdfs:label "identifies network member"@en ;
     rdfs:comment "Links investigation to network members identified."@en ;
     rdfs:domain icac-enterprises:IdentityCorrelationAnalysis ;
-    rdfs:range uco-identity:Person .
-
-# International Cooperation Relationships
-icac-enterprises:coordinatesInternationalEffort rdf:type owl:ObjectProperty ;
-    rdfs:label "coordinates international effort"@en ;
-    rdfs:comment "Links investigation to international coordination efforts."@en ;
-    rdfs:domain icac-enterprises:CrossJurisdictionalInvestigation ;
-    rdfs:range icac-enterprises:MutualLegalAssistanceTreatyProcess .
-
-icac-enterprises:sharesEvidenceInternationally rdf:type owl:ObjectProperty ;
-    rdfs:label "shares evidence internationally"@en ;
-    rdfs:comment "Links evidence sharing to evidence shared across borders."@en ;
-    rdfs:domain icac-enterprises:InternationalEvidenceSharing ;
-    rdfs:range uco-observable:ObservableObject .
-
-icac-enterprises:disruptsNetwork rdf:type owl:ObjectProperty ;
-    rdfs:label "disrupts network"@en ;
-    rdfs:comment "Links disruption effort to network being disrupted."@en ;
-    rdfs:domain icac-enterprises:InternationalNetworkDisruption ;
-    rdfs:range icac-enterprises:NihilisticViolentExtremismNetwork .
-
-icac-enterprises:resultsInSeizure rdf:type owl:ObjectProperty ;
-    rdfs:label "results in seizure"@en ;
-    rdfs:comment "Links international cooperation to device seizures performed."@en ;
-    rdfs:domain icac-enterprises:MutualLegalAssistanceTreatyProcess ;
-    rdfs:range icac-enterprises:CrossBorderDeviceSeizure . 
+    rdfs:range uco-identity:Person . 

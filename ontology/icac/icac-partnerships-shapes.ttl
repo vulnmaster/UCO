@@ -1,0 +1,643 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/uco/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-partnerships: <https://ontology.unifiedcyberontology.org/icac/partnerships#> .
+@prefix icac-partnerships-shapes: <https://ontology.unifiedcyberontology.org/icac/partnerships/shapes#> .
+
+# =============================================================================
+# PUBLIC-PRIVATE PARTNERSHIP SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:PublicPrivatePartnershipShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:PublicPrivatePartnership ;
+    rdfs:label "Public Private Partnership Shape"@en ;
+    rdfs:comment "Validation shape for public-private partnership instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:partnerCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 2 ;
+        sh:maxInclusive 100 ;
+        sh:message "Partnership must have between 2 and 100 partners."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:partnershipScope ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "local" "national" "regional" "global" ) ;
+        sh:message "Partnership scope must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:partnershipDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1.0 ;
+        sh:maxInclusive 120.0 ;
+        sh:message "Partnership duration must be between 1 and 120 months."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:formalAgreement ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Partnership must specify if formal agreement exists."@en
+    ] .
+
+icac-partnerships-shapes:MultiStakeholderInitiativeShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:MultiStakeholderInitiative ;
+    rdfs:label "Multi Stakeholder Initiative Shape"@en ;
+    rdfs:comment "Validation shape for multi-stakeholder initiative instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:partnerCount ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 3 ;
+        sh:maxInclusive 50 ;
+        sh:message "Multi-stakeholder initiative must have between 3 and 50 partners."@en
+    ] .
+
+icac-partnerships-shapes:TechIndustryCooperationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:TechIndustryCooperation ;
+    rdfs:label "Tech Industry Cooperation Shape"@en ;
+    rdfs:comment "Validation shape for tech industry cooperation instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:formalAgreement ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Tech industry cooperation must specify if formal agreement exists."@en
+    ] .
+
+# =============================================================================
+# NATIONAL INITIATIVE PROGRAM SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:NationalInitiativeProgramShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:NationalInitiativeProgram ;
+    rdfs:label "National Initiative Program Shape"@en ;
+    rdfs:comment "Validation shape for national initiative program instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:initiativeName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Initiative name must be between 3 and 100 characters."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:launchedDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "National initiative must have a launch date."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:programScope ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "federal" "state_coordination" "local_support" "multi_jurisdictional" ) ;
+        sh:message "Program scope must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:leadAgency ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "DOJ" "DHS" "FBI" "ICE" "USAO" "ATF" ) ;
+        sh:message "Lead agency must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:casesProcessed ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Cases processed must be between 0 and 10,000."@en
+    ] .
+
+icac-partnerships-shapes:ProjectSafeChildhoodCaseShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:ProjectSafeChildhoodCase ;
+    rdfs:label "Project Safe Childhood Case Shape"@en ;
+    rdfs:comment "Validation shape for Project Safe Childhood case instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Case label should be between 5 and 200 characters when provided."@en
+    ] .
+
+# =============================================================================
+# CROWDSOURCING INVESTIGATION SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:CrowdsourcingInvestigationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:CrowdsourcingInvestigation ;
+    rdfs:label "Crowdsourcing Investigation Shape"@en ;
+    rdfs:comment "Validation shape for crowdsourcing investigation instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:publicTipsReceived ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 100000 ;
+        sh:message "Public tips received must be between 0 and 100,000."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:crowdsourcingPlatform ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "website" "social_media" "forums" "mobile_app" "specialized_platform" ) ;
+        sh:message "Crowdsourcing platform must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:ObjectIdentificationRequestShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:ObjectIdentificationRequest ;
+    rdfs:label "Object Identification Request Shape"@en ;
+    rdfs:comment "Validation shape for object identification request instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:objectsToIdentify ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 1000 ;
+        sh:message "Objects to identify must be between 1 and 1,000."@en
+    ] ;
+    sh:property [
+        sh:path icac-partnerships:identificationSuccessRate ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "Identification success rate must be between 0.0 and 1.0."@en
+    ] .
+
+icac-partnerships-shapes:GeolocationRequestShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:GeolocationRequest ;
+    rdfs:label "Geolocation Request Shape"@en ;
+    rdfs:comment "Validation shape for geolocation request instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:objectsToIdentify ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 500 ;
+        sh:message "Locations to identify must be between 1 and 500."@en
+    ] .
+
+icac-partnerships-shapes:CommunityAnalysisShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:CommunityAnalysis ;
+    rdfs:label "Community Analysis Shape"@en ;
+    rdfs:comment "Validation shape for community analysis instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:volunteerHours ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1.0 ;
+        sh:maxInclusive 10000.0 ;
+        sh:message "Volunteer hours must be between 1.0 and 10,000.0."@en
+    ] .
+
+# =============================================================================
+# INFORMATION SHARING FRAMEWORK SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:InformationSharingFrameworkShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:InformationSharingFramework ;
+    rdfs:label "Information Sharing Framework Shape"@en ;
+    rdfs:comment "Validation shape for information sharing framework instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:sharingFrequency ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "real_time" "daily" "weekly" "monthly" "on_demand" ) ;
+        sh:message "Sharing frequency must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:DataSharingAgreementShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:DataSharingAgreement ;
+    rdfs:label "Data Sharing Agreement Shape"@en ;
+    rdfs:comment "Validation shape for data sharing agreement instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:dataSharingLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "metadata_only" "hash_values" "intelligence_products" "full_data" ) ;
+        sh:message "Data sharing level must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:TechnicalIntegrationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:TechnicalIntegration ;
+    rdfs:label "Technical Integration Shape"@en ;
+    rdfs:comment "Validation shape for technical integration instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:automationLevel ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "manual" "semi_automated" "fully_automated" ) ;
+        sh:message "Automation level must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:HashSharingProtocolShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:HashSharingProtocol ;
+    rdfs:label "Hash Sharing Protocol Shape"@en ;
+    rdfs:comment "Validation shape for hash sharing protocol instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:hashDatabaseSize ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.1 ;
+        sh:maxInclusive 1000.0 ;
+        sh:message "Hash database size must be between 0.1 and 1,000.0 million entries."@en
+    ] .
+
+# =============================================================================
+# TECHNOLOGY COOPERATION SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:TechnologyCooperationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:TechnologyCooperation ;
+    rdfs:label "Technology Cooperation Shape"@en ;
+    rdfs:comment "Validation shape for technology cooperation instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:technologyMaturity ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "experimental" "pilot" "production" "mature" ) ;
+        sh:message "Technology maturity must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:ContentDetectionCooperationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:ContentDetectionCooperation ;
+    rdfs:label "Content Detection Cooperation Shape"@en ;
+    rdfs:comment "Validation shape for content detection cooperation instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:detectionAccuracy ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.5 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "Detection accuracy must be between 0.5 and 1.0."@en
+    ] .
+
+icac-partnerships-shapes:PlatformMonitoringShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:PlatformMonitoring ;
+    rdfs:label "Platform Monitoring Shape"@en ;
+    rdfs:comment "Validation shape for platform monitoring instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:platformsCovered ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 1000 ;
+        sh:message "Platforms covered must be between 1 and 1,000."@en
+    ] .
+
+icac-partnerships-shapes:ToolDevelopmentShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:ToolDevelopment ;
+    rdfs:label "Tool Development Shape"@en ;
+    rdfs:comment "Validation shape for tool development instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:developmentInvestment ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 10000.0 ;
+        sh:maxInclusive 100000000.0 ;
+        sh:message "Development investment must be between $10,000 and $100,000,000."@en
+    ] .
+
+# =============================================================================
+# COORDINATION MECHANISM SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:CoordinationMechanismShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:CoordinationMechanism ;
+    rdfs:label "Coordination Mechanism Shape"@en ;
+    rdfs:comment "Validation shape for coordination mechanism instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Coordination mechanism label should be between 5 and 200 characters when provided."@en
+    ] .
+
+icac-partnerships-shapes:RegularMeetingShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:RegularMeeting ;
+    rdfs:label "Regular Meeting Shape"@en ;
+    rdfs:comment "Validation shape for regular meeting instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:meetingFrequency ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ( "weekly" "monthly" "quarterly" "annual" "ad_hoc" ) ;
+        sh:message "Meeting frequency must be from the allowed list."@en
+    ] .
+
+icac-partnerships-shapes:EmergencyCoordinationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:EmergencyCoordination ;
+    rdfs:label "Emergency Coordination Shape"@en ;
+    rdfs:comment "Validation shape for emergency coordination instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:responseTime ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.25 ;
+        sh:maxInclusive 72.0 ;
+        sh:message "Emergency response time must be between 0.25 and 72.0 hours."@en
+    ] .
+
+icac-partnerships-shapes:JointOperationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:JointOperation ;
+    rdfs:label "Joint Operation Shape"@en ;
+    rdfs:comment "Validation shape for joint operation instances."@en ;
+    sh:property [
+        sh:path icac-partnerships:operationSuccess ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "Operation success rate must be between 0.0 and 1.0."@en
+    ] .
+
+# =============================================================================
+# PARTNER ROLE SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:PartnerRoleShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:PartnerRole ;
+    rdfs:label "Partner Role Shape"@en ;
+    rdfs:comment "Validation shape for partner role instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Partner role label should be between 3 and 100 characters when provided."@en
+    ] .
+
+icac-partnerships-shapes:LawEnforcementPartnerShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:LawEnforcementPartner ;
+    rdfs:label "Law Enforcement Partner Shape"@en ;
+    rdfs:comment "Validation shape for law enforcement partner instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Law enforcement partner label should be between 3 and 100 characters when provided."@en
+    ] .
+
+icac-partnerships-shapes:TechnologyPartnerShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:TechnologyPartner ;
+    rdfs:label "Technology Partner Shape"@en ;
+    rdfs:comment "Validation shape for technology partner instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "Technology partner label should be between 3 and 100 characters when provided."@en
+    ] .
+
+icac-partnerships-shapes:NGOPartnerShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:NGOPartner ;
+    rdfs:label "NGO Partner Shape"@en ;
+    rdfs:comment "Validation shape for NGO partner instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 3 ;
+        sh:maxLength 100 ;
+        sh:message "NGO partner label should be between 3 and 100 characters when provided."@en
+    ] .
+
+# =============================================================================
+# OBJECT PROPERTY SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:IncludesPartnerShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:includesPartner ;
+    sh:name "includes partner" ;
+    sh:description "Links partnership to participating organizations" ;
+    sh:class uco-identity:Organization ;
+    sh:minCount 2 .
+
+icac-partnerships-shapes:HasRoleShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:hasRole ;
+    sh:name "has role" ;
+    sh:description "Links partner organization to their role in the partnership" ;
+    sh:class icac-partnerships:PartnerRole ;
+    sh:minCount 1 .
+
+icac-partnerships-shapes:CoordinatedByShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:coordinatedBy ;
+    sh:name "coordinated by" ;
+    sh:description "Links partnership activities to coordinating organization" ;
+    sh:class uco-identity:Organization ;
+    sh:minCount 1 .
+
+icac-partnerships-shapes:GovernedByShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:governedBy ;
+    sh:name "governed by" ;
+    sh:description "Links partnership to information sharing frameworks governing it" ;
+    sh:class icac-partnerships:InformationSharingFramework ;
+    sh:minCount 0 .
+
+icac-partnerships-shapes:SolicitsHelpShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:solicitsHelp ;
+    sh:name "solicits help" ;
+    sh:description "Links organization to crowdsourcing investigations they conduct" ;
+    sh:class icac-partnerships:CrowdsourcingInvestigation ;
+    sh:minCount 0 .
+
+icac-partnerships-shapes:ParticipatesInDevelopmentShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:participatesInDevelopment ;
+    sh:name "participates in development" ;
+    sh:description "Links technology partners to development projects they participate in" ;
+    sh:class icac-partnerships:ToolDevelopment ;
+    sh:minCount 0 .
+
+icac-partnerships-shapes:CoordinatedThroughShape rdf:type sh:PropertyShape ;
+    sh:path icac-partnerships:coordinatedThrough ;
+    sh:name "coordinated through" ;
+    sh:description "Links partnership activities to coordination mechanisms used" ;
+    sh:class icac-partnerships:CoordinationMechanism ;
+    sh:minCount 1 .
+
+# =============================================================================
+# CROSS-REFERENCE VALIDATION SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:PartnershipConsistencyShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:PublicPrivatePartnership ;
+    rdfs:label "Partnership Consistency Shape"@en ;
+    rdfs:comment "Validates consistency between partnership characteristics and participating organizations."@en ;
+    sh:sparql [
+        sh:message "Partnership must include at least the minimum number of partners specified in partnerCount."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-partnerships" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/partnerships#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-partnerships:partnerCount ?count .
+                {
+                    SELECT $this (COUNT(?partner) AS ?actualCount)
+                    WHERE {
+                        $this icac-partnerships:includesPartner ?partner .
+                    }
+                    GROUP BY $this
+                }
+                FILTER (?actualCount < ?count)
+            }
+        """
+    ] .
+
+icac-partnerships-shapes:TechCooperationValidityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:TechIndustryCooperation ;
+    rdfs:label "Tech Cooperation Validity Shape"@en ;
+    rdfs:comment "Validates that tech industry cooperation includes at least one technology partner."@en ;
+    sh:sparql [
+        sh:message "Tech industry cooperation must include at least one technology partner."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-partnerships" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/partnerships#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a icac-partnerships:TechIndustryCooperation .
+                FILTER NOT EXISTS {
+                    $this icac-partnerships:includesPartner ?org .
+                    ?org icac-partnerships:hasRole icac-partnerships:TechnologyPartner .
+                }
+            }
+        """
+    ] .
+
+icac-partnerships-shapes:CrowdsourcingEffectivenessShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:ObjectIdentificationRequest ;
+    rdfs:label "Crowdsourcing Effectiveness Shape"@en ;
+    rdfs:comment "Validates crowdsourcing effectiveness metrics."@en ;
+    sh:sparql [
+        sh:message "Object identification requests with high success rates should have received public tips."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-partnerships" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/partnerships#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-partnerships:identificationSuccessRate ?rate .
+                FILTER (?rate > 0.5)
+                FILTER NOT EXISTS {
+                    ?investigation icac-partnerships:generatesRequests $this ;
+                                   icac-partnerships:publicTipsReceived ?tips .
+                    FILTER (?tips > 0)
+                }
+            }
+        """
+    ] .
+
+# =============================================================================
+# DATA QUALITY SHAPES
+# =============================================================================
+
+icac-partnerships-shapes:DataQualityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:PublicPrivatePartnership ;
+    rdfs:label "Data Quality Shape"@en ;
+    rdfs:comment "Validates data quality for partnership instances."@en ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 5 ;
+        sh:maxLength 200 ;
+        sh:message "Partnership label should be between 5 and 200 characters when provided."@en
+    ] ;
+    sh:property [
+        sh:path rdfs:comment ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:minLength 10 ;
+        sh:maxLength 1000 ;
+        sh:message "Partnership comment should be between 10 and 1000 characters when provided."@en
+    ] .
+
+icac-partnerships-shapes:NationalInitiativeDataQualityShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-partnerships:NationalInitiativeProgram ;
+    rdfs:label "National Initiative Data Quality Shape"@en ;
+    rdfs:comment "Validates data quality for national initiative program instances."@en ;
+    sh:sparql [
+        sh:message "National initiative programs should have realistic case processing numbers relative to their duration."@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-partnerships" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/partnerships#"^^xsd:anyURI ;
+            ]
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-partnerships:casesProcessed ?cases ;
+                      icac-partnerships:launchedDate ?launched .
+                BIND (NOW() AS ?now)
+                BIND ((?now - ?launched) / (365.25 * 24 * 60 * 60) AS ?yearsActive)
+                BIND (?cases / ?yearsActive AS ?casesPerYear)
+                FILTER (?casesPerYear > 5000)
+            }
+        """
+    ] . 

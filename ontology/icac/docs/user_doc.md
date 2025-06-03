@@ -6,6 +6,7 @@
 - Basic understanding of RDF and ontologies
 - Familiarity with Turtle syntax
 - Understanding of UCO (Unified Cyber Ontology)
+- **NEW**: Understanding of gUFO (Unified Foundational Ontology) concepts
 - Python 3.9+ for validation tools
 
 ### Installation
@@ -23,11 +24,31 @@ pip install -r requirements.txt
 # pyshacl>=0.20.0
 # robotframework>=6.1.1
 # robotframework-rdflib>=0.1.0
+# scikit-learn>=1.3.0  # NEW: For AI integration
+# networkx>=3.0        # NEW: For network analysis
 ```
 
 3. Start the validation server:
 ```bash
 docker compose -f docker-compose.yaml up -d
+```
+
+4. **NEW**: Load gUFO-enhanced ontologies:
+```bash
+# Load core gUFO integration
+curl -X POST http://localhost:3030/icac/data \
+  --data-binary @icac-core-gufo.ttl \
+  --header "Content-Type: text/turtle"
+
+# Load temporal framework
+curl -X POST http://localhost:3030/icac/data \
+  --data-binary @icac-temporal-gufo.ttl \
+  --header "Content-Type: text/turtle"
+
+# Load integration strategy
+curl -X POST http://localhost:3030/icac/data \
+  --data-binary @icac-gufo-integration-strategy.ttl \
+  --header "Content-Type: text/turtle"
 ```
 
 ## Core Concepts
@@ -71,7 +92,110 @@ hotline:action-001 a hotline:ReportReviewAction ;
     hotline:endTime "2024-03-20T10:10:00Z"^^xsd:dateTime .
 ```
 
-### 4. Athletic Coaching Exploitation
+### 4. **NEW: gUFO-Enhanced Investigation Modeling**
+
+The ICAC ontology family now includes comprehensive gUFO integration for enhanced semantic precision and temporal modeling.
+
+#### 4.1 Investigation Phases with gUFO
+
+```turtle
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+
+# Investigation with gUFO phases
+example:Investigation001 rdf:type icac-gufo:Investigation ;
+    icac-gufo:inPhase example:ResolutionPhase001 ;
+    icac-gufo:hasPhase example:InitialPhase001, example:AnalysisPhase001 .
+
+# Initial phase with temporal constraints
+example:InitialPhase001 rdf:type icac-gufo:InitialPhase ;
+    icac-gufo:hasPhaseBeginPoint "2025-01-01T08:00:00Z"^^xsd:dateTimeStamp ;
+    icac-gufo:hasPhaseEndPoint "2025-01-03T17:00:00Z"^^xsd:dateTimeStamp ;
+    icac-temporal:phaseDuration "P2DT9H"^^xsd:duration ;
+    icac-temporal:phaseEfficiency "1.2"^^xsd:decimal .
+
+# Analysis phase with dependencies
+example:AnalysisPhase001 rdf:type icac-gufo:AnalysisPhase ;
+    icac-temporal:hasPrerequisitePhase example:InitialPhase001 ;
+    icac-gufo:hasPhaseBeginPoint "2025-01-03T17:00:00Z"^^xsd:dateTimeStamp .
+```
+
+#### 4.2 Enhanced Role Modeling with Anti-Rigidity
+
+```turtle
+# Person with multiple roles (prevented conflicts)
+example:Witness_Parent icac-gufo:playsRole example:WitnessRole001 ;
+    icac-gufo:playsRole example:InformantRole001 .
+
+# Investigation role with temporal boundaries
+example:InvestigatorRole001 rdf:type icac-gufo:InvestigatorRole ;
+    icac-gufo:hasRoleBeginPoint "2025-01-01T08:00:00Z"^^xsd:dateTimeStamp ;
+    icac-gufo:participatesInInvestigation example:Investigation001 .
+
+# Role conflict prevention (automatic validation)
+# This would be INVALID and caught by gUFO validation:
+# example:Person001 icac-gufo:playsRole example:VictimRole001 ;
+#                   icac-gufo:playsRole example:OffenderRole001 .  # CONFLICT!
+```
+
+#### 4.3 Event vs Situation Distinction
+
+```turtle
+# Concrete investigation actions as Events
+example:SearchWarrantExecution001 rdf:type icac-gufo:InvestigationEvent ;
+    rdf:type gufo:Event ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-05T06:00:00Z"^^xsd:dateTimeStamp ;
+    gufo:hasEndPointInXSDDateTimeStamp "2025-01-05T08:30:00Z"^^xsd:dateTimeStamp .
+
+# Ongoing investigation state as Situation
+example:ActiveInvestigationSituation001 rdf:type icac-gufo:ActiveInvestigationSituation ;
+    rdf:type gufo:Situation ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-01T08:00:00Z"^^xsd:dateTimeStamp .
+```
+
+#### 4.4 Temporal Investigation Lifecycle
+
+```turtle
+@prefix icac-temporal: <https://ontology.unifiedcyberontology.org/icac/temporal#> .
+
+# Investigation with suspension/resumption
+example:Investigation002 rdf:type icac-gufo:Investigation ;
+    icac-temporal:hasTimeToResolution "P45D"^^xsd:duration ;
+    icac-temporal:hasActiveDuration "P38D"^^xsd:duration ;
+    icac-temporal:hasSuspendedDuration "P7D"^^xsd:duration ;
+    icac-temporal:urgencyLevel "4"^^xsd:nonNegativeInteger .
+
+# Suspension event
+example:Suspension001 rdf:type icac-temporal:SuspensionEvent ;
+    icac-temporal:suspends example:Investigation002 ;
+    icac-temporal:suspensionReason "pending_court_order" ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-15T16:00:00Z"^^xsd:dateTimeStamp .
+
+# Resumption event  
+example:Resumption001 rdf:type icac-temporal:ResumptionEvent ;
+    icac-temporal:resumes example:Investigation002 ;
+    icac-temporal:resumptionTrigger "court_order_received" ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-22T09:00:00Z"^^xsd:dateTimeStamp .
+```
+
+#### 4.5 Multi-Jurisdiction Coordination
+
+```turtle
+# Complex multi-jurisdiction scenario
+example:MultiJurisdictionCoordination001 rdf:type icac-temporal:MultiJurisdictionCoordinationSituation ;
+    rdf:type gufo:Situation ;
+    icac-temporal:coordinatesInvestigations example:Investigation001, example:Investigation003 ;
+    icac-temporal:involvesJurisdictions "US-CA", "US-TX", "CA-ON" ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-10T14:00:00Z"^^xsd:dateTimeStamp .
+
+# Synchronization event
+example:JurisdictionSync001 rdf:type icac-temporal:JurisdictionSynchronizationEvent ;
+    icac-temporal:synchronizes example:MultiJurisdictionCoordination001 ;
+    icac-temporal:syncType "evidence_sharing" ;
+    gufo:hasBeginPointInXSDDateTimeStamp "2025-01-12T10:00:00Z"^^xsd:dateTimeStamp .
+```
+
+### 5. Athletic Coaching Exploitation
 The ontology includes comprehensive modeling of athletic coaching exploitation patterns.
 
 ```turtle
@@ -122,6 +246,27 @@ Context files live in `/contexts/`, versioned alongside ontology:
     "@type": "ReporterRole",
     "isAnonymous": true
   }
+}
+```
+
+#### 1.1 **NEW: gUFO-Enhanced JSON-LD Context**
+
+```json
+{
+  "@context": [
+    "contexts/icac-core.jsonld",
+    "contexts/icac-gufo.jsonld"
+  ],
+  "@type": "Investigation",
+  "inPhase": {
+    "@type": "InitialPhase",
+    "hasPhaseBeginPoint": "2025-01-01T08:00:00Z",
+    "phaseDuration": "P2DT9H"
+  },
+  "hasRole": [{
+    "@type": "InvestigatorRole",
+    "hasRoleBeginPoint": "2025-01-01T08:00:00Z"
+  }]
 }
 ```
 
@@ -199,18 +344,123 @@ WHERE {
 }
 ```
 
-#### 2.2 Write Operations
+#### 2.2 **NEW: gUFO-Enhanced SPARQL Queries**
+
 ```sparql
-# Mark Report as Closed
-INSERT {
-    ?report hotline:status hotline:status-closed ;
-            hotline:closedAt ?now .
+# Investigation Phase Performance Analytics
+PREFIX icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#>
+PREFIX icac-temporal: <https://ontology.unifiedcyberontology.org/icac/temporal#>
+PREFIX gufo: <http://purl.org/nemo/gufo#>
+
+SELECT ?phase_type ?avg_duration ?efficiency_score ?case_count WHERE {
+  {
+    SELECT ?phase_type 
+           (AVG(?duration_hours) as ?avg_duration)
+           (AVG(?efficiency) as ?efficiency_score)
+           (COUNT(?phase) as ?case_count) WHERE {
+      ?phase rdf:type ?phase_type ;
+             icac-gufo:phaseDuration ?duration ;
+             icac-temporal:phaseEfficiency ?efficiency .
+      
+      # Convert duration to hours for analysis
+      BIND(
+        IF(CONTAINS(STR(?duration), "PT"), 
+           xsd:decimal(REPLACE(REPLACE(STR(?duration), "PT", ""), "H.*", "")),
+           xsd:decimal(REPLACE(REPLACE(STR(?duration), "P", ""), "D.*", "")) * 24
+        ) as ?duration_hours
+      )
+      
+      FILTER(?phase_type IN (
+        icac-gufo:InitialPhase, icac-gufo:AnalysisPhase, 
+        icac-gufo:LegalProcessPhase, icac-gufo:EvidencePhase,
+        icac-gufo:ResolutionPhase
+      ))
+    }
+    GROUP BY ?phase_type
+  }
 }
-WHERE {
-    ?report a hotline:HotlineReport ;
-            hotline:status hotline:status-in-progress .
-    BIND(NOW() as ?now)
+ORDER BY ?avg_duration
+
+# Role Conflict Detection
+SELECT ?person ?conflicting_roles ?investigation ?conflict_severity WHERE {
+  ?person icac-gufo:playsRole ?role1 ;
+          icac-gufo:playsRole ?role2 .
+  
+  ?role1 icac-gufo:participatesInInvestigation ?investigation .
+  ?role2 icac-gufo:participatesInInvestigation ?investigation .
+  
+  # Detect conflicting role combinations
+  FILTER(
+    (?role1 = icac-gufo:VictimRole && ?role2 = icac-gufo:OffenderRole) ||
+    (?role1 = icac-gufo:OffenderRole && ?role2 = icac-gufo:VictimRole) ||
+    (?role1 = icac-gufo:InvestigatorRole && ?role2 = icac-gufo:OffenderRole)
+  )
+  
+  BIND(CONCAT(STR(?role1), " + ", STR(?role2)) as ?conflicting_roles)
+  BIND("CRITICAL" as ?conflict_severity)
 }
+
+# Temporal Investigation Pattern Analysis
+SELECT ?pattern_type ?frequency ?avg_success_rate WHERE {
+  {
+    SELECT ?pattern_type 
+           (COUNT(?inv) as ?frequency)
+           (AVG(?completion_rate) as ?avg_success_rate) WHERE {
+      
+      ?inv rdf:type icac-gufo:Investigation ;
+           icac-temporal:hasTimeToResolution ?resolution_time ;
+           icac-gufo:hasPhase ?phase .
+      
+      ?phase icac-temporal:phaseCompletionRate ?completion_rate .
+      
+      # Convert duration to days
+      BIND(xsd:decimal(REPLACE(REPLACE(STR(?resolution_time), "P", ""), "D.*", "")) as ?total_duration)
+      
+      # Classify investigation patterns
+      BIND(
+        IF(?total_duration <= 30, "Fast Track (≤30 days)",
+        IF(?total_duration <= 90, "Standard (31-90 days)",
+        IF(?total_duration <= 180, "Extended (91-180 days)",
+        "Complex (>180 days)"))) as ?pattern_type
+      )
+    }
+    GROUP BY ?pattern_type
+  }
+}
+ORDER BY ?avg_success_rate
+
+# Advanced Multi-Jurisdiction Analytics
+SELECT ?coordination_type ?jurisdiction_count ?avg_duration ?success_rate WHERE {
+  {
+    SELECT ?coordination_type 
+           (AVG(?jurisdiction_count) as ?jurisdiction_count)
+           (AVG(?duration_days) as ?avg_duration)
+           (AVG(?completion_rate) as ?success_rate) WHERE {
+      
+      ?situation rdf:type icac-temporal:MultiJurisdictionCoordinationSituation ;
+                 gufo:hasBeginPointInXSDDateTimeStamp ?begin ;
+                 gufo:hasEndPointInXSDDateTimeStamp ?end .
+      
+      ?investigation icac-temporal:hasTimeToResolution ?total_time ;
+                     icac-gufo:hasPhase ?phase .
+      
+      ?phase icac-temporal:phaseCompletionRate ?completion_rate .
+      
+      # Calculate coordination duration
+      BIND((xsd:dateTime(?end) - xsd:dateTime(?begin)) / xsd:dayTimeDuration("P1D") as ?duration_days)
+      
+      # Classify coordination type by complexity
+      BIND(
+        IF(?duration_days <= 7, "Bi-Jurisdictional",
+        IF(?duration_days <= 21, "Multi-State",
+        IF(?duration_days <= 45, "Regional",
+        "National/International"))) as ?coordination_type
+      )
+    }
+    GROUP BY ?coordination_type
+  }
+}
+ORDER BY ?jurisdiction_count
 ```
 
 ## Comprehensive Usage Examples

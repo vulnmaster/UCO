@@ -8,14 +8,18 @@
 @prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
 @prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
 @prefix uco-role: <https://ontology.unifiedcyberontology.org/uco/role#> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable#> .
 
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix icac-gufo: <https://ontology.unifiedcyberontology.org/icac/gufo#> .
 
 <https://ontology.unifiedcyberontology.org/icac/international> rdf:type owl:Ontology ;
-    rdfs:label "ICAC International Coordination Ontology"@en ;
-    rdfs:comment "An ontology for modeling international coordination mechanisms in child protection, cross-border investigations, and global partnerships based on ICMEC frameworks serving 120+ countries."@en ;
-    owl:versionInfo "0.1.0" .
+    rdfs:label "ICAC International Cooperation Ontology"@en ;
+    rdfs:comment "An ontology for modeling international cooperation, cross-border investigations, diplomatic protocols, and multilateral frameworks in Internet Crimes Against Children cases with gUFO foundational ontology enhancements for improved semantic precision, temporal modeling, and validation capabilities."@en ;
+    owl:versionInfo "0.1.0" ;
+    owl:imports <http://purl.org/nemo/gufo> .
 
 # =============================================================================
 # INTERNATIONAL PARTNERSHIP FRAMEWORK
@@ -71,6 +75,16 @@ icac-international:GlobalCaseTracking rdf:type owl:Class ;
     rdfs:comment "System for tracking cases across multiple jurisdictions."@en .
 
 icac-international:InternationalReferral rdf:type owl:Class ;    rdfs:subClassOf uco-action:Action ;    rdfs:label "International Referral"@en ;    rdfs:comment "Referral of cases or information to international partners."@en .# SA JACET-inspired Live Streaming Operations  icac-international:LiveStreamingInvestigation rdf:type owl:Class ;    rdfs:subClassOf icac-international:CrossBorderInvestigation ;    rdfs:label "Live Streaming Investigation"@en ;    rdfs:comment "Investigation involving live streaming of child abuse across international borders (e.g., Philippines operations)."@en .icac-international:DistanceChildAbuse rdf:type owl:Class ;    rdfs:subClassOf icac-international:CrossBorderOperation ;    rdfs:label "Distance Child Abuse"@en ;    rdfs:comment "Child abuse ordered and instructed remotely across international borders via online platforms."@en .icac-international:InstructedAbuseOperation rdf:type owl:Class ;    rdfs:subClassOf icac-international:DistanceChildAbuse ;    rdfs:label "Instructed Abuse Operation"@en ;    rdfs:comment "Investigation of suspects ordering and instructing live child abuse viewed online from another country."@en .icac-international:OverseasVictimCoordination rdf:type owl:Class ;    rdfs:subClassOf icac-international:InternationalReferral ;    rdfs:label "Overseas Victim Coordination"@en ;    rdfs:comment "Coordination for identifying and assisting child victims located in foreign countries."@en .# NCMEC Integration (based on WA case)icac-international:NCMECReporting rdf:type owl:Class ;    rdfs:subClassOf icac-international:InternationalReferral ;    rdfs:label "NCMEC Reporting"@en ;    rdfs:comment "Reporting mechanism from US National Center for Missing and Exploited Children to international partners."@en .icac-international:USAustraliaCoordination rdf:type owl:Class ;    rdfs:subClassOf icac-international:InternationalPartnership ;    rdfs:label "US-Australia Coordination"@en ;    rdfs:comment "Coordination mechanism between United States and Australia for child exploitation investigations."@en .icac-international:ACCCEIntegration rdf:type owl:Class ;    rdfs:subClassOf icac-international:InternationalReferral ;    rdfs:label "ACCCE Integration"@en ;    rdfs:comment "Integration between international reports and AFP-led Australian Centre to Counter Child Exploitation."@en .
+
+icac-international:CrossJurisdictionalInvestigation rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:CrossBorderInvestigation ;
+    rdfs:label "Cross Jurisdictional Investigation"@en ;
+    rdfs:comment "Investigation spanning multiple jurisdictions and countries targeting international criminal networks."@en .
+
+icac-international:InternationalNetworkDisruption rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:CrossJurisdictionalInvestigation ;
+    rdfs:label "International Network Disruption"@en ;
+    rdfs:comment "Coordinated international effort to disrupt criminal networks operating across borders."@en .
 
 # =============================================================================
 # INFORMATION SHARING MECHANISMS
@@ -128,6 +142,21 @@ icac-international:MutualLegalAssistance rdf:type owl:Class ;
     rdfs:subClassOf uco-core:UcoObject ;
     rdfs:label "Mutual Legal Assistance"@en ;
     rdfs:comment "Formal legal assistance between countries for investigations and prosecutions."@en .
+
+icac-international:MutualLegalAssistanceTreatyOperation rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:MutualLegalAssistance ;
+    rdfs:label "Mutual Legal Assistance Treaty Operation"@en ;
+    rdfs:comment "Operational process using Mutual Legal Assistance Treaty (MLAT) for international evidence sharing and cooperation."@en .
+
+icac-international:CrossBorderDeviceSeizure rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:MutualLegalAssistanceTreatyOperation ;
+    rdfs:label "Cross Border Device Seizure"@en ;
+    rdfs:comment "Seizure of electronic devices across international borders with subsequent evidence sharing through MLAT processes."@en .
+
+icac-international:InternationalEvidenceSharing rdf:type owl:Class ;
+    rdfs:subClassOf icac-international:MutualLegalAssistanceTreatyOperation ;
+    rdfs:label "International Evidence Sharing"@en ;
+    rdfs:comment "Sharing of evidence between countries through formal legal assistance mechanisms and treaties."@en .
 
 icac-international:ExtraditionAgreement rdf:type owl:Class ;
     rdfs:subClassOf uco-core:UcoObject ;
@@ -265,6 +294,31 @@ icac-international:treatyBasis rdf:type owl:DatatypeProperty ;
     rdfs:label "treaty basis"@en ;
     rdfs:comment "International treaty or agreement basis for legal cooperation."@en .
 
+# Properties for migrated International Coordination classes
+icac-international:treatyMechanism rdf:type owl:DatatypeProperty ;
+    rdfs:label "treaty mechanism"@en ;
+    rdfs:comment "Specific treaty mechanism used for international cooperation (MLAT, extradition, informal_cooperation)."@en ;
+    rdfs:domain icac-international:MutualLegalAssistanceTreatyOperation ;
+    rdfs:range xsd:string .
+
+icac-international:cooperationResponseTime rdf:type owl:DatatypeProperty ;
+    rdfs:label "cooperation response time"@en ;
+    rdfs:comment "Response time for international cooperation requests in days."@en ;
+    rdfs:domain icac-international:InternationalEvidenceSharing ;
+    rdfs:range xsd:decimal .
+
+icac-international:evidenceSharingVolume rdf:type owl:DatatypeProperty ;
+    rdfs:label "evidence sharing volume"@en ;
+    rdfs:comment "Volume of evidence shared internationally in gigabytes."@en ;
+    rdfs:domain icac-international:InternationalEvidenceSharing ;
+    rdfs:range xsd:decimal .
+
+icac-international:disruptionEffectiveness rdf:type owl:DatatypeProperty ;
+    rdfs:label "disruption effectiveness"@en ;
+    rdfs:comment "Effectiveness of network disruption efforts (low, moderate, high, complete)."@en ;
+    rdfs:domain icac-international:InternationalNetworkDisruption ;
+    rdfs:range xsd:string .
+
 # =============================================================================
 # OBJECT PROPERTIES FOR INTERNATIONAL RELATIONSHIPS
 # =============================================================================
@@ -341,6 +395,31 @@ icac-international:coordinatesHotlines rdf:type owl:ObjectProperty ;
     rdfs:range uco-identity:Organization ;
     rdfs:label "coordinates hotlines"@en ;
     rdfs:comment "Hotlines coordinated under international framework."@en .
+
+# Object Properties for migrated International Coordination classes
+icac-international:coordinatesInternationalEffort rdf:type owl:ObjectProperty ;
+    rdfs:label "coordinates international effort"@en ;
+    rdfs:comment "Links investigation to international coordination efforts."@en ;
+    rdfs:domain icac-international:CrossJurisdictionalInvestigation ;
+    rdfs:range icac-international:MutualLegalAssistanceTreatyOperation .
+
+icac-international:sharesEvidenceInternationally rdf:type owl:ObjectProperty ;
+    rdfs:label "shares evidence internationally"@en ;
+    rdfs:comment "Links evidence sharing to evidence shared across borders."@en ;
+    rdfs:domain icac-international:InternationalEvidenceSharing ;
+    rdfs:range uco-observable:ObservableObject .
+
+icac-international:disruptsInternationalNetwork rdf:type owl:ObjectProperty ;
+    rdfs:label "disrupts international network"@en ;
+    rdfs:comment "Links disruption effort to international networks being disrupted."@en ;
+    rdfs:domain icac-international:InternationalNetworkDisruption ;
+    rdfs:range uco-identity:Organization .
+
+icac-international:resultsInSeizure rdf:type owl:ObjectProperty ;
+    rdfs:label "results in seizure"@en ;
+    rdfs:comment "Links international cooperation to device seizures performed."@en ;
+    rdfs:domain icac-international:MutualLegalAssistanceTreatyOperation ;
+    rdfs:range icac-international:CrossBorderDeviceSeizure .
 
 # =============================================================================
 # EUROPOL FRAMEWORK (Large-Scale Operations)

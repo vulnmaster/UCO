@@ -1,5 +1,76 @@
 # ICAC Ontology Family Architecture
 
+## gUFO Foundational Ontology Integration (**NEW**)
+
+The ICAC ontology family now includes comprehensive integration with gUFO (Unified Foundational Ontology), providing enhanced semantic precision, temporal modeling, and validation capabilities. This integration consists of three completed phases:
+
+### Phase 1: Core Investigation Modeling (✅ COMPLETE)
+**Files**: `icac-core-gufo.ttl`, `examples/gufo-phase1-example.ttl`
+
+```mermaid
+graph TD
+    subgraph "gUFO Foundation"
+        GUFO_KIND[gufo:Kind]
+        GUFO_PHASE[gufo:Phase] 
+        GUFO_ROLE[gufo:Role]
+        GUFO_EVENT[gufo:Event]
+        GUFO_SITUATION[gufo:Situation]
+    end
+
+    subgraph "ICAC Core with gUFO"
+        INVESTIGATION[Investigation]
+        INIT_PHASE[InitialPhase]
+        ANALYSIS_PHASE[AnalysisPhase]
+        LEGAL_PHASE[LegalProcessPhase]
+        INVESTIGATOR_ROLE[InvestigatorRole]
+        VICTIM_ROLE[VictimRole]
+        CRIMINAL_EVENT[CriminalEvent]
+        LIFECYCLE_SIT[LifecycleSituation]
+    end
+
+    GUFO_KIND --> INVESTIGATION
+    GUFO_PHASE --> INIT_PHASE
+    GUFO_PHASE --> ANALYSIS_PHASE
+    GUFO_PHASE --> LEGAL_PHASE
+    GUFO_ROLE --> INVESTIGATOR_ROLE
+    GUFO_ROLE --> VICTIM_ROLE
+    GUFO_EVENT --> CRIMINAL_EVENT
+    GUFO_SITUATION --> LIFECYCLE_SIT
+```
+
+### Phase 2: Temporal Framework (✅ COMPLETE)  
+**Files**: `icac-temporal-gufo.ttl`, `examples/gufo-phase2-temporal-example.ttl`
+
+```mermaid
+graph TD
+    subgraph "Temporal Investigation Lifecycle"
+        LIFECYCLE[InvestigationLifecycle]
+        TRANSITION[PhaseTransitionEvent]
+        SUSPENSION[SuspensionEvent]
+        RESUMPTION[ResumptionEvent]
+        COORDINATION[MultiJurisdictionCoordination]
+    end
+
+    subgraph "Performance Metrics"
+        EFFICIENCY[PhaseEfficiency]
+        DURATION[PhaseDuration]
+        COMPLETION[CompletionRate]
+    end
+
+    LIFECYCLE --> TRANSITION
+    TRANSITION --> SUSPENSION
+    SUSPENSION --> RESUMPTION
+    LIFECYCLE --> COORDINATION
+    LIFECYCLE --> EFFICIENCY
+    EFFICIENCY --> DURATION
+    EFFICIENCY --> COMPLETION
+```
+
+### Phase 3: Full Integration Strategy (✅ COMPLETE)
+**Files**: `icac-gufo-integration-strategy.ttl`, `examples/gufo-integration-summary.md`
+
+16 specialized integration patterns across all 26 ICAC modules with 345-day deployment timeline.
+
 ## Complete Import Chain
 
 ```mermaid
@@ -7,6 +78,13 @@ graph TD
     subgraph UCO/CASE
         UCO[UCO Core]
         CASE[CASE Investigation]
+    end
+
+    subgraph "gUFO Foundation (**NEW**)"
+        GUFO[gUFO Core Concepts]
+        ICAC_GUFO[icac-core-gufo.ttl]
+        TEMPORAL_GUFO[icac-temporal-gufo.ttl]
+        STRATEGY_GUFO[icac-gufo-integration-strategy.ttl]
     end
 
     subgraph "ICAC Core"
@@ -57,6 +135,8 @@ graph TD
     end
 
     subgraph Examples
+        GUFO_EX1[gufo-phase1-example.ttl]
+        GUFO_EX2[gufo-phase2-temporal-example.ttl]
         HOTLINE_EX[hotline-lifecycle.ttl]
         INVEST_EX[investigation-lifecycle.ttl]
         ENHANCED_EX[enhanced-investigation-lifecycle.ttl]
@@ -71,8 +151,12 @@ graph TD
         SEXTORTION_EX[wa-sextortion-case-example.ttl]
     end
 
+    GUFO --> ICAC_GUFO
+    GUFO --> TEMPORAL_GUFO  
+    GUFO --> STRATEGY_GUFO
     UCO --> ICAC
     CASE --> ICAC
+    ICAC --> ICAC_GUFO
     ICAC --> HOTLINES
     ICAC --> NCMEC
     
@@ -108,6 +192,8 @@ graph TD
     ICAC -.-> ICAC_SHAPES
     FORENSICS -.-> FORENSICS_SHAPES
     
+    ICAC_GUFO --> GUFO_EX1
+    TEMPORAL_GUFO --> GUFO_EX2
     HOTLINES --> HOTLINE_EX
     ICAC --> INVEST_EX
     FORENSICS --> ENHANCED_EX
@@ -122,11 +208,18 @@ graph TD
     SEXTORTION --> SEXTORTION_EX
 
     linkStyle 23,24,25 stroke-dasharray: 5 5
+
+    style GUFO fill:#e1f5fe
+    style ICAC_GUFO fill:#e1f5fe  
+    style TEMPORAL_GUFO fill:#e1f5fe
+    style STRATEGY_GUFO fill:#e1f5fe
+    style GUFO_EX1 fill:#f3e5f5
+    style GUFO_EX2 fill:#f3e5f5
 ```
 
-> **Note**: Shapes files (dotted lines) are used for validation but not imported by production graphs. All 23 ontology modules extend the core ICAC framework.
+> **Note**: gUFO components (blue) provide foundational ontology enhancements. Shapes files (dotted lines) are used for validation but not imported by production graphs. All 23 ontology modules extend the core ICAC framework with optional gUFO integration.
 
-## Enhanced Data Flow
+## Enhanced Data Flow with gUFO Integration
 
 ```mermaid
 graph LR
@@ -136,6 +229,13 @@ graph LR
         FORM[Web Form]
         ESP[Platform ESP Reports]
         ATHLETIC_REPORT[Athletic Coaching Reports]
+    end
+
+    subgraph "gUFO Enhanced Processing (**NEW**)"
+        PHASE_MODEL[Phase Modeling]
+        ROLE_VALID[Role Validation]
+        TEMPORAL_CONST[Temporal Constraints]
+        ANTI_RIGID[Anti-Rigid Validation]
     end
 
     subgraph "Detection & Classification"
@@ -162,24 +262,30 @@ graph LR
     end
 
     subgraph Storage
-        VALID[SHACL Validation]
+        VALID[SHACL + gUFO Validation]
         STORE[Fuseki Store]
     end
 
     subgraph Output
         CASE[CASE Export]
-        SPARQL[Analytics Queries]
+        SPARQL[Enhanced Analytics]
         REPORTS[Forensic Reports]
         VIZ[Visualization]
-        ATHLETIC_INTEL[Athletic Investigation Intelligence]
+        GUFO_ANALYTICS[gUFO Analytics]
+        AI_INSIGHTS[AI-Enhanced Insights]
     end
 
-    JSON --> HASH
-    API --> HASH
-    FORM --> HASH
-    ESP --> HASH
+    JSON --> PHASE_MODEL
+    API --> PHASE_MODEL
+    FORM --> PHASE_MODEL
+    ESP --> PHASE_MODEL
     ATHLETIC_REPORT --> ATHLETIC_ANALYSIS
     
+    PHASE_MODEL --> ROLE_VALID
+    ROLE_VALID --> TEMPORAL_CONST
+    TEMPORAL_CONST --> ANTI_RIGID
+    
+    ANTI_RIGID --> HASH
     HASH --> ML
     ML --> MANUAL
     MANUAL --> CLASS
@@ -198,15 +304,24 @@ graph LR
     
     TEAM_DYNAMICS --> VALID
     CLASS --> VALID
-    INSTITUTIONAL --> VALID
     VALID --> STORE
     
     STORE --> CASE
     STORE --> SPARQL
     STORE --> REPORTS
     STORE --> VIZ
-    STORE --> ATHLETIC_INTEL
+    STORE --> GUFO_ANALYTICS
+    STORE --> AI_INSIGHTS
+
+    style PHASE_MODEL fill:#e1f5fe
+    style ROLE_VALID fill:#e1f5fe
+    style TEMPORAL_CONST fill:#e1f5fe
+    style ANTI_RIGID fill:#e1f5fe
+    style GUFO_ANALYTICS fill:#e1f5fe
+    style AI_INSIGHTS fill:#e1f5fe
 ```
+
+> **Note**: Blue components represent new gUFO-enhanced processing stages that provide semantic validation, temporal modeling, and enhanced analytics capabilities.
 
 ## Enhanced Class Hierarchy
 

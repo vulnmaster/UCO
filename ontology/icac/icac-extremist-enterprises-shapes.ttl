@@ -358,49 +358,6 @@ icac-enterprises:NetworkMappingInvestigationShape rdf:type sh:NodeShape ;
     ] .
 
 # =============================================================================
-# INTERNATIONAL COOPERATION SHAPES
-# =============================================================================
-
-icac-enterprises:MutualLegalAssistanceTreatyProcessShape rdf:type sh:NodeShape ;
-    sh:targetClass icac-enterprises:MutualLegalAssistanceTreatyProcess ;
-    sh:property [
-        sh:path icac-enterprises:treatyMechanism ;
-        sh:datatype xsd:string ;
-        sh:maxCount 1 ;
-        sh:in ("MLAT" "extradition" "informal_cooperation" "bilateral_agreement") ;
-        sh:message "Treaty mechanism must be valid type."@en ;
-    ] .
-
-icac-enterprises:InternationalEvidenceSharingShape rdf:type sh:NodeShape ;
-    sh:targetClass icac-enterprises:InternationalEvidenceSharing ;
-    sh:property [
-        sh:path icac-enterprises:cooperationResponseTime ;
-        sh:datatype xsd:decimal ;
-        sh:maxCount 1 ;
-        sh:minInclusive 1.0 ; # Minimum 1 day response
-        sh:maxInclusive 365.0 ; # Maximum 1 year response
-        sh:message "Cooperation response time must be between 1 and 365 days."@en ;
-    ] ;
-    sh:property [
-        sh:path icac-enterprises:evidenceSharingVolume ;
-        sh:datatype xsd:decimal ;
-        sh:maxCount 1 ;
-        sh:minInclusive 0.001 ; # Minimum 1 MB
-        sh:maxInclusive 10000.0 ; # Maximum 10 TB
-        sh:message "Evidence sharing volume must be between 0.001 and 10,000 GB."@en ;
-    ] .
-
-icac-enterprises:InternationalNetworkDisruptionShape rdf:type sh:NodeShape ;
-    sh:targetClass icac-enterprises:InternationalNetworkDisruption ;
-    sh:property [
-        sh:path icac-enterprises:disruptionEffectiveness ;
-        sh:datatype xsd:string ;
-        sh:maxCount 1 ;
-        sh:in ("low" "moderate" "high" "complete") ;
-        sh:message "Disruption effectiveness must be valid level."@en ;
-    ] .
-
-# =============================================================================
 # RELATIONSHIP VALIDATION SHAPES
 # =============================================================================
 

@@ -8,6 +8,7 @@
 @prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location/> .
 @prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
 @prefix icac-enterprises: <https://ontology.unifiedcyberontology.org/icac/extremist-enterprises#> .
+@prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
 @prefix ex: <https://example.org/kb/> .
 
 # =============================================================================
@@ -282,33 +283,33 @@ ex:cross_platform_evidence_correlation rdf:type icac-enterprises:CrossPlatformEv
 # INTERNATIONAL COORDINATION
 # =============================================================================
 
-ex:mlat_process_us_greece rdf:type icac-enterprises:MutualLegalAssistanceTreatyProcess ;
+ex:mlat_process_us_greece rdf:type icac-international:MutualLegalAssistanceTreatyOperation ;
     rdfs:label "US-Greece MLAT Process"@en ;
     rdfs:comment "Mutual Legal Assistance Treaty process between United States and Greece for device seizure and evidence sharing."@en ;
-    icac-enterprises:treatyMechanism "MLAT" ;
-    icac-enterprises:resultsInSeizure ex:greece_device_seizure .
+    icac-international:treatyMechanism "MLAT" ;
+    icac-international:resultsInSeizure ex:greece_device_seizure .
 
-ex:greece_device_seizure rdf:type icac-enterprises:CrossBorderDeviceSeizure ;
+ex:greece_device_seizure rdf:type icac-international:CrossBorderDeviceSeizure ;
     rdfs:label "Greece Device Seizure"@en ;
     rdfs:comment "Seizure of electronic devices from Varagiannis in Thessaloniki, Greece by Greek law enforcement on April 5, 2024."@en .
 
-ex:international_evidence_sharing rdf:type icac-enterprises:InternationalEvidenceSharing ;
+ex:international_evidence_sharing rdf:type icac-international:InternationalEvidenceSharing ;
     rdfs:label "US-Greece Evidence Sharing"@en ;
     rdfs:comment "Sharing of evidence between Greece and United States through MLAT including Android device data and digital evidence."@en ;
-    icac-enterprises:cooperationResponseTime 30.0 ; # 30 days response time
-    icac-enterprises:evidenceSharingVolume 50.0 ; # 50 GB of evidence
-    icac-enterprises:sharesEvidenceInternationally ex:android_device_evidence .
+    icac-international:cooperationResponseTime 30.0 ; # 30 days response time
+    icac-international:evidenceSharingVolume 50.0 ; # 50 GB of evidence
+    icac-international:sharesEvidenceInternationally ex:android_device_evidence .
 
-ex:international_network_disruption rdf:type icac-enterprises:InternationalNetworkDisruption ;
+ex:international_network_disruption rdf:type icac-international:InternationalNetworkDisruption ;
     rdfs:label "764 Network Disruption Operation"@en ;
     rdfs:comment "Coordinated international effort to disrupt 764 extremist child exploitation network operations."@en ;
-    icac-enterprises:disruptionEffectiveness "high" ;
-    icac-enterprises:disruptsNetwork ex:network_764 .
+    icac-international:disruptionEffectiveness "high" ;
+    icac-international:disruptsInternationalNetwork ex:network_764 .
 
-ex:cross_jurisdictional_investigation rdf:type icac-enterprises:CrossJurisdictionalInvestigation ;
+ex:cross_jurisdictional_investigation rdf:type icac-international:CrossJurisdictionalInvestigation ;
     rdfs:label "US-Greece Joint Investigation"@en ;
     rdfs:comment "Investigation spanning United States and Greece targeting international 764 network operations."@en ;
-    icac-enterprises:coordinatesInternationalEffort ex:mlat_process_us_greece .
+    icac-international:coordinatesInternationalEffort ex:mlat_process_us_greece .
 
 # =============================================================================
 # VICTIMS AND EVIDENCE

@@ -1,0 +1,685 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
+@prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
+@prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
+@prefix uco-role: <https://ontology.unifiedcyberontology.org/role#> .
+@prefix case-investigation: <https://ontology.caseontology.org/case/investigation#> .
+@prefix icac: <https://ontology.unifiedcyberontology.org/icac#> .
+@prefix icac-case: <https://ontology.unifiedcyberontology.org/icac/case-management#> .
+
+# Ontology Declaration
+<https://ontology.unifiedcyberontology.org/icac/case-management> rdf:type owl:Ontology ;
+    rdfs:label "ICAC Case Management Ontology"@en ;
+    rdfs:comment "Comprehensive ontology for modeling case management processes, workflows, assignments, tracking, documentation, and metrics within ICAC investigations and prosecutions."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/case-management/0.1> ;
+    dcterms:creator "UCO Ontology Team" ;
+    dcterms:issued "2025-01-27"^^xsd:date ;
+    dcterms:modified "2025-01-27"^^xsd:date ;
+    owl:imports <https://ontology.unifiedcyberontology.org/core> ,
+                <https://ontology.caseontology.org/case> ,
+                <https://ontology.unifiedcyberontology.org/icac> .
+
+# =============================================================================
+# CORE CASE MANAGEMENT CLASSES
+# =============================================================================
+
+icac-case:CaseManagement rdf:type owl:Class ;
+    rdfs:label "Case Management"@en ;
+    rdfs:comment "Comprehensive management framework for ICAC cases including status tracking, priority assignment, and resource allocation."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-case:CaseWorkflow rdf:type owl:Class ;
+    rdfs:label "Case Workflow"@en ;
+    rdfs:comment "Structured workflow stages and processes for managing case progression from intake to disposition."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-case:CaseAssignment rdf:type owl:Class ;
+    rdfs:label "Case Assignment"@en ;
+    rdfs:comment "Assignment of personnel and resources to specific cases with defined roles and responsibilities."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-case:InvestigatorAssignment rdf:type owl:Class ;
+    rdfs:label "Investigator Assignment"@en ;
+    rdfs:comment "Specific assignment of investigators to cases with experience levels, caseload management, and specialization tracking."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment .
+
+icac-case:CaseTracking rdf:type owl:Class ;
+    rdfs:label "Case Tracking"@en ;
+    rdfs:comment "Systematic tracking of case progress, updates, and status changes across multiple systems and jurisdictions."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-case:CaseDocumentation rdf:type owl:Class ;
+    rdfs:label "Case Documentation"@en ;
+    rdfs:comment "Comprehensive documentation management for case files, reports, evidence logs, and legal documents."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-case:CaseReview rdf:type owl:Class ;
+    rdfs:label "Case Review"@en ;
+    rdfs:comment "Formal review processes for case quality assurance, supervisory oversight, and legal compliance."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+icac-case:CaseMetrics rdf:type owl:Class ;
+    rdfs:label "Case Metrics"@en ;
+    rdfs:comment "Performance metrics and analytics for case management including duration, resolution rates, and resource utilization."@en ;
+    rdfs:subClassOf uco-core:UcoObject .
+
+icac-case:CaseClosure rdf:type owl:Class ;
+    rdfs:label "Case Closure"@en ;
+    rdfs:comment "Formal case closure process including disposition, appeals status, and archival procedures."@en ;
+    rdfs:subClassOf uco-action:Action .
+
+# =============================================================================
+# SPECIALIZED CASE MANAGEMENT CLASSES
+# =============================================================================
+
+icac-case:MultiJurisdictionalCaseManagement rdf:type owl:Class ;
+    rdfs:label "Multi Jurisdictional Case Management"@en ;
+    rdfs:comment "Specialized management for cases spanning multiple jurisdictions with coordination requirements."@en ;
+    rdfs:subClassOf icac-case:CaseManagement .
+
+icac-case:HighPriorityCaseManagement rdf:type owl:Class ;
+    rdfs:label "High Priority Case Management"@en ;
+    rdfs:comment "Enhanced management protocols for critical and high-priority cases requiring expedited processing."@en ;
+    rdfs:subClassOf icac-case:CaseManagement .
+
+icac-case:ComplexCaseManagement rdf:type owl:Class ;
+    rdfs:label "Complex Case Management"@en ;
+    rdfs:comment "Specialized management for complex cases involving multiple offenses, victims, or extensive evidence."@en ;
+    rdfs:subClassOf icac-case:CaseManagement .
+
+icac-case:ColdCaseManagement rdf:type owl:Class ;
+    rdfs:label "Cold Case Management"@en ;
+    rdfs:comment "Management protocols for cold cases including periodic review and new evidence integration."@en ;
+    rdfs:subClassOf icac-case:CaseManagement .
+
+# =============================================================================
+# WORKFLOW AND PROCESS CLASSES
+# =============================================================================
+
+icac-case:IntakeWorkflow rdf:type owl:Class ;
+    rdfs:label "Intake Workflow"@en ;
+    rdfs:comment "Initial case intake and assessment workflow including triage and preliminary evaluation."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow .
+
+icac-case:InvestigationWorkflow rdf:type owl:Class ;
+    rdfs:label "Investigation Workflow"@en ;
+    rdfs:comment "Active investigation workflow including evidence collection, analysis, and suspect identification."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow .
+
+icac-case:ProsecutionWorkflow rdf:type owl:Class ;
+    rdfs:label "Prosecution Workflow"@en ;
+    rdfs:comment "Prosecution preparation and court proceedings workflow including case presentation and trial management."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow .
+
+icac-case:DispositionWorkflow rdf:type owl:Class ;
+    rdfs:label "Disposition Workflow"@en ;
+    rdfs:comment "Final case disposition workflow including sentencing, appeals, and case closure procedures."@en ;
+    rdfs:subClassOf icac-case:CaseWorkflow .
+
+# =============================================================================
+# ASSIGNMENT AND ROLE CLASSES
+# =============================================================================
+
+icac-case:PrimaryInvestigatorAssignment rdf:type owl:Class ;
+    rdfs:label "Primary Investigator Assignment"@en ;
+    rdfs:comment "Lead investigator assignment with primary responsibility for case management and coordination."@en ;
+    rdfs:subClassOf icac-case:InvestigatorAssignment .
+
+icac-case:SecondaryInvestigatorAssignment rdf:type owl:Class ;
+    rdfs:label "Secondary Investigator Assignment"@en ;
+    rdfs:comment "Supporting investigator assignment providing specialized skills or additional resources."@en ;
+    rdfs:subClassOf icac-case:InvestigatorAssignment .
+
+icac-case:AnalystAssignment rdf:type owl:Class ;
+    rdfs:label "Analyst Assignment"@en ;
+    rdfs:comment "Assignment of analysts for data analysis, intelligence gathering, and technical support."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment .
+
+icac-case:ProsecutorAssignment rdf:type owl:Class ;
+    rdfs:label "Prosecutor Assignment"@en ;
+    rdfs:comment "Assignment of prosecutors for legal review, charging decisions, and court representation."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment .
+
+icac-case:SupervisorAssignment rdf:type owl:Class ;
+    rdfs:label "Supervisor Assignment"@en ;
+    rdfs:comment "Supervisory assignment for case oversight, quality assurance, and administrative guidance."@en ;
+    rdfs:subClassOf icac-case:CaseAssignment .
+
+# =============================================================================
+# DOCUMENTATION AND REVIEW CLASSES
+# =============================================================================
+
+icac-case:CaseReport rdf:type owl:Class ;
+    rdfs:label "Case Report"@en ;
+    rdfs:comment "Formal case report documenting investigation findings, evidence, and recommendations."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:EvidenceLog rdf:type owl:Class ;
+    rdfs:label "Evidence Log"@en ;
+    rdfs:comment "Comprehensive log of all evidence collected, analyzed, and maintained for the case."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:InterviewNotes rdf:type owl:Class ;
+    rdfs:label "Interview Notes"@en ;
+    rdfs:comment "Documentation of interviews conducted with victims, witnesses, and suspects."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:SearchWarrant rdf:type owl:Class ;
+    rdfs:label "Search Warrant"@en ;
+    rdfs:comment "Legal documentation for search warrants including applications, approvals, and execution records."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:ArrestWarrant rdf:type owl:Class ;
+    rdfs:label "Arrest Warrant"@en ;
+    rdfs:comment "Legal documentation for arrest warrants including applications, approvals, and execution records."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:CourtFiling rdf:type owl:Class ;
+    rdfs:label "Court Filing"@en ;
+    rdfs:comment "Legal documents filed with courts including motions, briefs, and procedural filings."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+icac-case:ExpertReport rdf:type owl:Class ;
+    rdfs:label "Expert Report"@en ;
+    rdfs:comment "Expert analysis reports including forensic findings, psychological evaluations, and technical assessments."@en ;
+    rdfs:subClassOf icac-case:CaseDocumentation .
+
+# =============================================================================
+# REVIEW AND QUALITY ASSURANCE CLASSES
+# =============================================================================
+
+icac-case:SupervisoryReview rdf:type owl:Class ;
+    rdfs:label "Supervisory Review"@en ;
+    rdfs:comment "Formal supervisory review of case progress, decisions, and quality standards."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+icac-case:PeerReview rdf:type owl:Class ;
+    rdfs:label "Peer Review"@en ;
+    rdfs:comment "Peer review process for case methodology, analysis, and conclusions."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+icac-case:QualityAssuranceReview rdf:type owl:Class ;
+    rdfs:label "Quality Assurance Review"@en ;
+    rdfs:comment "Systematic quality assurance review ensuring compliance with standards and procedures."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+icac-case:LegalReview rdf:type owl:Class ;
+    rdfs:label "Legal Review"@en ;
+    rdfs:comment "Legal review of case materials, procedures, and prosecution readiness."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+icac-case:AdministrativeReview rdf:type owl:Class ;
+    rdfs:label "Administrative Review"@en ;
+    rdfs:comment "Administrative review of case management, resource allocation, and procedural compliance."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+icac-case:ExternalReview rdf:type owl:Class ;
+    rdfs:label "External Review"@en ;
+    rdfs:comment "External review by independent parties for oversight, audit, or specialized expertise."@en ;
+    rdfs:subClassOf icac-case:CaseReview .
+
+# =============================================================================
+# METRICS AND ANALYTICS CLASSES
+# =============================================================================
+
+icac-case:CaseDurationMetrics rdf:type owl:Class ;
+    rdfs:label "Case Duration Metrics"@en ;
+    rdfs:comment "Metrics tracking case duration from opening to closure across different stages."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics .
+
+icac-case:ResolutionRateMetrics rdf:type owl:Class ;
+    rdfs:label "Resolution Rate Metrics"@en ;
+    rdfs:comment "Metrics tracking case resolution rates including conviction and closure statistics."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics .
+
+icac-case:ResourceUtilizationMetrics rdf:type owl:Class ;
+    rdfs:label "Resource Utilization Metrics"@en ;
+    rdfs:comment "Metrics tracking resource allocation and utilization efficiency across cases."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics .
+
+icac-case:CostPerCaseMetrics rdf:type owl:Class ;
+    rdfs:label "Cost Per Case Metrics"@en ;
+    rdfs:comment "Financial metrics tracking costs associated with case investigation and prosecution."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics .
+
+icac-case:QualityScoreMetrics rdf:type owl:Class ;
+    rdfs:label "Quality Score Metrics"@en ;
+    rdfs:comment "Quality assessment metrics evaluating case management effectiveness and outcomes."@en ;
+    rdfs:subClassOf icac-case:CaseMetrics .
+
+# =============================================================================
+# DATATYPE PROPERTIES
+# =============================================================================
+
+# Case Management Properties
+icac-case:caseStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "case status"@en ;
+    rdfs:comment "Current status of the case (open, active, pending, suspended, closed, archived, transferred, merged)."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:string .
+
+icac-case:casePriority rdf:type owl:DatatypeProperty ;
+    rdfs:label "case priority"@en ;
+    rdfs:comment "Priority level of the case (critical, high, medium, low, routine, administrative)."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:string .
+
+icac-case:caseType rdf:type owl:DatatypeProperty ;
+    rdfs:label "case type"@en ;
+    rdfs:comment "Type of case (possession, distribution, production, trafficking, exploitation, grooming, sextortion, multi_offense)."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:string .
+
+icac-case:assignedInvestigator rdf:type owl:DatatypeProperty ;
+    rdfs:label "assigned investigator"@en ;
+    rdfs:comment "Name or identifier of the assigned investigator."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:string .
+
+icac-case:caseOpenDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "case open date"@en ;
+    rdfs:comment "Date when the case was officially opened."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:dateTime .
+
+icac-case:caseCloseDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "case close date"@en ;
+    rdfs:comment "Date when the case was officially closed."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:dateTime .
+
+icac-case:jurisdictionLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "jurisdiction level"@en ;
+    rdfs:comment "Level of jurisdiction (local, state, federal, multi_state, international, joint_jurisdiction)."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range xsd:string .
+
+# Workflow Properties
+icac-case:workflowStage rdf:type owl:DatatypeProperty ;
+    rdfs:label "workflow stage"@en ;
+    rdfs:comment "Current stage in the case workflow (intake, initial_review, investigation, evidence_analysis, prosecution_review, court_proceedings, disposition)."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:string .
+
+icac-case:stageStartDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "stage start date"@en ;
+    rdfs:comment "Date when the workflow stage began."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-case:stageEndDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "stage end date"@en ;
+    rdfs:comment "Date when the workflow stage ended."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:dateTime .
+
+icac-case:stageDuration rdf:type owl:DatatypeProperty ;
+    rdfs:label "stage duration"@en ;
+    rdfs:comment "Duration of the workflow stage in days."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:decimal .
+
+icac-case:stageOutcome rdf:type owl:DatatypeProperty ;
+    rdfs:label "stage outcome"@en ;
+    rdfs:comment "Outcome of the workflow stage (completed, pending, escalated, transferred, suspended, terminated)."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range xsd:string .
+
+# Assignment Properties
+icac-case:assignmentType rdf:type owl:DatatypeProperty ;
+    rdfs:label "assignment type"@en ;
+    rdfs:comment "Type of assignment (primary_investigator, secondary_investigator, lead_detective, analyst, supervisor, prosecutor)."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:string .
+
+icac-case:assignmentDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "assignment date"@en ;
+    rdfs:comment "Date when the assignment was made."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:dateTime .
+
+icac-case:assignmentStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "assignment status"@en ;
+    rdfs:comment "Status of the assignment (active, inactive, transferred, completed, suspended, terminated)."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:string .
+
+icac-case:workloadPercentage rdf:type owl:DatatypeProperty ;
+    rdfs:label "workload percentage"@en ;
+    rdfs:comment "Percentage of workload allocated to this assignment."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:decimal .
+
+icac-case:specialization rdf:type owl:DatatypeProperty ;
+    rdfs:label "specialization"@en ;
+    rdfs:comment "Area of specialization (digital_forensics, undercover_operations, victim_services, legal_analysis, technical_analysis, general_investigation)."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range xsd:string .
+
+# Investigator Assignment Properties
+icac-case:investigatorExperience rdf:type owl:DatatypeProperty ;
+    rdfs:label "investigator experience"@en ;
+    rdfs:comment "Years of experience of the assigned investigator."@en ;
+    rdfs:domain icac-case:InvestigatorAssignment ;
+    rdfs:range xsd:decimal .
+
+icac-case:caseloadCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "caseload count"@en ;
+    rdfs:comment "Number of active cases assigned to the investigator."@en ;
+    rdfs:domain icac-case:InvestigatorAssignment ;
+    rdfs:range xsd:nonNegativeInteger .
+
+icac-case:certificationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "certification level"@en ;
+    rdfs:comment "Certification level of the investigator (basic, intermediate, advanced, expert, specialized, master)."@en ;
+    rdfs:domain icac-case:InvestigatorAssignment ;
+    rdfs:range xsd:string .
+
+# Tracking Properties
+icac-case:trackingNumber rdf:type owl:DatatypeProperty ;
+    rdfs:label "tracking number"@en ;
+    rdfs:comment "Unique tracking number for the case."@en ;
+    rdfs:domain icac-case:CaseTracking ;
+    rdfs:range xsd:string .
+
+icac-case:trackingSystem rdf:type owl:DatatypeProperty ;
+    rdfs:label "tracking system"@en ;
+    rdfs:comment "System used for tracking (local_system, state_system, federal_system, ncmec_system, multi_system, custom_system)."@en ;
+    rdfs:domain icac-case:CaseTracking ;
+    rdfs:range xsd:string .
+
+icac-case:lastUpdate rdf:type owl:DatatypeProperty ;
+    rdfs:label "last update"@en ;
+    rdfs:comment "Date and time of the last update to case tracking."@en ;
+    rdfs:domain icac-case:CaseTracking ;
+    rdfs:range xsd:dateTime .
+
+icac-case:updateFrequency rdf:type owl:DatatypeProperty ;
+    rdfs:label "update frequency"@en ;
+    rdfs:comment "Frequency of updates (real_time, daily, weekly, bi_weekly, monthly, as_needed)."@en ;
+    rdfs:domain icac-case:CaseTracking ;
+    rdfs:range xsd:string .
+
+icac-case:accessLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "access level"@en ;
+    rdfs:comment "Access level for case information (public, restricted, confidential, classified, need_to_know, compartmented)."@en ;
+    rdfs:domain icac-case:CaseTracking ;
+    rdfs:range xsd:string .
+
+# Documentation Properties
+icac-case:documentType rdf:type owl:DatatypeProperty ;
+    rdfs:label "document type"@en ;
+    rdfs:comment "Type of document (case_report, evidence_log, interview_notes, search_warrant, arrest_warrant, court_filing, expert_report)."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:string .
+
+icac-case:documentStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "document status"@en ;
+    rdfs:comment "Status of the document (draft, review, approved, filed, sealed, archived, destroyed)."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:string .
+
+icac-case:creationDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "creation date"@en ;
+    rdfs:comment "Date when the document was created."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:dateTime .
+
+icac-case:lastModified rdf:type owl:DatatypeProperty ;
+    rdfs:label "last modified"@en ;
+    rdfs:comment "Date when the document was last modified."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:dateTime .
+
+icac-case:retentionPeriod rdf:type owl:DatatypeProperty ;
+    rdfs:label "retention period"@en ;
+    rdfs:comment "Document retention period in days."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:decimal .
+
+icac-case:classificationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "classification level"@en ;
+    rdfs:comment "Security classification level (unclassified, law_enforcement_sensitive, confidential, restricted, classified, top_secret)."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range xsd:string .
+
+# Review Properties
+icac-case:reviewType rdf:type owl:DatatypeProperty ;
+    rdfs:label "review type"@en ;
+    rdfs:comment "Type of review (supervisory_review, peer_review, quality_assurance, legal_review, administrative_review, external_review)."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:string .
+
+icac-case:reviewDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "review date"@en ;
+    rdfs:comment "Date when the review was conducted."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:dateTime .
+
+icac-case:reviewOutcome rdf:type owl:DatatypeProperty ;
+    rdfs:label "review outcome"@en ;
+    rdfs:comment "Outcome of the review (approved, approved_with_conditions, requires_revision, rejected, escalated, deferred)."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:string .
+
+icac-case:reviewerRole rdf:type owl:DatatypeProperty ;
+    rdfs:label "reviewer role"@en ;
+    rdfs:comment "Role of the reviewer (supervisor, senior_investigator, prosecutor, legal_counsel, quality_assurance, external_expert)."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:string .
+
+icac-case:recommendationsCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "recommendations count"@en ;
+    rdfs:comment "Number of recommendations made during the review."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Metrics Properties
+icac-case:metricType rdf:type owl:DatatypeProperty ;
+    rdfs:label "metric type"@en ;
+    rdfs:comment "Type of metric (case_duration, resolution_rate, conviction_rate, resource_utilization, cost_per_case, quality_score)."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range xsd:string .
+
+icac-case:metricValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "metric value"@en ;
+    rdfs:comment "Numerical value of the metric."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range xsd:decimal .
+
+icac-case:measurementUnit rdf:type owl:DatatypeProperty ;
+    rdfs:label "measurement unit"@en ;
+    rdfs:comment "Unit of measurement (days, hours, percentage, count, dollars, score, ratio)."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range xsd:string .
+
+icac-case:reportingPeriod rdf:type owl:DatatypeProperty ;
+    rdfs:label "reporting period"@en ;
+    rdfs:comment "Period for metric reporting (daily, weekly, monthly, quarterly, annually, case_based)."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range xsd:string .
+
+icac-case:benchmarkValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "benchmark value"@en ;
+    rdfs:comment "Benchmark or target value for the metric."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range xsd:decimal .
+
+# Closure Properties
+icac-case:closureReason rdf:type owl:DatatypeProperty ;
+    rdfs:label "closure reason"@en ;
+    rdfs:comment "Reason for case closure (conviction, plea_agreement, dismissal, insufficient_evidence, statute_limitations, death_of_suspect, administrative_closure)."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:string .
+
+icac-case:closureDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "closure date"@en ;
+    rdfs:comment "Date when the case was closed."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:dateTime .
+
+icac-case:finalDisposition rdf:type owl:DatatypeProperty ;
+    rdfs:label "final disposition"@en ;
+    rdfs:comment "Final legal disposition (guilty_verdict, not_guilty_verdict, plea_guilty, plea_no_contest, charges_dropped, case_dismissed, no_charges_filed)."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:string .
+
+icac-case:appealStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "appeal status"@en ;
+    rdfs:comment "Status of any appeals (no_appeal, appeal_pending, appeal_denied, appeal_granted, remanded, overturned)."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:string .
+
+icac-case:archivalDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "archival date"@en ;
+    rdfs:comment "Date when case materials were archived."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range xsd:dateTime .
+
+# =============================================================================
+# OBJECT PROPERTIES
+# =============================================================================
+
+# Case Management Relationships
+icac-case:managesCase rdf:type owl:ObjectProperty ;
+    rdfs:label "manages case"@en ;
+    rdfs:comment "Links case management to specific investigations."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range case-investigation:Investigation .
+
+icac-case:followsWorkflow rdf:type owl:ObjectProperty ;
+    rdfs:label "follows workflow"@en ;
+    rdfs:comment "Links case to workflow stages and processes."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseWorkflow .
+
+icac-case:hasAssignment rdf:type owl:ObjectProperty ;
+    rdfs:label "has assignment"@en ;
+    rdfs:comment "Links case to personnel assignments."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseAssignment .
+
+icac-case:trackedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "tracked by"@en ;
+    rdfs:comment "Links case to tracking systems and processes."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseTracking .
+
+icac-case:hasDocumentation rdf:type owl:ObjectProperty ;
+    rdfs:label "has documentation"@en ;
+    rdfs:comment "Links case to associated documentation."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseDocumentation .
+
+icac-case:undergoesReview rdf:type owl:ObjectProperty ;
+    rdfs:label "undergoes review"@en ;
+    rdfs:comment "Links case to review processes."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseReview .
+
+icac-case:generatesMetrics rdf:type owl:ObjectProperty ;
+    rdfs:label "generates metrics"@en ;
+    rdfs:comment "Links case to performance metrics and analytics."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseMetrics .
+
+icac-case:resultsInClosure rdf:type owl:ObjectProperty ;
+    rdfs:label "results in closure"@en ;
+    rdfs:comment "Links case to closure information and final disposition."@en ;
+    rdfs:domain icac-case:CaseManagement ;
+    rdfs:range icac-case:CaseClosure .
+
+# Assignment Relationships
+icac-case:assignedTo rdf:type owl:ObjectProperty ;
+    rdfs:label "assigned to"@en ;
+    rdfs:comment "Links assignment to assigned personnel."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range uco-identity:Person .
+
+icac-case:assignedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "assigned by"@en ;
+    rdfs:comment "Links assignment to assigning authority."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range uco-identity:Person .
+
+icac-case:supervisedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "supervised by"@en ;
+    rdfs:comment "Links assignment to supervising personnel."@en ;
+    rdfs:domain icac-case:CaseAssignment ;
+    rdfs:range uco-identity:Person .
+
+# Workflow Relationships
+icac-case:precedesStage rdf:type owl:ObjectProperty ;
+    rdfs:label "precedes stage"@en ;
+    rdfs:comment "Links workflow stage to subsequent stage."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range icac-case:CaseWorkflow .
+
+icac-case:followsStage rdf:type owl:ObjectProperty ;
+    rdfs:label "follows stage"@en ;
+    rdfs:comment "Links workflow stage to preceding stage."@en ;
+    rdfs:domain icac-case:CaseWorkflow ;
+    rdfs:range icac-case:CaseWorkflow .
+
+# Documentation Relationships
+icac-case:documentedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "documented by"@en ;
+    rdfs:comment "Links documentation to creating personnel."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range uco-identity:Person .
+
+icac-case:reviewedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "reviewed by"@en ;
+    rdfs:comment "Links documentation to reviewing personnel."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range uco-identity:Person .
+
+icac-case:approvedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "approved by"@en ;
+    rdfs:comment "Links documentation to approving authority."@en ;
+    rdfs:domain icac-case:CaseDocumentation ;
+    rdfs:range uco-identity:Person .
+
+# Review Relationships
+icac-case:conductsReview rdf:type owl:ObjectProperty ;
+    rdfs:label "conducts review"@en ;
+    rdfs:comment "Links reviewer to review process."@en ;
+    rdfs:domain uco-identity:Person ;
+    rdfs:range icac-case:CaseReview .
+
+icac-case:reviewsCase rdf:type owl:ObjectProperty ;
+    rdfs:label "reviews case"@en ;
+    rdfs:comment "Links review to case being reviewed."@en ;
+    rdfs:domain icac-case:CaseReview ;
+    rdfs:range icac-case:CaseManagement .
+
+# Metrics Relationships
+icac-case:measuresPerformance rdf:type owl:ObjectProperty ;
+    rdfs:label "measures performance"@en ;
+    rdfs:comment "Links metrics to performance measurement targets."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range uco-core:UcoObject .
+
+icac-case:benchmarkedAgainst rdf:type owl:ObjectProperty ;
+    rdfs:label "benchmarked against"@en ;
+    rdfs:comment "Links metrics to benchmark standards."@en ;
+    rdfs:domain icac-case:CaseMetrics ;
+    rdfs:range icac-case:CaseMetrics .
+
+# Closure Relationships
+icac-case:closedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "closed by"@en ;
+    rdfs:comment "Links case closure to closing authority."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range uco-identity:Person .
+
+icac-case:archivedAt rdf:type owl:ObjectProperty ;
+    rdfs:label "archived at"@en ;
+    rdfs:comment "Links case closure to archival location."@en ;
+    rdfs:domain icac-case:CaseClosure ;
+    rdfs:range uco-core:UcoObject . 

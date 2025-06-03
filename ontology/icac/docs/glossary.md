@@ -7,6 +7,7 @@
 - **CASE**: Cyber-investigation Analysis Standard Expression
 - **CSAM**: Child Sexual Abuse Material
 - **ESP**: Electronic Service Provider
+- **gUFO**: Unified Foundational Ontology (**NEW**)
 - **ICAC**: Internet Crimes Against Children
 - **ICMEC**: International Centre for Missing & Exploited Children
 - **ICCAM**: International Child Sexual Exploitation Image Database
@@ -34,6 +35,20 @@
 - **AutomatedReporterAgent**: Software system that automatically generates reports
 - **HashFeedbackAction**: Action recording feedback on hash matches
 - **URLReference**: Reference to a URL containing potential CSAM
+
+### **NEW: gUFO-Enhanced Core Classes**
+- **Investigation** (`icac-gufo:Investigation`): gUFO-enhanced investigation with phase modeling and temporal constraints
+- **InitialPhase** (`icac-gufo:InitialPhase`): Initial investigation phase modeled as anti-rigid `gufo:Phase`
+- **AnalysisPhase** (`icac-gufo:AnalysisPhase`): Evidence analysis phase with temporal dependencies
+- **LegalProcessPhase** (`icac-gufo:LegalProcessPhase`): Legal proceedings phase with court coordination
+- **EvidencePhase** (`icac-gufo:EvidencePhase`): Evidence collection and processing phase
+- **ResolutionPhase** (`icac-gufo:ResolutionPhase`): Investigation resolution and case closure phase
+- **InvestigatorRole** (`icac-gufo:InvestigatorRole`): Investigation role with anti-rigid properties and temporal boundaries
+- **VictimRole** (`icac-gufo:VictimRole`): Victim role with conflict prevention mechanisms
+- **OffenderRole** (`icac-gufo:OffenderRole`): Offender role with exclusive constraints
+- **WitnessRole** (`icac-gufo:WitnessRole`): Witness role allowing multiple assignments
+- **InformantRole** (`icac-gufo:InformantRole`): Informant role with confidentiality constraints
+- **RescuerRole** (`icac-gufo:RescuerRole`): Rescue operation role with temporal dynamics
 
 ### Criminal Activity Classes
 - **ProductionOffense**: Child sexual abuse material production activity
