@@ -5,3 +5,4 @@
 .venv.done.log
 _*
 venv
+.venv/
