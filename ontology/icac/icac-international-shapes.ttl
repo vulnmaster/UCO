@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core#> .
 @prefix uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity#> .
 @prefix uco-location: <https://ontology.unifiedcyberontology.org/uco/location#> .
@@ -12,13 +13,142 @@
 @prefix icac-international: <https://ontology.unifiedcyberontology.org/icac/international#> .
 
 # =============================================================================
+# gUFO TYPE CONSISTENCY VALIDATION FOR INTERNATIONAL COOPERATION
+# =============================================================================
+
+# Organization Kind validation for international partnerships (rigid sortals)
+icac-international:InternationalPartnershipKindValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Kind ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue gufo:Kind ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path rdfs:subClassOf ;
+        sh:class gufo:Object ;
+        sh:minCount 1 ;
+    ] ;
+    sh:message "Every international partnership Kind must extend gufo:Object and be properly classified"@en .
+
+# EventType validation for cross-border operations
+icac-international:CrossBorderEventTypeValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:EventType ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue gufo:EventType ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path rdfs:subClassOf ;
+        sh:class gufo:Event ;
+        sh:minCount 1 ;
+    ] ;
+    sh:message "Every cross-border operation EventType must extend gufo:Event"@en .
+
+# Role validation for international coordinators (anti-rigid relational)
+icac-international:InternationalRoleValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:Role ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue gufo:Role ;
+        sh:minCount 1 ;
+    ] ;
+    sh:not [
+        sh:property [
+            sh:path rdfs:subClassOf ;
+            sh:class gufo:Kind ;
+        ] ;
+    ] ;
+    sh:message "International coordination roles are anti-rigid and cannot be subclasses of rigid Kinds"@en .
+
+# SituationType validation for legal and coordination situations
+icac-international:InternationalSituationTypeValidationShape rdf:type sh:NodeShape ;
+    sh:targetClass gufo:SituationType ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue gufo:SituationType ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path rdfs:subClassOf ;
+        sh:class gufo:Situation ;
+        sh:minCount 1 ;
+    ] ;
+    sh:message "Every international SituationType must extend gufo:Situation"@en .
+
+# =============================================================================
+# gUFO TEMPORAL CONSTRAINTS FOR INTERNATIONAL OPERATIONS
+# =============================================================================
+
+# Cross-Border Operation Temporal Validation
+icac-international:CrossBorderOperationTemporalShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:CrossBorderOperation ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Cross-border operation may have at most one start time (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasEndPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Cross-border operation may have at most one end time (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:sparql [
+        sh:message "Operation end time must be after start time when both specified (gUFO temporal ordering)"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "gufo" ;
+                sh:namespace "http://purl.org/nemo/gufo#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this gufo:hasBeginPointInXSDDateTimeStamp ?startTime .
+                $this gufo:hasEndPointInXSDDateTimeStamp ?endTime .
+                FILTER (?endTime <= ?startTime)
+            }
+        """ ;
+    ] .
+
+# International Alert Temporal Validation
+icac-international:InternationalAlertTemporalShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalAlert ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "International alert must have exactly one start time (gUFO temporal boundary)"@en ;
+    ] .
+
+# International Partnership Temporal Validation
+icac-international:InternationalPartnershipTemporalShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalPartnership ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Partnership may have establishment date (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasEndPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Partnership may have termination date (gUFO temporal boundary)"@en ;
+    ] .
+
+# =============================================================================
 # INTERNATIONAL PARTNERSHIP SHAPES
 # =============================================================================
 
 icac-international:InternationalPartnershipShape rdf:type sh:NodeShape ;
     sh:targetClass icac-international:InternationalPartnership ;
     rdfs:label "International Partnership Shape"@en ;
-    rdfs:comment "Validation shape for international partnership instances."@en ;
+    rdfs:comment "Validation shape for international partnership instances with gUFO integration."@en ;
     sh:property [
         sh:path uco-core:name ;
         sh:datatype xsd:string ;
@@ -44,6 +174,26 @@ icac-international:InternationalPartnershipShape rdf:type sh:NodeShape ;
         sh:maxCount 1 ;
         sh:in ( "formal_request" "intelligence_sharing" "joint_investigation" "bilateral_agreement" "multilateral_treaty" ) ;
         sh:message "Coordination method must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-international:hasCoordinationEffectiveness ;
+        sh:datatype xsd:string ;
+        sh:in ( "low" "moderate" "high" "excellent" "outstanding" ) ;
+        sh:maxCount 1 ;
+        sh:message "Partnership effectiveness level must be from allowed list (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasTrustLevel ;
+        sh:datatype xsd:string ;
+        sh:in ( "developing" "established" "strong" "exceptional" "complete" ) ;
+        sh:maxCount 1 ;
+        sh:message "Partnership trust level must be from allowed list (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Partnership may have establishment date (gUFO temporal boundary)"@en ;
     ] .
 
 icac-international:CountryPartnershipShape rdf:type sh:NodeShape ;
@@ -108,7 +258,7 @@ icac-international:InternationalTaskForceShape rdf:type sh:NodeShape ;
 icac-international:CrossBorderOperationShape rdf:type sh:NodeShape ;
     sh:targetClass icac-international:CrossBorderOperation ;
     rdfs:label "Cross-Border Operation Shape"@en ;
-    rdfs:comment "Validation shape for cross-border operation instances."@en ;
+    rdfs:comment "Validation shape for cross-border operation instances with gUFO integration."@en ;
     sh:property [
         sh:path uco-core:startTime ;
         sh:datatype xsd:dateTime ;
@@ -122,6 +272,19 @@ icac-international:CrossBorderOperationShape rdf:type sh:NodeShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:message "Cross-border operation may specify end time."@en
+    ] ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Cross-border operation must have start time (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasEndPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Cross-border operation may have end time (gUFO temporal boundary)"@en ;
     ] ;
     sh:property [
         sh:path icac-international:crossBorderCapability ;
@@ -138,6 +301,21 @@ icac-international:CrossBorderOperationShape rdf:type sh:NodeShape ;
         sh:maxCount 1 ;
         sh:in ( "low" "medium" "high" "complex" ) ;
         sh:message "Coordination complexity must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-international:hasOperationalUrgency ;
+        sh:datatype xsd:string ;
+        sh:in ( "routine" "urgent" "critical" "emergency" "immediate" ) ;
+        sh:maxCount 1 ;
+        sh:message "Operational urgency level must be from allowed list (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasSuccessLikelihood ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:maxCount 1 ;
+        sh:message "Success likelihood must be between 0.0 and 1.0 (gUFO quality aspect)"@en ;
     ] .
 
 icac-international:CrossBorderInvestigationShape rdf:type sh:NodeShape ;
@@ -215,7 +393,7 @@ icac-international:InternationalReferralShape rdf:type sh:NodeShape ;
 icac-international:LiveStreamingInvestigationShape rdf:type sh:NodeShape ;
     sh:targetClass icac-international:LiveStreamingInvestigation ;
     rdfs:label "Live Streaming Investigation Shape"@en ;
-    rdfs:comment "Validation shape for live streaming investigation instances."@en ;
+    rdfs:comment "Validation shape for live streaming investigation instances with gUFO integration."@en ;
     sh:property [
         sh:path icac-international:jurisdictionCount ;
         sh:datatype xsd:nonNegativeInteger ;
@@ -224,6 +402,31 @@ icac-international:LiveStreamingInvestigationShape rdf:type sh:NodeShape ;
         sh:minInclusive 2 ;
         sh:maxInclusive 10 ;
         sh:message "Live streaming investigation must involve 2-10 jurisdictions."@en
+    ] ;
+    sh:property [
+        sh:path icac-international:crossBorderCapability ;
+        sh:hasValue "expert" ;
+        sh:message "Live streaming investigations require expert cross-border capability (gUFO quality constraint)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:coordinationComplexity ;
+        sh:hasValue "complex" ;
+        sh:message "Live streaming investigations require complex coordination (gUFO quality constraint)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasOperationalUrgency ;
+        sh:datatype xsd:string ;
+        sh:in ( "urgent" "critical" "emergency" "immediate" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Live streaming investigations must have urgent operational priority (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Investigation must have start time (gUFO temporal boundary)"@en ;
     ] .
 
 icac-international:DistanceChildAbuseShape rdf:type sh:NodeShape ;
@@ -306,7 +509,7 @@ icac-international:ACCCEIntegrationShape rdf:type sh:NodeShape ;
 icac-international:InformationSharingAgreementShape rdf:type sh:NodeShape ;
     sh:targetClass icac-international:InformationSharingAgreement ;
     rdfs:label "Information Sharing Agreement Shape"@en ;
-    rdfs:comment "Validation shape for information sharing agreement instances."@en ;
+    rdfs:comment "Validation shape for information sharing agreement instances with gUFO integration."@en ;
     sh:property [
         sh:path uco-core:name ;
         sh:datatype xsd:string ;
@@ -330,6 +533,33 @@ icac-international:InformationSharingAgreementShape rdf:type sh:NodeShape ;
         sh:maxCount 1 ;
         sh:in ( "basic" "enhanced" "full" "restricted" ) ;
         sh:message "Information sharing level must be from the allowed list."@en
+    ] ;
+    sh:property [
+        sh:path icac-international:hasAgreementStability ;
+        sh:datatype xsd:string ;
+        sh:in ( "temporary" "provisional" "stable" "long_term" "permanent" ) ;
+        sh:maxCount 1 ;
+        sh:message "Agreement stability level must be from allowed list (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasCompliance ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:maxCount 1 ;
+        sh:message "Compliance rate must be between 0.0 and 1.0 (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Agreement may have effective date (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:property [
+        sh:path gufo:hasEndPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Agreement may have expiration date (gUFO temporal boundary)"@en ;
     ] .
 
 icac-international:DataExchangeProtocolShape rdf:type sh:NodeShape ;
@@ -685,6 +915,76 @@ icac-international:ResponseTimeValidationShape rdf:type sh:NodeShape ;
     ] .
 
 # =============================================================================
+# gUFO PARTICIPATION CONSTRAINTS FOR INTERNATIONAL COOPERATION
+# =============================================================================
+
+# Cross-Border Operation Participation Validation
+icac-international:CrossBorderOperationParticipationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:CrossBorderOperation ;
+    sh:property [
+        sh:path [ sh:alternativePath ( 
+            gufo:participatedIn 
+            icac-international:coordinatedBy 
+            icac-international:operatesInCountry 
+        ) ] ;
+        sh:minCount 2 ;
+        sh:message "Every cross-border operation must have at least two participating entities (gUFO participation)"@en ;
+    ] .
+
+# International Partnership Participation Validation
+icac-international:InternationalPartnershipParticipationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalPartnership ;
+    sh:property [
+        sh:path [ sh:alternativePath ( 
+            icac-international:partnerOrganization 
+            icac-international:coordinatesWith 
+        ) ] ;
+        sh:minCount 2 ;
+        sh:message "Partnership must have at least two participating organizations (gUFO participation)"@en ;
+    ] .
+
+# Information Sharing Agreement Participation Validation
+icac-international:InformationSharingParticipationShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InformationSharingAgreement ;
+    sh:property [
+        sh:path icac-international:sharesDataWith ;
+        sh:class uco-identity:Organization ;
+        sh:minCount 2 ;
+        sh:message "Information sharing must involve at least two organizations (gUFO participation)"@en ;
+    ] .
+
+# =============================================================================
+# gUFO PART-WHOLE RELATIONSHIP VALIDATION FOR INTERNATIONAL COOPERATION
+# =============================================================================
+
+# International Task Force Composition Validation
+icac-international:InternationalTaskForceCompositionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalTaskForce ;
+    sh:property [
+        sh:path [ sh:inversePath gufo:isProperPartOf ] ;
+        sh:minCount 1 ;
+        sh:message "Task force must have component organizations or units (gUFO part-whole)"@en ;
+    ] .
+
+# Global Network Composition Validation
+icac-international:GlobalNetworkCompositionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:GlobalHotlineNetwork ;
+    sh:property [
+        sh:path [ sh:inversePath gufo:isProperPartOf ] ;
+        sh:minCount 3 ;
+        sh:message "Global network must be composed of at least 3 national components (gUFO part-whole)"@en ;
+    ] .
+
+# Cross-Border Investigation Composition Validation
+icac-international:CrossBorderInvestigationCompositionShape rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:CrossBorderInvestigation ;
+    sh:property [
+        sh:path [ sh:inversePath gufo:isProperPartOf ] ;
+        sh:minCount 2 ;
+        sh:message "Cross-border investigation must include at least two national investigation components (gUFO part-whole)"@en ;
+    ] .
+
+# =============================================================================
 # DATA QUALITY SHAPES
 # =============================================================================
 
@@ -695,7 +995,7 @@ icac-international:DataQualityShape rdf:type sh:NodeShape ;
                    icac-international:GlobalHotlineNetwork ,
                    icac-international:MutualLegalAssistance ;
     rdfs:label "Data Quality Shape"@en ;
-    rdfs:comment "Validates data quality for international coordination entities."@en ;
+    rdfs:comment "Validates data quality for international coordination entities with gUFO quality aspects."@en ;
     sh:property [
         sh:path uco-core:createdTime ;
         sh:datatype xsd:dateTime ;
@@ -709,6 +1009,27 @@ icac-international:DataQualityShape rdf:type sh:NodeShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:message "Modification time should be specified when available."@en
+    ] ;
+    sh:property [
+        sh:path gufo:hasBeginPointInXSDDateTimeStamp ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Entity may have temporal beginning (gUFO temporal boundary)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasDataQuality ;
+        sh:datatype xsd:string ;
+        sh:in ( "poor" "fair" "good" "excellent" "validated" ) ;
+        sh:maxCount 1 ;
+        sh:message "Data quality level must be from allowed list (gUFO quality aspect)"@en ;
+    ] ;
+    sh:property [
+        sh:path icac-international:hasReliabilityScore ;
+        sh:datatype xsd:double ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:maxCount 1 ;
+        sh:message "Reliability score must be between 0.0 and 1.0 (gUFO quality aspect)"@en ;
     ] .
 
 icac-international:CoordinationComplexityValidationShape rdf:type sh:NodeShape ;
@@ -781,4 +1102,122 @@ icac-international:SpecializedOperationValidationShape rdf:type sh:NodeShape ;
                 }
             }
         """
+    ] .
+
+# =============================================================================
+# gUFO BUSINESS RULES FOR INTERNATIONAL COOPERATION
+# =============================================================================
+
+# Multi-Jurisdiction Coordination Business Rule
+icac-international:MultiJurisdictionCoordinationBusinessRule rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:CrossBorderOperation ;
+    sh:sparql [
+        sh:message "High complexity operations must involve multiple jurisdictions and advanced capabilities"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-international" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/international#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-international:coordinationComplexity ?complexity ;
+                      icac-international:crossBorderCapability ?capability .
+                FILTER (?complexity IN ("high", "complex") && 
+                        ?capability NOT IN ("advanced", "expert"))
+            }
+        """ ;
+    ] .
+
+# Partnership Trust and Effectiveness Business Rule
+icac-international:PartnershipEffectivenessBusinessRule rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalPartnership ;
+    sh:sparql [
+        sh:message "High effectiveness partnerships require established or strong trust levels"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-international" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/international#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-international:hasCoordinationEffectiveness ?effectiveness ;
+                      icac-international:hasTrustLevel ?trust .
+                FILTER (?effectiveness IN ("high", "excellent", "outstanding") && 
+                        ?trust IN ("developing"))
+            }
+        """ ;
+    ] .
+
+# Urgent Operation Response Business Rule
+icac-international:UrgentOperationResponseBusinessRule rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InternationalReferral ;
+    sh:sparql [
+        sh:message "Emergency operations must have rapid response times"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-international" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/international#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-international:hasOperationalUrgency ?urgency ;
+                      icac-international:responseTimeInternational ?responseTime .
+                FILTER (?urgency IN ("emergency", "immediate") && ?responseTime > 24.0)
+            }
+        """ ;
+    ] .
+
+# Information Sharing Level Business Rule
+icac-international:InformationSharingLevelBusinessRule rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:InformationSharingAgreement ;
+    sh:sparql [
+        sh:message "Multilateral agreements with many partners require enhanced information sharing"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-international" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/international#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-international:multilateralAgreement true ;
+                      icac-international:informationSharingLevel "basic" .
+                {
+                    SELECT $this (COUNT(?partner) as ?partnerCount)
+                    WHERE {
+                        $this icac-international:sharesDataWith ?partner .
+                    }
+                    GROUP BY $this
+                    HAVING (?partnerCount > 5)
+                }
+            }
+        """ ;
+    ] .
+
+# Live Streaming Investigation Capability Business Rule
+icac-international:LiveStreamingInvestigationCapabilityBusinessRule rdf:type sh:NodeShape ;
+    sh:targetClass icac-international:LiveStreamingInvestigation ;
+    sh:sparql [
+        sh:message "Live streaming investigations require expert capabilities and complex coordination"@en ;
+        sh:prefixes [
+            sh:declare [
+                sh:prefix "icac-international" ;
+                sh:namespace "https://ontology.unifiedcyberontology.org/icac/international#"^^xsd:anyURI ;
+            ] ;
+        ] ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this icac-international:crossBorderCapability ?capability ;
+                      icac-international:coordinationComplexity ?complexity .
+                FILTER (?capability != "expert" || ?complexity != "complex")
+            }
+        """ ;
     ] . 

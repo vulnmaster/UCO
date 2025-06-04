@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
 @prefix uco-core: <https://ontology.unifiedcyberontology.org/core#> .
 @prefix uco-identity: <https://ontology.unifiedcyberontology.org/identity#> .
 @prefix uco-action: <https://ontology.unifiedcyberontology.org/action#> .
@@ -16,311 +17,366 @@
 # Ontology Declaration
 <https://ontology.unifiedcyberontology.org/icac/investigation-coordination> rdf:type owl:Ontology ;
     rdfs:label "ICAC Investigation Coordination Ontology"@en ;
-    rdfs:comment "Comprehensive ontology for modeling investigation coordination processes, information sharing, resource sharing, communication protocols, and inter-agency collaboration within ICAC investigations."@en ;
-    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/investigation-coordination/0.1> ;
+    rdfs:comment "Comprehensive ontology for modeling investigation coordination processes, information sharing, resource sharing, communication protocols, and inter-agency collaboration within ICAC investigations. Enhanced with gUFO (gentle Unified Foundational Ontology) integration for improved semantic precision and validation capabilities."@en ;
+    owl:versionIRI <https://ontology.unifiedcyberontology.org/icac/investigation-coordination/1.1> ;
     dcterms:creator "UCO Ontology Team" ;
     dcterms:issued "2025-01-27"^^xsd:date ;
     dcterms:modified "2025-01-27"^^xsd:date ;
+    owl:versionInfo "1.1.0" ;
     owl:imports <https://ontology.unifiedcyberontology.org/core> ,
                 <https://ontology.caseontology.org/case> ,
-                <https://ontology.unifiedcyberontology.org/icac> .
+                <https://ontology.unifiedcyberontology.org/icac> ,
+                <http://purl.org/nemo/gufo#> .
 
 # =============================================================================
-# CORE INVESTIGATION COORDINATION CLASSES
+# CORE INVESTIGATION COORDINATION CLASSES (gUFO: EventType)
 # =============================================================================
 
 icac-coord:InvestigationCoordination rdf:type owl:Class ;
     rdfs:label "Investigation Coordination"@en ;
     rdfs:comment "Comprehensive framework for coordinating investigations across multiple agencies, jurisdictions, and organizational boundaries."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    rdf:type gufo:EventType .
 
 icac-coord:JointInvestigation rdf:type owl:Class ;
     rdfs:label "Joint Investigation"@en ;
     rdfs:comment "Formal joint investigation involving multiple agencies working together with shared resources, command structure, and unified reporting."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:ParallelInvestigation rdf:type owl:Class ;
     rdfs:label "Parallel Investigation"@en ;
     rdfs:comment "Parallel investigation where multiple agencies investigate related aspects independently while maintaining coordination."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:TaskForceCoordination rdf:type owl:Class ;
     rdfs:label "Task Force Coordination"@en ;
     rdfs:comment "Coordination through specialized task forces bringing together personnel from multiple agencies for specific operations."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:MultiAgencyCoordination rdf:type owl:Class ;
     rdfs:label "Multi Agency Coordination"@en ;
     rdfs:comment "Coordination involving multiple law enforcement agencies at various jurisdictional levels."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 # =============================================================================
-# INFORMATION SHARING CLASSES
+# INFORMATION SHARING CLASSES (gUFO: EventType)
 # =============================================================================
 
 icac-coord:InformationSharing rdf:type owl:Class ;
     rdfs:label "Information Sharing"@en ;
     rdfs:comment "Systematic sharing of information between agencies including intelligence, evidence, case data, and technical information."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    rdf:type gufo:EventType .
 
 icac-coord:IntelligenceSharing rdf:type owl:Class ;
     rdfs:label "Intelligence Sharing"@en ;
     rdfs:comment "Specialized sharing of intelligence information including tactical, strategic, operational, and threat assessment data."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:EvidenceSharing rdf:type owl:Class ;
     rdfs:label "Evidence Sharing"@en ;
     rdfs:comment "Formal sharing of evidence between agencies including digital evidence, physical evidence, and forensic analysis results."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:CaseInformationSharing rdf:type owl:Class ;
     rdfs:label "Case Information Sharing"@en ;
     rdfs:comment "Sharing of case-specific information including case files, reports, witness statements, and investigative findings."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:SuspectInformationSharing rdf:type owl:Class ;
     rdfs:label "Suspect Information Sharing"@en ;
     rdfs:comment "Sharing of suspect-related information including identification, criminal history, and behavioral patterns."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:VictimInformationSharing rdf:type owl:Class ;
     rdfs:label "Victim Information Sharing"@en ;
     rdfs:comment "Coordinated sharing of victim information while maintaining privacy and protection protocols."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:TechnicalDataSharing rdf:type owl:Class ;
     rdfs:label "Technical Data Sharing"@en ;
     rdfs:comment "Sharing of technical data including forensic tools, methodologies, and technical analysis results."@en ;
-    rdfs:subClassOf icac-coord:InformationSharing .
+    rdfs:subClassOf icac-coord:InformationSharing ;
+    rdf:type gufo:EventType .
 
 # =============================================================================
-# RESOURCE SHARING CLASSES
+# RESOURCE SHARING CLASSES (gUFO: EventType)
 # =============================================================================
 
 icac-coord:ResourceSharing rdf:type owl:Class ;
     rdfs:label "Resource Sharing"@en ;
     rdfs:comment "Systematic sharing of resources between agencies including personnel, equipment, facilities, and expertise."@en ;
-    rdfs:subClassOf uco-action:Action .
+    rdfs:subClassOf uco-action:Action, gufo:Event ;
+    rdf:type gufo:EventType .
 
 icac-coord:PersonnelSharing rdf:type owl:Class ;
     rdfs:label "Personnel Sharing"@en ;
     rdfs:comment "Sharing of specialized personnel including investigators, analysts, technical experts, and support staff."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:EquipmentSharing rdf:type owl:Class ;
     rdfs:label "Equipment Sharing"@en ;
     rdfs:comment "Sharing of specialized equipment including forensic tools, surveillance equipment, and technical devices."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:FacilitySharing rdf:type owl:Class ;
     rdfs:label "Facility Sharing"@en ;
     rdfs:comment "Sharing of facilities including laboratories, command centers, training facilities, and secure meeting spaces."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:TechnologySharing rdf:type owl:Class ;
     rdfs:label "Technology Sharing"@en ;
     rdfs:comment "Sharing of technology resources including software, databases, communication systems, and analytical tools."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:ExpertiseSharing rdf:type owl:Class ;
     rdfs:label "Expertise Sharing"@en ;
     rdfs:comment "Sharing of specialized expertise including subject matter experts, consultants, and technical specialists."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 icac-coord:FundingSharing rdf:type owl:Class ;
     rdfs:label "Funding Sharing"@en ;
     rdfs:comment "Coordinated funding arrangements including cost sharing, joint funding, and resource pooling."@en ;
-    rdfs:subClassOf icac-coord:ResourceSharing .
+    rdfs:subClassOf icac-coord:ResourceSharing ;
+    rdf:type gufo:EventType .
 
 # =============================================================================
-# COMMUNICATION AND PROTOCOL CLASSES
+# COMMUNICATION AND PROTOCOL CLASSES (gUFO: SituationType)
 # =============================================================================
 
 icac-coord:CommunicationProtocol rdf:type owl:Class ;
     rdfs:label "Communication Protocol"@en ;
     rdfs:comment "Formal protocols governing communication between agencies including channels, frequencies, and procedures."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:subClassOf uco-core:UcoObject, gufo:Situation ;
+    rdf:type gufo:SituationType .
 
 icac-coord:FormalCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Formal Communication Channel"@en ;
     rdfs:comment "Official communication channels following established protocols and hierarchies."@en ;
-    rdfs:subClassOf icac-coord:CommunicationProtocol .
+    rdfs:subClassOf icac-coord:CommunicationProtocol ;
+    rdf:type gufo:SituationType .
 
 icac-coord:InformalCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Informal Communication Channel"@en ;
     rdfs:comment "Informal communication channels for rapid information exchange and coordination."@en ;
-    rdfs:subClassOf icac-coord:CommunicationProtocol .
+    rdfs:subClassOf icac-coord:CommunicationProtocol ;
+    rdf:type gufo:SituationType .
 
 icac-coord:EmergencyCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Emergency Communication Channel"@en ;
     rdfs:comment "Emergency communication channels for urgent coordination and crisis response."@en ;
-    rdfs:subClassOf icac-coord:CommunicationProtocol .
+    rdfs:subClassOf icac-coord:CommunicationProtocol ;
+    rdf:type gufo:SituationType .
 
 icac-coord:SecureCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Secure Communication Channel"@en ;
     rdfs:comment "Secure communication channels for sensitive information and classified communications."@en ;
-    rdfs:subClassOf icac-coord:CommunicationProtocol .
+    rdfs:subClassOf icac-coord:CommunicationProtocol ;
+    rdf:type gufo:SituationType .
 
 icac-coord:EncryptedCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Encrypted Communication Channel"@en ;
     rdfs:comment "Encrypted communication channels providing enhanced security for sensitive operations."@en ;
-    rdfs:subClassOf icac-coord:SecureCommunicationChannel .
+    rdfs:subClassOf icac-coord:SecureCommunicationChannel ;
+    rdf:type gufo:SituationType .
 
 icac-coord:LiaisonCommunicationChannel rdf:type owl:Class ;
     rdfs:label "Liaison Communication Channel"@en ;
     rdfs:comment "Communication channels managed through designated liaison officers for inter-agency coordination."@en ;
-    rdfs:subClassOf icac-coord:CommunicationProtocol .
+    rdfs:subClassOf icac-coord:CommunicationProtocol ;
+    rdf:type gufo:SituationType .
 
 # =============================================================================
-# AGREEMENT AND GOVERNANCE CLASSES
+# AGREEMENT AND GOVERNANCE CLASSES (gUFO: SituationType)
 # =============================================================================
 
 icac-coord:CoordinationAgreement rdf:type owl:Class ;
     rdfs:label "Coordination Agreement"@en ;
     rdfs:comment "Formal agreements governing coordination between agencies including MOUs, MOAs, and operational agreements."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:subClassOf uco-core:UcoObject, gufo:Situation ;
+    rdf:type gufo:SituationType .
 
 icac-coord:MemorandumOfUnderstanding rdf:type owl:Class ;
     rdfs:label "Memorandum of Understanding"@en ;
     rdfs:comment "Formal MOU establishing framework for ongoing cooperation and coordination between agencies."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 icac-coord:MemorandumOfAgreement rdf:type owl:Class ;
     rdfs:label "Memorandum of Agreement"@en ;
     rdfs:comment "Formal MOA defining specific terms and conditions for inter-agency cooperation."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 icac-coord:FormalAgreement rdf:type owl:Class ;
     rdfs:label "Formal Agreement"@en ;
     rdfs:comment "Comprehensive formal agreement with legal binding terms for inter-agency coordination."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 icac-coord:InformalAgreement rdf:type owl:Class ;
     rdfs:label "Informal Agreement"@en ;
     rdfs:comment "Informal agreement or understanding for coordination without formal legal binding."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 icac-coord:TaskForceCharter rdf:type owl:Class ;
     rdfs:label "Task Force Charter"@en ;
     rdfs:comment "Charter document establishing task force structure, authority, and operational parameters."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 icac-coord:JointOperationsPlan rdf:type owl:Class ;
     rdfs:label "Joint Operations Plan"@en ;
     rdfs:comment "Detailed operational plan for joint investigations and coordinated activities."@en ;
-    rdfs:subClassOf icac-coord:CoordinationAgreement .
+    rdfs:subClassOf icac-coord:CoordinationAgreement ;
+    rdf:type gufo:SituationType .
 
 # =============================================================================
-# LIAISON AND PERSONNEL CLASSES
+# LIAISON AND PERSONNEL CLASSES (gUFO: Role - anti-rigid relational)
 # =============================================================================
 
 icac-coord:LiaisonOfficer rdf:type owl:Class ;
     rdfs:label "Liaison Officer"@en ;
     rdfs:comment "Designated officer responsible for maintaining communication and coordination between agencies."@en ;
-    rdfs:subClassOf uco-role:Role .
+    rdfs:subClassOf uco-role:Role ;
+    rdf:type gufo:Role .
 
 icac-coord:PrimaryLiaison rdf:type owl:Class ;
     rdfs:label "Primary Liaison"@en ;
     rdfs:comment "Primary liaison officer with full authority for inter-agency communication and coordination."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 icac-coord:SecondaryLiaison rdf:type owl:Class ;
     rdfs:label "Secondary Liaison"@en ;
     rdfs:comment "Secondary liaison officer providing backup and specialized coordination support."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 icac-coord:TechnicalLiaison rdf:type owl:Class ;
     rdfs:label "Technical Liaison"@en ;
     rdfs:comment "Technical liaison officer specializing in technical coordination and information sharing."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 icac-coord:LegalLiaison rdf:type owl:Class ;
     rdfs:label "Legal Liaison"@en ;
     rdfs:comment "Legal liaison officer handling legal aspects of inter-agency coordination and agreements."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 icac-coord:IntelligenceLiaison rdf:type owl:Class ;
     rdfs:label "Intelligence Liaison"@en ;
     rdfs:comment "Intelligence liaison officer managing intelligence sharing and coordination activities."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 icac-coord:OperationalLiaison rdf:type owl:Class ;
     rdfs:label "Operational Liaison"@en ;
     rdfs:comment "Operational liaison officer coordinating operational activities and tactical coordination."@en ;
-    rdfs:subClassOf icac-coord:LiaisonOfficer .
+    rdfs:subClassOf icac-coord:LiaisonOfficer ;
+    rdf:type gufo:Role .
 
 # =============================================================================
-# METRICS AND PERFORMANCE CLASSES
+# METRICS AND PERFORMANCE CLASSES (gUFO: Object)
 # =============================================================================
 
 icac-coord:CoordinationMetrics rdf:type owl:Class ;
     rdfs:label "Coordination Metrics"@en ;
     rdfs:comment "Performance metrics for measuring effectiveness and efficiency of inter-agency coordination."@en ;
-    rdfs:subClassOf uco-core:UcoObject .
+    rdfs:subClassOf uco-core:UcoObject, gufo:Object ;
+    rdf:type gufo:Kind .
 
 icac-coord:ResponseTimeMetrics rdf:type owl:Class ;
     rdfs:label "Response Time Metrics"@en ;
     rdfs:comment "Metrics measuring response times for coordination requests and information sharing."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 icac-coord:InformationSharingRateMetrics rdf:type owl:Class ;
     rdfs:label "Information Sharing Rate Metrics"@en ;
     rdfs:comment "Metrics measuring the rate and volume of information sharing between agencies."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 icac-coord:ResourceUtilizationMetrics rdf:type owl:Class ;
     rdfs:label "Resource Utilization Metrics"@en ;
     rdfs:comment "Metrics measuring efficiency of shared resource utilization and allocation."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 icac-coord:CaseResolutionTimeMetrics rdf:type owl:Class ;
     rdfs:label "Case Resolution Time Metrics"@en ;
     rdfs:comment "Metrics measuring impact of coordination on case resolution times and outcomes."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 icac-coord:CoordinationEffectivenessMetrics rdf:type owl:Class ;
     rdfs:label "Coordination Effectiveness Metrics"@en ;
     rdfs:comment "Metrics measuring overall effectiveness of coordination efforts and outcomes."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 icac-coord:CostEfficiencyMetrics rdf:type owl:Class ;
     rdfs:label "Cost Efficiency Metrics"@en ;
     rdfs:comment "Metrics measuring cost efficiency and financial benefits of coordination activities."@en ;
-    rdfs:subClassOf icac-coord:CoordinationMetrics .
+    rdfs:subClassOf icac-coord:CoordinationMetrics ;
+    rdf:type gufo:SubKind .
 
 # =============================================================================
-# SPECIALIZED COORDINATION CLASSES
+# SPECIALIZED COORDINATION CLASSES (gUFO: EventType)
 # =============================================================================
 
 icac-coord:LocalCoordination rdf:type owl:Class ;
     rdfs:label "Local Coordination"@en ;
     rdfs:comment "Coordination activities within local jurisdictions and municipal boundaries."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:RegionalCoordination rdf:type owl:Class ;
     rdfs:label "Regional Coordination"@en ;
     rdfs:comment "Coordination activities spanning regional areas and multiple local jurisdictions."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:StateCoordination rdf:type owl:Class ;
     rdfs:label "State Coordination"@en ;
     rdfs:comment "Coordination activities within state boundaries involving state and local agencies."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:MultiStateCoordination rdf:type owl:Class ;
     rdfs:label "Multi State Coordination"@en ;
     rdfs:comment "Coordination activities spanning multiple states requiring interstate cooperation."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:FederalCoordination rdf:type owl:Class ;
     rdfs:label "Federal Coordination"@en ;
     rdfs:comment "Coordination involving federal agencies and national-level law enforcement."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 icac-coord:InternationalCoordination rdf:type owl:Class ;
     rdfs:label "International Coordination"@en ;
     rdfs:comment "Coordination activities involving international agencies and cross-border cooperation."@en ;
-    rdfs:subClassOf icac-coord:InvestigationCoordination .
+    rdfs:subClassOf icac-coord:InvestigationCoordination ;
+    rdf:type gufo:EventType .
 
 # =============================================================================
 # DATATYPE PROPERTIES
@@ -735,4 +791,276 @@ icac-coord:benchmarkedAgainst rdf:type owl:ObjectProperty ;
     rdfs:label "benchmarked against"@en ;
     rdfs:comment "Links metrics to benchmark standards."@en ;
     rdfs:domain icac-coord:CoordinationMetrics ;
-    rdfs:range icac-coord:CoordinationMetrics . 
+    rdfs:range icac-coord:CoordinationMetrics .
+
+# =============================================================================
+# gUFO TEMPORAL PROPERTIES
+# =============================================================================
+
+# Temporal boundary properties (from gUFO)
+# Note: These are imported from gUFO but documented here for clarity
+
+# gufo:hasBeginPointInXSDDateTimeStamp - Start time for events and situations
+# gufo:hasEndPointInXSDDateTimeStamp - End time for events and situations
+
+# =============================================================================
+# gUFO QUALITY ASPECTS FOR INVESTIGATION COORDINATION
+# =============================================================================
+
+# Coordination Quality Aspects
+icac-coord:hasCoordinationEffectiveness rdf:type owl:DatatypeProperty ;
+    rdfs:label "has coordination effectiveness"@en ;
+    rdfs:comment "Coordination effectiveness level assessment (poor, fair, good, excellent, outstanding) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InvestigationCoordination ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasComplexityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "has complexity level"@en ;
+    rdfs:comment "Coordination complexity level assessment (simple, moderate, complex, highly_complex, extremely_complex) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InvestigationCoordination ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasSuccessRate rdf:type owl:DatatypeProperty ;
+    rdfs:label "has success rate"@en ;
+    rdfs:comment "Success rate measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InvestigationCoordination ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasCoordinationIntensity rdf:type owl:DatatypeProperty ;
+    rdfs:label "has coordination intensity"@en ;
+    rdfs:comment "Coordination integration intensity (minimal, moderate, high, intensive, fully_integrated) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:JointInvestigation ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasUnificationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "has unification level"@en ;
+    rdfs:comment "Unification degree measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:JointInvestigation ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+# Information Sharing Quality Aspects
+icac-coord:hasSharingEfficiency rdf:type owl:DatatypeProperty ;
+    rdfs:label "has sharing efficiency"@en ;
+    rdfs:comment "Information sharing efficiency level (poor, fair, good, excellent, optimal) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InformationSharing ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasSecurityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "has security level"@en ;
+    rdfs:comment "Security assessment level (basic, standard, enhanced, high, maximum) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InformationSharing ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasTimeliness rdf:type owl:DatatypeProperty ;
+    rdfs:label "has timeliness"@en ;
+    rdfs:comment "Timeliness score measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:InformationSharing ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasIntelligenceValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "has intelligence value"@en ;
+    rdfs:comment "Intelligence value assessment (low, moderate, high, critical, exceptional) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:IntelligenceSharing ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasActionability rdf:type owl:DatatypeProperty ;
+    rdfs:label "has actionability"@en ;
+    rdfs:comment "Actionability score measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:IntelligenceSharing ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+# Personnel Quality Aspects
+icac-coord:hasLiaisonEffectiveness rdf:type owl:DatatypeProperty ;
+    rdfs:label "has liaison effectiveness"@en ;
+    rdfs:comment "Liaison effectiveness level (poor, adequate, good, excellent, exceptional) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:LiaisonOfficer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasTrustLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "has trust level"@en ;
+    rdfs:comment "Trust relationship measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:LiaisonOfficer ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasResponsiveness rdf:type owl:DatatypeProperty ;
+    rdfs:label "has responsiveness"@en ;
+    rdfs:comment "Response capability level (slow, moderate, good, rapid, immediate) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:LiaisonOfficer ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+# Data Quality Aspects
+icac-coord:hasDataQuality rdf:type owl:DatatypeProperty ;
+    rdfs:label "has data quality"@en ;
+    rdfs:comment "Data quality assessment (poor, fair, good, excellent, validated) - gUFO quality aspect."@en ;
+    rdfs:domain [ 
+        owl:unionOf ( 
+            icac-coord:InvestigationCoordination 
+            icac-coord:InformationSharing 
+            icac-coord:ResourceSharing 
+            icac-coord:CoordinationAgreement 
+            icac-coord:LiaisonOfficer 
+            icac-coord:CoordinationMetrics 
+        ) 
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasDataCompleteness rdf:type owl:DatatypeProperty ;
+    rdfs:label "has data completeness"@en ;
+    rdfs:comment "Data completeness measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain [ 
+        owl:unionOf ( 
+            icac-coord:InvestigationCoordination 
+            icac-coord:InformationSharing 
+            icac-coord:ResourceSharing 
+            icac-coord:CoordinationAgreement 
+            icac-coord:LiaisonOfficer 
+            icac-coord:CoordinationMetrics 
+        ) 
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasDataConsistency rdf:type owl:DatatypeProperty ;
+    rdfs:label "has data consistency"@en ;
+    rdfs:comment "Data consistency measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain [ 
+        owl:unionOf ( 
+            icac-coord:InvestigationCoordination 
+            icac-coord:InformationSharing 
+            icac-coord:ResourceSharing 
+            icac-coord:CoordinationAgreement 
+            icac-coord:LiaisonOfficer 
+            icac-coord:CoordinationMetrics 
+        ) 
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasValidationLevel rdf:type owl:DatatypeProperty ;
+    rdfs:label "has validation level"@en ;
+    rdfs:comment "Validation thoroughness (none, basic, standard, comprehensive, full_verification) - gUFO quality aspect."@en ;
+    rdfs:domain [ 
+        owl:unionOf ( 
+            icac-coord:InvestigationCoordination 
+            icac-coord:InformationSharing 
+            icac-coord:ResourceSharing 
+            icac-coord:CoordinationAgreement 
+            icac-coord:LiaisonOfficer 
+            icac-coord:CoordinationMetrics 
+        ) 
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasReliability rdf:type owl:DatatypeProperty ;
+    rdfs:label "has reliability"@en ;
+    rdfs:comment "Reliability measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:CoordinationMetrics ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+icac-coord:hasAccuracy rdf:type owl:DatatypeProperty ;
+    rdfs:label "has accuracy"@en ;
+    rdfs:comment "Accuracy measurement (0.0 to 1.0) - gUFO quality aspect."@en ;
+    rdfs:domain icac-coord:CoordinationMetrics ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf gufo:hasQuality .
+
+# =============================================================================
+# gUFO PARTICIPATION AND PART-WHOLE RELATIONSHIPS
+# =============================================================================
+
+# Participation relationships (from gUFO)
+# Note: These properties connect entities to events and situations they participate in
+
+icac-coord:participatesIn rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in"@en ;
+    rdfs:comment "Links an organization or person to coordination activities they participate in - gUFO participation relation."@en ;
+    rdfs:domain [ owl:unionOf ( uco-identity:Organization uco-identity:Person ) ] ;
+    rdfs:range icac-coord:InvestigationCoordination ;
+    rdfs:subPropertyOf gufo:participatedIn .
+
+icac-coord:participatesInSharing rdf:type owl:ObjectProperty ;
+    rdfs:label "participates in sharing"@en ;
+    rdfs:comment "Links an organization to information or resource sharing activities - gUFO participation relation."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range [ owl:unionOf ( icac-coord:InformationSharing icac-coord:ResourceSharing ) ] ;
+    rdfs:subPropertyOf gufo:participatedIn .
+
+# Part-whole relationships for complex coordination structures
+icac-coord:isComponentOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is component of"@en ;
+    rdfs:comment "Links component agencies to task force or multi-agency coordination structures - gUFO part-whole relation."@en ;
+    rdfs:domain uco-identity:Organization ;
+    rdfs:range [ owl:unionOf ( icac-coord:TaskForceCoordination icac-coord:MultiAgencyCoordination ) ] ;
+    rdfs:subPropertyOf gufo:isComponentOf .
+
+icac-coord:hasComponent rdf:type owl:ObjectProperty ;
+    rdfs:label "has component"@en ;
+    rdfs:comment "Links coordination structures to their component agencies - gUFO part-whole relation."@en ;
+    rdfs:domain [ owl:unionOf ( icac-coord:TaskForceCoordination icac-coord:MultiAgencyCoordination icac-coord:JointInvestigation ) ] ;
+    rdfs:range uco-identity:Organization ;
+    owl:inverseOf icac-coord:isComponentOf .
+
+icac-coord:isSubInvestigationOf rdf:type owl:ObjectProperty ;
+    rdfs:label "is sub investigation of"@en ;
+    rdfs:comment "Links sub-investigations to larger joint investigation structures - gUFO part-whole relation."@en ;
+    rdfs:domain case-investigation:Investigation ;
+    rdfs:range icac-coord:JointInvestigation ;
+    rdfs:subPropertyOf gufo:isProperPartOf .
+
+icac-coord:hasSubInvestigation rdf:type owl:ObjectProperty ;
+    rdfs:label "has sub investigation"@en ;
+    rdfs:comment "Links joint investigations to their component sub-investigations - gUFO part-whole relation."@en ;
+    rdfs:domain icac-coord:JointInvestigation ;
+    rdfs:range case-investigation:Investigation ;
+    owl:inverseOf icac-coord:isSubInvestigationOf .
+
+# =============================================================================
+# gUFO QUALIFIED RELATIONS FOR INVESTIGATION COORDINATION
+# =============================================================================
+
+# Qualified relations enable temporal and quality aspects of participation
+icac-coord:standsInQualifiedParticipation rdf:type owl:ObjectProperty ;
+    rdfs:label "stands in qualified participation"@en ;
+    rdfs:comment "Links entities to qualified participation situations in coordination - gUFO qualified relation."@en ;
+    rdfs:domain [ owl:unionOf ( uco-identity:Organization uco-identity:Person ) ] ;
+    rdfs:range gufo:ParticipationSituation .
+
+icac-coord:standsInQualifiedParthood rdf:type owl:ObjectProperty ;
+    rdfs:label "stands in qualified parthood"@en ;
+    rdfs:comment "Links entities to qualified part-whole situations in coordination structures - gUFO qualified relation."@en ;
+    rdfs:domain [ owl:unionOf ( uco-identity:Organization case-investigation:Investigation ) ] ;
+    rdfs:range gufo:TemporaryParthoodSituation .
+
+icac-coord:concernsParticipant rdf:type owl:ObjectProperty ;
+    rdfs:label "concerns participant"@en ;
+    rdfs:comment "Links participation situations to the participating entities - gUFO qualified relation."@en ;
+    rdfs:domain gufo:ParticipationSituation ;
+    rdfs:range [ owl:unionOf ( uco-identity:Organization uco-identity:Person ) ] .
+
+icac-coord:concernsTemporaryWhole rdf:type owl:ObjectProperty ;
+    rdfs:label "concerns temporary whole"@en ;
+    rdfs:comment "Links part-whole situations to the whole entity - gUFO qualified relation."@en ;
+    rdfs:domain gufo:TemporaryParthoodSituation ;
+    rdfs:range [ owl:unionOf ( icac-coord:InvestigationCoordination uco-identity:Organization ) ] .
+
+icac-coord:concernsTemporaryPart rdf:type owl:ObjectProperty ;
+    rdfs:label "concerns temporary part"@en ;
+    rdfs:comment "Links part-whole situations to the part entity - gUFO qualified relation."@en ;
+    rdfs:domain gufo:TemporaryParthoodSituation ;
+    rdfs:range [ owl:unionOf ( uco-identity:Organization case-investigation:Investigation ) ] . 
